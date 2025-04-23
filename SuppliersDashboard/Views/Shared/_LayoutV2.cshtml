@@ -634,14 +634,242 @@
 || funcs.Contains("اعدادات القنوات") || funcs.Contains("اضافة مجموعة مندوبين") || funcs.Contains("قبول الاسعار")
 )
                 {
-                
-                
-                
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu9" role="button" aria-expanded="false" aria-controls="billingSubmenu">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ni ni-credit-card text-white"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">@llayout.setting</span>
+                            </div>
+                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                        </a>
+                        <div class="collapse" id="billingSubmenu9">
+                            <ul class="nav ms-4 flex-column">
+
+
+                                @if (funcs.Contains("صغحة البنوك"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/Bank/index">- @llayout.addbank</a></li>
+
+                                }
+                                @*<li class='onlyone'> <a href="/Employee/Index" class="dropdown-item  ">  @llayout.addCustomer  </a>                   </li>*@
+                                @if (funcs.Contains("صفحة ادارة وتعديل المستخدمين"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/Admin/UsersManagement">- @llayout.Users_Management</a></li>
+
+                                }
+                                @if (funcs.Contains("اعدادات المخازن"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/Warehousing/WareHousesSetting">- @llayout.WareHousesSetting</a></li>
+
+                                }
+                                @if (1 > 2
+|| funcs.Contains("صفحة اضافة او وقف صنف") || funcs.Contains("صفحة تعديل الاسعار الخاصة") || funcs.Contains("اعدادات قوائم الاسعار") || funcs.Contains("قبول الاسعار")
+)
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub01" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>-  @llayout.items</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub01">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة اضافة او وقف صنف"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Items/ItemSetting">- @llayout.Add_Or_Stop_Item </a></li>
+
+                                                }
+                                                @if (funcs.Contains("قبول الاسعار"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Items/ConfirmUpdatePrice">- قبول الاسعار</a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة تعديل الاسعار الخاصة"))
+                                                {
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub02" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                                            <span>-  @llayout.price</span>
+                                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                                        </a>
+                                                        <div class="collapse" id="nestedBillingSub02">
+                                                            <ul class="nav ms-4 flex-column">
+                                                                <li class="nav-item"><a class="nav-link" href="/Items/Specialprice">- @llayout.Special_Prices</a></li>
+                                                                <li class="nav-item"><a class="nav-link" href="/Supplier/EditItemsPrices">- @llayout.updatepricesfordisgroups</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                }
+                                                @if (funcs.Contains("اعدادات قوائم الاسعار"))
+                                                {
+
+
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub03" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                                            <span>- @llayout.Lists</span>
+                                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                                        </a>
+                                                        <div class="collapse" id="nestedBillingSub03">
+                                                            <ul class="nav ms-4 flex-column">
+                                                                <li class="nav-item"><a class="nav-link" href="/PriceList/Index">- @llayout.PriceListSetting</a></li>
+                                                                <li class="nav-item"><a class="nav-link" href="/Supplier/EditItemsPricesList">- @llayout.updatepriceforpricelist</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                }
+
+
+
+                                            </ul>
+
+                                        </div>
+                                    </li>
+                                }
+                                @if (1 > 2 ||
+funcs.Contains("صفحة تعديل بيانات عميل") ||
+funcs.Contains("صفحة اضافة عميل") ||
+funcs.Contains("صفحة اضافة رصيد افتتاحي"))
+
+
+                                {
+
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub04" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.Customers</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub04">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة تعديل بيانات عميل"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Branch/EditBranchData">- @llayout.Edit_Customer_Details</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="/Branch/EditoCompanyData">- @llayout.EditoCompanyData</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة اضافة عميل"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Branch/AddBranch">- @llayout.Add_Customer </a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة اضافة رصيد افتتاحي"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Branch/AddOpeningBalance">- @llayout.Add_opening_balance</a></li>
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+                                @if (funcs.Contains("صفحة اضافة منطقة او حي"))
+                                {
+
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>-  @llayout.Regions</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub">
+                                            <ul class="nav ms-4 flex-column">
+                                                <li class="nav-item"><a class="nav-link" href="/Screens/AddRange">- @llayout.Add_Region_Or_neighborhood </a></li>
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                @if (1 > 2 || funcs.Contains("صفحة تعديل او ايقاف مورد") || funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين"))
+                                {
+
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub07" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.suppliers</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub07">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة تعديل او ايقاف مورد"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Supplier/Seting">- @llayout.Edit_Or_Stop_Supplier</a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Supplier/Add">- @llayout.Add_Supplier</a></li>
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                @if (
+funcs.Contains("اعدادات القنوات")
+|| funcs.Contains("اضافة مجموعة مندوبين")
+)
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub08" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.Sales_channels</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub08">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("اعدادات القنوات"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Branch/AddEditAgent">- @llayout.addandeditagents</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("اضافة مجموعة مندوبين"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Supplier/AddreprsntGroup">- @llayout.Add_Distributors_Group</a></li>
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                        <span>-   Payments</span>
+                                        <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                    </a>
+                                    <div class="collapse" id="nestedBillingSub">
+                                        <ul class="nav ms-4 flex-column">
+                                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Pending</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Completed</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Invoices</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+
                 }
 
 
 
-            <!-- Tables with Submenu -->
+                <!-- Tables with Submenu -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#tablesSubmenu" role="button" aria-expanded="false" aria-controls="tablesSubmenu">
                         <div class="d-flex align-items-center">
