@@ -127,7 +127,7 @@
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="#" target="_blank">
                 <img src="~/NewDesgin/assets/img/UNO.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">@pages.dawarmalik</span>
+                <span class="ms-1 font-weight-bold"></span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -136,13 +136,6 @@
 
                 <!-- Dashboard -->
                 @*<li class="nav-item">
-            <a class="nav-link active" href="../pages/dashboard.html">
-                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-single-02 text-primary"></i>
-                </div>
-                <span class="nav-link-text ms-1">Dashboard</span>
-            </a>
-        </li>*@
                         <a class="nav-link active" href="../pages/dashboard.html">
                             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-single-02 text-primary"></i>
@@ -150,6 +143,20 @@
                             <span class="nav-link-text ms-1">Dashboard</span>
                         </a>
                     </li>*@
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">
+                        <div class="d-flex align-items-center">
+                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
+                                <i class="ni ni-single-02 text-white"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">@pages.dawarmalik</span>
+                        </div>
+                        @*<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-single-02 text-primary"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Dashboard</span>*@
+                    </a>
+                </li>
 
                 @* Operation  *@
                 @if (1 > 2
@@ -169,7 +176,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center  @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-credit-card text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.operations</span>
@@ -384,7 +391,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu2" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center  @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-credit-card text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.reports</span>
@@ -665,7 +672,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu9" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center  @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-credit-card text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.setting</span>
@@ -1082,7 +1089,6 @@ funcs.Contains("اعدادات القنوات")
             </div>
         </nav>
         <!-- End Navbar -->
-        @RenderBody()
 
         <div class="container-fluid py-4">
             @RenderBody()
@@ -1115,13 +1121,13 @@ funcs.Contains("اعدادات القنوات")
                                     @*<a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted" target="_blank">En</a>*@
                                     @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
                                     {
-                                        <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted" >En</a>
+                                        <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted">En</a>
 
                                         @*<a class=" media-body" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> En</a>*@
                                     }
                                     else
                                     {
-                                        <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted" >Ar</a>
+                                        <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted">Ar</a>
 
                                         @*<a class=" media-body" onclick="ChangeToRTL()" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> Ar</a>*@
                                     }
@@ -1206,6 +1212,7 @@ funcs.Contains("اعدادات القنوات")
     <script src="~/NewDesgin/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="~/NewDesgin/assets/js/plugins/chartjs.min.js"></script>
     <script>
+
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {
@@ -1389,6 +1396,25 @@ funcs.Contains("اعدادات القنوات")
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="~/NewDesgin/assets/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تحديد جميع عناصر التنقل
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // إزالة الكلاس النشط من جميع العناصر
+            navLinks.forEach(l => l.classList.remove('active'));
+
+            // إضافة الكلاس النشط للعنصر المختار
+            this.classList.add('active');
+
+            // إذا كنت تريد منع السلوك الافتراضي (التنقل)
+            // e.preventDefault();
+        });
+    });
+});
+    </script>
 </body>
 
 </html>
