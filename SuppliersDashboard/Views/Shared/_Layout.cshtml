@@ -224,7 +224,7 @@
                                     </a>
                                 </li>
 
-                                @if(1>2
+                                @if (1 > 2
                                     || funcs.Contains("صفحة ادارة المناديب") || funcs.Contains("صفحة البيع لقناة بيعية")
                                     || funcs.Contains("صفحة تسليم المخزن") || funcs.Contains("صفحة تسليم بضاعة للمناديب")
                                     || funcs.Contains("صفحة المردودات") || funcs.Contains("w-store")
@@ -235,40 +235,40 @@
                                     || funcs.Contains("صفحة التحصيل") || funcs.Contains("صفحة المشتريات")
                                     || funcs.Contains("صفحة المصروفات") || funcs.Contains("صفحة تعديل الشيكات")
                                     || funcs.Contains("صفحة تصفية حساب اليوم") || funcs.Contains("قبول طلبات الفروع")
-                                    || funcs.Contains("صفحات ال GPS") || funcs.Contains("صفحات ال KPIS")  
+                                    || funcs.Contains("صفحات ال GPS") || funcs.Contains("صفحات ال KPIS")
                                     )
 
-                                    {
-
-           
-                                        <li class="sidebar-list">
-
-                                            <a style="text-align: center;" class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
-                                                <i class="ri-store-3-line"></i>
-                                                <span>@llayout.operations</span>
-                                            </a>
-                                            <ul class="sidebar-submenu">
+                                {
 
 
-                                                @if (funcs.Contains("صفحة ادارة المناديب"))
-                                                {
-                                                    <li class='onlyone'> <a href="/Distributor/GroupUsers" class="dropdown-item"> @llayout.Delegatemanagement  </a> </li>
-                                                }
-                                                @if (funcs.Contains("صفحة البيع لقناة بيعية"))
-                                                {
-                                                    <li class='onlyone'> <a href="/AsSalesman" class="dropdown-item"> @llayout.assalesman  </a> </li>
-                                                }
+                                    <li class="sidebar-list">
 
-                                                @if(1>2
-                                                    || funcs.Contains("صفحة تسليم المخزن") || funcs.Contains("صفحة تسليم بضاعة للمناديب")
-                                                    || funcs.Contains("صفحة المردودات")  || funcs.Contains("w-store")
-                                                    || funcs.Contains("صفحة جرد المخزن") || funcs.Contains("صفحة جرد المخازن")
-                                                    || funcs.Contains("تقربر جرد المخزن الفرعي") || funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن")
-                                                    || funcs.Contains("صفحة تسوية المرتجعات")
+                                        <a style="text-align: center;" class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                            <i class="ri-store-3-line"></i>
+                                            <span>@llayout.operations</span>
+                                        </a>
+                                        <ul class="sidebar-submenu">
 
-                                                    )
 
-                                                { 
+                                            @if (funcs.Contains("صفحة ادارة المناديب"))
+                                            {
+                                                <li class='onlyone'> <a href="/Distributor/GroupUsers" class="dropdown-item"> @llayout.Delegatemanagement  </a> </li>
+                                            }
+                                            @if (funcs.Contains("صفحة البيع لقناة بيعية"))
+                                            {
+                                                <li class='onlyone'> <a href="/AsSalesman" class="dropdown-item"> @llayout.assalesman  </a> </li>
+                                            }
+
+                                            @if (1 > 2
+                                                || funcs.Contains("صفحة تسليم المخزن") || funcs.Contains("صفحة تسليم بضاعة للمناديب")
+                                                || funcs.Contains("صفحة المردودات") || funcs.Contains("w-store")
+                                                || funcs.Contains("صفحة جرد المخزن") || funcs.Contains("صفحة جرد المخازن")
+                                                || funcs.Contains("تقربر جرد المخزن الفرعي") || funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن")
+                                                || funcs.Contains("صفحة تسوية المرتجعات")
+
+                                                )
+
+                                            {
                                                 <li>
                                                     <a href="#" class=" sidebar-link" style=" " onclick='ShowSecond("ul1" ,"liwareHouse", this)'>
                                                         @llayout.wareHouse
@@ -323,33 +323,33 @@
 
                                                     </ul>
                                                 </li>
-                                                }
+                                            }
 
-                                                @if (funcs.Contains("صفحة اغلاق وتسليم الخزنة"))
-                                                {
-                                                    <li>
-                                                        <a href="#" class=" sidebar-link" onclick='ShowSecond("ul3","lithe_safe" , this)'>
-                                                            @llayout.the_safe
-                                                            <div class="according-menu">  <i class='ri-arrow-right-s-line' id="lithe_safe" style='font-size:20px'></i></div>
-                                                        </a>
-                                                        @if (funcs.Contains("صفحة اغلاق وتسليم الخزنة"))
-                                                        {
+                                            @if (funcs.Contains("صفحة اغلاق وتسليم الخزنة"))
+                                            {
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul3","lithe_safe" , this)'>
+                                                        @llayout.the_safe
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="lithe_safe" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    @if (funcs.Contains("صفحة اغلاق وتسليم الخزنة"))
+                                                    {
 
-                                                            <ul style="list-style-type: circle !important;" class='secondul collapse' id='ul3'>
-                                                                <li>   <a href="/Accounting/CloseAcconterDay" class="   dropdown-item-Chile"> @llayout.shift   </a> </li>
-                                                            </ul>
-                                                        }
-                                                    </li>
-                                                }
+                                                        <ul style="list-style-type: circle !important;" class='secondul collapse' id='ul3'>
+                                                            <li>   <a href="/Accounting/CloseAcconterDay" class="   dropdown-item-Chile"> @llayout.shift   </a> </li>
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
 
 
-                                                @if(1>2
-                                                   || funcs.Contains("صفحة البيع") || funcs.Contains("AddSale")
-                                                   || funcs.Contains("صفحة التحصيل") || funcs.Contains("صفحة المشتريات")
-                                                   || funcs.Contains("صفحة المصروفات") || funcs.Contains("صفحة تعديل الشيكات")
-                                                   || funcs.Contains("صفحة تصفية حساب اليوم")
-                                                    )
-                                                {
+                                            @if (1 > 2
+                                               || funcs.Contains("صفحة البيع") || funcs.Contains("AddSale")
+                                               || funcs.Contains("صفحة التحصيل") || funcs.Contains("صفحة المشتريات")
+                                               || funcs.Contains("صفحة المصروفات") || funcs.Contains("صفحة تعديل الشيكات")
+                                               || funcs.Contains("صفحة تصفية حساب اليوم")
+                                                )
+                                            {
                                                 <li>
                                                     <a href="#" class=" sidebar-link" style=" " onclick='ShowSecond("ulAccounts" ,"liwareAccounts", this)'>
                                                         @pages.Accounts
@@ -391,272 +391,273 @@
                                                     </ul>
                                                 </li>
 
-                                                }
-                                                @if (funcs.Contains("قبول طلبات الفروع"))
-                                                {
-                                                    <li class='onlyone'> <a href="/Admin/OnlineShopRequests" class="dropdown-item"> قبول طلبات الفروع  </a> </li>
-                                                }
-                                            </ul>
+                                            }
+                                            @if (funcs.Contains("قبول طلبات الفروع"))
+                                            {
+                                                <li class='onlyone'> <a href="/Admin/OnlineShopRequests" class="dropdown-item"> قبول طلبات الفروع  </a> </li>
+                                            }
+                                        </ul>
 
-                                        </li>
+                                    </li>
 
                                 }
 
 
-                                @if(1>2 ||
+                                @if (1 > 2 ||
                                     funcs.Contains("مشروع العمولة") || funcs.Contains("تقارير المندوب") || funcs.Contains("تقارير القنوات")
-                                    || funcs.Contains("تقارير الشركات") || funcs.Contains("تقارير الامناء والمحاسبين")|| funcs.Contains("صفحة جرد المخزن")
-                                    || funcs.Contains("صفحة تقرير المديونيات")|| funcs.Contains("صفحة تقرير المتاخرات")|| funcs.Contains("تقرير اجماليات الفواتير")
-                                    || funcs.Contains("تقرير المصاريف")|| funcs.Contains("تقرير اوراق الدفع")|| funcs.Contains("تقرير العجوزات")
+                                    || funcs.Contains("تقارير الشركات") || funcs.Contains("تقارير الامناء والمحاسبين") || funcs.Contains("صفحة جرد المخزن")
+                                    || funcs.Contains("صفحة تقرير المديونيات") || funcs.Contains("صفحة تقرير المتاخرات") || funcs.Contains("تقرير اجماليات الفواتير")
+                                    || funcs.Contains("تقرير المصاريف") || funcs.Contains("تقرير اوراق الدفع") || funcs.Contains("تقرير العجوزات")
                                       || funcs.Contains("صفحة تقرير كشف حركة صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات صنف")
                                         || funcs.Contains("صفحة تقرير مجموع مبيعات صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة")
-                                         || funcs.Contains("صفحة تقرير بيانات العملاء") || funcs.Contains("صفحة العملاء")||funcs.Contains("صفحة تقرير مبيعات المندوبين")
+                                         || funcs.Contains("صفحة تقرير بيانات العملاء") || funcs.Contains("صفحة العملاء") || funcs.Contains("صفحة تقرير مبيعات المندوبين")
                                     )
-                                    {
-
-                                   
-                                <li class="sidebar-list">
-                                    <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
-                                        <i class="ri-list-check-2"></i>
-                                        <span>@llayout.reports</span>
-                                    </a>
-                                    <ul class="sidebar-submenu">
-                                        @if (funcs.Contains("مشروع العمولة"))
-                                        {
-                                            <li class='onlyone'> <a href="/CP/SalesCPReport" class="dropdown-item  ">@llayout.Commission_project </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("تقارير المندوب"))
-                                        {
-                                            <li class='onlyone'> <a href="/FastReport/Index" class="dropdown-item  ">  @llayout.DelegateReports </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("تقارير القنوات"))
-                                        {
-                                            <li class='onlyone'> <a href="/FastReport/Agent" class="dropdown-item  ">@llayout.SalesChannelReports  </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("تقارير الشركات"))
-                                        {
-                                            <li class='onlyone'> <a href="/FastReport/Company" class="dropdown-item  ">@llayout.CorporateReports</a>                   </li>
-                                        }
-                                        @if (funcs.Contains("تقارير الشركات"))
-                                        {
-                                            <li class='onlyone'> <a href="/FastReport/Branch" class="dropdown-item  "> @llayout.BranchReports </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("تقارير الامناء والمحاسبين"))
-                                        {
-                                            <li class='onlyone'> <a href="/FastReport/Safe" class="dropdown-item  "> @llayout.keepers_and_Accounters_Reports  </a>                   </li>
-                                        }   
-                                        @if (funcs.Contains("تقارير الاصناف"))
-                                        {
-                                            <li class='onlyone'> <a href="/FastReport/Items" class="dropdown-item  "> تقارير الاصناف  </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("صفحة جرد المخزن"))
-                                        {
-                                            <li class='onlyone'> <a href="/WareHousing/StoreGard" class="dropdown-item  ">@llayout.Ware_House_Review </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("صفحة تقرير المديونيات"))
-                                        {
-                                            <li class='onlyone'>        <a href="/Distributor/CustomerDeffers" class="dropdown-item">@llayout.Indebtedness</a>        </li>
-                                        }
-                                        @if (funcs.Contains("صفحة تقرير المتاخرات"))
-                                        {
-                                            <li class='onlyone'>        <a href="/NewReports/BillLatersReport" class="dropdown-item">@llayout.Invoicearrears</a>        </li>
-                                        }
-                                        @if (funcs.Contains("تقرير اجماليات الفواتير"))
-                                        {
-                                            <li class='onlyone'>        <a href="/NewReports/TotalPillsReports" class="dropdown-item">@llayout.Invoice_totals </a>         </li>
-                                        }
-                                        @if (funcs.Contains("تقرير المصاريف"))
-                                        {
-                                            <li class='onlyone'>        <a href="/NewReports/ExpensesReports" class="dropdown-item">@llayout.Expenses </a>         </li>
-                                        }
-                                        @if (funcs.Contains("تقرير اوراق الدفع"))
-                                        {
-                                            <li class='onlyone'>        <a href="/NewReports/MoneyPaper" class="dropdown-item">@llayout.Paymentpapers  </a>         </li>
-                                        }
-                                        @if (funcs.Contains("تقرير العجوزات"))
-                                        {
-
-                                            <li>
-                                                <a href="#" class=" sidebar-link" onclick='ShowSecond("ul2","liul2" , this)'>
-                                                    @llayout.inability
-                                                    <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liul2" style='font-size:20px'></i></div>
-                                                </a>
-                                                <ul class='secondul collapse' id='ul2'>
-                                                    <li>     <a href="/NewReports/ShortFalls" class="dropdown-item-Chile  ">   @llayout.Storeshortage     </a>                       </li>
-
-                                                    <li>    <a href="/NewReports/MoneyShortFalls" class="dropdown-item-Chile  ">   @llayout.Moneyshortage       </a>          </li>
-
-                                                </ul>
-                                            </li>
-                                        }
-                                        @if(1>2
-                                            ||funcs.Contains("صفحة تقرير كشف حركة صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات صنف")
-                                            || funcs.Contains("صفحة تقرير مجموع مبيعات صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة")
-                                            )
-                                                {
-
-                                        <li>
-                                            <a href="#" class=" sidebar-link" onclick='ShowSecond("ul2222","liitems" , this)'>
-                                                @llayout.items
-                                                <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liitems" style='font-size:20px'></i></div>
-                                            </a>
-                                            <ul style="list-style-type: circle;" class='secondul collapse' id='ul2222'>
-                                                @if (funcs.Contains("صفحة تقرير كشف حركة صنف"))
-                                                {
-                                                    <li>     <a href="/Report/ItemCard" class="dropdown-item-Chile debitsreportscollapse "> @llayout.Item_Transaction    </a>                       </li>
-                                                }
-                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
-
-                                                {
-                                                    <li>    <a href="/NewReports/itemDistributors" class="dropdown-item-Chile debitsreportscollapse "> @llayout.s  </a>          </li>
-                                                }
-                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
-
-                                                {
-                                                    <li>    <a href="/NewReports/TotalItemsSales" class="dropdown-item-Chile debitsreportscollapse "> @llayout.e       </a>          </li>
-                                                }
-                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
-
-                                                {
-                                                    <li>    <a href="/NewREports/ItemsReport" class="dropdown-item-Chile debitsreportscollapse "> @llayout.g   </a>          </li>
-                                                }
-                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة"))
-
-                                                {
-                                                    <li>    <a href="/NewReports/TotalCategoriesSalesReport" class="dropdown-item-Chile debitsreportscollapse "> @llayout.Group_Total_Sale     </a>          </li>
-                                                }
-
-                                            </ul>
-                                        </li>
-
-                                                }
-
-                                        @if(1>2
-                                            || funcs.Contains("صفحة تقرير بيانات العملاء") || funcs.Contains("صفحة العملاء")
-                                            )
-                                             {
-
-       
-                                        <li>
-                                            <a href="#" class=" sidebar-link" onclick='ShowSecond("ul333","liCustomers" , this)'>
-                                                @llayout.Customers
-                                                <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liCustomers" style='font-size:20px'></i></div>
-                                            </a>
-                                            <ul class='secondul collapse' id='ul333'>
-
-                                                @if (funcs.Contains("صفحة تقرير بيانات العملاء"))
-                                                {
-                                                    <li>    <a href="/Branch/BranchDetails" class="dropdown-item-Chile Branchesreportscollapse "> @llayout.Customer_Details   </a> </li>
-                                                }
+                                {
 
 
-                                                @if (funcs.Contains("صفحة العملاء"))
+                                    <li class="sidebar-list">
+                                        <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                            <i class="ri-list-check-2"></i>
+                                            <span>@llayout.reports</span>
+                                        </a>
+                                        <ul class="sidebar-submenu">
+                                            @if (funcs.Contains("مشروع العمولة"))
+                                            {
+                                                <li class='onlyone'> <a href="/CP/SalesCPReport" class="dropdown-item  ">@llayout.Commission_project </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("تقارير المندوب"))
+                                            {
+                                                <li class='onlyone'> <a href="/FastReport/Index" class="dropdown-item  ">  @llayout.DelegateReports </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("تقارير القنوات"))
+                                            {
+                                                <li class='onlyone'> <a href="/FastReport/Agent" class="dropdown-item  ">@llayout.SalesChannelReports  </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("تقارير الشركات"))
+                                            {
+                                                <li class='onlyone'> <a href="/FastReport/Company" class="dropdown-item  ">@llayout.CorporateReports</a>                   </li>
+                                            }
+                                            @if (funcs.Contains("تقارير الشركات"))
+                                            {
+                                                <li class='onlyone'> <a href="/FastReport/Branch" class="dropdown-item  "> @llayout.BranchReports </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("تقارير الامناء والمحاسبين"))
+                                            {
+                                                <li class='onlyone'> <a href="/FastReport/Safe" class="dropdown-item  "> @llayout.keepers_and_Accounters_Reports  </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("تقارير الاصناف"))
+                                            {
+                                                <li class='onlyone'> <a href="/FastReport/Items" class="dropdown-item  "> تقارير الاصناف  </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("صفحة جرد المخزن"))
+                                            {
+                                                <li class='onlyone'> <a href="/WareHousing/StoreGard" class="dropdown-item  ">@llayout.Ware_House_Review </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("صفحة تقرير المديونيات"))
+                                            {
+                                                <li class='onlyone'>        <a href="/Distributor/CustomerDeffers" class="dropdown-item">@llayout.Indebtedness</a>        </li>
+                                            }
+                                            @if (funcs.Contains("صفحة تقرير المتاخرات"))
+                                            {
+                                                <li class='onlyone'>        <a href="/NewReports/BillLatersReport" class="dropdown-item">@llayout.Invoicearrears</a>        </li>
+                                            }
+                                            @if (funcs.Contains("تقرير اجماليات الفواتير"))
+                                            {
+                                                <li class='onlyone'>        <a href="/NewReports/TotalPillsReports" class="dropdown-item">@llayout.Invoice_totals </a>         </li>
+                                            }
+                                            @if (funcs.Contains("تقرير المصاريف"))
+                                            {
+                                                <li class='onlyone'>        <a href="/NewReports/ExpensesReports" class="dropdown-item">@llayout.Expenses </a>         </li>
+                                            }
+                                            @if (funcs.Contains("تقرير اوراق الدفع"))
+                                            {
+                                                <li class='onlyone'>        <a href="/NewReports/MoneyPaper" class="dropdown-item">@llayout.Paymentpapers  </a>         </li>
+                                            }
+                                            @if (funcs.Contains("تقرير العجوزات"))
+                                            {
 
-                                                {
-                                                    <li>      <a href="/Market/Index" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Account_statement</a>    </li>
-                                                }
-                                                }
-                                            </ul>
-                                        </li>
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul2","liul2" , this)'>
+                                                        @llayout.inability
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liul2" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='ul2'>
+                                                        <li>     <a href="/NewReports/ShortFalls" class="dropdown-item-Chile  ">   @llayout.Storeshortage     </a>                       </li>
 
-                                        }
+                                                        <li>    <a href="/NewReports/MoneyShortFalls" class="dropdown-item-Chile  ">   @llayout.Moneyshortage       </a>          </li>
 
-                                        @if (funcs.Contains("صفحة تقرير مبيعات المندوبين"))
-                                        {
+                                                    </ul>
+                                                </li>
+                                            }
+                                            @if (1 > 2
+                                                || funcs.Contains("صفحة تقرير كشف حركة صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات صنف")
+                                                || funcs.Contains("صفحة تقرير مجموع مبيعات صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة")
+                                                )
+                                            {
 
-                                            <li>
-                                                <a href="#" class=" sidebar-link" onclick='ShowSecond("ul-15","lidistributors" , this)'>
-                                                    @llayout.distributors
-                                                    <div class="according-menu"> <i class='ri-arrow-right-s-line' id="lidistributors" style='font-size:20px'></i></div>
-                                                </a>
-                                                <ul class='secondul collapse' id='ul-15'>
-                                                    <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item-Chile Branchesreportscollapse "> @llayout.Distributors_Sales   </a> </li>
-                                                </ul>
-                                            </li>
-                                        }
-                                        @if (funcs.Contains("صفحات ال KPIS"))
-                                        {
-                                            <li>
-                                                <a href="#" class=" sidebar-link" onclick='ShowSecond("ul-r-1","liKPIS" , this)'>
-                                                    KPIS
-                                                    <div class="according-menu"> <i class='ri-arrow-right-s-line' id="liKPIS" style='font-size:20px;'></i></div>
-                                                </a>
-                                                <ul class='secondul collapse' id='ul-r-1'>
-                                                    <li>    <a href="/KPIS/Distributors" class="dropdown-item-Chile  "> @llayout.Distributors_Details   </a> </li>
-                                                    <li>    <a href="/KPIS/ItemsKPI" class="dropdown-item-Chile  "> @llayout.Items_Details   </a> </li>
-                                                    <li>    <a href="/KPIS/BranchesKPI" class="dropdown-item-Chile  "> @llayout.Customer_Details   </a> </li>
-                                                    <li>    <a href="/KPIS/PriceListKPI" class="dropdown-item-Chile  "> @llayout.Prices_Details   </a> </li>
-                                                    @*<li>    <a href="/DashboardSuppliers/Index" class="dropdown-item-Chile  "> @llayout.dawar  </a> </li>*@
-                                                    <li>    <a href="/DashboardSuppliers/Index" class="dropdown-item-Chile  "> @llayout.dawarSalesMen   </a> </li>
-                                                </ul>
-                                            </li>
-                                        }
-                                        @if (funcs.Contains("صفحات ال GPS"))
-                                        {
-                                            <li>
-                                                <a href="#" class=" sidebar-link" onclick='ShowSecond("GPS","liGPS" , this)'>
-                                                    GPS
-                                                    <div class="according-menu"> <i class='ri-arrow-right-s-line' id="liGPS" style='font-size:20px;'></i></div>
-                                                </a>
-                                                <ul class='secondul collapse' id='GPS'>
-                                                    <li>    <a href="/Admin/ShowMap" class="dropdown-item-Chile  "> @llayout.Representativeperformanceanalysis   </a> </li>
-                                                    <li>    <a href="/Admin/ShowBranchesMap" class="dropdown-item-Chile  "> @llayout.Branches   </a> </li>
-                                                </ul>
-                                            </li>
-                                        }
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul2222","liitems" , this)'>
+                                                        @llayout.items
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liitems" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul style="list-style-type: circle;" class='secondul collapse' id='ul2222'>
+                                                        @if (funcs.Contains("صفحة تقرير كشف حركة صنف"))
+                                                        {
+                                                            <li>     <a href="/Report/ItemCard" class="dropdown-item-Chile debitsreportscollapse "> @llayout.Item_Transaction    </a>                       </li>
+                                                        }
+                                                        @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
 
-                                    </ul>
+                                                        {
+                                                            <li>    <a href="/NewReports/itemDistributors" class="dropdown-item-Chile debitsreportscollapse "> @llayout.s  </a>          </li>
+                                                        }
+                                                        @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
 
-                                </li>
+                                                        {
+                                                            <li>    <a href="/NewReports/TotalItemsSales" class="dropdown-item-Chile debitsreportscollapse "> @llayout.e       </a>          </li>
+                                                        }
+                                                        @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                                        {
+                                                            <li>    <a href="/NewREports/ItemsReport" class="dropdown-item-Chile debitsreportscollapse "> @llayout.g   </a>          </li>
+                                                        }
+                                                        @if (funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة"))
+
+                                                        {
+                                                            <li>    <a href="/NewReports/TotalCategoriesSalesReport" class="dropdown-item-Chile debitsreportscollapse "> @llayout.Group_Total_Sale     </a>          </li>
+                                                        }
+
+                                                    </ul>
+                                                </li>
+
+                                            }
+
+                                            @if (1 > 2
+                                                || funcs.Contains("صفحة تقرير بيانات العملاء") || funcs.Contains("صفحة العملاء")
+                                                )
+                                            {
+
+
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul333","liCustomers" , this)'>
+                                                        @llayout.Customers
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liCustomers" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='ul333'>
+
+                                                        @if (funcs.Contains("صفحة تقرير بيانات العملاء"))
+                                                        {
+                                                            <li>    <a href="/Branch/BranchDetails" class="dropdown-item-Chile Branchesreportscollapse "> @llayout.Customer_Details   </a> </li>
+                                                        }
+
+
+                                                        @if (funcs.Contains("صفحة العملاء"))
+
+                                                        {
+                                                            <li>      <a href="/Market/Index" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Account_statement</a>    </li>
+                                                        }
+                                                        }
+                                                    </ul>
+                                                </li>
+
+                                            }
+
+                                            @if (funcs.Contains("صفحة تقرير مبيعات المندوبين"))
+                                            {
+
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul-15","lidistributors" , this)'>
+                                                        @llayout.distributors
+                                                        <div class="according-menu"> <i class='ri-arrow-right-s-line' id="lidistributors" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='ul-15'>
+                                                        <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item-Chile Branchesreportscollapse "> @llayout.Distributors_Sales   </a> </li>
+                                                    </ul>
+                                                </li>
+                                            }
+                                            @if (funcs.Contains("صفحات ال KPIS"))
+                                            {
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul-r-1","liKPIS" , this)'>
+                                                        KPIS
+                                                        <div class="according-menu"> <i class='ri-arrow-right-s-line' id="liKPIS" style='font-size:20px;'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='ul-r-1'>
+                                                        <li>    <a href="/KPIS/Distributors" class="dropdown-item-Chile  "> @llayout.Distributors_Details   </a> </li>
+                                                        <li>    <a href="/KPIS/ItemsKPI" class="dropdown-item-Chile  "> @llayout.Items_Details   </a> </li>
+                                                        <li>    <a href="/KPIS/BranchesKPI" class="dropdown-item-Chile  "> @llayout.Customer_Details   </a> </li>
+                                                        <li>    <a href="/KPIS/PriceListKPI" class="dropdown-item-Chile  "> @llayout.Prices_Details   </a> </li>
+                                                        @*<li>    <a href="/DashboardSuppliers/Index" class="dropdown-item-Chile  "> @llayout.dawar  </a> </li>*@
+                                                        <li>    <a href="/DashboardSuppliers/Index" class="dropdown-item-Chile  "> @llayout.dawarSalesMen   </a> </li>
+                                                    </ul>
+                                                </li>
+                                            }
+                                            @if (funcs.Contains("صفحات ال GPS"))
+                                            {
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("GPS","liGPS" , this)'>
+                                                        GPS
+                                                        <div class="according-menu"> <i class='ri-arrow-right-s-line' id="liGPS" style='font-size:20px;'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='GPS'>
+                                                        <li>    <a href="/Admin/ShowMap" class="dropdown-item-Chile  "> @llayout.Representativeperformanceanalysis   </a> </li>
+                                                        <li>    <a href="/Admin/ShowBranchesMap" class="dropdown-item-Chile  "> @llayout.Branches   </a> </li>
+                                                    </ul>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+                                    </li>
 
                                 }
 
 
 
-                                @if(1>2
-                                    || funcs.Contains("صغحة البنوك") || funcs.Contains("صفحة ادارة وتعديل المستخدمين")|| funcs.Contains("اعدادات المخازن")
+                                @if (1 > 2
+                                    || funcs.Contains("صغحة البنوك") || funcs.Contains("صفحة ادارة وتعديل المستخدمين") || funcs.Contains("اعدادات المخازن")
                                     || funcs.Contains("صفحة اضافة او وقف صنف") || funcs.Contains("صفحة تعديل الاسعار الخاصة") || funcs.Contains("اعدادات قوائم الاسعار")
                                     || funcs.Contains("صفحة تعديل بيانات عميل") || funcs.Contains("صفحة اضافة عميل") || funcs.Contains("صفحة اضافة رصيد افتتاحي")
                                     || funcs.Contains("صفحة اضافة منطقة او حي") || funcs.Contains("صفحة تعديل او ايقاف مورد") || funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين")
                                     || funcs.Contains("اعدادات القنوات") || funcs.Contains("اضافة مجموعة مندوبين") || funcs.Contains("قبول الاسعار")
                                     )
-                                    {
+                                {
 
-                                <li class="sidebar-list">
-                                    <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
-                                        <i class="ri-list-settings-line"></i>
-                                        <span>@llayout.setting</span>
-                                    </a>
-                                    <ul class="sidebar-submenu">
-                                        @if (funcs.Contains("صغحة البنوك"))
-                                        {
-                                            <li class='onlyone'>  <a href="/Bank/index" class="dropdown-item">      @llayout.addbank   </a>  </li>
-}
-                                        @*<li class='onlyone'> <a href="/Employee/Index" class="dropdown-item  ">  @llayout.addCustomer  </a>                   </li>*@
-                                        @if (funcs.Contains("صفحة ادارة وتعديل المستخدمين")) {
-                                        <li class='onlyone'> <a href="/Admin/UsersManagement" class="dropdown-item  ">  @llayout.Users_Management </a>                   </li>
-                                        }
-                                        @if (funcs.Contains("اعدادات المخازن"))
-                                        {
+                                    <li class="sidebar-list">
+                                        <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                            <i class="ri-list-settings-line"></i>
+                                            <span>@llayout.setting</span>
+                                        </a>
+                                        <ul class="sidebar-submenu">
+                                            @if (funcs.Contains("صغحة البنوك"))
+                                            {
+                                                <li class='onlyone'>  <a href="/Bank/index" class="dropdown-item">      @llayout.addbank   </a>  </li>
+                                            }
+                                            @*<li class='onlyone'> <a href="/Employee/Index" class="dropdown-item  ">  @llayout.addCustomer  </a>                   </li>*@
+                                            @if (funcs.Contains("صفحة ادارة وتعديل المستخدمين"))
+                                            {
+                                                <li class='onlyone'> <a href="/Admin/UsersManagement" class="dropdown-item  ">  @llayout.Users_Management </a>                   </li>
+                                            }
+                                            @if (funcs.Contains("اعدادات المخازن"))
+                                            {
 
-                                        <li class='onlyone'> <a href="/Warehousing/WareHousesSetting" class="dropdown-item  ">  @llayout.WareHousesSetting </a>                   </li>
-                                        }
-                                        @if(1>2
-                                            || funcs.Contains("صفحة اضافة او وقف صنف") || funcs.Contains("صفحة تعديل الاسعار الخاصة") || funcs.Contains("اعدادات قوائم الاسعار") || funcs.Contains("قبول الاسعار")
-                                           )
-                                        {
-                                        <li>
-                                            <a href="#" class=" sidebar-link" onclick='ShowSecond("set1","liset1" , this)'>
-                                                @llayout.items
-                                                <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset1" style='font-size:20px'></i></div>
-                                            </a>
-                                            <ul class='secondul collapse' id='set1'>
+                                                <li class='onlyone'> <a href="/Warehousing/WareHousesSetting" class="dropdown-item  ">  @llayout.WareHousesSetting </a>                   </li>
+                                            }
+                                            @if (1 > 2
+                                                || funcs.Contains("صفحة اضافة او وقف صنف") || funcs.Contains("صفحة تعديل الاسعار الخاصة") || funcs.Contains("اعدادات قوائم الاسعار") || funcs.Contains("قبول الاسعار")
+                                               )
+                                            {
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("set1","liset1" , this)'>
+                                                        @llayout.items
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset1" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='set1'>
 
                                                         @funcs.Contains("صفحة اضافة او وقف صنف")
                                                         {
                                                         <li>     <a href="/Items/ItemSetting" class="   dropdown-item-Chile itemssettingcollapse "> @llayout.Add_Or_Stop_Item   </a>          </li>
                                                         }
-                                                @funcs.Contains("قبول الاسعار")
+                                                        @funcs.Contains("قبول الاسعار")
                                                         {
                                                         <li>     <a href="/Items/ConfirmUpdatePrice" class="   dropdown-item-Chile itemssettingcollapse "> قبول الاسعار   </a>          </li>
                                                         }
@@ -668,9 +669,9 @@
                                                                     <div style="margin: auto;">  <i class='ri-arrow-right-s-line' id="priceliset1" style='font-size:20px'></i></div>
                                                                 </a>
                                                                 <ul class='secondul collapse' id='priceSetting'>
-                                                                        <li>        <a href="/Items/Specialprice" class="   dropdown-item-Chile_sub itemssettingcollapse "> @llayout.Special_Prices   </a>              </li>
+                                                                    <li>        <a href="/Items/Specialprice" class="   dropdown-item-Chile_sub itemssettingcollapse "> @llayout.Special_Prices   </a>              </li>
                                                                     @*  <li>        <a href="/Items/AddItemPrice" class="   dropdown-item-Chile itemssettingcollapse "> @llayout.Edit_Prices     </a>         </li>*@
-                                                        
+
                                                                     <li>        <a href="/Supplier/EditItemsPrices" class="  dropdown-item-Chile_sub itemssettingcollapse "> @llayout.updatepricesfordisgroups    </a>         </li>
 
                                                                 </ul>
@@ -679,118 +680,127 @@
                                                         @if (funcs.Contains("اعدادات قوائم الاسعار"))
                                                         {
 
-                                                        <li>
-                                                            <a href="#" class="dropdown-item-Chile itemssettingcollapse" onclick='ShowSecond("PriceListSetting","PriceListSettingliset1" , this)'>
-                                                                @llayout.Lists
-                                                                <div style="margin: auto;">  <i class='ri-arrow-right-s-line' id="PriceListSettingliset1" style='font-size:20px'></i></div>
-                                                            </a>
-                                                            <ul class='secondul collapse' id='PriceListSetting'>
-                                                                <li class='onlyone'> <a href="/PriceList/Index" class="dropdown-item-Chile_sub  itemssettingcollapse">  @llayout.PriceListSetting </a>                   </li>
+                                                            <li>
+                                                                <a href="#" class="dropdown-item-Chile itemssettingcollapse" onclick='ShowSecond("PriceListSetting","PriceListSettingliset1" , this)'>
+                                                                    @llayout.Lists
+                                                                    <div style="margin: auto;">  <i class='ri-arrow-right-s-line' id="PriceListSettingliset1" style='font-size:20px'></i></div>
+                                                                </a>
+                                                                <ul class='secondul collapse' id='PriceListSetting'>
+                                                                    <li class='onlyone'> <a href="/PriceList/Index" class="dropdown-item-Chile_sub  itemssettingcollapse">  @llayout.PriceListSetting </a>                   </li>
 
-                                                                <li>        <a href="/Supplier/EditItemsPricesList" class="   dropdown-item-Chile_sub itemssettingcollapse "> @llayout.updatepriceforpricelist    </a>         </li>
+                                                                    <li>        <a href="/Supplier/EditItemsPricesList" class="   dropdown-item-Chile_sub itemssettingcollapse "> @llayout.updatepriceforpricelist    </a>         </li>
 
 
-                                                            </ul>
-                                                        </li>
+                                                                </ul>
+                                                            </li>
                                                         }
-                                            </ul>
-                                        </li>
-                                        }                                   
-                                        @if(1>2 ||
-                                            funcs.Contains("صفحة تعديل بيانات عميل") || funcs.Contains("صفحة اضافة عميل") || funcs.Contains("صفحة اضافة رصيد افتتاحي")
-                                            )
-                                        { 
-                                        <li>
-                                            <a href="#" class=" sidebar-link" onclick='ShowSecond("set2","liset2", this)'>
-                                                @llayout.Customers
-                                                <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset2" style='font-size:20px'></i></div>
-                                            </a>
-                                            <ul class='secondul collapse' id='set2'>
-                                                @if (funcs.Contains("صفحة تعديل بيانات عميل"))
-                                                {  <li>      <a href="/Branch/EditBranchData" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Edit_Customer_Details </a></li>
-                                                  <li>      <a href="/Branch/EditoCompanyData" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.EditoCompanyData </a></li>
-                                                }
-
-                                                @if (funcs.Contains("صفحة اضافة عميل"))
-                                                { <li>      <a href="/Branch/AddBranch" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Add_Customer      </a>                     </li>}
-
-                                                @if (funcs.Contains("صفحة اضافة رصيد افتتاحي"))
-                                                { <li>      <a href="/Branch/AddOpeningBalance" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Add_opening_balance       </a>    </li>}
-
-                                            </ul>
-                                        </li>
-                                        }
-
-                                        @if (funcs.Contains("صفحة اضافة منطقة او حي")) {
-                                        <li>
-                                            <a href="#" class=" sidebar-link" onclick='ShowSecond("set4" ,"liset4", this)'>
-                                                @llayout.Regions
-                                                <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset4" style='font-size:20px'></i></div>
-                                            </a>
-                                            <ul class='secondul collapse' id='set4'>
-                                                <li>      <a href="/Screens/AddRange" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Add_Region_Or_neighborhood    </a>             </li>
-                                            </ul>
-                                        </li>
-                                        }
-
-                                        @if(1>2 || funcs.Contains("صفحة تعديل او ايقاف مورد") || funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين"))
-                                        {
-                                        <li>
-                                            <a href="#" class=" sidebar-link" onclick='ShowSecond("set3","liset3" , this)'>
-                                                @llayout.suppliers
-                                                <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset3" style='font-size:20px'></i></div>
-                                            </a>
-                                            <ul class='secondul collapse' id='set3'>
-
-
-                                                @if (funcs.Contains("صفحة تعديل او ايقاف مورد"))
-                                                { <li> <a href="/Supplier/Seting" class="   suppliersettingcollapse dropdown-item-Chile suppliersettingcollapse "> @llayout.Edit_Or_Stop_Supplier   </a> </li>
-                                                }
-                                                @if (funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين"))
-                                                {
-
-                                                <li>  <a href="/Supplier/Add" class="   suppliersettingcollapse dropdown-item-Chile  "> @llayout.Add_Supplier</a> </li>
-                                                }
-
-
-                                            </ul>
-                                        </li>
-                                        }
-                                        @if (
-                                        funcs.Contains("اعدادات القنوات")
-                                        || funcs.Contains("اضافة مجموعة مندوبين")
-                                        )
-        {
-
-                                    <li>
-                                        <a href="#" class=" sidebar-link" onclick='ShowSecond("ul5","liul5" , this)'>
-                                            @llayout.Sales_channels
-                                            <div class="according-menu"> <i class='ri-arrow-right-s-line' id="liul5" style='font-size:20px'></i></div>
-                                        </a>
-                                        <ul class='secondul collapse' id='ul5'>
-
-
-                                            @if (funcs.Contains("اعدادات القنوات"))
+                                                    </ul>
+                                                </li>
+                                            }
+                                            @if (1 > 2 ||
+                                                funcs.Contains("صفحة تعديل بيانات عميل") || funcs.Contains("صفحة اضافة عميل") || funcs.Contains("صفحة اضافة رصيد افتتاحي")
+                                                )
                                             {
-                                                <li> <a href="/Branch/AddEditAgent" class="dropdown-item-Chile Branchesreportscollapse ">@llayout.addandeditagents   </a> </li>
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("set2","liset2", this)'>
+                                                        @llayout.Customers
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset2" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='set2'>
+                                                        @if (funcs.Contains("صفحة تعديل بيانات عميل"))
+                                                        {
+                                                            <li>      <a href="/Branch/EditBranchData" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Edit_Customer_Details </a></li>
+                                                            <li>      <a href="/Branch/EditoCompanyData" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.EditoCompanyData </a></li>
+                                                        }
+
+                                                        @if (funcs.Contains("صفحة اضافة عميل"))
+                                                        {
+                                                            <li>      <a href="/Branch/AddBranch" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Add_Customer      </a>                     </li>
 }
 
-                                            @if (funcs.Contains("اضافة مجموعة مندوبين"))
-                                            {<li>  <a href="/Supplier/AddreprsntGroup" class="   suppliersettingcollapse dropdown-item-Chile  "> @llayout.Add_Distributors_Group     </a> </li>}
+                                                        @if (funcs.Contains("صفحة اضافة رصيد افتتاحي"))
+                                                        {
+                                                            <li>      <a href="/Branch/AddOpeningBalance" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Add_opening_balance       </a>    </li>
+}
+
+                                                    </ul>
+                                                </li>
+                                            }
+
+                                            @if (funcs.Contains("صفحة اضافة منطقة او حي"))
+                                            {
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("set4" ,"liset4", this)'>
+                                                        @llayout.Regions
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset4" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='set4'>
+                                                        <li>      <a href="/Screens/AddRange" class="   dropdown-item-Chile branshsettingcollapse "> @llayout.Add_Region_Or_neighborhood    </a>             </li>
+                                                    </ul>
+                                                </li>
+                                            }
+
+                                            @if (1 > 2 || funcs.Contains("صفحة تعديل او ايقاف مورد") || funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين"))
+                                            {
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("set3","liset3" , this)'>
+                                                        @llayout.suppliers
+                                                        <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liset3" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='set3'>
+
+
+                                                        @if (funcs.Contains("صفحة تعديل او ايقاف مورد"))
+                                                        {
+                                                            <li> <a href="/Supplier/Seting" class="   suppliersettingcollapse dropdown-item-Chile suppliersettingcollapse "> @llayout.Edit_Or_Stop_Supplier   </a> </li>
+                                                        }
+                                                        @if (funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين"))
+                                                        {
+
+                                                            <li>  <a href="/Supplier/Add" class="   suppliersettingcollapse dropdown-item-Chile  "> @llayout.Add_Supplier</a> </li>
+                                                        }
+
+
+                                                    </ul>
+                                                </li>
+                                            }
+                                            @if (
+                                            funcs.Contains("اعدادات القنوات")
+                                            || funcs.Contains("اضافة مجموعة مندوبين")
+                                            )
+                                            {
+
+                                                <li>
+                                                    <a href="#" class=" sidebar-link" onclick='ShowSecond("ul5","liul5" , this)'>
+                                                        @llayout.Sales_channels
+                                                        <div class="according-menu"> <i class='ri-arrow-right-s-line' id="liul5" style='font-size:20px'></i></div>
+                                                    </a>
+                                                    <ul class='secondul collapse' id='ul5'>
+
+
+                                                        @if (funcs.Contains("اعدادات القنوات"))
+                                                        {
+                                                            <li> <a href="/Branch/AddEditAgent" class="dropdown-item-Chile Branchesreportscollapse ">@llayout.addandeditagents   </a> </li>
+                                                        }
+
+                                                        @if (funcs.Contains("اضافة مجموعة مندوبين"))
+                                                        {
+                                                            <li>  <a href="/Supplier/AddreprsntGroup" class="   suppliersettingcollapse dropdown-item-Chile  "> @llayout.Add_Distributors_Group     </a> </li>
+}
+
+
+
+                                                    </ul>
+                                                </li>
+                                            }
+
 
 
 
                                         </ul>
                                     </li>
-        }
 
-
-
-
-                                    </ul>
-                                </li>
-
-                                    }
+                                }
 
                                 @if (funcs.Contains("صقحات الHR"))
                                 {
@@ -826,7 +836,7 @@
         </a>
     </li> -->
                                 @if (funcs.Contains("الفاتورة الاكترونية"))
-                                    {
+                                {
 
                                     <li class="sidebar-list">
                                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -846,7 +856,7 @@
 
                                         </ul>
                                     </li>
-                                    }
+                                }
 
 
                                 <li class="sidebar-list">
@@ -854,6 +864,14 @@
 
                                         <i class="ri-user-3-line"></i>
                                         <span>@SuppliersDashboard.Resources.llayout.logout</span>
+                                    </a>
+
+                                </li>
+                                <li class="sidebar-list">
+                                    <a href="/CustomeDesgin/Index" class="dropdown-item">
+
+                                        <i class=" fa fa-accessible-icon"></i>
+                                        <span>Custome Desgin</span>
                                     </a>
 
                                 </li>
