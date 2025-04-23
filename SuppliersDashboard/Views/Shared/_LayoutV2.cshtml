@@ -846,77 +846,73 @@ funcs.Contains("اعدادات القنوات")
                                 }
 
 
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
-                                        <span>-   Payments</span>
-                                        <i class="fas fa-chevron-down me-2 text-sm"></i>
-                                    </a>
-                                    <div class="collapse" id="nestedBillingSub">
-                                        <ul class="nav ms-4 flex-column">
-                                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Pending</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Completed</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Invoices</a></li>
                             </ul>
+
                         </div>
                     </li>
 
 
                 }
+                @if (funcs.Contains("صقحات الHR"))
+                {
 
 
 
-                <!-- Tables with Submenu -->
-                <li class="nav-item">
-                    <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#tablesSubmenu" role="button" aria-expanded="false" aria-controls="tablesSubmenu">
-                        <div class="d-flex align-items-center">
-                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="ni ni-bullet-list-67 text-white"></i>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu002" role="button" aria-expanded="false" aria-controls="billingSubmenu002">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ni ni-credit-card text-white"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">HR</span>
                             </div>
-                            <span class="nav-link-text ms-1">Tables</span>
-                        </div>
-                        <i class="fas fa-chevron-down me-2 text-sm"></i>
-                    </a>
-                    <div class="collapse" id="tablesSubmenu">
-                        <ul class="nav ms-4 flex-column">
-                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin">-   Sub Table 1</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Sub Table 2</a></li>
-                        </ul>
-                    </div>
-                </li>
+                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                        </a>
+                        <div class="collapse" id="billingSubmenu002">
+                            <ul class="nav ms-4 flex-column">
+                                <li class="nav-item"><a class="nav-link" href="/Employee/Index">- @llayout.AddEmployee</a></li>
 
-                <!-- Billing with Nested Submenus -->
+                            </ul>
+                        </div>
+                    </li>
+                }
+
+                @if (funcs.Contains("الفاتورة الاكترونية"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu001" role="button" aria-expanded="false" aria-controls="billingSubmenu">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ni ni-credit-card text-white"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">@llayout.Invoice</span>
+                            </div>
+                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                        </a>
+                        <div class="collapse" id="billingSubmenu001">
+                            <ul class="nav ms-4 flex-column">
+                                <li class="nav-item"><a class="nav-link" href="/Integration/Get_All_Bill">- @llayout.sendBill</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/Integration/index">- @llayout.integration</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+                }
+
+
                 <li class="nav-item">
-                    <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu" role="button" aria-expanded="false" aria-controls="billingSubmenu">
+                    <a class="nav-link d-flex justify-content-between align-items-center" href="/Account/LogOut">
                         <div class="d-flex align-items-center">
                             <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-credit-card text-white"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Billing</span>
+                            <span class="nav-link-text ms-1">@SuppliersDashboard.Resources.llayout.logout</span>
                         </div>
-                        <i class="fas fa-chevron-down me-2 text-sm"></i>
                     </a>
-                    <div class="collapse" id="billingSubmenu">
-                        <ul class="nav ms-4 flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
-                                    <span>-   Payments</span>
-                                    <i class="fas fa-chevron-down me-2 text-sm"></i>
-                                </a>
-                                <div class="collapse" id="nestedBillingSub">
-                                    <ul class="nav ms-4 flex-column">
-                                        <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Pending</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Completed</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Invoices</a></li>
-                        </ul>
-                    </div>
                 </li>
+
+
 
             </ul>
         </div>
