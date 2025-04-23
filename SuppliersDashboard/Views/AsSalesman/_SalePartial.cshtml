@@ -1,0 +1,516 @@
+﻿
+@{ 
+    Layout = null;
+
+}
+<style>
+    .modal-content {
+        min-width: 200%
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 p-2">
+            <label class="form-label">
+                الشركة
+            </label>
+            <input onchange="companychanged(this.value)" list="salecompanyoptions" name="salecompanyoptions" class="form-control" placeholder=" اختر الشركة " id="saleCompanyId">
+            <datalist id="salecompanyoptions">
+             
+               
+
+            </datalist>
+
+        </div>
+
+        <div class="col-lg-6 p-2">
+            <label class="form-label">
+                الفرع
+            </label>
+          
+            <select onchange="branchidchanged(this.value)" id="branchselectId" class="form-control">
+
+                <option value="0"> اختر الفرع </option>
+
+            </select>
+
+        </div>
+        <div class="col-lg-2 p-2 collapse" id="deffdev">
+            <label>
+                مديونية سابقة
+            </label>
+            <input class="form-control" disabled id="Unpaid_deferred" value="0" />
+        </div>
+    </div>
+
+    <div id="saledivid" class="collapse">
+        <div class="row">
+            <div class="col-lg-4 p-2">
+                <label>
+                    اختر الصنف
+                </label>
+                <select onchange="saleitemChanged(this.value)" class="form-control" id="sale-item-id">
+                </select>
+            </div>
+            <div class="col-lg-4 p-2">
+                <label>
+                    سعر الوحدة
+                </label>
+                <input type="number" class="form-control" disabled id="sale-item-unit-price-id" />
+            </div>
+
+            <div class="col-lg-4 p-2">
+                <label>
+                    العدد
+                </label>
+                <input type="number" class="form-control" id="sale-item-count-id" />
+            </div>
+            <div class="col-lg-4 p-2">
+                <label>
+                  
+                </label>
+                  <button class="btn btn-primary w-100" onclick="addItemToBill()" > اضافة  </button>
+            </div> 
+            <div class="col-lg-4 p-2">
+                <label>
+                  
+                </label>
+                  <button class="btn btn-primary w-100" onclick="addAllItemToBill()" > تسوية للعميل  </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p class="text-danger text-center" id="danger-div-id"></p>
+    </div>
+    <div id="billdetailsdiv" class="collapse">
+        <div class="table">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            الصنف
+                        </th>
+                        <th>
+                            سعر الوحدة
+                        </th>
+                        <th>
+                            العدد
+                        </th>
+                        <th>
+                            الاجمالي
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody id="bill-details-table-body">
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 p-3">
+                <label class="form-label">
+                    اجمالي الفاتورة
+                </label>
+                <input class="form-control" type="number" id="bill-money-id" disabled />
+            </div>
+            <div class="col-lg-4 p-3">
+                <label class="form-label">
+                  خصم  فاتورة
+                </label>
+                <input class="form-control" type="number" id="bill-discount-id" value="0" onclick="this.select()"  onkeyup="loadbilldetails()" />
+            </div> 
+            <div class="col-lg-4 p-3">
+                <label class="form-label">
+                  تعليق
+                </label>
+                <input class="form-control" type="text" id="bill-comment-id" value="" onclick="this.select()"   />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 p-3">
+                <label class="form-label">
+                    المبلغ المطلوب
+                </label>
+                <input class="form-control" type="number" id="required-money-id" disabled />
+            </div>
+
+            <div class="col-lg-4 p-3">
+                <label class="form-label">
+                    المبلغ المدفوع
+                </label>
+                <input class="form-control" value="0" type="number" id="paid-money-id" onkeyup="loadbilldetails()"  />
+            </div>
+      <div class="col-lg-4 p-3">
+                <label class="form-label">
+                    المبلغ الباقي
+                </label>
+                <input class="form-control" type="number" id="defferd-money-id" disabled  />
+            </div>
+   
+        </div>
+  
+    <div class="p-3">
+        <button onclick="createBill(this)" class="btn btn-primary w-100">
+            اصدار فاتورة
+        </button>
+    </div>
+    </div>
+</div>
+
+<script>
+
+
+    saleitems = []
+    billItems = []
+    // الاصناف الي في الفاتورة
+
+    function loadComs() {                      //  // //     // // // // //
+
+
+        $.post(`/AsSalesman/loadCompanies/${$("#distributorId").val()}`, (res) => {
+            console.log(res)
+            let html = `   `
+            $.each(res, (i, e) => {
+                html+=`<option id='option-com-id-${e.Id}' value='${e.Id}' >  ${e.Value}</option>`
+            })
+
+            $("#salecompanyoptions").html(html)
+        })
+    }
+    loadComs()
+
+    function companychanged(comid) {
+        let text = $("#option-com-id-" + comid).text()
+        $("#saleCompanyId").attr('placeholder', text)
+        $("#saleCompanyId").val('')
+
+        loadbranchesselect(comid)
+
+    }
+    function loadbranchesselect(comid) {
+        //branchselectId
+        $.post(`/AsSalesman/loadBranches?Id=${$("#distributorId").val()}&comId=${comid}`, (res) => {
+            console.log(res)
+            let html = `   <option value="0"> اختر الفرع </option>   `
+            $.each(res, (i, e) => {
+                html += `<option id='option-branch-id-${e.Branch_ID}' data-deffered = '${e.Unpaid_deferred}' value='${e.Branch_ID}' >  ${e.branchName} - ${e.Region} - ${e.Range}</option>`
+            })
+            $("#branchselectId").html(html)
+        })
+    }
+    function branchidchanged(branchId) {
+
+        var unpaiddeffered = $("#option-branch-id-" + branchId).attr('data-deffered')
+        $("#Unpaid_deferred").val(unpaiddeffered)
+
+        $("#deffdev").collapse('show')
+
+        let url = `/AsSalesman/getItemsToSale?Id=${$("#distributorId").val()}&branchId=${branchId}`
+        $.post(url, (res) => {
+
+            
+            console.log(res)
+            saleitems = res.data;
+            loadItemsToSale();
+
+
+
+
+
+            $("#saledivid").collapse('show')
+        })
+    }
+    function loadItemsToSale() {
+        let html = `<option value='0'> اختر الصنف</option>`
+        $.each(saleitems, (i, e) => {
+            html += `
+            <option value='${e.Item_ID}' > ${e.item}</option>
+            `
+        })
+
+        $("#sale-item-id").html(html)
+    }
+    function saleitemChanged(itemid) {
+        let specificitem = saleitems.find(x => x.Item_ID == itemid)
+        console.log('specificitem', specificitem)
+
+        $("#sale-item-unit-price-id").val(specificitem.CustomerSellingPrice)
+        $("#sale-item-count-id").val(specificitem.bal)
+        $("#saleCompanyId").attr("disabled" , "disabled")
+        $("#branchselectId").attr("disabled" , "disabled")
+
+
+    }
+    function addItemToBill() {
+        let itemid = $("#sale-item-id").val() 
+        let itemunitprice = $("#sale-item-unit-price-id").val() 
+        let itemcount = $("#sale-item-count-id").val() 
+
+        console.log(itemid)
+        console.log(itemunitprice)
+        console.log(itemcount)
+
+        if (itemid == 0 || itemid == "" || itemid == undefined)
+        {
+            displaydangermsg('اختر صنف')
+            return
+        }
+        //if (itemunitprice == 0 || itemunitprice == "" || itemunitprice == undefined)
+        //    return
+        if (itemcount == 0 || itemcount == "" || itemcount == undefined)
+        {
+            displaydangermsg('اختر هدد')
+            return
+        }
+            //الي في القاتوؤة
+        var olditeminbill = billItems.find(x => x.itemid == itemid)
+        // الاصناف الي بيبيعها 
+        var oldsaleitems = saleitems.find(x => x.Item_ID == itemid)
+
+        if (itemcount > oldsaleitems.bal )
+        {
+            displaydangermsg(' العدد لا يكفي ')
+            return
+        }
+
+
+        if (olditeminbill == undefined) {
+            let length = billItems.length
+            billItems.push(
+                {
+                id: length + 1,
+                itemid: itemid,
+                unitprice: parseFloat(itemunitprice),
+                    itemcount: parseFloat(itemcount),
+                    pricetotal: parseFloat(itemunitprice) * parseFloat(itemcount),
+                    name: oldsaleitems.item
+                  }
+            )
+            oldsaleitems.bal -= parseFloat(itemcount)
+        }
+        else
+        {
+            let oldcountinbill = olditeminbill.itemcount;
+            olditeminbill.itemcount += parseFloat(itemcount)
+            olditeminbill.pricetotal += (parseFloat(itemcount) * parseFloat(itemunitprice))
+
+            oldsaleitems.bal -= parseFloat(itemcount)
+
+        }
+
+        loadbilldetails()
+
+        document.getElementById('sale-item-id').value = 0
+        document.getElementById('sale-item-unit-price-id').value = 0
+        document.getElementById('sale-item-count-id').value = 0
+    }
+
+    function addAllItemToBill() {
+        if (saleitems.length > 0 && billItems.length == 0) {
+            $.each(saleitems, (i, e) => {
+                billItems.push(
+                    {
+                        id: i + 1,
+                        itemid: e.Item_ID,
+                        unitprice: parseFloat(e.CustomerSellingPrice),
+                        itemcount: parseFloat(e.bal),
+                        pricetotal: parseFloat(e.CustomerSellingPrice) * parseFloat(e.bal),
+                        name: e.item
+                    }
+
+                )
+                    e.bal = 0 ;
+               
+
+            })
+            loadbilldetails()
+            document.getElementById('sale-item-id').value = 0
+            document.getElementById('sale-item-unit-price-id').value = 0
+            document.getElementById('sale-item-count-id').value = 0
+        }else {
+            displaydangermsg('لا يوجد بضاعة او  الفاتورة تحتوي علي اصناف يدوية')
+        }
+    }
+    function loadbilldetails() {
+
+        console.log(billItems)
+        console.log(saleitems)
+        if (billItems.length > 0) {
+            let html = ``
+
+            $.each(billItems, (i, e) => {
+                html += `
+                <tr>
+                <td> ${e.id}</td> 
+                <td>${e.name}</td> 
+                <td>${e.unitprice}</td> 
+                <td>${e.itemcount}</td> 
+                <td>${e.pricetotal}</td> 
+                <td> <button onclick='deletefrombilldetails(${e.id})' class='btn btn-danger'> حذف </button>  </td> 
+                </tr>
+                `
+            })
+            $("#bill-details-table-body").html(html)
+            $("#billdetailsdiv").collapse('show')
+
+
+           
+
+           let oldremainingamount = parseFloat( $("#Unpaid_deferred").val() )
+            let billamountbeforediscount = 0.0;
+            $.each(billItems, (i, e) => {
+                billamountbeforediscount += e.pricetotal;
+            })
+            let billdiscount = 0;
+            try {
+
+             billdiscount =    parseFloat($("#bill-discount-id").val())
+            } catch { }
+            let billamountafterdiscount = billamountbeforediscount - billdiscount; 
+            $("#bill-money-id").val(billamountbeforediscount)
+            let billrequiredmoney = parseFloat(billamountafterdiscount) + parseFloat(oldremainingamount)
+            $("#required-money-id").val(billrequiredmoney)
+            let paidmoney = 0.0;
+            try {
+                paidmoney = parseFloat($("#paid-money-id").val())
+            } catch { }
+
+           let defferedmoney = billrequiredmoney - paidmoney; 
+            $("#defferd-money-id").val(defferedmoney)
+        } else {
+            $("#billdetailsdiv").collapse('hide')
+        }
+
+    }
+    function deletefrombilldetails(id) {
+        debugger
+        let deleteditem = billItems.find(x => x.id == id)
+
+        let oldsaleone = saleitems.find(x => x.Item_ID == deleteditem.itemid)
+        oldsaleone.bal += parseFloat(deleteditem.itemcount)
+        billItems.splice(id - 1, 1)
+
+        $.each(billItems, (i, e) => {
+            e.id = i+1
+        })
+        loadbilldetails()
+    }
+    function displaydangermsg(msg) {
+        $("#danger-div-id").text(msg)
+        setTimeout(() => {
+            $("#danger-div-id").text('')
+
+        }, 4000)
+    }
+    function createBill(ele) {
+        $(ele).attr('disabled', 'disabled')
+        let oldremainingamount = parseFloat($("#Unpaid_deferred").val())
+        let billamountbeforediscount = 0.0;
+        $.each(billItems, (i, e) => {
+            billamountbeforediscount += e.pricetotal;
+        })
+        let billdiscount = 0;
+        try {
+
+            billdiscount = parseFloat($("#bill-discount-id").val())
+        } catch { }
+        let billamountafterdiscount = billamountbeforediscount - billdiscount; 
+        let billrequiredmoney = parseFloat(billamountafterdiscount) + parseFloat(oldremainingamount)
+        let paidmoney = 0.0;
+        try {
+            paidmoney = parseFloat($("#paid-money-id").val())
+        } catch { }
+
+        let defferedmoney = billrequiredmoney - paidmoney; 
+
+
+        let jsondetails = []
+        $.each(billItems, (i, e) => {
+            let specificone = saleitems.find(x => x.Item_ID == e.itemid)
+            let d = {
+                
+                Discount: 0,
+                ItemID: e.itemid,
+                Items: specificone.item,
+                NumberOfUnits: e.itemcount,
+                SR_No: i + 1,
+                Suppier_id: specificone.Supplier_ID,
+                Supply_Price: specificone.Supply_Price ,
+                TotalPrice: e.pricetotal,
+                TransactionType: 1,
+                UnitPrice: e.unitprice,
+                discountItemSize: 0.0,
+                discountType: " ",
+                discount_reason: "0",
+                itemcount: e.itemcount,
+                returns: "0",
+                sals: "  بيع :",
+                size: specificone.size
+            }
+            
+        jsondetails.push(d)
+
+        })
+
+        let cusid = $("#branchselectId").val()
+        let json = {
+            Bill_Details: jsondetails,
+            "Cash": paidmoney,
+            "ClientDocumentNo": "",
+            "Comment": $("#bill-comment-id").val(),
+            "CusID": cusid,
+            "Deferred": defferedmoney,
+            "Editor": $("#distributorId").val(),
+            "Latitude":0.0,
+            "Longitude": 0.0,
+            "PillDiscount": billdiscount,
+            "ReturnAmount": 0.0,
+            "Sales_ID": $("#distributorId").val(),
+            "TotalAmountAfterDiscount": billrequiredmoney,
+            "TotalAmountBeforDiscount": billamountbeforediscount,
+            "collection": oldremainingamount
+        }
+         console.log('json ' , json)
+
+
+        $.ajax({
+            url: "/AsSalesman/setPill",
+            type: "post",
+            data: {
+                Id: json.Sales_ID, 
+                json: json
+            },
+            success: (res) => {
+                console.log(res)
+                let mes = ''
+                if (res.Message != undefined)
+                    mes += " " + res.Message
+                if (res.msg != undefined)
+                    mes += " " + res.msg
+
+                if (res.State == 1) {
+
+                    let ht = `
+                    <diV class="p-2 ">
+                    <h2 class='text-center h2'> ${res.Message}</h2>
+                    <button class='btn btn-primary w-100' onclick="viewBill('${res.Message}')"  > عرض الفاتورة</button>
+                    </div>
+                    `
+
+                    ShowModal(ht)
+                } else {
+
+                displaymsg(mes)
+                }
+            }
+        })
+    }
+
+</script>

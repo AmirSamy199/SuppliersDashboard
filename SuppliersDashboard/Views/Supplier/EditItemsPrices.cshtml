@@ -1,0 +1,240 @@
+﻿
+@{
+    ViewBag.Title = "تعديل قوائم الاسعار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="p-3 text-center"> قائمة تعديل الاسعار </h2>
+<div class="p-3">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6">
+            <div class="p-2">
+                <div class="form-group">
+                    <label class="form-label"> اختر المورد :</label>
+                    <select id="supplierId" onchange="supplierchange()" class="form-control">
+                        @foreach (var item in ViewBag.Suppliers)
+                        {
+                            <option value="@item.Record_ID">@item.CompanyName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6">
+            <div class="p-2">
+                <div class="form-group">
+                    <label class="form-label"> اختر مجموعة الاصناف :</label>
+                    <select id="categoryId" class="form-control">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-lg-6">
+            <div class="p-2">
+                <div class="form-group">
+                    <label class="form-label"> اختر مجموعة المندوبين :</label>
+                    <select id="distributorId" class="form-control">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="p-2">
+                <div class="form-group">
+                    <label class="form-label"> </label>
+                    <button onclick="loadPage()" class="btn btn-primary col-lg-12 p-2 "> بحث <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="collapse">
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="p-3 text-center" id="heading"> </h3>
+            </div>
+            <div class="  card-ERB ">
+                <div class="  table-responsive  ">
+
+                    <div class="table-responsive" id="content-div">
+                        @*<div class="col-lg-12">
+                                <div class="row">
+
+                                </div>
+                            </div>*@
+                        <table class="table table-active">
+                            <thead class="">
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th class="text-center">
+                                        الصنف
+                                    </th>
+                                    <th class="text-center">
+                                        سعر البيع
+                                    </th>
+                                    <th class="text-center">
+                                        سعر المورد
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-around">
+
+                <div class="col-lg-4 text-center p-3">
+                    <button class="btn btn-primary col-12 btn-lg" onclick="submitEditPrices()" > تعديل الاسعار  </button>
+                </div>
+            </div>
+
+        </div>
+
+        @*<div class="text-center"> <button onclick="submitEditPrices()" class="btn btn-primary"> تعديل الاسعار  </button></div>*@
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    let operationdistributor = 0;
+    $(document).ready(() => {
+        supplierchange()
+        getDistributors()
+    })
+
+
+    function supplierchange() {
+        let sup = $("#supplierId").val()
+        let yrl = `/Selector/GetCategoriesToSupplier?supplier=${sup}`
+        $.get(yrl, (res) => {
+            let html = ``
+            if (res.data.Data.length > 0) {
+                $.each(res.data.Data, (i, e) => {
+                    html += `<option value='${e.Id}'> ${e.Value}</option>`
+                })
+            }
+
+            $("#categoryId").html(html)
+        })
+    }
+    function getDistributors() {
+
+        let yrl = `/Selector/GetDistributors`
+        $.get(yrl, (res) => {
+            let html = ``
+            if (res.data.Data.length > 0) {
+                $.each(res.data.Data, (i, e) => {
+                    html += `<option value='${e.Id}'> ${e.Value}</option>`
+                })
+            }
+
+            $("#distributorId").html(html)
+        })
+
+    }
+
+
+    function loadPage() {
+        $("#content").collapse("hide")
+        let distributorId = $("#distributorId").val()
+        let categoryId = $("#categoryId").val()
+        //console.log(distributorId)
+        let disname = $(`#distributorId option[value='${distributorId}']`).text()
+        let catname = $(`#categoryId option[value='${categoryId}']`).text()
+        operationdistributor = distributorId;
+        let url = `/Supplier/SearchPrice?DistributorId=${distributorId}&CategoryId=${categoryId}`;
+        $.get(url, (res) => {
+            //  console.log(res)
+
+            if (res.State == 1) {
+                let header = ` قائمة اسعار مجموعة اصناف ` + catname + ` لمجموعة مناديب ` + disname
+                $(`#heading`).text(header)
+                let html = ``
+                $.each(res.Data, (i, e) => {
+                    html += `
+                     <tr class="tr" id="${e.ItemCode}">
+                         <td>
+                                   ${(++i)}
+                         </td>
+                         <td " class='text-center'>
+                             ${e.ItemName}
+                         </td>
+                         <td>
+                             <input onclick="this.select()"  class="text-center form-control" type="number" id="sellprice-${e.ItemCode}" value="${e.SellPrice}" />
+                         </td>
+                         <td>
+                             <input  onclick="this.select()" class="text-center form-control"  type="number" id="supplyprice-${e.ItemCode}" value="${e.SupplyPrice}" />
+                         </td>
+
+                     </tr>
+                    `
+                    $("#tbody").html(html)
+
+                })
+
+                $("#content").collapse("show")
+
+            }
+        })
+
+    }
+
+
+    function submitEditPrices() {
+        let items = []
+        let trs = $(".tr")
+        $.each(trs, (i, e) => {
+            let id = $(e).attr("id")
+            console.log(id);
+            let supprice = $(`#supplyprice-${id}`).val()
+            console.log(supprice);
+            let sellpri = $(`#sellprice-${id}`).val()
+            console.log(sellpri);
+            if (supprice === "")
+                supprice = 0
+            if (sellpri === "")
+                sellpri = 0
+
+            let model = {
+                ItemId: id,
+                DistributorGroupId: operationdistributor,
+                SupplyPrice: supprice,
+                SellPrice: sellpri
+            }
+
+            items.push(model)
+            console.log(items);
+        })
+        let url = `/Supplier/SubmitEditPrices`
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                Models: items
+            }, success: (res) => {
+                if (res.data.State == 1) {
+                    showSuccessOperation(res.data.Message);
+                } else {
+                    showDangerOperation(res.data.Message);
+                }
+
+            }
+        })
+
+    }
+</script>

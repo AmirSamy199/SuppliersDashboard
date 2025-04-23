@@ -1,0 +1,341 @@
+﻿
+@{
+    ViewBag.Title = @SuppliersDashboard.Resources.llayout.items;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+
+    .editorinput {
+        outline: unset;
+        background: unset;
+        border: unset;
+        width:60px;
+    }
+
+        .editorinput:focus {
+            border-bottom: 1px solid #009CFF;
+        }
+
+    button {
+        margin: 0 10px;
+    }
+</style>
+<div class="p-3">
+
+
+    <div class="row" style="margin:30px">
+        <div class="p-2 col-6">
+
+            <select id="supplierselect" class="form-control form-select">
+                <option> @SuppliersDashboard.Resources.pages.choosesupplier </option>
+              @foreach(var item in ViewBag.Suppliers)
+            {
+                <option value="@item.Record_ID"> @item.CompanyName </option>
+            }
+            </select>
+        </div>
+        <div class="p-2 col-6">
+
+            <select id="categoryselect" class="form-control form-select">
+                <option>--</option>
+              
+            </select>
+        </div>
+    </div>
+
+
+    <div id="tablemsg" class="text-center text-body collapse">
+        <h2 class="text-muted">
+           .........@SuppliersDashboard.Resources.pages.plzchoosesupplier ........
+        </h2>
+    </div>
+
+    <div id="tablecollapse" class="collapse">
+
+
+        <table class="   table table-striped" style="width:100%" id="Table">
+            <thead>
+                <tr>
+                    <th scope="col" style="">#</th>
+                    <th scope="col" style="">@SuppliersDashboard.Resources.pages.name </th>
+                    <th scope="col" style="">@SuppliersDashboard.Resources.pages.category </th>
+                    <th scope="col" style="">@SuppliersDashboard.Resources.pages.supplier </th>
+                    <th scope="col" style="">@SuppliersDashboard.Resources.pages.distributor </th>
+                    <th scope="col" style="">@SuppliersDashboard.Resources.pages.sellprice </th>
+                    <th scope="col" style="">@SuppliersDashboard.Resources.pages.supplierprice  </th>
+                  @*  <th scope="col" style="">تقرير   </th>*@
+                    @*<th scope="col" style="">@SuppliersDashboard.Resources.pages.status  </th>*@
+                   @* <th scope="col" style='text-align:Center' style=""> @SuppliersDashboard.Resources.pages.action </th>*@
+                </tr>
+            </thead>
+            <tbody id="TableBody">
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+@section scripts{
+    <script>
+        $(document).ready(() => {
+            $("#tablemsg").collapse("show")
+        //startloader()
+        })
+           // LoadData()
+
+
+       function LoadData(isfromsupselect = false) {
+           startloader();
+            let sup = $("#supplierselect").val();
+            let category = $("#categoryselect").val();
+            if (validateSupplier(sup) == false) {
+                sup = -1;
+           }
+
+            if (validatecategory(category) == false) {
+                category = -1;
+            }
+           if (isfromsupselect)
+               category = -1;
+            $.ajax({
+                type: "post",
+                url: "/Items/GetAllItems",
+                data: {
+                    SupId : sup,
+                    CatId: category
+                },
+                success: (res) => {
+
+                    drawTable(res.data.Data)
+                    $("#tablecollapse").collapse("show")
+                    $("#tablemsg").collapse("hide")
+                    endloader();
+                }
+            })
+        }
+
+        function drawTable(data) {
+            $("#Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+                data: data,
+                "columns": [
+                    { "data": "Item_ID", "name": "Item_ID", "width": "Auto" },
+                    { "data": "ItemName", "name": "ItemName", "width": "Auto" },
+                    { "data": "CategoryName", "name": "CategoryName", "width": "Auto" },
+                    { "data": "CompanyName", "name": "CompanyName", "width": "Auto" },
+                    { "data": "Distributor", "name": "Distributor", "width": "Auto" },
+
+                    //{ "data": "Selling_Price", "name": "Selling_Price", "width": "Auto" },
+                    {
+                        "data": null, render: (data,i,e) => {
+                            return "<input disabled onchange='inputchange(" + data.Item_ID + "," + data.Distributor_Group_id +")' type='number' step='0.1' class='editorinput' id='" + getInputId('sellprice', data.Item_ID, data.Distributor_Group_id ) + "' value='" + data.Selling_Price+"'  />"
+                        }
+                    },  {
+                        "data": null, render: (data,i,e) => {
+                            return "<input disabled onchange='inputchange(" + data.Item_ID + "," + data.Distributor_Group_id +")' type='number' step='0.1' class='editorinput' id='" + getInputId('supplierprice', data.Item_ID, data.Distributor_Group_id) + "' value='" + data.Supply_Price+"'  />"
+                        }
+                    },
+                   // { "data": "Supply_Price", "name": "Supply_Price", "width": "Auto" },
+                    @*{
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+                            if (data.Item_Status == 1) {
+                                return "<span class='text-primary'>@SuppliersDashboard.Resources.pages.active </span>"
+
+                            }
+                            if (data.Item_Status == 0) {
+                                return "<span class='text-warning'>@SuppliersDashboard.Resources.pages.notactive </span>"
+
+                            }
+
+                        }
+                    },*@
+                    //{
+                    //    "width": "Auto",
+                    //    data: null, render: function (data, type, row) {
+                    //        return "<a class=' btn btn-outline-success btn-sm ' href='/Report/ItemCard?itemId=" + data.Item_ID +"'>حركة الصنف  </a>"
+                    //    }
+                    //}
+                    //,
+                    //{
+                    //    "width": "Auto",
+                    //    data: null, render: function (data, type, row) {
+                    //        return getbutton(data.Item_ID, data.Item_Status, data.Distributor_Group_id) + getEditButton(data.Item_ID, data.Distributor_Group_id)
+                    //    }
+                    //}
+                ]
+            })
+        }
+
+
+
+
+
+        function validateSupplier(value) {
+            if (value != null && value != "" && value.trim() != "اختر المورد"&& value.trim() != "choose supplier")
+                return true
+            return false
+        }
+        function validatecategory(value) {
+            if (value != null && value != "" && value.trim() != "اختر الفئة" && value.trim() != "choose category" && value.trim() != "--")
+                return true
+            return false
+        }
+
+        function ActiveORDeactiveb(id, type, disGroupId, element) {
+
+            $.ajax({
+                type: "post",
+                url: "/Items/ActiveORDeactiveb",
+                data: {
+                    id: id,
+                    type: type,
+                    disGroupId: disGroupId
+                },
+                success: (res) => {
+
+                    $("#modalcontent").text(res.data.Message)
+                    $("#myModal").modal("show")
+
+                    let ele = $(element);
+                    let html = getbutton(id, type, disGroupId);
+                    ele.parent().html(html)
+                }
+            })
+
+        }
+
+        $("#supplierselect").change(() => {
+            let value = $("#supplierselect").val();
+            if (validateSupplier(value)) {
+
+                changeCategoriesselect(value)
+                LoadData(true);
+
+            }
+        });
+        $("#categoryselect").change(() => {
+            let value = $("#supplierselect").val();
+                LoadData();
+
+        });
+
+
+        function changeCategoriesselect(value) {
+            $.ajax({
+                type: "post",
+                url: "/Items/GetCategories",
+                data: {
+                    SupId: value
+                }, success: (res) => {
+                    console.log(res)
+                    let html = "<option>@SuppliersDashboard.Resources.pages.choosecategory </option>"
+                    $.each(res.data.Data, (i, e) => {
+                        html += "<option value='" + e.Id + "'>" + e.Value + "</option>"
+
+                    })
+
+                    $("#categoryselect").html(html)
+                }
+            });
+
+        }
+
+        function getbutton(id,status,dis) {// itemId , Status , DistributorGroup
+           
+            if (status == 1) {
+                return "<button data='" + id + "' class='btn btn-sm btn-outline-primary' onclick='ActiveORDeactiveb(" + id + ",0," + dis + ",this)'>@SuppliersDashboard.Resources.pages.active </button>"
+
+            }
+            if (status == 0) {
+                return "<button  data='" + id + "' class='btn btn-sm btn-outline-warning' onclick='ActiveORDeactiveb(" + id + ",1," + dis + ",this)'>@SuppliersDashboard.Resources.pages.notactive </button>"
+
+            }
+            return "";
+        }
+
+        function getInputId(name, id, dis) {// itemid , item distributor group
+            return name+"-"+id+"-"+dis
+        }
+
+        function getEditButton(id, dis) {
+            return "<button style='display:none' id='" + getInputId('submitchangepricebtn',id,dis)+"' onclick='submitChangeItemPrice("+id+","+dis+",this)' class='btn btn-sm btn-outline-success'> تغيير السعر  </button>"
+        }
+        function submitChangeItemPrice(id, dis,element) {
+            let suppliervalue = $("#" + getInputId("supplierprice", id, dis)).val();
+            let sellvalue = $("#" + getInputId("sellprice", id, dis)).val();
+            $.ajax({
+                type: "post",
+                url: "/Items/SubmitChangeItemPrice",
+                data: {
+                    id: id,
+                    dis: dis,
+                    suppliervalue: suppliervalue,
+                    sellvalue: sellvalue
+                }, success: (res) => {
+                    $("#modalcontent").text(res.data.Message)
+                    $("#myModal").modal("show")
+
+                    $(element).css("display","none")    
+
+                }
+            })
+        }
+
+        function inputchange( id, dis) {
+            
+            $("#" + getInputId("submitchangepricebtn",id,dis)).css("display","inline")
+            
+        }
+
+        function AddCountt(id, type) {
+            let count = $("#count-" + id).val();
+            $.ajax({
+                url: "/Company/AddItemCount",
+                type: "post",
+                data: {
+                    itemId: id,
+                    count: count,
+                    type: type,
+                    user: $("#curuser").val(),
+                    supplier: $("#SupID").val()
+                },
+                success: (res) => {
+                    if (res.data.State == 1) {
+
+                        //document.getElementById("bal-" + id).innerText = res.data.Data;
+                        //    $("#count-" + id).val("0");
+
+                    }
+                    $("#modalcontent").text(res.data.Message)
+                    $("#myModal").modal("show")
+
+
+                }
+            })
+
+
+        }
+
+    </script>
+}

@@ -1,0 +1,595 @@
+﻿<div class="row p-3" id="manageUser" style="width:100%">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        th, td {
+            border: 1px solid #ccc !important;
+            text-align: center
+        }
+
+        table {
+            border-collapse: collapse !important
+        }
+
+        .lableGoupe {
+            font-size: 20px;
+            margin: 9px;
+            font-weight: 600
+        }
+
+        .btnGroup {
+            margin-top: 90px;
+            width: 50%;
+        }
+
+        td, th {
+            text-align: center !important
+        }
+    </style>
+
+
+
+
+
+    <div class="container ">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-info" role="status" id="spineruser" style="margin-top:50px;width: 3rem; height: 3rem;">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+
+        <h2 class=" p-3 text-center" id="head">
+        </h2>
+        <div class="row d-flex justify-content-around">
+
+            <div class="col-lg-4 text-center p-3">
+                <button class="btn btn-primary col-12 btn-lg" onclick="addnewuserpop()" id="newuser">مستخدم جديد</button>
+            </div>
+        </div>
+        @*<div class="col-12 m-4 d-flex justify-content-center ">
+
+                <button class="btn btn-primary btn-lg collapse" onclick="addnewuserpop()" id="newuser">مستخدم جديد</button>
+
+            </div>*@
+        <div class=" card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <div id="headtablediv" class="collapse">
+
+                        <table class="table table-hover table-bordered table-responsive" id="headTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+
+                                        @SuppliersDashboard.Resources.llayout.username
+                                    </th>
+
+                                    <th>
+                                        @SuppliersDashboard.Resources.pages.Group
+                                    </th>
+                                    <th>
+                                        المشرف
+                                    </th>
+                                    <th>
+                                        النشاط
+                                    </th>
+                                    <th>
+                                       
+                                    </th>
+                                     <th>
+                                       
+                                    </th>
+                                     <th>
+                                      
+                                    </th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<script>
+    var gtml = ``
+    $("#manageUser").ready(function () {
+        $.ajax({
+            url: "/Admin/GetGroups",
+            type: "post",
+
+            success: function (res) {
+
+                console.log(res.data.Data[0].Value)
+
+
+
+                $.each(res.data.Data, function (i, e) {
+                    //console.log("-------------------")
+                    //console.log(e)
+                    gtml += `<option value="${e.Id}">${e.Value}</option>`
+
+                })
+
+
+            }
+        })
+        LoadTable()
+
+
+
+
+
+
+
+    })
+
+    function LoadTable() {
+        $.ajax({
+            url: "/Admin/GetAllUser",
+            type: "post",
+            success: function (res) {
+
+                console.log("data  vvvvv")
+                console.log(res.data.Data)
+                console.log(res.data.Data.length)
+                let ince = 1
+                $("#head").text(res.data.Message)
+                $("#newuser").removeClass("collapse")
+                if (res.data.Data.length > 0) {
+                    /*  $("#spineruser").addClass("collapse")*/
+                    $("#spineruser").fadeOut("slow");
+                    console.log("done")
+                    /*  console.log(headers)*/
+                    $("#headtablediv").collapse("show")
+                    $("#headTable").dataTable({
+                        'iDisplayLength': 10,
+                        "bDestroy": true,
+                        "bSearchable": true,
+                        "responsive": true,
+                        "language": {
+                            "searchPlaceholder": 'Search...',
+                            "sSearch": '',
+                            "lengthMenu": '_MENU_ items/page',
+                        },
+                        data: res.data.Data,
+                        "columns": [
+                            {
+                                "data": null, render: function () {
+                                    return ince++
+                                }
+                            },
+                            { "data": "UserName", "UserName": "Items", "width": "Auto" },
+
+                            { "data": "GroupName", "name": "GroupName", "width": "Auto" },
+                            { "data": "AgentName", "name": "AgentName", "width": "Auto" },
+                            {
+                                data: null, render: function (e) {
+                                    var html =``
+                                    if (e.IsActive == 1) {
+                                        html += `
+                                        <span class="text-success mr-2 ml-2 "> نشط </span>
+                                        <button  style='display:inline'  class='btn btn-sm btn-primary' onclick='changestateofuser(${e.RecordID})'> ايقاف</button>
+                                      `
+                                    } else {
+                                        html += `
+                                          <span class="text-success mr-2 ml-2 "> غير نشط </span>
+                                          <button style='display:inline' class='btn  btn-sm  btn-primary' onclick='changestateofuser(${e.RecordID})'> تشغيل</button>
+                                        `
+                                    }
+                                    return html
+                                }
+                            },
+                            {
+                                "data": null, render: function (e) {
+                                    return `
+            <button class="  btn-sm  btn btn-primary col-12 btn-lg" onclick="GetUserFunction(${e.Group_RecordID},'${e.UserName}')">صلاحيات اليوز</button>
+`
+                                }
+                            },
+      {
+                                "data": null, render: function (e) {
+              return `
+                                        <button  class="btn  btn-sm btn-primary col-12 btn-lg" onclick="ChangeGroupUser('${e.GroupName}','${e.UserName}',${e.RecordID})"> تغير المجموعة</button>
+                                `
+                                }
+                            },
+      {
+                                "data": null, render: function (e) {
+              return ` 
+                            <button class="btn btn-sm  btn-primary col-12 btn-lg" onclick="changeAgent(${e.AgentId},${e.RecordID})"> تغير المشرف</button>
+                                  `
+                                }
+                            },
+      {
+                                "data": null, render: function (e) {
+              return ` 
+                            <button class="btn btn-sm  btn-primary col-12 btn-lg" onclick="changePassword(${e.RecordID} , '${e.UserName}')"> تغير البيانات</button>
+                                  `
+                                }
+                            },
+
+
+
+                        ]
+                    })
+                }
+                else {
+                    console.log("not don")
+                }
+
+            }
+
+        })
+
+    }
+
+    function GetUserFunction(Group_RecordID, username) {
+        $.ajax({
+            url: "/admin/GetFunctionsUser",
+            type: "post",
+            data: {
+                Group_RecordID: Group_RecordID
+            },
+            success: function (res) {
+                let html = `<div class='col-12 text-center row d-flex justify-content-around  p-3'><h2 class='text-center'>صلاحيات ${username}</h2></div>`
+                $.each(res.data, (i, e) => {
+                    html += `<div class='col-12 row d-flex justify-content-around  p-2 m-1'><h3 style="margin-right: 15px;"> <i style="margin-left: 15px;" class="fa-solid fa-arrow-left" ></i> ${e[1]["Value"]}</h3></div>`
+
+                })
+                ShowModal(html)
+            }
+
+
+        })
+    }
+
+    function GetAllGroup(Gtml) {
+
+
+        $.ajax({
+            url: "/Admin/GetGroups",
+            type: "post",
+
+            success: function (res) {
+
+                console.log(res.data.Data[0].Value)
+
+
+
+                $.each(res.data.Data, function (i, e) {
+                    //console.log("-------------------")
+                    //console.log(e)
+                    Gtml += `<option value="${e.Id}">${e.Value}</option>`
+
+                })
+
+
+            }
+        })
+
+
+    }
+
+    function ChangeGroupUser(groupname, userame, userid) {
+
+
+        let html = `   <div class="text-center collapse" role="alert " id="messagesaveuser"></div>`
+            +
+            `<div class='col-12 text-center row d-flex justify-content-around  p-3'><h5 class='text-center'>نقل ${userame} من مجموعة ${groupname} </h5></div>` +
+
+            `<label for='selectGroupUser' class='lableGoupe'>اختار جروب جديد لليوزر</label>` +
+            ` <select class="form-select" id='selectGroupUser'>` + gtml + `</select>` +
+            `<div class='d-flex justify-content-center'><button class='btn btn-primary btnGroup text-center ' onclick="SaveChangeGroupUser(${userid})">تغير جروب المستخدم</button></div>`
+        Ghtml = ``
+        ShowModal(html)
+
+    }
+
+    function SaveChangeGroupUser(userid) {
+        var GourpId = $("#selectGroupUser").val()
+        $.ajax({
+            url: "/admin/AssignUserToGroup",
+            type: "post",
+            data: {
+                userid: userid,
+                groupid: GourpId
+            },
+            success: function (res) {
+                if (res.status == 0) {
+                    $("#messagesaveuser").removeClass("collapse");
+                    $("#messagesaveuser").addClass("alert alert-success")
+                    $("#messagesaveuser").text("تم نقل  المستخدم بنجاح")
+
+                }
+                else {
+                    $("#messagesaveuser").removeClass("collapse");
+                    $("#messagesaveuser").addClass("alert alert-danger")
+                    $("#messagesaveuser").text("فشل عملية النقل")
+                }
+                RemoveMessageEro()
+                LoadTable()
+            }
+
+        })
+    }
+
+    function addnewuserpop() {
+        let html = `<form style="font-size:20px;font-weight:500">
+                    <div class=" collapse text-center" role="alert " id="messagesaveuser">
+
+</div>
+                    <div class='col-12 text-center row d-flex justify-content-around  p-3'><h5 class='text-center'>اضافة مستخدم جديد </h5></div>
+                    <div class="form-group">
+                        <label for="username">اسم المستخدم</label>
+                        <input type="text" class="form-control"  onkeyup="checkEmptyaule(this)" id="username" aria-describedby="emailHelp" name='Name' placeholder="  ادخل اسم المستخدم ">
+                        <small id="usernameerro" class="form-text text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneuser">الايميل </label>
+                        <input type="text" class="form-control"  onkeyup="checkEmptyaule(this)" id="phoneuser"name='phone' placeholder="ادخل التلفون">
+                <small id="phoneusererro" class="form-text text-danger"></small>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="passworduser">الباسورد</label>
+                        <input type="password" class="form-control"  onkeyup="checkEmptyaule(this)" name='password' id="passworduser" placeholder="ادخل الباسورد">
+                    <small id="passwordusererro" class="form-text text-danger"></small>
+
+                    </div>
+                     <div class="form-group">
+                        <label for="GroupId">اختار الجروب</label>
+                    <select class="form-select" id='GroupId'>` + gtml + `</select>
+
+                    </div>
+                    <div class="col-12 m-4 d-flex justify-content-center">
+
+                        <button type="button" class="btn btn-primary" onclick="SavenewUser()">حفظ المستخدم</button>
+
+                    </div>
+
+
+                </form>`
+        ShowModal(html)
+    }
+
+    function SavenewUser() {
+        let user = {
+            Name: $("#username").val(),
+            password: $("#passworduser").val(),
+            GroupId: $("#GroupId").val(),
+            phone: $("#phoneuser").val(),
+        }
+        if (Vaildinput()) {
+            $.ajax({
+                url: "/admin/AddNewUser",
+                type: "post",
+                data: user,
+                success: function (res) {
+                    if (res.status == 0) {
+                        $("#messagesaveuser").removeClass("collapse");
+                        $("#messagesaveuser").addClass("alert alert-success")
+                        $("#messagesaveuser").text("تم الحفظ  المستخدم بنجاح")
+
+                        EmptyAllFileds()
+                        CloseModal()
+
+
+                    }
+                    else {
+                        $("#messagesaveuser").removeClass("collapse");
+                        $("#messagesaveuser").addClass("alert alert-danger")
+                        $("#messagesaveuser").text("فشل عملية الحفظ")
+                    }
+
+                    RemoveMessageEro()
+                    LoadTable()
+
+
+                }
+
+            })
+        }
+
+    }
+
+    function ShowModal(html) {
+        $("#modalcontent").html(html)
+        $("#myModal").modal("show")
+    }
+
+    function RemoveMessageEro() {
+        setTimeout(function () {
+            $("#messagesaveuser").addClass("collapse");
+
+            $("#messagesaveuser").text();
+            /* location.reload()*/
+
+        }, 1000)
+    }
+    /*vaild*/
+    function Vaildinput() {
+        let name = $("#username")
+        let phone = $("#phoneuser")
+        let pass = $("#passworduser")
+        if (name.val() == "") {
+            name.next().text(`ادخل اسم المستخدم`)
+            name.css("border", "1px solid red")
+        }
+        if (phone.val() == "") {
+            phone.next().text(`ادخل تلفون المستخدم`)
+            phone.css("border", "1px solid red")
+        }
+        if (pass.val() == "") {
+            pass.next().text(`ادخل باسورد لمستخدم`)
+            pass.css("border", "1px solid red")
+        }
+        else {
+            pass.css("border", "1px solid green")
+            name.css("border", "1px solid green")
+            phone.css("border", "1px solid green")
+            pass.next().text("")
+            phone.next().text("")
+            name.next().text("")
+            return true
+
+
+        }
+    }
+    function EmptyAllFileds() {
+        $("#username").val("")
+        $("#phoneuser").val("")
+        $("#passworduser").val("")
+    }
+    function checkEmptyaule(ele) {
+
+        if ($(ele).val() == "") {
+            $(ele).next().text(`يجب ادخل قمية`)
+            $(ele).css("border", "1px solid red")
+            /*  console.log($(ele).val())*/
+        }
+        else {
+            $(ele).next().text("")
+            $(ele).css("border", "1px solid green")
+            //console.log($(ele).val())
+            //if ($(ele).attr("id") == "branchid") {
+            //    idbra = $(ele).val()
+            //}
+
+        }
+    }
+    function changeAgent(agentId, userId) {
+        let html = `
+        <div class='p-4 row'>
+            <div class='col-12 p-2'>
+                <label> اختر المشرف </label>
+                <select value='${agentId}' class='form-control' id='agentidselect' > ${$("#hiddenidforcompanytypes").html()}</select>
+            </div>
+            <div class='col-12 p-2'>
+            <button class='btn btn-primary w-100' onclick='submitchangeAgent(${userId})' > حفظ </button>
+            </div>
+        </div>
+        `
+        ShowModal(html)
+  
+    }
+    function changePassword(userId) {
+
+        $.post(`/Admin/getUserDate?userId=${userId}`, (res) => {
+            console.log(res)
+            var data = res.Data; 
+            let html = `
+                     <h3 class='text-center text-primary '>  تغيير البيانات ل
+                     ${data.username}
+                     </h3>
+                     <div class='p-4 row'>
+                         <div class='col-12 p-2'>
+                             <label> الاسم الجديد  </label>
+                             <input class='form-control' type='text' id='usernameinputId' value='${data.username}' />
+                         </div> 
+                         <div class='col-12 p-2'>
+                             <label> الايميل الجديد  </label>
+                             <input class='form-control' type='text' id='useremailinputId'  value='${data.email}'  />
+                         </div> 
+                         <div class='col-12 p-2'>
+                             <label> الباسورد الجديد  </label>
+                             <input class='form-control' type='text' id='userpasswordinputId'  value='${data.password}'  />
+                         </div>
+                         <div class='col-12 p-2'>
+                         <button class='btn btn-primary w-100' onclick='submitChangePassword(${userId})' > حفظ </button>
+                         </div>
+                     </div>
+                     `
+            ShowModal(html)
+        })
+       
+    }
+
+
+    function submitchangeAgent(userId) {
+        let agentId = $("#agentidselect").val()
+
+        $.ajax({
+            url: "/admin/editUserAgent",
+            type: "post",
+            data: {
+                userId: userId,
+                agentId: agentId
+            },
+            success: function (res) {
+
+                ShowModal(`
+                <h3 class='text-center p-3 text-success' > ${res.Message} </h3>
+                `)
+                LoadTable()
+            }
+
+        })
+    }
+    function changestateofuser(userId) {
+        
+        $.ajax({
+            url: "/admin/editUserstatus",
+            type: "post",
+            data: {
+                userId: userId
+             
+            },
+            success: function (res) {
+
+                ShowModal(`
+                <h3 class='text-center p-3 text-success' > ${res.Message} </h3>
+                `)
+                LoadTable()
+            }
+
+        })
+    }
+
+    function submitChangePassword(userId) {
+
+        if (
+
+            $("#userpasswordinputId").val() != '' && $("#userpasswordinputId").val() != ' '
+            && $("#usernameinputId").val() != '' && $("#usernameinputId").val() != ' '
+            && $("#useremailinputId").val() != '' && $("#useremailinputId").val() != ' '
+
+
+        )
+
+        {
+
+        $.ajax({
+            url: "/admin/changeUserPassword",
+            type: "post",
+            data: {
+                userId: userId,
+                newPassword: $("#userpasswordinputId").val(),
+                username: $("#usernameinputId").val(),
+                email: $("#useremailinputId").val(),
+            },
+            success: function (res) {
+
+                ShowModal(`
+          <h3 class='text-center p-3 text-success' > ${res.Message} </h3>
+          `)
+                LoadTable()
+            }
+
+        })
+        }
+    }
+
+</script>

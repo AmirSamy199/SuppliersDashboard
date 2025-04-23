@@ -1,0 +1,343 @@
+﻿@using SuppliersDashboard.Resources
+
+@{
+    ViewBag.Title = "المردودات ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+
+    .editorinput {
+        outline: unset;
+        background: unset;
+        border: unset;
+    }
+
+    .body {
+        padding: 30px;
+    }
+
+    .editorinput:focus {
+        border-bottom: 1px solid #009CFF;
+    }
+
+    button {
+        margin: 0 10px;
+    }
+</style>
+
+<input type="hidden" id="salesid" value="0" />
+<div class="body" id="">
+    <div class="p-2">
+
+       
+        <div class="row">
+            <div class="p-2 col-lg-3 col-sm-6 ">
+                <div class="text-center p-2" style="font-size:32px">
+                    العدد : <strong> @ViewBag.SalesCount </strong>
+                </div>
+            </div>
+            <div class="p-2 col-lg-3 col-sm-6 " style="cursor:pointer">
+
+                <div style=" border-radius:10px" class="text-center p-3 ">
+                    <input onkeyup="searchsales(this)" class="form-control form-inline" placeholder="بحث  " />
+                </div>
+            </div>
+
+            <div class="p-2 col-lg-3 col-sm-6 " style="cursor:pointer">
+
+                <div style=" border-radius:10px" class="text-center p-3 collapse" id="anothersale">
+                    <button class="btn btn-sm btn-outline-primary " onclick="displaysetting()"> اختيار بائع اخر </button>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="row  collapse show " id="allsales">
+
+
+            @foreach (var item in ViewBag.Sales)
+            {
+
+                <div class="p-2 col-lg-4 col-sm-6 search-div" style="cursor:pointer" onclick="LoadPage(@item.Value,'@item.Text')">
+                    <div style="border:1px solid #009CFF ; border-radius:10px" class="text-center">
+                        @item.Text
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+
+
+    </div>
+
+
+   
+
+    <div id="mortaga3tablecollapse" class="collapse">
+        <label class="form-label-title text-center col-lg-12 col-md-3 " for="name" style="font-size: 24px;"> المرتجعات  </label>
+        <style>
+            td, th {
+                text-align: center !important;
+                border: 2px solid !important;
+            }
+
+            table {
+                margin: 10px;
+                border-collapse: collapse !important;
+            }
+        </style>
+        <div class="card pd-20  card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table-responsive table table-striped" style="width:100%" id="mortaga3Table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="">#</th>
+                                <th scope="col" style="">@pages.name </th>
+                                <th scope="col" style="">@llayout.Storekeeper </th>
+                                <th scope="col" style="">@llayout.Quantity  </th>
+
+                                <th scope="col" style='text-align:Center'> @pages.action </th>
+                            </tr>
+                        </thead>
+                        <tbody id="mortaga3TableBody">
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3" id="acceptarea">
+
+    </div>
+    <div class="text-center p-3" id="deningarea">
+
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+
+        let baseid = 0;
+        let basename = ``
+        function displaysetting() {
+            $("#allsales").collapse("show")
+        }
+
+        function searchsales(element) {
+
+            let filter = $(element).val().toUpperCase()
+
+            var divs = document.querySelectorAll(".search-div");
+            for (let i = 0; i < divs.length; i++) {
+                let d = divs[i];
+                let txtValue = d.textContent || d.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    divs[i].style.display = "";
+                } else {
+                    divs[i].style.display = "none";
+                }
+            }
+        }
+        function LoadPage(id, name) {
+
+            baseid = id
+            basename = name
+            startloader();
+
+            $("#salehead").text(name);
+            $("#salehead").collapse("show");
+            $("#allsales").collapse("hide");
+            let sales = id;
+         
+            Loadmortaga3Page(sales);
+        }
+
+
+
+     
+
+         function Loadmortaga3Page(sales) {
+        startloader();
+
+            $.ajax({
+                type: "post",
+                    url: "/WareHousing/GetPendingWareHouseMortga3at?sales="+ sales,
+                data: {},
+                success: (res) => {
+                   // console.log(res)
+                    drawmortaga3Table(res.data.Data)
+                $("#mortaga3tablecollapse").show()
+                  //  $("#spinner").removeClass("show");
+                    endloader();
+                $("#acceptarea").html(" <button class='btn btn-primary col-lg-3 ' onclick='confirmRequest(" + sales + ")'>@SuppliersDashboard.Resources.pages.accept </button>")
+
+                }
+            })
+        }
+        function drawmortaga3Table(data) {
+
+             $("#mortaga3Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+               data:data,
+                "columns": [
+                    { "data": "RecordID", "name": "RecordID", "width": "Auto" },
+                    { "data": "Item_Name", "name": "Item_Name", "width": "Auto" },
+                    { "data": "Item_Count", "name": "Item_Count", "width": "Auto" },
+                    //{
+                    //    data: null, render: function (data, c, d) {
+                    //        return "<input type = 'number' style='width:60px' class='addcount editorinput' id='countinput-" + data.RecordID + "' onchange='change(" + data.RecordID + ")' value=" + data.Item_Count +" /> "
+                    //    }
+                    //},
+                    { "data": "total_amount", "name": "total_amount", "width": "Auto" },
+                    //{
+                    //    data: null, render: function (data, c, d) {
+                    //        return "<input type = 'number' style='width:60px' class='addcount editorinput' id='amountinput-" + data.RecordID + "' onchange='change(" + data.RecordID + ")' value=" + data.total_amount +" /> "
+                    //    }
+                    //},
+                   // { "data": "SalesName", "name": "SalesName", "width": "Auto" },
+                    {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+                            return `    <div style="display: inline-block;">
+<button  class='btn btn-primary ' onclick='returnasMardodat(${data.Item_ID} , "${data.Item_Name}" , ${data.User_ID} , ${data.Item_Count})'>رد كمية كمردود  </button> </div>`
+
+                        }
+                    }
+                ]
+            })
+
+
+        }
+
+        function returnasMardodat(itemId , itemName , userId , oldCount) {
+            let html = `
+            <div class='p-3'>
+            <h2 class='p-2'> رد
+            ${itemName}
+            كمردود من المندوب بكمية
+            </h2>
+            ادخل الكمية
+            <div class='p-2'><input type='number' class='form-control' placeholder='ادخل الوزن ' id = 'returnmardodId' ></div>
+            </div>
+
+
+
+            <div class='p-4 text-center'> <button class='btn btn-primary btn-lg ' onclick='submitReturnasMardodat(${itemId} , "${itemName}" , ${userId} )'> تاكيد </button></div>
+            `
+            ShowModal(html)
+        }
+        function submitReturnasMardodat(itemId, itemName, userId) {
+            let newcount = $("#returnmardodId").val()
+
+            let url = `/Warehousing/ReturnAsMardod?ItemId=${itemId}&UserId=${userId}&ReturnCount=${newcount}`
+            $.post(url, (res) => {
+                if (res.State == 1) {
+                    showSuccessOperation(res.Message)
+                    LoadPage(baseid, basename)
+                } else {
+                    showDangerOperation(res.Message)
+
+                }
+            })
+        }
+        function change(id) {
+
+            $("#confirm-" + id).css("display", "inline");
+
+        }
+        function confirmRequest(id) {
+
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/ConfirmMotaga3Req",
+                data: {
+                    ID: id
+                },
+                success: (res) => {
+
+                    if (res.data.State == 1) {
+                        showSuccessOperation(res.data.Message)
+                      //  LoadPage(baseid, basename)
+
+                    } else {
+
+                        showDangerOperation(res.data.Message)
+                    }
+
+                }
+            })
+        }
+
+        function submitchange(id) {
+            let value = $("#countinput-" + id).val();
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/SubmitChange",
+                data: {
+                    ID: id,
+                    value:value
+                },
+                success: (res) => {
+                    if (res.data.State == 1) {
+                        $("#modalcontent").text(res.data.Message)
+                        $("#myModal").modal("show")
+                    }
+
+                }
+            })
+
+
+
+
+        }
+
+        function deleteRequest(id) {
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/DeleteAllSalesMardodatMortg3atRequests",
+                data: {
+                    SalesId: id
+                },
+                success: (res) => {
+                        showSuccessOperation(res.Message)
+
+
+
+                }
+            })
+        }
+    </script>
+
+
+}

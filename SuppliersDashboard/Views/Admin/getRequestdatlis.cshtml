@@ -1,0 +1,182 @@
+﻿
+
+@{
+    ViewBag.Title = "OnlineRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<button class="btn btn-outline-primary m-1" id="bt">إضافه طلب  </button>
+<table class="table table-hover m-1">
+    <thead>
+        <tr class="table-active">
+            <th>#</th>
+            <th> اسم العميل </th>
+            <th> رقم الماكينه </th>
+           =
+            <th>  الحاله</th>
+           
+            <th>تعديل الحاله </th>
+        </tr>
+    </thead>
+    <tbody class="tbody1">
+
+        @*@if (ViewBag.pro1 != null)
+            {
+
+                foreach (var item in ViewBag.pro1)
+                {
+                 <tr>
+
+
+                                <td > @item.request_ID  </td>
+                               <td >@item.CustomerName  </td>
+                              <td >@item.resquest_stauta </td>
+                               <td > <a href="#" onclick="add(@item.request_ID )" class="btn btn-outline-primary">التفاصيل</a></td>
+                               </tr>
+                }
+            }*@
+    </tbody>
+</table>
+@*modal mpopup*@
+<div class="modal " id="myModal">
+    <div class="modal-dialog ">
+        <div class="modal-content" id="modalcontent">
+            <table class="table table-hover m-1">
+                <thead>
+                    <tr class="table-active">
+
+                        <th>#</th>
+                        <th> اسم </th>
+
+                        <th>  الكميه</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tbody11">
+
+                    @*@if (ViewBag.pro1 != null)
+                        {
+
+                            foreach (var item in ViewBag.pro1)
+                            {
+                             <tr>
+
+
+                                            <td > @item.request_ID  </td>
+                                           <td >@item.CustomerName  </td>
+                                          <td >@item.resquest_stauta </td>
+                                           <td > <a href="#" onclick="add(@item.request_ID )" class="btn btn-outline-primary">التفاصيل</a></td>
+                                           </tr>
+                            }
+                        }*@
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        const cars = [];
+        $(document).ready(function () {
+           getAll();
+           
+
+
+
+        });
+
+        function ShowModal(html) {
+            $("#modalcontent").html(html)
+            $("#myModal").modal("show")
+        }
+        function CloseModal() {
+
+            $("#myModal").modal("hide")
+        }
+    
+        //get all Data Request
+        function getAll() {
+            {
+
+                $.ajax({
+                    url: "/Admin/getallrequestorder",
+                    type: "Get",
+                    contenttype: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+
+
+                        var html = '';
+                        var i = 1;
+
+                        $.each(result, function (key, item) {
+
+                            html += `<tr>'
+
+                            <td>${i++}</td>
+                            <td > ${item.UserName}</td>
+                          <td > ${item.Serial_No} </td>
+                        
+                             <td> ${item.status}</td>
+                            
+                             <td> <a href="#" onclick="updata( ${item.Record_ID})" class="btn btn-outline-primary">تعديل الحاله</a></td>
+                             </tr>`
+
+                        });
+                        $('.tbody1').html(html);
+
+
+                    }
+                });
+            }
+        }
+
+
+        function updata(iid) {
+            var html = '';
+            html += `<div class="p-4 m-auto">
+            <h2> تعديل حاله الطلب </h2>
+                <select id="select1" class="btn btn-outline-info">
+                <option value="1"> موافق <option>
+                    <option value="2">رفض<option>
+            
+           <a href="#" onclick="updatastutas(${iid})" class="btn btn-outline-info">تعديل الحاله</a></div>`
+            ShowModal(html)
+
+        }
+
+        function updatastutas(idd) {
+
+            const x = $('#select1').val();
+            if (x =='رفضت') {
+                $.ajax({
+                    url: "/Admin/updatastu",
+                    data: { id: idd, parm: 2 },
+                    type: "post",
+
+                    dataType: "json",
+
+                    success: function (result) {
+                        getAll();
+                        $("#myModal").modal("hide")
+                    }
+                })
+            }
+            $.ajax({
+                url: "/Admin/updatastu",
+                data: { id: idd, parm: x },
+                type: "post",
+
+                dataType: "json",
+
+                success: function (result) {
+                    getAll();
+                    $("#myModal").modal("hide")
+                }
+            })
+        }
+
+
+    </script>
+}

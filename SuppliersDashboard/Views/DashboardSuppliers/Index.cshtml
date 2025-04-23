@@ -1,0 +1,662 @@
+﻿@model SuppliersDashboard.ViewModels.AnalysisSuppliersHead
+@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .CardDigital {
+    }
+
+        .CardDigital:hover {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+    .btn-outline-primary {
+        color: #b66dff;
+        border-color: #b66dff;
+    }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(90deg,#da8cff,#9a55ff);
+            color: white
+        }
+</style>
+
+<div class="container;" style=" width: 100%; height: 100%;">
+
+    <div class="main-panel ">
+        <div class="row d-flex justify-content-around " style="direction:ltr">
+            <div class="col-lg-3 text-center p-3">
+                <div class="card bg-success CardDigital" >
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.TotalSalesAmount</h4>
+                    <h5 style="text-align: center;" class="text-center  text-white" id="head1">@Model.TotalSalesAmount</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center p-3">
+                <div class="card bg-danger CardDigital">
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.TotalCollection </h4>
+                    <h5 style="text-align: center;" class="text-center mt-4 text-white" id="head2">@Model.TotalMoneyTakeFromBranch</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center p-3">
+                <div class="card bg-info CardDigital">
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.TotalRemaining</h4>
+                    <h5 style="text-align: center;" class="text-center mt-4 text-white" id="head3">@Model.TotalRemainingAmount</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center p-3">
+                <div class="card bg-secondary CardDigital" >
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.items</h4>
+                    <h5 style="text-align: center;"  class="text-center mt-4 text-white" id="head4">@Model.CountItems</h5>
+                </div>
+            </div>
+        </div>
+
+        @*header one*@
+        @*<div class="row d-flex justify-content-around m-auto p-5" style="direction:ltr">
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card CardDigital" style=" background: linear-gradient(90deg,#ffbf96,#fe7096);">
+                        <h4 class="card-title text-center text-white">Total Sales Amount</h4>
+                        <h5 class="text-center mt-4 text-white" id="head1">@Model.TotalSalesAmount</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card CardDigital" style=" background: linear-gradient(90deg,#90caf9,#047edf 99%);">
+                        <h4 class="card-title text-center text-white">Total Collection </h4>
+                        <h5 class="text-center mt-4 text-white" id="head2">@Model.TotalMoneyTakeFromBranch</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card CardDigital" style=" background: linear-gradient(90deg,#84d9d2,#07cdae);">
+                        <h4 class="card-title text-center text-white">Total Remaining</h4>
+                        <h5 class="text-center mt-4 text-white" id="head3">@Model.TotalRemainingAmount</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card CardDigital" style="background: linear-gradient(90deg,#da8cff,#9a55ff);">
+                        <h4 class="card-title text-center text-white">Items</h4>
+                        <h5 class="text-center mt-4 text-white" id="head4">@Model.CountItems</h5>
+                    </div>
+                </div>
+            </div>*@
+
+        @*header two*@
+        <div class="row d-flex justify-content-around " style="direction:ltr">
+            <div class="col-lg-3 text-center p-3">
+                <div class="card bg-primary CardDigital" >
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.Branches </h4>
+                    <h5 style="text-align: center;" class="text-center mt-4 text-white" id="head5">@Model.CountBranchs</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center p-3">
+                <div class="card bg-warning CardDigital" >
+                    <h4 style="text-align: center;" class="card-title text-center text-white"> @llayout.Categories</h4>
+                    <h5 style="text-align: center;" class="text-center mt-4 text-white" id="head6">@Model.CountCats</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center p-3">
+                <div class="card CardDigital" style=" background: linear-gradient(90deg,#84d9d2,#07cdae);">
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.Ranges</h4>
+                    <h5 style="text-align: center;" class="text-center mt-4 text-white" id="head7">@Model.CountRanges</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center p-3">
+                <div class="card CardDigital" style="background: linear-gradient(90deg,#da8cff,#9a55ff);">
+                    <h4 style="text-align: center;" class="card-title text-center text-white">@llayout.Regions</h4>
+                    <h5 style="text-align: center;" class="text-center mt-4 text-white" id="head8">@Model.CountRegion</h5>
+                </div>
+            </div>
+        </div>
+        @*header two*@
+        @*<div class="row   m-auto p-5" style=" margin-top: -70px !important; direction:ltr">
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card " style="background: linear-gradient(90deg,#ffe19873,#fe70a29c) ">
+                        <div class="card-body CardDigital">
+                            <h4 class="card-title text-center text-white">Branches </h4>
+                            <h5 class="text-center mt-4 text-white" id="head5">@Model.CountBranchs</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card ">
+                        <div class="card-body CardDigital" style="background: linear-gradient(90deg,#90f9e58f,#0493dfd4 99%) ">
+                            <h4 class="card-title text-center text-white"> Categories</h4>
+                            <h5 class="text-center mt-4 text-white" id="head6">@Model.CountCats</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card ">
+                        <div class="card-body CardDigital" style=" background: linear-gradient(90deg,#84d99f91,#07b1cd69);">
+                            <h4 class="card-title text-center text-white">Ranges</h4>
+                            <h5 class="text-center mt-4 text-white" id="head7">@Model.CountRanges</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 grid-margin stretch-card ">
+                    <div class="card ">
+                        <div class="card-body CardDigital" style=" background: linear-gradient(90deg,#ff8ce0cf,#a955ff69)">
+                            <h4 class="card-title text-center text-white">Regions</h4>
+                            <h5 class="text-center mt-4 text-white" id="head8">@Model.CountRegion</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+
+        @*Sales At Item Level By Total Price*@
+        <div class="row m-auto p-3">
+            <div class="col-lg-12 grid-margin stretch-card  p-3">
+                <h2 class="text-center"> Most or least sold items At Level Price of Items</h2>
+            </div>
+        </div>
+        @*Most And Less Items Sales  At Item  price Level*@
+        <div class="row m-auto p-5">
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartMostpriceitemParent">
+
+                        <div class="row mb-3">
+                            <div class="col-12">   <h5 class="card-title  m-auto " style="margin-left: -14px;">The Most  Sales At The Items Level By Total Price </h5></div>
+                        </div>
+                        <canvas id="ChartMostpriceitem"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body" id="ChartLesspriceitemParent">
+
+                        <div class="row mb-3">
+                            <div class="col-12  ">
+                                <h5 class="card-title  m-auto " style="margin-left: -14px;">The least  Sales At The Items Level By Total Price </h5>
+                            </div>
+                        </div>
+                        <canvas id="ChartLesspriceitem"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        @*Sales At Item Level By Total Count*@
+        <div class="row m-auto p-3">
+            <div class="col-lg-12 grid-margin stretch-card  p-3">
+                <h2 class="text-center"> Most or least sold items At Level Count of Items</h2>
+            </div>
+        </div>
+        @*Most And Less Items Sales  At Item  Count Level*@
+        <div class="row m-auto p-5">
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartMostCountitemParent">
+
+                        <div class="row mb-3">
+                            <div class="col-12">   <h5 class="card-title  m-auto " style="margin-left: -14px;">The Most  Sales At The Items Level By Count Items </h5></div>
+                        </div>
+                        <canvas id="ChartMostCountitem"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartLessCountitemParent">
+
+                        <div class="row mb-3">
+                            <div class="col-12 m-auto">
+                                <h5 class="card-title  m-auto" style="margin-left: -14px;">The least  Sales At The Items Level By Count Items </h5>
+                            </div>
+                        </div>
+                        <canvas id="ChartLessCountitem"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        @*Sales At Braches Level to this Year*@
+        <div class="row m-auto p-3">
+            <div class="col-lg-12 grid-margin stretch-card  p-3">
+                <h2 class="text-center"> Most or least Sales  At Level Branches</h2>
+            </div>
+        </div>
+        @*Most And Less Items Sales  At Branche Level*@
+        <div class="row m-auto p-5">
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartMostBranchParent">
+
+                        <div class="row mb-3">
+                            <div class="col-12">   <h5 class="card-title  m-auto " style="margin-left: -14px;">The Most  Sales At Branches Level </h5></div>
+                        </div>
+                        <canvas id="ChartMostBranch"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartLessBranchParent">
+
+                        <div class="row mb-3">
+                            <div class="col-12  ">
+                                <h5 class="card-title  m-auto " style="margin-left: -14px;">The least  Sales At The Branches Level  </h5>
+                            </div>
+                        </div>
+                        <canvas id="ChartLessBranch"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        @*Most And Less Items Sales  At Item  price Level*@
+        <div class="row m-auto p-5">
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartMostBranchYearParent">
+
+                        <div class="row mb-3">
+                            <div class="col-9">   <h5 class="card-title  m-auto " style="margin-left: -14px;">The Most  Sales At Branches Level </h5></div>
+                            <div class="col-3"><select id="SelectYear2" class="form-control yearSelect" onchange=" GetMostOrLessSalesBranches(0, $(this).val(),'ChartMostBranchYear','bar',0);"></select></div>
+
+                        </div>
+
+                        <canvas id="ChartMostBranchYear"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 grid-margin stretch-card ">
+                <div class="card">
+                    <div class="card-body" id="ChartLessBranchYearParent">
+
+                        <div class="row mb-3">
+                            <div class="col-9 ">
+                                <h5 class="card-title  m-auto " style="margin-left: -14px;">The least  Sales At The Branches Level  </h5>
+                            </div>
+                            <div class="col-3"><select id="SelectYear2" class="form-control yearSelect" onchange=" GetMostOrLessSalesBranches(1, $(this).val(),'ChartLessBranchYear','bar',0);"></select></div>
+
+
+                        </div>
+                        <canvas id="ChartLessBranchYear"> </canvas>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        @*Most Sales Amount For Distributor for this year*@
+        <div class="row m-auto p-3">
+            <div class="col-lg-12 grid-margin stretch-card  p-3">
+                <h2 class="text-center">  Sales  At Level Distributor</h2>
+            </div>
+        </div>
+
+        <div class="row m-auto p-3">
+            <div class="row m-auto p-5">
+                <div class="col-lg-12 grid-margin stretch-card ">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-9"><h4 class="card-title">The Most  Sales At The Distributor Level</h4></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th> # </th>
+                                            <th> Name  </th>
+                                            <th> Sales   </th>
+                                            <th> Collection </th>
+                                            <th> Details </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="SalesDistributorBody" class="mt-3"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card ">
+                    <div class="card ">
+                        <div class="card-body " id="ChartSalesDistributorParent">
+                            <h4 class="card-title text-center mb-4 " id="txtDistributor"></h4>
+                            <canvas id="ChartSalesDistributor" class="mt-2 mb-2"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+      $(document).ready(function (){
+        const currentYear = new Date().getFullYear();
+        //Select Year
+        SelectYear()
+         $("#head1").text(ForamtNumber(@Model.TotalSalesAmount));
+  $("#head2").text(ForamtNumber(@Model.TotalMoneyTakeFromBranch))
+  $("#head3").text(ForamtNumber(@Model.TotalRemainingAmount))
+  /// Most Items Sales At Total Price
+  GetMostOrLessSalesForItems(0,0,"ChartMostpriceitem","bar",0)
+    /// less Items Sales At Total Price
+  GetMostOrLessSalesForItems(1,0,"ChartLesspriceitem","bar",0)
+
+   /// Most Items Sales At Total Count
+  GetMostOrLessSalesForItems(0,1,"ChartMostCountitem","bar",1)
+    /// less Items Sales At Total Count
+  GetMostOrLessSalesForItems(1,1,"ChartLessCountitem","bar",1)
+  /// most Sales Branches
+  GetMostOrLessSalesBranches(0,currentYear,"ChartMostBranch","bar",0)
+   /// less Sales Branches
+  GetMostOrLessSalesBranches(1,currentYear,"ChartLessBranch","bar",0)
+
+    /// most Sales Branches by year
+  GetMostOrLessSalesBranches(0,"","ChartMostBranchYear","bar",0)
+   /// less Sales Branches by year
+  GetMostOrLessSalesBranches(1,"","ChartLessBranchYear","bar",0)
+
+  /// Most Sales For Distributor
+  GetMostSalesForDistributor(0,currentYear)
+      })
+
+      ///// Get Most Sales For Distributor
+
+      function GetMostSalesForDistributor(status,year){
+
+          $.ajax({
+              url:"/DashboardSuppliers/GetSalesAndCollectDistributor",
+              type:"post",
+              data:{
+                  Year:year,
+                  Status:status
+              },
+              success:function(res){
+                  drawtable(res.data.Data,"SalesDistributorBody")
+                  DetailsDebetForDistributor(res.data.Data[0].Name,res.data.Data[0].ID,"ChartSalesDistributor","doughnut",0)
+              }
+          })
+      }
+
+      ////-------------------------------
+
+      ///////////Details Debet For Distributor
+      function DetailsDebetForDistributor(name,id,idChart, type,stat){
+            $.ajax({
+              url:"/DashboardSuppliers/SelectAllDebtsForDistributor",
+              type:"post",
+              data:{
+                  UserId:id,
+
+              },
+              success:function(res){
+                $("#txtDistributor").text("Debts For "+name)
+                   $("#" + idChart).remove()
+                   $("#AllDepets").remove()
+                $("#" + idChart + "Parent").append(`<canvas id='${idChart}' class='mt-2 mb-4' ></canvas>`)
+                let total=0
+                     let datas = [];
+                     let labels = [];
+
+
+                $.each(res.data.Data, function (i, e) {
+                 datas.push(e.Debts)
+                 labels.push(e.CompanyName+"-"+e.region)
+                 total+=e.Debts
+                })
+                drawChartJsbar(datas, labels, "", idChart, type,stat)
+               $("#" + idChart + "Parent").append(`<h5 id='AllDepets' class='text-center'>Total Debts: ${total} </h5>`)
+              }
+          })
+      }
+      ///////////////----------------------
+
+///// Get Most Or Less sales For Branches
+function GetMostOrLessSalesBranches(Status,year,idChart,type,stat){
+    $.ajax({
+        url:"/DashboardSuppliers/GetMostOrLessSalesForBranches",
+        type:"post",
+        data:{
+            year:year,
+            Status:Status
+        },
+        success:function(res){
+              $("#" + idChart).remove()
+
+                $("#" + idChart + "Parent").append(`<canvas id='${idChart}' ></canvas>`)
+                let resulte = ExtractData(res.data.Data)
+                drawChartJsbar(resulte[0], resulte[1], "", idChart, type,stat)
+        }
+    })
+}
+//////////------------------------------/
+
+///////// GET most or less Items at level price and count
+function GetMostOrLessSalesForItems(Status,StatusSales,idChart,type,stat){
+    $.ajax({
+        url:"/DashboardSuppliers/GetMostOrLessCountOrPriceItems",
+        type:"post",
+        data:{
+            StatusSales:StatusSales,
+            Status:Status
+        },
+        success:function(res){
+                $("#" + idChart).remove()
+
+                $("#" + idChart + "Parent").append(`<canvas id='${idChart}' ></canvas>`)
+                let resulte = ExtractData(res.data.Data)
+                drawChartJsbar(resulte[0], resulte[1], "", idChart, type,stat)
+        }
+    })
+
+}
+////////////-----------------------------////////////////
+
+//// Get Data And Put In two Array
+    function ExtractData(data) {
+        const months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+        console.log(data)
+        let datas = [];
+        let labels = [];
+        let Labal = []
+        $.each(data, function (i, e) {
+            if ( e.Date != null) {
+                const dateComponents = e.Date.split('-');
+                const month = dateComponents[1];
+                const day = dateComponents[2];
+                let mon = months[parseInt(month) - 1]
+                labels.push(day + "/" + mon );
+              //  Labal.push()
+            }
+            else {
+                labels.push(e.Name)
+            }
+
+            datas.push(e.Value)
+        });
+        return [datas, labels, Labal];
+    }
+
+
+    ////Drow Chart Bar
+    function FillDataToChartBar(data, labels, label) {
+
+        var dataBar = {
+            labels: labels,
+            datasets: [{
+                label: label,
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(75, 192, 200, 0.2)',
+                    'rgba(54, 162, 100, 0.2)',
+                    'rgba(255, 206, 50, 0.2)',
+                    'rgba(153, 102, 120, 0.2)',
+                    'rgba(255, 159, 30, 0.2)',
+                    'rgba(255, 99, 56, 0.2)',
+                    '#FFA1F5',
+                    '#EDB7ED',
+                    '#26577C',
+                    '#9D76C1',
+                    '#A6F6FF',
+                    '#6499E9',
+                    'rgba(75, 192, 200, 0.2)',
+                    'rgba(54, 162, 100, 0.2)',
+                    'rgba(255, 206, 50, 0.2)',
+                    'rgba(153, 102, 120, 0.2)',
+                    'rgba(255, 159, 30, 0.2)',
+                    'rgba(255, 99, 56, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255,99,132,1)',
+                    '#FFA1F5',
+                    '#EDB7ED',
+                    '#26577C',
+                    '#9D76C1',
+                    '#A6F6FF',
+                    '#6499E9',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1,
+                fill: true
+            }]
+        };
+
+        return dataBar;
+
+    }
+    function drawChartJsbar(data, labels, label, idchart,type,stat) {
+
+        var databar = FillDataToChartBar(data, labels, label)
+        if ($("#" + idchart).length) {
+            var barChartCanvas = $("#" + idchart).get(0).getContext("2d");
+            // This will get the first returned node in the jQuery collection.
+            var barChart = new Chart(barChartCanvas, {
+                type: type,
+                data: databar,
+                // options: optionbar
+                options: {
+                    tooltips: {
+                        enabled: true, // Enable tooltips
+                        mode: 'index', // Display tooltips for all datasets at the same index
+                        intersect: false, // Don't allow tooltips to overlap
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                if(type="doughnut"){
+                                    const label = data.labels[tooltipItem.index];
+                                 const value = data.datasets[0].data[tooltipItem.index];
+                                 return `${ForamtNumber(value)}`;
+                                }
+                                else{
+                                // Customize the label for each tooltip
+                                const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                                const value = tooltipItem.yLabel;
+                               let FormatValue = stat== 0 ?datasetLabel + ': ' + ForamtNumber(value) :value ;
+                                return FormatValue ;
+                                }
+                            },
+                        },
+                    },
+                    // Your other chart options go here
+                },
+            });
+        }
+    }
+   //----------------------------//
+
+   ////// Chart
+
+
+   //-------------------------------------/////
+    /// Select Year
+    function SelectYear() {
+        const yearSelect = $(".yearSelect")
+
+        // Get the current year
+        const currentYear = new Date().getFullYear();
+
+        let option = ``;
+
+        // Loop from the current year down to the year 2000
+        for (let year = currentYear; year >= currentYear-10; year--) {
+
+            option += `<option Value='${year}'>${year}</option>`
+            // Create an option element
+            // Append the option to the select element
+        }
+        $.each(yearSelect, function (index, ele) {
+            $(ele).html(option);
+        })
+    }
+    //-----------------------//
+
+
+    //// Format Number
+    function ForamtNumber(number) {
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+
+        const formattedNumber = formatter.format(number);
+        return formattedNumber
+    }
+    //----------------------------///
+    ///////////////////// drow table
+
+function drawtable(data,id){
+   let year=$("#SelectYear").val();
+    let table=``
+    $.each(data,function(index,e){
+        table+=` <tr>  <td> ${index+1}</td>  <td> ${e.Name} </td> <td> ${ForamtNumber(e.Value)} </td> <td> ${ForamtNumber(e.Value2)} </td>  `+
+
+        `<td> <button type="button" class="btn btn-outline-primary btn-fw" onclick="DetailsDebetForDistributor('${e.Name}',${e.ID},'ChartSalesDistributor','doughnut',${0})">Details</button>    </td> </tr>`
+    })
+    $("#"+id).html(table)
+}
+    //
+</script>
+

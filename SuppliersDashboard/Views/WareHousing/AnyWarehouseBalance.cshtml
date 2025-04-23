@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "AnyWarehouseBalance";
+}
+
+
+<div class="container">
+<h2 class="h2 text-center p-2 text-success">Warehouse Balance</h2>
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="w-100">
+                        اختر نوع المخزن
+                        :
+                    </label>
+                </div>
+                <div class="col-lg-8">
+                    <select onchange="storetypechanged(this.value)" class="form-control" id="storeType">
+                        @if (ViewBag.StoreTypes != null)
+                        {
+                            foreach (var item in ViewBag.StoreTypes)
+                            {
+                                <option value="@item.Id">
+                                @item.Value
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+   
+    <div class="col-lg-6">
+        <div class="row">
+
+        <div class="col-lg-4">
+            اختر المخزن
+            :
+        </div>
+            <div class="col-lg-8" id="warehouseIdDiv">
+
+            </div>
+        </div>
+    </div>
+
+        <div class="col-12 p-3">
+            <button class="btn btn-primary text-center w-100" onclick="submitGardForm()">
+                جرد
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="resultDiv">
+
+        <div class="row  ">
+            <div class="col-lg-6 p-4">
+                <input type="text" id="myInput" class="form-control text-center" onkeyup="SearchInTable('myInput','mytable')" placeholder=" بحث ...">
+            </div>
+
+            <div class="col-lg-3">
+
+            </div>
+            <div class="col-lg-3">
+                <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><svg class="svg-inline--fa fa-print" id="printbtn" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="print" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg><!-- <i class="fa fa-solid fa-print" id="printbtn"></i> Font Awesome fontawesome.com -->طباعة </button>
+            </div>
+
+        </div>
+        <div id="printer">
+            <h2 class="h2 text-center p-2 text-success" id="result-header"> </h2>
+            <div class="">
+                <table id="mytable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th> #</th>
+                            <th>كود</th>
+                            <th>الصنف</th>
+                            <th>الكمية</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t-body">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div style="display:none">
+    @if (ViewBag.WarehousesList != null) {
+        foreach(var item in ViewBag.WarehousesList)
+                {
+            if(item.Id !=0 && item.Id !=-1)
+                    {
+                    <input class="warehouse-type-2" data-value="@item.Value" data-id="@item.Id" />
+
+                    }
+                }
+    }
+    @if (ViewBag.DistributorMan != null) {
+        foreach(var item in ViewBag.DistributorMan)
+                {
+                    <input class="warehouse-type-1" data-value="@item.Value" data-id="@item.Id" />
+                }
+    }
+</div>
+
+
+<script>
+    function storetypechanged(id) {
+        if (id == 0) {
+            $("#warehouseIdDiv").html('');
+            return 
+        }
+        let options = ``
+        let inputs = $('.warehouse-type-'+id)
+        $.each(inputs, (i, e) => {
+            options += `<option value='${$(e).attr("data-id")}' > ${$(e).attr("data-value") } </option>`
+        })
+        console.log(options)
+        let htmlselect = `
+        <select id='warehouseId' class='form-control'>
+        ${options}
+        </select>
+        `
+
+        $("#warehouseIdDiv").html(htmlselect)
+    }
+
+
+    function submitGardForm() {
+        let wareId = 0;
+        let storetype = $("#storeType").val()
+       
+        if (parseInt(storetype) != 0)
+            wareId = $("#warehouseId").val()
+
+
+
+        let url = `/Warehousing/AnyWarehouseBalanceJson?WarehouseId=${wareId}&StoreTypeId=${storetype}`
+        console.log(url)
+        $.post(url, (res) => {
+            console.log(res)
+            let gridhtml = ``
+            $.each(res.Data, (i, e) => {
+
+                gridhtml += `
+                <tr>
+                <td>${i+1}</td>
+                <td>${e.ItemId}</td>
+                <td>${e.ItemName}</td>
+                <td>${e.bal}</td>
+                </tr>
+                `
+            })
+            $("#result-header").text(res.Message)
+            $("#t-body").html(gridhtml)
+            $("#resultDiv").collapse('show')
+        })
+
+
+    } 
+</script>

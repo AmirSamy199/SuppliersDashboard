@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "AddRange";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="P-5">
+
+    <div class="row">
+        <div class="col-lg-5 p-2 m-4" >
+            <div class="row p-3 ">
+                <div style="height: 267px">
+                    <h2 class=" text-center mt-4 p-3">@SuppliersDashboard.Resources.pages.String1</h2>
+
+                    <div class="text-center">
+                        <label> @SuppliersDashboard.Resources.pages.Area</label>
+                        <input class="form-control " type="text" id="rangenameinput" placeholder="@SuppliersDashboard.Resources.pages.Area " />
+                        <div class="row d-flex justify-content-around">
+
+                            <div class="col-lg-6 text-center p-3">
+                                <button class="btn btn-primary col-12 btn-lg"  onclick="SubmitAddRange()"> @SuppliersDashboard.Resources.pages.String1</button>
+                            </div>
+                        </div>
+                        @*<div class="text-center mt-3 mb-3">
+                            <button class="btn btn-primary" onclick="SubmitAddRange()"> @SuppliersDashboard.Resources.pages.String1</button>
+                        </div>*@
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-5 p-2 m-4">
+            <div style="height: 267px">
+                <div class="row p-3 ">
+                    <div style="height: 267px">
+
+                        <h2 class=" text-center mt-4 p-3"> @SuppliersDashboard.Resources.pages.neighborhood1  </h2>
+
+                        <div class="text-center ">
+                            <label> @SuppliersDashboard.Resources.pages.neighborhood   </label>
+                            <input class="form-control " type="text" id="regionnameinput" placeholder="@SuppliersDashboard.Resources.pages.neighborhood    " />
+
+                            <div class="text-center">
+                                <label>
+                                    @SuppliersDashboard.Resources.pages.Region
+                                </label>
+                                <select id="regionrangeselect" class="form-control form-select">
+                                    <option value="0"> @SuppliersDashboard.Resources.pages.Region </option>
+                                    @foreach (var item in ViewBag.Ranges)
+                                    {
+                                        <option value="@item.Id"> @item.Value</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="row d-flex justify-content-around">
+
+                                <div class="col-lg-6 text-center p-3">
+                                    <button class="btn btn-primary col-12 btn-lg" onclick="SubmitAddRegion()">@SuppliersDashboard.Resources.pages.neighborhood1    </button>
+                                </div>
+                            </div>
+                            @*<div class="text-center mt-3 mb-3">
+                                <button class="btn btn-primary" onclick="SubmitAddRegion()">@SuppliersDashboard.Resources.pages.neighborhood1    </button>
+                            </div>*@
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+ </div>
+
+
+<script>
+
+    function SubmitAddRegion() {
+        
+        let name = $("#regionnameinput").val()
+        let range = $("#regionrangeselect").val()
+        if (name == "" || range == 0 ) {
+            alert("ادخل جميع البيانات  ");
+        } else {
+            $.ajax({
+                url: "/Screens/SubmitAddRegion",
+                data: {
+                    Name: name,
+                    RangeId : range
+                },type:"post"
+                , success: (res) => {
+                    ShowModal(res.data.Message)
+                    if (res.data.State == 1) {
+                        setTimeout(function () { location.reload() }, 3000)
+                    }
+
+                }
+            })
+        }
+    }
+
+    function SubmitAddRange() {
+       
+        let name = $("#rangenameinput").val()
+        if (name == "") {
+            alert("ادخل اسم المنطقة ");
+        } else {
+            $.ajax({
+                url: "/Screens/SubmitAddRange",
+                data: {
+                    Name: name
+                }, type: "post",
+                success: (res) => {
+                    ShowModal(res.data.Message)
+                    if (res.data.State == 1) {
+                        setTimeout(function () { location.reload() }, 3000)
+
+                    }
+
+                }
+            })
+        }
+        location.reload()
+    }
+</script>

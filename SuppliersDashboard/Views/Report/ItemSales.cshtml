@@ -1,0 +1,327 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "ItemSales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center p-4">
+
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <input type="hidden" id="hiddenItemIdInput" value="0" />
+        <div class="col-lg-6">
+            <input list="itemslistoption" name="itemslistoption"  class="form-control" placeholder="@llayout.items " id="ItemIdInput" />
+            <datalist id="itemslistoption">
+            </datalist>
+
+
+        </div>
+        <div class="col-lg-3"></div>
+
+    </div>
+    <div class="row p-4">
+        <div class="col-lg-1"> @pages.iin </div>
+        <div class="col-lg-5">
+            <input class="form-control" type="date" id="DateFrom" />
+        </div>
+        <div class="col-lg-1"> @pages.from </div>
+        <div class="col-lg-5">
+            <input class="form-control" type="date" id="DateTo" />
+
+        </div>
+
+
+    </div>
+</div>
+<div id="printer" class="p-5">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1px solid #000 !important;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+    </style>
+    <div class="row">
+        <div class="col-12 justify-content-center ">
+            <h2 class="h2 text-primary text-center m-3 " id="header"> </h2>
+        </div>
+        <div class="col-12" style="height:30px"></div>
+    </div>
+
+
+
+    <table class="table table-bordered table-striped" id="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    @Items.ItemName
+                </th>
+                <th>
+                    @pages.billno
+                </th>
+                <th>
+                    @llayout.NameSalesMan
+                </th>
+                <th>
+                    @llayout.Branch
+                </th>
+                <th>
+                    @pages.quantity
+                </th>
+                <th>
+                  @pages.priceun
+                </th>
+                <th>
+                   @pages.totalprice
+                </th>
+
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+        </tbody>
+    </table>
+
+
+
+</div>
+<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">@llayout.Execl </button>
+</div>
+<input type="hidden" id="twice" value="0" />
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $("#ItemIdInput").change(() => {
+            let id = $("#ItemIdInput").val();
+            $("#hiddenItemIdInput").val(id)
+
+
+            LoadPage(id, $("#DateFrom").val(), $("#DateTo").val())
+
+            let name = $('#itemslistoption option[value="' + id + '"]').text()
+            $("#ItemIdInput").attr("placeholder", name)
+            $("#ItemIdInput").val("")
+
+
+        })
+
+    })
+
+    let currentdate = new Date();
+ 
+    let m = currentdate.getMonth() + 1;
+    if (m < 10) m = "0" + m
+    let d = currentdate.getDate() ;
+    if(d<10) d = "0"+d
+    let dd = "" + currentdate.getFullYear() + "-" + m+ "-" + d
+    $("#DateFrom").val(dd)
+    $("#DateTo").val(dd)
+    LoadPage(0,dd,dd)
+    function excel() {
+
+      let datefrom =   $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+       
+        let ItemID = $("#hiddenItemIdInput").val()
+
+       let h = $("#header").text()
+        LayoutExcel(`/Report/ItemSalesFromToExcel?ItemId=${ItemID}&DateFrom=${datefrom}&DateTo=${dateto}`, `${h}`)
+    }
+    $.ajax({
+        url: "/Items/GetAllItemsFromTable",
+        type:"post",
+        data: {
+
+        }, success: (res) => {
+          
+            let html = `<option value="0">كل الاصناف </option>`;
+            $.each(res.data.Data, (i, e) => {
+                html += `<option value='${e.Record_ID}'> ${e.ItemName}</option>`
+            })
+            $("#itemslistoption").html(html)
+        }
+    })
+
+    $("#DateFrom").change(() => {
+        LoadPage($("#hiddenItemIdInput").val(),$("#DateFrom").val(), $("#DateTo").val())
+
+    })
+    $("#DateTo").change(() => {
+        LoadPage($("#hiddenItemIdInput").val() , $("#DateFrom").val(), $("#DateTo").val())
+    })
+ 
+    
+
+    function LoadPage(ItemID, DateFrom, DateTo) {
+     
+        if (ItemID == "") {
+            ItemID =0 
+        }
+        //$("#spinner").addClass("show");
+        startloader()
+        setTimeout(() => {
+            endloader()
+        },3000)
+        //if (ItemID <= 0) {
+        //    ShowModal(`<h2 class='text-center'> من افضلك اختر صنف صحيح </h2>`)
+        //}
+        $.ajax({
+            url: "/Report/ItemSalesFromTOJson",
+            type: "post",
+            data: {
+                ItemID:ItemID,
+                DateFrom: DateFrom,
+                DateTo: DateTo
+            }, success: (res) => {
+                console.log(res)
+                endloader()
+
+              $("#header").text(res.data.Message)
+
+                let ciunter = 1;
+
+
+                $("#table").dataTable({
+                    'iDisplayLength': 25,
+                    "bDestroy": true,
+                    "bSearchable": true,
+                    "responsive": true,
+                    "language": {
+                        "searchPlaceholder": 'Search...',
+                        "sSearch": '',
+                        "lengthMenu": '_MENU_ items/page',
+                    },
+                    data: res.data.Data,
+                    "columns": [
+                        {
+                            "data": null, render:function  (){
+                                return ciunter ++
+                            }
+                        },
+                        { "data": "Items", "name": "Items", "width": "Auto" },
+                        {
+                            "data": null,
+                            render: function (e, x, y) {
+                                
+                                return `<span style='width:100%' id='${e.BillNO}' class='billcell' ondblclick='Rowclickable(this, ${e.BillNO})'> ${e.BillNO} </span>`
+                            }
+                        },
+                        { "data": "UserName", "name": "UserName", "width": "Auto" },
+                        { "data": "BranchName", "name": "BranchName", "width": "Auto" },
+                        { "data": "NumberOfUnits", "name": "NumberOfUnits", "width": "Auto" },
+                        { "data": "UnitPrice", "name": "UnitPrice", "width": "Auto" },
+                        { "data": "TotalPrice", "name": "TotalPrice", "width": "Auto" },
+
+                ]
+                })
+
+
+                let billcells = document.querySelectorAll(".billcell")
+                for (let i = 0; i < billcells.length; i++){
+                    let id = billcells[i].getAttribute("id");
+                    $(billcells[i]).parent().parent().attr("ondblclick", "Rowclickable(this, "+id+")")
+                  }
+
+                //let table = document.querySelector("table");
+                //debugger
+                //let i = 0;
+                //for (let row of table.rows) {
+                //    if (i == 0) {
+                //        i++;
+                //        continue;
+                //    }
+                //    billNO = row.cells[2].innerHTML
+                //    row.click(function () {
+                //        console.log("hay");
+                //    });
+
+                //}
+
+            }
+
+        })
+        $("#spinner").removeClass("show");
+
+    }
+    function Print() {
+        $("#Table_length").addClass("d-none")
+        $("#Table_paginate").addClass("d-none")
+        $("#Table_filter").addClass("d-none")
+        $("#Table_info").addClass("d-none")
+        $("#table_length").addClass("d-none")
+        $("#table_paginate").addClass("d-none")
+        $("#table_filter").addClass("d-none")
+        $("#table_info").addClass("d-none")
+        let df = $("#DateFrom").val()
+        let dt = $("#DateTo").val()
+        //var restorepage = $('body').html();
+        //var printcontent = $('#printer').clone();
+
+        //$('body').empty().html(printcontent);
+        //window.print();
+        LayoutPrint()
+      //   $('body').html(restorepage);
+        $("#DateFrom").val(df)
+        $("#DateTo").val(dt)
+       
+    }
+    function endloader() {
+        $("#spinner").removeClass("show");
+    }
+    function ShowModal(html) {
+        $("#modalcontent").html(html)
+        $("#myModal").modal("show")
+    }
+    function startloader() {
+        $("#spinner").addClass("show");
+    }
+
+    function Rowclickable(billCell, billno) {
+        //let billno = $("#viewbillid").val()
+
+        HomeViewBill(billno)
+        //debugger
+        //row = billCell.parent();
+        //row.attr('onclick', `HomeViewBill(${billno})`);
+
+        //row.click(function () {
+        //    HomeViewBill(billno)
+        //})
+        //row.css({ "color": "red", "border": "2px solid red" });
+
+
+    }
+
+    function HomeViewBill(billno) {
+        
+
+        if (billno > 0) {
+            $.ajax({
+                url: "/CHIJpbnRlcg/Encrypt",
+                type: "post",
+                data: {
+                    key: String(billno)
+                }, success: (res) => {
+
+                    location.href = `/chijpbnrlcg/T1UHSfl6oRmBLZg7E44aAg?QmlsbE5v=${res}`
+
+                }
+
+            })
+        }
+
+    }
+
+</script>

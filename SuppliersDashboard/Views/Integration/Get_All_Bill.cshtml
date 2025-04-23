@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewBag.Title = "Get_All_Bill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Button trigger modal -->
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="p-4">
+                    <label class="modal-title" id="exampleModalLabel"> تفاصيل الفاتوره</label>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="p-4">
+
+
+                    <table class="table table-hover m-1">
+                        <thead>
+                            <tr class="table-active">
+
+                                <th>#</th>
+                                <th> اسم المنتج</th>
+
+                                <th>  السعر</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="tbody11">
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-around p-3 "data-select2-id="select2-data-40-j4ub">
+    <div class="col-lg-4 text-center">
+        <label style="text-align: center;" class="  col-form-label form-label-title"> اختر البنك </label>
+    </div>
+    <div class="col-lg-8 text-center">
+        <input type="hidden" id="distributorId" value="0" />
+        <select class="form-control col-9" style=" width: 100%; " id="sss">
+            @foreach (var item in @ViewBag.bank)
+            {
+                <option value="@item.RecordID">@item.bankName</option>
+            }
+        </select>
+    </div>
+</div>
+@*<div class="row">
+    <div class=" mb-4 row align-items-center col-12" data-select2-id="select2-data-40-j4ub">
+        <label style="text-align: center;" class=" col-sm-3 col-form-label form-label-title"> اختر البنك </label>
+        <select class="form-control col-9" style=" width: 100%; " id="sss">
+            @foreach (var item in @ViewBag.bank)
+            {
+                <option value="@item.RecordID">@item.bankName</option>
+            }
+        </select>
+    </div>
+</div>*@
+
+
+@*<div>
+        <label>اختر البنك</label>
+        <select class="form-control" style=" width: 197px; margin-bottom: 4px;" id="sss">
+            @foreach (var item in @ViewBag.bank)
+            {
+                <option value="@item.RecordID">@item.bankName</option>
+            }
+        </select>
+    </div>*@
+
+
+
+
+
+
+
+
+<div class=" card-ERB">
+    <div class="  table-responsive  " style=" margin-top: 14px; }">
+
+        <div id="table-scroll">
+            <table id="dtBasicExample" style="margin-top: 7px;  " class="table display responsive nowrap " width="100%">
+
+                <thead>
+                    <tr>
+                        <th class="all" @*style="width:48px;"*@> INo</th>
+                        <th class="all"> InvoiceDate</th>
+                        <th class="all"> ReceiverName</th>
+
+                        <th class="all"> TotalAmount</th>
+
+                        <th class="all"> Status</th>
+                        <th class="all"> UUID</th>
+                        <th class="all"> Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.data)
+                    {
+                        <tr id="@item.BillNo">
+                            <td>@item.BillNo</td>
+                            <td>@item.BillDate</td>
+                            <td>@item.BranchName</td>
+                            <td>@item.TotalAmountAfterDiscount</td>
+                            <td>@item.Bill_Stutes</td>
+                            <td>@item.Currency</td>
+                            <td>
+                                <a href="#" class="btn btn-primary" id="btn11" onclick="addInvoise(6,371)">CreateInviose</a>
+                                <br> <!-- Add a line break to place the second <a> tag under the first one -->
+
+
+                                <a href="#" class="btn btn-primary" onclick="DetailsInvoise('@item.BillNo')" data-bs-toggle="modal" data-bs-target="#exampleModal"> Details</a>
+                            </td>
+                            @*<td class="btn btn-primary" style="margin-bottom: 5px;" id="btn11" onclick="addInvoise(@item.BillNo,@item.Branch_id)"> CreateInviose</td>
+
+                                <td class="btn btn-primary" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="DetailsInvoise(@item.BillNo)"> Details</td>*@
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+<div class="modal " id="myModal">
+    <div class="modal-dialog ">
+        <div class="modal-content" id="modalcontent">
+            <table class="table table-hover m-1">
+                <thead>
+                    <tr class="table-active">
+
+                        <th>#</th>
+                        <th> اسم </th>
+
+                        <th>  الكميه</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tbody11">
+
+                    @*@if (ViewBag.pro1 != null)
+                        {
+
+                            foreach (var item in ViewBag.pro1)
+                            {
+                             <tr>
+
+
+                                            <td > @item.request_ID  </td>
+                                           <td >@item.CustomerName  </td>
+                                          <td >@item.resquest_stauta </td>
+                                           <td > <a href="#" onclick="add(@item.request_ID )" class="btn btn-outline-primary">التفاصيل</a></td>
+                                           </tr>
+                            }
+                        }*@
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable({
+            "bDestroy": true,
+            "bSearchable": true,
+            "responsive": true,
+            "language": {
+                "searchPlaceholder": 'Search...',
+                "sSearch": '',
+                "lengthMenu": '_MENU_ items/page',
+            }
+        });
+    });
+
+    function addInvoise(id, s) {
+
+        var bankid = $('#sss').val();
+        $.ajax({
+            url: "/Integration/AddInvoise",
+            data: { id: id, s: s, bankid: bankid },
+            type: "post",
+            contenttype: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result == "flase") {
+                    $('#' + id).css("background-color", "red");
+                    $('#' + id).css("color", "black");
+                    Swal.fire({
+                        title: "Invoice Data is InComplete of Customer",
+                        text: "error",
+                        icon: "error"
+                    });
+                    disabledbtn();
+
+                } else if (result == "fase") {
+                    $('#' + id).css("background-color", "red");
+                    $('#' + id).css("color", "black");
+                    Swal.fire({
+                        title: "Invoice Data is InComplete of Items",
+                        text: "error",
+                        icon: "error"
+                    });
+
+                }
+                else {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "success ",
+                        icon: "success"
+                    });
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    function disabledbtn() {
+
+        $('#btn11').disabled();
+    }
+    function DetailsInvoise(id) {
+
+
+
+        console.log("success");
+        console.log(id);
+        $.ajax({
+            url: "/Integration/getdatils",
+            data: { id: id },
+            type: "Get",
+            contenttype: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                var html = '';
+                var i = 1;
+                console.log("111");
+                console.log(result);
+                $.each(result, function (key, item) {
+
+                    console.log(item);
+                    html += '<tr>'
+                    console.log("111");
+                    html += '<td > ' + i++ + '</td>'
+                    html += '<td >' + item.Items + '</td>'
+                    html += '<td >' + item.UnitPrice + '</td>'
+
+                    html += '</tr>'
+                });
+
+
+                $('.tbody11').html(html);
+            }
+        });
+    }
+
+</script>
+
+

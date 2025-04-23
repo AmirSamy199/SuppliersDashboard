@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "طلبات المندوب ";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="alert text-center " id="msg2">
+    تقرير استلام بضاعة : @ViewBag.Sales
+</div>
+<table class="table-responsive table table-striped" style="width:100%" id="Table">
+    <thead>
+        <tr>
+            <th scope="col" style="">#</th>
+            <th scope="col" style="">@SuppliersDashboard.Resources.pages.name </th>
+            <th scope="col" style="">@SuppliersDashboard.Resources.pages.count </th>
+            <th scope="col" style="">البائع </th>
+            <th scope="col" style="">امين المخزن  </th>
+            <th scope="col" style="">التاريخ </th>
+        </tr>
+    </thead>
+    <tbody id="TableBody">
+        @if (ViewBag.Data != null)
+            {
+
+          
+        foreach (var item in ViewBag.Data)
+        {
+            <tr>
+
+        <td scope="col" style="">#</td>
+        <td scope="col" style="">@item.ItemName </td>
+        <td scope="col" style=""> @item.Item_Count</td>
+        <td scope="col" style="">@item.SalesName </td>
+        <td scope="col" style="">@ViewBag.userName </td>
+        <td scope="col" style="">@item._Edit_date </td>
+            </tr>
+            }
+        }
+        </tbody>
+    </table>

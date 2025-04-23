@@ -1,0 +1,225 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "CustomerDeffers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center !important;
+    }
+
+    .editorinput {
+        outline: unset;
+        background: unset;
+        border: unset;
+    }
+
+    .body {
+        padding: 30px;
+    }
+
+    .editorinput:focus {
+        border-bottom: 1px solid #009CFF;
+    }
+
+    button {
+        margin: 0 10px;
+    }
+</style>
+
+
+<div class="body" id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 2px solid !important;
+        }
+
+        table {
+            margin: 10px;
+            border-collapse: collapse !important;
+        }
+    </style>
+    <div class=" card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse" class="collapse">
+                <h2 class="p-3 text-center "> @pages.accountstatement @ViewBag.BranchName   </h2>
+                <table class=" table table-bordered table-striped" style="width:100%" id="Table">
+                    <thead>
+                        <tr>
+
+
+                            <th scope="col" style="">#</th>
+                            <th scope="col" style="">@pages.procesno   </th>
+                            <th scope="col" style=""> @pages.proces   </th>
+                            <th scope="col" style=""> @Items.Date   </th>
+                            <th scope="col" style=""> @pages.previousbalance      </th>
+                            <th scope="col" style="">@pages.Sales     </th>
+                            <th scope="col" style="">@pages.Returns    </th>
+                            <th scope="col" style="">@pages.amountrequired    </th>
+                            <th scope="col" style=""> @pages.Totalpaid     </th>
+                            <th scope="col" style="">@pages.collection    </th>
+                            <th scope="col" style="">@pages.cash   </th>
+                            <th scope="col" style=""> @pages.deffered    </th>
+                            <th scope="col" style=""> @pages.currentbalance     </th>
+
+
+                            @*  <th scope="col" style='text-align:Center'> @SuppliersDashboard.Resources.pages.action </th>*@
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i>@llayout.print</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary col-12 btn-lg " onclick="LayoutExcel('/Report/BranchAccountStateMent?BranchID=@ViewBag.BranchId','كشف حساب  @ViewBag.BranchName')" id="excelbtn"> @llayout.Execl </button>
+
+    </div>
+
+</div>
+@*<div class="text-center p-4">
+
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i>@llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="LayoutExcel('/Report/BranchAccountStateMent?BranchID=@ViewBag.BranchId','كشف حساب  @ViewBag.BranchName')" id="excelbtn"> @llayout.Execl </button>
+</div>*@
+<script>
+    let counter = 1;
+    LoadPage(@ViewBag.BranchId)
+
+      function LoadPage(id) {
+           // startloader();
+            $.ajax({
+                type: "post",
+                url: `/Market/GetAccountStatement?BranchID=${id}`,
+                data: {},
+                success: (res) => {
+
+                    drawTable(res.data.Data)
+
+                    $("#tablecollapse").show()
+
+
+                }
+            })
+
+        }
+
+
+
+        function drawTable(data) {
+
+               $("#Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+               data:data,
+                   "columns": [
+
+                       {
+                           "data": null, render: () => {
+                               return counter++;
+                           }
+                       },
+                       { "data": "BillNo", "name": "BillNo", "width": "Auto" },
+                       {
+                           //"data": "Typett", "name": "Typett", "width": "Auto"
+                           data: null,
+                           render: function (e, y, x) {
+                               debugger
+                               if (e.Typett =="ت")
+                                   return `<span style='width:100%' id='${e.BillNo}' class='billcell' ondblclick='Rowclickable(this, ${e.BillNO})'> ${e.Typett} </span>`
+                               else
+                                   return `<span style='width:100%' id='${e.BillNo}' class='billcell'> ${e.Typett} </span>`
+                           }
+
+                       },
+                       { "data": "Add_date", "name": "Add_date", "width": "Auto" },
+                       { "data": "Old_RemainingAmount", "name": "Old_RemainingAmount", "width": "Auto" },
+                       { "data": "SalesAmount", "name": "SalesAmount", "width": "Auto" },
+                       { "data": "ReturnAmount", "name": "ReturnAmount", "width": "Auto" },
+                       { "data": "Amount_Required", "name": "Amount_Required", "width": "Auto" },
+                       { "data": "TotalePayment", "name": "TotalePayment", "width": "Auto" },
+                       { "data": "CollectionAmount", "name": "CollectionAmount", "width": "Auto" },
+                       { "data": "cash", "name": "cash", "width": "Auto" },
+                       { "data": "Deferred", "name": "Deferred", "width": "Auto" },
+                       { "data": "RemainingAmount", "name": "RemainingAmount", "width": "Auto" },
+
+
+
+
+                   ]
+               })
+
+            let billcells = document.querySelectorAll(".billcell")
+            for (let i = 0; i < billcells.length; i++) {
+                let id = billcells[i].getAttribute("id");
+                $(billcells[i]).parent().parent().attr("ondblclick", "Rowclickable(this, " + id + ")")
+                $(billcells[i]).parent().parent().attr("onclick", "viewBill( " + id + ")")
+            }
+
+    }
+
+    function Rowclickable(billCell, billno) {
+        //let billno = $("#viewbillid").val()
+
+        HomeViewBill(billno)
+        //debugger
+        //row = billCell.parent();
+        //row.attr('onclick', `HomeViewBill(${billno})`);
+
+        //row.click(function () {
+        //    HomeViewBill(billno)
+        //})
+        //row.css({ "color": "red", "border": "2px solid red" });
+
+
+    }
+
+    function HomeViewBill(billno) {
+
+
+        if (billno > 0) {
+            $.ajax({
+                url: "/CHIJpbnRlcg/Encrypt",
+                type: "post",
+                data: {
+                    key: String(billno)
+                }, success: (res) => {
+
+                    location.href = `/chijpbnrlcg/T1UHSfl6oRmBLZg7E44aAg?QmlsbE5v=${res}`
+
+                }
+
+            })
+        }
+
+    }
+</script>
+

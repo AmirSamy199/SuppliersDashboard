@@ -1,0 +1,199 @@
+﻿@*@model SuppliersDashboard.ViewModels.Response<SuppliersDashboard.Models.CP.CommisionModel>*@
+
+@{
+    var Model = ViewBag.Model;
+}
+<style>
+    #modalcontent {
+        min-width: 700px;
+    }
+
+    .card-header {
+        text-align: center !important;
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+
+@if (Model.State == 1)
+{
+    <div class="p-4">
+        <h2 class="p-3 text-center">
+            اغلاق شهرية
+
+            المندوب
+            @Model.Data.SalesManName
+
+        </h2>
+
+        <div class="row d-flex justify-content-around">
+            <div class="p-2 col-4">
+
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        الراتب الاساسي
+                    </div>
+                    <div class="card-body text-success text-center">
+                        @Model.Data.BaseSalary
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 col-4">
+
+
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        كل الحافز
+                    </div>
+                    <div class="card-body text-success  text-center">
+                        @Model.Data.AllCommision
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 col-4">
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        بدل انتقالات
+                    </div>
+                    <div class="card-body text-center text-success">
+                        <span class="text-success">  @Model.Data.TransportInstead</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around">
+
+            <div class="p-2 col-4">
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        مجموع الحافز
+                    </div>
+                    <div class="card-body text-center text-success">
+                        @if (Model.Data.FinalCommision < 0)
+                        {
+                            @Model.Data.FinalCommision
+                        }
+                        else
+                        {
+                            <span class="text-success"> @Model.Data.FinalCommision</span>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 col-4">
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        حافز المبيعات
+                    </div>
+                    <div class="card-body text-center text-success">
+                        @if (Model.Data.FinalSalesCommision < 0)
+                        {
+                            @Model.Data.FinalSalesCommision
+                        }
+                        else
+                        {
+                            <span class="text-success"> @Model.Data.FinalSalesCommision</span>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 col-4">
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        حافز التغطية
+                    </div>
+                    <div class="card-body text-center text-success">
+                        @if (Model.Data.FinalCoverageCommision < 0)
+                        {
+                            @Model.Data.FinalCoverageCommision
+                        }
+                        else
+                        {
+                            <span class="text-success"> @Model.Data.FinalCoverageCommision</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around">
+
+            <div class="p-2 col-4">
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        حافز الاصناف
+                    </div>
+                    <div class="card-body text-center text-success">
+                        @if (Model.Data.FinalItemCommision < 0)
+                        {
+                            @Model.Data.FinalItemCommision
+                        }
+                        else
+                        {
+                            <span class="text-success"> @Model.Data.FinalItemCommision</span>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 col-4">
+                <div class=" p-3 card">
+                    <div class="card-body text-center">
+                        حافز المرتجعات
+                    </div>
+                    <div class="card-body text-center text-success">
+                        @if (Model.Data.FinalReturnCommision < 0)
+                        {
+                            @Model.Data.FinalReturnCommision
+                        }
+                        else
+                        {
+                            <span class="text-success"> @Model.Data.FinalReturnCommision</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="p-3">
+        <ul style="list-style-type:none">
+            @foreach (var item in Model.Data.Messsages)
+            {
+                <li  style="font-size:20px ; font-weight:bold">- @item </li>
+            }
+
+
+
+        </ul>
+
+    </div>
+
+
+    <div class="p-3">
+        <div class="row d-flex justify-content-around">
+            <div class="col-lg-6 text-center" style="font-size:22px">  اجمالي المستحق :</div>
+            <div class="col-lg-6 text-success"style="font-size:22px">
+                    @Model.Data.FinalSalary
+                    جنيه
+            </div>
+        </div>
+    </div> 
+
+
+    <div class="text-center p-5">
+        <button class="btn btn-primary" style="width : 100% ; display:inline-block" onclick="sure(`هل تريد اغلاق الشهرية للمندوب ؟ ` , 'اغلاق' ,'submitCloseMonth(@Model.Data.SalesManId , `@Model.Data.Month`)')">
+            اغلاق الشهرية
+        </button>
+    </div>
+}
+else
+{
+    <div class="text-danger text-center">
+        @Model.Message
+    </div>
+    <script>
+        console.log(`@Model.ErrorMessage`)
+    </script>
+}
+
+

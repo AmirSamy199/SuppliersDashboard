@@ -1,0 +1,503 @@
+﻿@model SuppliersDashboard.ViewModels.SelectSales_Today_English_Pro
+@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "الحساب ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .con {
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #0094ff;
+        text-align: center;
+    }
+</style>
+<div class="p-3">
+    <button class="btn btn-outline-danger" onclick="Print()"> طباعة</button>
+</div>
+
+<div class="p-2">
+    <div id="printer">
+        <div class="h2 text-center   mb-3">
+            <label class="form-label-title text-center col-lg-12 col-md-3 mb-0" for="name">
+                @ViewBag.User
+            </label>
+        </div>
+        <div class="row">
+            <div class="col-lg-3  col-sm-4   p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.totalpil </p>
+                    <div class="text-center ">
+                        @Model.TotalPil
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3  col-sm-4   p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.tbbeforediscount </p>
+                    <div class="text-center ">
+                        @Model.TotalPillBeforDiscount
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.tbdiscount </p>
+                    <div class="text-center ">
+                        @Model.TotalPilDiscount
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.tbafterdiscount </p>
+                    <div class="text-center ">
+                        @Model.TotalPilAfterDiscount
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.titemcount </p>
+                    <div class="text-center ">
+                        @Model.TotalItemsQount
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.titemdiscount </p>
+                    <div class="text-center ">
+                        @Model.TotalItemsDiscount
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.totalpilagil </p>
+                    <div class="text-center ">
+                        @Model.TotalPilAgel
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillsreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  "> @llayout.cashBill  </p>
+                    <div class="text-center ">
+                        @Model.TotalPilCach
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-4  p-4">
+                <div class=" con" onclick="showbillscollectionreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @pages.collection </p>
+                    <div class="text-center ">
+                        @Model.Collection
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-4  p-4" >
+                <div class=" con"  onclick="showexpensesreportpopup(@ViewBag.UserId)" >
+                    <p class="text-center  ">  @pages.msrofat </p>
+                    <div class="text-center ">
+                        @Model.Msrofat
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-4  p-4" >
+                <div class=" con"  onclick="showbillscollectionreportpopup(@ViewBag.UserId)">
+                    <p class="text-center  ">  @llayout.Clearcash  </p>
+                    <div class="text-center ">
+                        @(Model.TotalPilNet - Model.MoneyReceiptPapers_Amount)
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-lg-3 p-4">
+            <div class=" con">
+                <p class="text-center  ">  @pages.ramount </p>
+                <div class="text-center ">
+                    @Model.ReturnAmount
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <div class="row">
+            <div style="font-size:20px" class="col-lg-4  mb-3">
+                @llayout.amount
+                <span class="" id="requiredmoney">
+                    @ViewBag.requiredamount
+                </span>
+            </div>
+            <div style="font-size:20px" class="col-lg-4   mb-3">
+                @llayout.Receivablepapers
+                <span class="" id="requiredpaymentpaper">
+                    @ViewBag.RequiredpaymentPapercount
+                </span>
+                @llayout.Amount1
+                <span class="" id="requiredpaymentpaperamount">
+                    @ViewBag.RequiredpaymentPaperamount
+                </span>
+
+            </div>
+            <div style="font-size:20px" class="col-lg-4  mb-3">
+                @llayout.Termpapers
+                <span class="" id="requiredcollectionpaper">
+                    @ViewBag.RequiredcollectionPapercount
+                </span>   @llayout.Amount1
+
+                <span class="" id="requiredcollectionpaper">
+                    @ViewBag.RequiredcollectionPaperamount
+                </span>
+            </div>
+
+            @*money*@
+            <div class="col-lg-6 text-center  mb-3 ">
+                <div class="row">
+                    <div class="col-4 p-1">
+                        <div class="text-center">
+                            @llayout.Receivedamount
+                        </div>
+                    </div>
+                    <div class="col-8 p-1 ">
+
+                        <input id="actualmoney" onkeyup="calcmoneyshortfall(this)" value="0" onclick="this.select()" type="number" class="form-control" />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center ">
+                <strong style="font-size:20px" id="moneyshortfall">
+
+                </strong>
+            </div>
+            @*payment paper*@
+            <div class="col-lg-6 text-center  mb-3 ">
+                <div class="row">
+                    <div class="col-2 p-1">
+                        <div class="text-center">
+                            @llayout.Receivablepapers
+                        </div>
+                    </div>
+                    <div class="col-4 p-1 ">
+
+                        <input id="paymentpapercount" onkeyup="calcpaymentpaper(this)" value="0" onclick="this.select()" type="number" class="form-control" />
+                    </div>
+                    <div class="col-2 p-1">
+                        <div class="text-center">
+                            @llayout.Amount1
+                        </div>
+                    </div>
+                    <div class="col-4 p-1 ">
+
+                        <input id="paymentpaperamount" value="0" onclick="this.select()" onkeyup="calcpaymentpaperamount(this)" type="number" class="form-control" />
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center ">
+                <strong style="font-size:20px" id="paymentpapershortfall">
+
+                </strong>
+                <span>
+                    -
+                </span>
+                <strong style="font-size:20px" id="paymentpapershortfallamount">
+
+                </strong>
+            </div>
+
+            @*collection paper*@
+            <div class="col-lg-6 text-center  mb-3 ">
+                <div class="row">
+                    <div class="col-2 p-1">
+                        <div class="text-center">
+                            @llayout.Termpapers
+                        </div>
+                    </div>
+                    <div class="col-4 p-1 ">
+
+                        <input id="collectionpapercount" value="0" onclick="this.select()" onkeyup="calccollectionpaper(this)" type="number" class="form-control" />
+                    </div>
+                    <div class="col-2 p-1">
+                        <div class="text-center">
+                            @llayout.Amount1
+                        </div>
+                    </div>
+                    <div class="col-4 p-1 ">
+
+                        <input id="collectionpaperamount" value="0" onclick="this.select()" onkeyup="calccollectionpaperamount(this)" type="number" class="form-control" />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center ">
+                <strong style="font-size:20px" id="collectionpapershortfall">
+
+                </strong>
+                <span>
+                    -
+                </span>
+                <strong style="font-size:20px" id="collectionpapershortfallamount">
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="col-lg-4 text-center  mb-3 ">
+                <button type="submit" class="btn  btn-outline-primary" onclick="openAccount(this)"> @llayout.openaccount </button>
+            </div>
+            <div class="col-lg-4 text-center  mb-3 collapse " id="receivemoneydiv">
+                <button type="submit" class="btn  btn-outline-primary" onclick="confirmreceivemoney(this)"> @llayout.Confirmre  </button>
+            </div>
+            <div class="col-lg-4 text-center  mb-3 collapse " id="closedaydiv">
+                <button type="submit" class="btn  btn-outline-primary" onclick="submitcloseDay(this)"> @llayout.closetoday    </button>
+            </div>
+        </div>
+
+     </div>
+
+ </div>
+
+
+
+    @section scripts{
+        <script>
+
+            function showbillsreportpopup(salesId) {
+                let Url = `/Distributor/showbillsreportpopup?SalesId=${salesId}`
+
+                $.post(Url, (res) => {
+                    ShowModal(res)
+
+                    //         console.log(res)
+                })
+            }
+            function showbillscollectionreportpopup(salesId) {
+                let Url = `/Distributor/showbillscollectionreportpopup?SalesId=${salesId}`
+
+                $.post(Url, (res) => {
+
+
+                    ShowModal(res)
+                    //                console.log(res)
+                })
+            }
+            function showexpensesreportpopup(salesId) {
+                let Url = `/Distributor/showbillsexpensesreportpopup?SalesId=${salesId}`
+
+                $.post(Url, (res) => {
+
+
+                    ShowModal(res)
+                    //                console.log(res)
+                })
+            }
+            function Print() {
+                var restorepage = $('body').html();
+
+                var printcontent = $('#printer').html();
+                $('body').empty().html(printcontent);
+                window.print();
+                $('body').html(restorepage);
+            }
+
+        function calcmoneyshortfall(el) {
+            let shoerfall = parseFloat($("#requiredmoney").text()) - parseFloat($(el).val())
+            if (shoerfall == 0) {
+                $("#moneyshortfall").html("لا يوجد عجز ").css("color", "#0094ff")
+
+            } else if (shoerfall > 0) {
+                $("#moneyshortfall").html(shoerfall + " جنيه  " + " عجز ").css("color", "#f00")
+
+            } else if (shoerfall < 0) {
+                $("#moneyshortfall").html(shoerfall * -1 + " جنيه  " + "  زيادة   " ).css("color", "#0094ff")
+            } else {
+                $("#moneyshortfall").html("ادخل رقم صحيح ").css("color", "#000")
+            }
+
+
+        }
+
+
+
+        function calcpaymentpaper(el) {
+            let shoerfall = parseFloat($("#requiredpaymentpaper").text()) - parseFloat($(el).val())
+            if (shoerfall == 0) {
+                $("#paymentpapershortfall").html("لا يوجد عجز ").css("color", "#0094ff")
+
+            } else if (shoerfall > 0) {
+                $("#paymentpapershortfall").html(shoerfall + " ورقة  " + " عجز ").css("color", "#f00")
+
+            } else if (shoerfall < 0) {
+                $("#paymentpapershortfall").html(shoerfall * -1 + " ورقة  " + "  زيادة   ").css("color", "#0094ff")
+            } else {
+                $("#paymentpapershortfall").html("ادخل رقم صحيح ").css("color", "#000")
+            }
+        }
+        function calcpaymentpaperamount(el) {
+            let shoerfall = parseFloat( @ViewBag.RequiredpaymentPaperamount) - parseFloat($(el).val())
+            if (shoerfall == 0) {
+                $("#paymentpapershortfallamount").html("لا يوجد عجز ").css("color", "#0094ff")
+
+            } else if (shoerfall > 0) {
+                $("#paymentpapershortfallamount").html(shoerfall + " جنيه  " + " عجز ").css("color", "#f00")
+
+            } else if (shoerfall < 0) {
+                $("#paymentpapershortfallamount").html(shoerfall * -1 + " جنيه  " + "  زيادة   ").css("color", "#0094ff")
+            } else {
+                $("#paymentpapershortfallamount").html("ادخل رقم صحيح ").css("color", "#000")
+            }
+        }
+        function calccollectionpaper(el) {
+            let shoerfall = parseFloat($("#requiredcollectionpaper").text()) - parseFloat($(el).val())
+            if (shoerfall == 0) {
+                $("#collectionpapershortfall").html("لا يوجد عجز ").css("color", "#0094ff")
+
+            } else if (shoerfall > 0) {
+                $("#collectionpapershortfall").html(shoerfall + " ورقة  " + " عجز ").css("color", "#f00")
+
+            } else if (shoerfall < 0) {
+                $("#collectionpapershortfall").html(shoerfall * -1 + " ورقة  " + "  زيادة   ").css("color", "#0094ff")
+            } else {
+                $("#collectionpapershortfall").html("ادخل رقم صحيح ").css("color", "#000")
+            }
+        }
+         function calccollectionpaperamount(el) {
+             let shoerfall = parseFloat( @ViewBag.RequiredcollectionPaperamount) - parseFloat($(el).val())
+            if (shoerfall == 0) {
+                $("#collectionpapershortfallamount").html("لا يوجد عجز ").css("color", "#0094ff")
+
+            } else if (shoerfall > 0) {
+                $("#collectionpapershortfallamount").html(shoerfall + " جنيه  " + " عجز ").css("color", "#f00")
+
+            } else if (shoerfall < 0) {
+                $("#collectionpapershortfallamount").html(shoerfall * -1 + " جنيه  " + "  زيادة   ").css("color", "#0094ff")
+            } else {
+                $("#collectionpapershortfallamount").html("ادخل رقم صحيح ").css("color", "#000")
+            }
+        }
+
+
+            function openAccount(element) {
+            let val = $("#actualmoney").val()
+            if (val = 0 || val == "") {
+                ShowModal("<span class='text-danger'> من فضلك ادخل المبلغ صحيح  </span> ");
+            } else {
+                $.ajax({
+                    type:"get",
+                    url: "/Distributor/SubmitAddAccount",
+                    data: {
+                        sales: @ViewBag.UserId,
+                        actualamount: $("#actualmoney").val(),
+                        requiredamount: @ViewBag.requiredamount,
+                        actualpaymentpaperCount: $("#paymentpapercount").val(),
+                        actualpaymentpaperamount: $("#paymentpaperamount").val(),
+                        actualcollectionpaperCount: $("#collectionpapercount").val(),
+                        actualcollectionpaperamount: $("#collectionpaperamount").val(),
+                        requiredcollectionpaperCount: @ViewBag.RequiredcollectionPapercount ,
+                        requiredcollectionpaperamount: @ViewBag.RequiredcollectionPaperamount ,
+                        requiredpaymentpaperCount:@ViewBag.RequiredpaymentPapercount ,
+                        requiredpaymentpaperamount: @ViewBag.RequiredpaymentPaperamount,
+
+                    },
+                    success:function(res) {
+
+                        if (res.data.State == 1) {
+                            $("#receivemoneydiv").collapse("show");
+                            $(element).parent().remove();
+
+                        } else if (res.data.State == 2) {
+                            //ShowModal(res.data.Message)
+                            showdangeroperation(res.data.Message)
+                            $("#receivemoneydiv").collapse("show");
+                            $(element).parent().remove();
+
+                        } else {
+                           // ShowModal(res.data.Message);
+                            showdangeroperation(res.data.Message)
+                        }
+                    }
+
+
+                })
+            }
+        }
+
+        function confirmreceivemoney(element) {
+            $.ajax({
+                    type:"post",
+                url: "/Distributor/confirmreceivemoney",
+                    data: {
+                        sales: @ViewBag.UserId,
+
+                    },
+                success: function (res) {
+
+                    if (res.data.State == 1) {
+                        // ShowModal(res.data.Message)
+                        $(element).css("display","none")
+                        $("#closedaydiv").collapse("show");
+                    }
+
+                    }
+
+
+                })
+        }
+
+        function submitcloseDay(element) {
+             $.ajax({
+                    type:"post",
+                 url: "/Distributor/submitcloseDay",
+                    data: {
+                        sales: @ViewBag.UserId,
+
+                    },
+                 success: function (res) {
+
+                     if (res.data.State == 1) {
+                         showsuccessoperation(res.data.Message)
+                        // ShowModal(res.data.Message)
+                         $(element).remove()
+                         setTimeout(() => { location.reload() }, 3000)
+                     }
+                     else {
+                         showDangerOperation(res.data.Message)
+                        // ShowModal(res.data.Message)
+
+                     }
+
+                 }
+
+
+                })
+        }
+        </script>
+
+    }
+
+

@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "مديونيات العملاء";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div  id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 2px solid #000 !important
+        }
+
+        table {
+            border-collapse: collapse !important
+        }
+    </style>
+    <h2 class="text-center">
+        @ViewBag.UserIdSales
+    </h2>
+    <h2 class="h2  text-center "> @SuppliersDashboard.Resources.llayout.Indebtedness   @ViewBag.Sales </h2>
+
+
+    @*choose the representaive person div*@
+    <div class="row d-flex justify-content-around" >
+        <div class="col-lg-4 text-center p-3" >
+            @*<label id="select_represent_label" for="select_represent" class="label">المندوب</label>*@
+            <input class="form-control" id="select_represent" list="representList" placeholder="@SuppliersDashboard.Resources.llayout.Alldelegates" />
+            <datalist id="representList">
+                <option value="0">@SuppliersDashboard.Resources.llayout.Alldelegates</option>
+                @if (ViewBag.presentatives != null)
+                {
+                    foreach (var item in ViewBag.presentatives)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                }
+            </datalist>
+        </div>
+    </div>
+
+    <p class="h4 text-body text-center d-none" id="emptydataparagraph"> @SuppliersDashboard.Resources.llayout.dets </p>
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <table class="table-responsive table table-bordered table-hover" style="width:100%" id="Table">
+                    <thead>
+                        <tr>
+
+
+                            <th scope="col" style="">#</th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.llayout.Branch   </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.llayout.company    </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.llayout.Indebtedness     </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.llayout.arrears     </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.llayout.data     </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+<div class="row d-flex justify-content-around">
+    <div class="col-lg-4 text-center p-3">    <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i>@SuppliersDashboard.Resources.llayout.print </button></div>
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="excel()" id="excelbtn"> @SuppliersDashboard.Resources.llayout.Execl </button>
+    </div>
+
+
+</div>
+<script>
+    let counter = 1;
+    LoadPage(0)
+
+    function LoadPage(id) {
+
+
+            $.ajax({
+                type: "post",
+                url: `/Distributor/GetDebits?UserId=${id}`,
+                data: {},
+                success: (res) => {
+
+                    if (res.data.Data.length > 0) {
+                        drawTable(res.data.Data)
+                        $("#tablecollapse").show()
+                        $("#emptydataparagraph").addClass("d-none")
+                    } else {
+                        $("#tablecollapse").hide()
+                        $("#emptydataparagraph").removeClass("d-none")
+                    }
+
+
+
+
+                }
+            })
+
+        }
+
+
+
+        function drawTable(data) {
+
+               $("#Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+               data:data,
+                   "columns": [
+
+                       {
+                           "data": null, render: () => {
+                               return counter++;
+                           }
+                       },
+                       {
+                           "data": null, render: (data, i, e) => {
+
+                               return data.region + " - " + data.BranchName
+                           }
+                       },
+                       { "data": "CompanyName", "name": "CompanyName", "width": "Auto" },
+                       { "data": "Debts", "name": "Debts", "width": "Auto" },
+                       { "data": "Laters", "name": "laters", "width": "Auto" },
+                       { "data": "_TranDate", "name": "_TranDate", "width": "Auto" },
+
+
+                ]
+            })
+
+    }
+
+
+    //choose the representative person
+    var id = 0;
+    $("#select_represent").change(function () {
+
+        id = $("#select_represent").val();
+        var name = $("#representList option[value=" + id + "]").text();
+        $("#select_represent_label").text(name);
+
+        LoadPage(id)
+        $('#select_represent').val("")
+        $('#select_represent').attr('placeholder', name);
+
+
+    })
+
+
+    //excel function
+    function excel() {
+        let ApI = "/Report/GetUserDeffered?Id=" + id;
+        LayoutExcel(ApI,'مديونيات @ViewBag.Sales')
+    }
+</script>
+

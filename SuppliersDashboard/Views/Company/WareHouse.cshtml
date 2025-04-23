@@ -1,0 +1,216 @@
+﻿@using SuppliersDashboard.Models
+@{
+    ViewBag.Title = @SuppliersDashboard.Resources.llayout.wareHouse;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SelectList suppliers = ViewBag.Suppliers;
+    User curuser = SuppliersDashboard.Helper.Cokie.UserGet();
+}
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center !important;
+    }
+    .editorinput{
+        outline:unset ; 
+        background:unset;
+        border:unset;
+    }
+    .editorinput:focus {
+      border-bottom:1px solid #009CFF;
+    }
+    button{
+        margin:0 10px;
+    }
+
+
+
+</style>
+<input type="hidden" id="curuser" value="@curuser.Id" /> 
+<div class="col-12">
+    <div class="bg-light rounded  p-4 pb-1">
+        <select class="form-select form-select-lg mb-3" id="SupID" aria-l>
+            <option value="">@SuppliersDashboard.Resources.pages.SelectSupplier</option>
+            @foreach (var item in suppliers)
+            {
+                <option value=@item.Value>@item.Text</option>
+            }
+        </select>
+    </div>
+    <h2 id="choosesupllierfirst"  class=" p-5 text-center text-body collapse show"> من فضلك اختر المورد اولا  </h2>
+    <div class="bg-light rounded  p-4 pt-1" id="Content">
+     
+       @* <h6 class="h3">@SuppliersDashboard.Resources.llayout.wareHouse </h6>*@
+
+        <div class="collapse" id="tablecollapse">
+
+            <div class="">
+                <table class="table-responsive table table-striped"  style="width:100%" id="Table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width:auto">#</th>
+                            <th scope="col" style="width: auto">@SuppliersDashboard.Resources.pages.name </th>
+                            <th scope="col" style="width: auto">@SuppliersDashboard.Resources.pages.count </th>
+                            @*<th scope="col" style="width: auto">value </th>
+                            <th scope="col" style='text-align: Center; width: auto'> @SuppliersDashboard.Resources.pages.action </th>*@
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function LoadData() {
+            if ($('#SupID').val() != "") {
+                $("#choosesupllierfirst").removeClass("show")
+                let x = parseInt($('#SupID').val());
+                startloader();
+                $.ajax({
+                    type: "post",
+                    url: "/Company/LoadData",
+                    data: { SupID:x  },
+                    datatype: "json",
+                    traditional: true,
+                    success: function (res) {
+                        if (res.data.State == 1) {
+                            let datalist = res.data.Data;
+                            drawTable(datalist);
+                            $("#tablecollapse").show()
+                        }
+                       endloader()
+                    }
+                });
+            }
+        }
+        function drawTable(data) {
+            $("#Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+               data:data,
+                "columns": [
+                    { "data": "ItemId", "name": "ItemId", "width": "Auto" },
+                    { "data": "ItemName", "name": "ItemName", "width": "Auto" },
+                    { "data": "bal", "name": "bal", "width": "Auto" },
+                   @* {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+
+                            return "<span id='bal-" + data.ItemId+"'> "+data.bal+ "</span>"
+                        }
+                    }, {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+
+                           return  "<input type = 'number' id='count-" + data.ItemId + "' step='1' class ='editorinput' value = '0'>"
+                        }
+                    },
+                    {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+                            let html ="";
+                            //AddCount(" + data.ItemId + ",\" C \" )
+                            html += "<button class='btn btn-sm btn-outline-primary' onclick='ConfirmAdd(" + data.ItemId + ",\" " + data.ItemName + "\",\"C\")'> @SuppliersDashboard.Resources.pages.add  </button> ";
+                            html += "<button class='btn btn-sm btn-outline-warning' onclick='ConfirmAdd(" + data.ItemId + ",\" " + data.ItemName +"\",\"D\")'> @SuppliersDashboard.Resources.pages.loss  </button> ";
+                            return html;
+
+                        }
+                    }*@
+                ]
+            })
+
+        }
+        $('#SupID').change(function () {
+           
+            LoadData();
+          
+        })
+
+        async function AddCount(id, type) {
+            // this method take await not to user dublicate click and do twice
+            $("#addbtn").addClass("disabled");
+            await AddCountt(id, type);
+        }
+          function AddCountt(id, type) {
+            let count = $("#count-" + id).val();
+
+            $.ajax({
+                url: "/Company/AddItemCount",
+                type:"post",
+                data: {
+                    itemId: id,
+                    count: count,
+                    type: type,
+                    user: $("#curuser").val(),
+                    supplier: $("#SupID").val()
+                },
+                success:  (res) =>{
+                    if (res.data.State == 1) {
+
+                    //document.getElementById("bal-" + id).innerText = res.data.Data;
+                    //    $("#count-" + id).val("0");
+                       
+                    }
+                    $("#modalcontent").text(res.data.Message)
+                    $("#myModal").modal("show")
+
+
+                }
+            })
+
+
+        }
+
+
+        function ConfirmAdd(id, name, type) {
+            let count = $("#count-" + id).val();
+            if (count == null || count <= 0) {
+                alert("enter valid count ");
+                return;
+            }
+
+            let message = " ";
+            let html = " ";
+            if (type.trim() == "C") {
+                message += " هل تريد بالفعل اضافة عدد   " + count + " للصنف " + name + "?"
+                html += "<div style ='adding : 25px'> <p>  " + message + " <p> <div>     <button id='addbtn' class='btn btn-sm btn-outline-primary' onclick='AddCount(" + id + ",\" " + type + " \" )'> @SuppliersDashboard.Resources.pages.add   </button>  <button  class='btn btn-sm btn-outline-primary m-2' onclick='closeConfirm()'> الغاء  </button>  </div> </div> "
+            }
+
+            if (type.trim() == "D") {
+
+                message += "  تريد بالفعل سحب عدد " + count + " للصنف " + name + "?"
+             html = "<div style ='adding : 25px'> <p>  " + message + " <p> <div>     <button id='addbtn' class='btn btn-sm btn-outline-primary' onclick='AddCount(" + id + ",\" "+type+" \" )'> @SuppliersDashboard.Resources.pages.loss    </button>  <button  class='btn btn-sm btn-outline-primary m-2' onclick='closeConfirm()'> الغاء  </button>  </div> </div> "
+            }
+            $("#modalcontent").html(html)
+            $("#myModal").modal("show")
+        }
+
+        function closeConfirm() {
+            $("#myModal").modal("hide")
+        }
+    </script>
+    
+    
+    
+    
+    
+    
+    }

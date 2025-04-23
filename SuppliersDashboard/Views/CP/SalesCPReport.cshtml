@@ -1,0 +1,61 @@
+﻿@{
+
+  
+    ViewBag.Title = "SalesCPReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row d-flex justify-content-around">
+    <div class="col-lg-4 text-center p-3">
+        @Html.Partial("_SelectDistributor")
+    </div>
+
+</div>
+<div id="printer">
+    <div class="row d-flex justify-content-around">
+    <div class="col-lg-4 text-center p-3">
+        <h3 class="p-4 text-center">
+            من فضلك اختر المندوب 
+        </h3>
+    </div>
+    </div>
+</div>
+
+<script>
+
+
+
+    function LoadPage() {
+        let Id = $("#distributorId").val();
+        $.get(`/CP/SalesCPReportPartial?SalesId=${Id}`, (res) => {
+            $("#printer").html(res)
+        })
+    }
+   
+
+    function submitCloseMonth(SalesId, Month) {
+        let url = `/CP/CloseSalesMonth?SalesId=${SalesId}&Month=${Month}`
+        $.get(url, (res) => {
+         
+            if (res.State == 1) {
+                showSuccessOperation(res.Message)
+                LoadPage()
+            } else {
+                showDangerOperation(res.Message)
+                console.log(res.ErrorMessage)
+            }
+
+        })
+    }
+    function ClosMonth(SalesId, Month) {
+
+        
+        let values = Month.split('/')
+            let url = `/CP/CloseSalesMonth?SalesId=${SalesId}&Year=${values[0]}&Month=${values[1]}`
+                $.get(url , (res) => {
+                   ShowModal(res)
+                
+                })
+    }
+</script>

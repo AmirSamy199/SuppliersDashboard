@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "PrintBuyBill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0; 
+}
+
+
+<div class="p-5" id="printer">
+    <style>
+        td , th{
+            text-align:center !important;
+        }
+    </style>
+    <h2 class="p-4 text-center">
+        @SuppliersDashboard.Resources.pages.prusche
+    </h2>
+
+    <div class="row ">
+        <div class="col-lg-6">
+            <div  style="font-size:20px">
+                <span>
+                    @SuppliersDashboard.Resources.pages.billno  :
+                </span>
+                <span>
+                    @ViewBag.requestId 
+                </span>
+            </div>
+
+        </div>
+        <div class="col-lg-6"></div>
+            <div class="col-lg-6">
+                <div style="font-size:20px">
+                    <span>
+                        @SuppliersDashboard.Resources.Items.Date  :
+                    </span>
+                    <span>
+                        @ViewBag.History
+                    </span>
+                </div>
+
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-6">
+                <div  style="font-size:20px">
+                    <span>
+                        @SuppliersDashboard.Resources.pages.supplier   :
+                    </span>
+                    <span>
+                        @ViewBag.Supplier
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    <div class="p-5">
+        <table class="table table-bordered">
+            <thead>
+
+            <tr>
+                <th>
+                    #
+                </th>
+                <th> @SuppliersDashboard.Resources.llayout.ProductName </th>
+                <th> @SuppliersDashboard.Resources.pages.price  </th>
+                <th> @SuppliersDashboard.Resources.pages.quantity </th>
+                <th>Totalprice </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(var item in ViewBag.Items)
+            {
+                <tr>
+                    <td>
+                        @(++counter)
+                    </td>
+                    <td>@item.ItemName</td>
+                    <td>@item.Supply_Price</td>
+                    <td>@item.Item_Count</td>
+                    <td>@item.TotalPrice</td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+
+                    </td >
+                    <td >
+                        @ViewBag.Total
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+</div>
+
+<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+  </div>

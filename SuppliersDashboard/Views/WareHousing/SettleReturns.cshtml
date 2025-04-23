@@ -1,0 +1,104 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "SettleReturns";
+}
+
+<h2 class="text-center p-2 ">@pages.SettleReturns</h2>
+
+<div class="container">
+    <table id="Table" class="table table-bordered">
+<thead>
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            @pages.ItemName
+        </th>
+        <th>
+            @pages.size
+        </th> 
+        <th>
+            @pages.Warehouse
+        </th>
+        <th>
+            --
+        </th>
+
+    </tr>
+</thead>
+        <tbody id="tbody">
+            
+        </tbody>
+    </table>
+
+
+
+</div>
+
+<script>
+    LoadTable();
+    function LoadTable() {
+        var url = `/WareHousing/LoadPage`
+
+        $.post(url, (res) => {
+            console.log(res)
+            
+
+
+
+            if (res.State == 2) {
+                let counter = 1; 
+                $("#Table").dataTable({
+                    'iDisplayLength': 25,
+                    "bDestroy": true,
+                    "bSearchable": true,
+                    "responsive": true,
+                    "language": {
+                        "searchPlaceholder": 'Search...',
+                        "sSearch": '',
+                        "lengthMenu": '_MENU_ items/page',
+                    },
+                    data: res.Data,
+                    "columns": [
+
+                        {
+                            "data": null, render: () => {
+                                return counter++;
+                            }
+                        },
+                        { "data": "ItemName", "name": "ItemName", "width": "Auto" },
+                        { "data": "WeightBalance", "name": "WeightBalance", "width": "Auto" },
+                        { "data": "WareHouseName", "name": "WareHouseName", "width": "Auto" },
+                        {
+                            //"data": "Typett", "name": "Typett", "width": "Auto"
+                            data: null,
+                            render: function (e, y, x) {
+                               
+                                return `<button class='btn btn-primary btn-lg' onclick="Settle(${e.CItemId} , ${e.WeightBalance} , ${e.CwId} )" > @pages.Settle </button>`
+                            }
+
+                        },
+                  
+
+
+
+
+                    ]
+                })
+            } else {
+                $("#tbody").html(`<p class='p-2 text-center' > لا يوجد حتي الان </p>`)
+            }
+
+
+        })
+    }
+
+
+    function Settle(ItemId, Size, debitWarehouseId) {
+        let url = `/Warehousing/SettlePartial?ItemId=${ItemId}&Size=${Size}&debitWarehouseId=${debitWarehouseId}`;
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+</script>

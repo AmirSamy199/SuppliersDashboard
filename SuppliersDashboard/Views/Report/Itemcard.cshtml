@@ -1,0 +1,250 @@
+﻿@*@model SuppliersDashboard.ViewModels.warehouse_main_V*@
+@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "كارت الصنف ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3">@pages.iin </div>
+            <div class="col-lg-8 text-center p-3" ">
+                <input class="form-control" type="date" id="DateFrom" />
+            </div>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3"> @pages.from </div>
+            <div class="col-lg-8 text-center p-3">
+                <input class="form-control" type="date" id="DateTo" />
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <input type="hidden" id="distributorId" value="0" />
+        <div class="col-lg-6 text-center ">
+            <input class="form-control" id="select_item" list="representList" placeholder="  @pages.Selectitem" onchange="getItem()" />
+            <datalist id="representList">
+            </datalist>
+        </div>
+    </div>
+
+    @*<div class="text-center">
+
+
+            <input class="form-control" id="select_item" list="representList" placeholder="  @pages.Selectitem" style="width:50%;margin:auto" onchange="getItem()" />
+            <datalist id="representList">
+            </datalist>
+
+        </div>*@
+    <div id="printer">
+        <style>
+            td, th {
+                text-align: center !important;
+                border: 1px solid #000 !important;
+            }
+
+            table {
+                border-collapse: collapse !important;
+            }
+        </style>
+
+
+
+        <div class="row">
+            <div class="col-12 justify-content-center ">
+                <h2 class="h2 text-primary text-center m-3 " id="header"> </h2>
+            </div>
+            <div class="col-12" style="height:30px"></div>
+        </div>
+        <div class=" card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table table-bordered table-striped" id="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    @Items.Date
+                                </th>
+                                <th>
+                                    @pages.tbbeforediscount
+                                </th>
+                                <th>
+                                    @pages.Dismissed
+                                </th>
+                                <th>
+                                    @pages.Incoming
+                                </th>
+                                <th>
+                                    @pages.tbafterdiscount
+                                </th>
+                                <th>
+                                    @pages.Movementtype
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">  @llayout.Execl </button>
+
+        </div>
+
+    </div>
+    @*<div class="text-center p-4">
+        <button class="btn btn-outline-danger" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+        <span style="width:20px"> </span>
+        <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">  @llayout.Execl </button>
+    </div>*@
+    <input type="hidden" id="twice" value="0" />
+</div>
+<script>
+    var selecteditemid
+    $(document).ready(function () {
+        getAllItems()
+    })
+
+    let currentdate = new Date();
+    let m = currentdate.getMonth() + 1;
+    if (m < 10) m = "0" + m
+    let d = currentdate.getDate();
+    if (d < 10) d = "0" + d
+    let dd = "" + currentdate.getFullYear() + "-" + m + "-" + d
+    $("#DateFrom").val(dd)
+    $("#DateTo").val(dd)
+    function excel() {
+
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        let h = $("#header").text()
+        LayoutExcel(`/Report/GetItemCardExcel?ItemId=${selecteditemid}&DateFrom=${datefrom}&DateTo=${dateto}`, `${h}`)
+    }
+    $("#DateTo").change(() => {
+        LoadPage($("#DateFrom").val(), $("#DateTo").val())
+
+    })
+    $("#DateFrom").change(() => {
+        LoadPage($("#DateFrom").val(), $("#DateTo").val())
+
+
+    })
+    LoadPage("", "")
+
+    function LoadPage(DateFrom, DateTo) {
+        $("#spinner").addClass("show");
+        $.ajax({
+            url: "/Report/GetItemTransaction",
+            type: "post",
+            data: {
+                ItemId: selecteditemid,
+                DateFrom: DateFrom,
+                DateTo: DateTo
+            }, success: (res) => {
+                $("#header").text(res.data.Message)
+                //debugger
+                let ciunter = 1;
+
+
+                $("#table").dataTable({
+                    'iDisplayLength': 25,
+                    "bDestroy": true,
+                    "bSearchable": true,
+                    "responsive": true,
+                    "language": {
+                        "searchPlaceholder": 'Search...',
+                        "sSearch": '',
+                        "lengthMenu": '_MENU_ items/page',
+                    },
+                    data: res.data.Data,
+                    "columns": [
+                        {
+                            "data": null, render: function () {
+                                return ciunter++
+                            }
+                        },
+                        { "data": "_date", "name": "_date", "width": "Auto" },
+                        { "data": "Item_Count", "name": "Item_Count", "width": "Auto" },
+                        { "data": "Debit", "name": "Debit", "width": "Auto" },
+                        { "data": "Credit", "name": "Credit", "width": "Auto" },
+                        { "data": "Item_New_Count", "name": "Item_New_Count", "width": "Auto" },
+                        { "data": "transactionType", "name": "transactionType", "width": "Auto" },
+
+                    ]
+                })
+
+            }
+
+        })
+        $("#spinner").removeClass("show");
+
+    }
+    function Print() {
+        $("#Table_length").addClass("d-none")
+        $("#Table_paginate").addClass("d-none")
+        $("#Table_filter").addClass("d-none")
+        $("#Table_info").addClass("d-none")
+        $("#table_length").addClass("d-none")
+        $("#table_paginate").addClass("d-none")
+        $("#table_filter").addClass("d-none")
+        $("#table_info").addClass("d-none")
+        let df = $("#DateFrom").val()
+        let dt = $("#DateTo").val()
+        //var restorepage = $('body').html();
+        //var printcontent = $('#printer').clone();
+
+        //$('body').empty().html(printcontent);
+        //window.print();
+        LayoutPrint()
+        //   $('body').html(restorepage);
+        $("#DateFrom").val(df)
+        $("#DateTo").val(dt)
+        LoadPage(Datefrom, Dateto)
+    }
+    function getAllItems() {
+        $.ajax({
+            url: "/Items/GetAllItemsFromTable",
+            type: "post",
+            data: {
+
+            }, success: (res) => {
+
+                //let html = `<option value="0"> اختار الصنف </option>`;
+                let html = ``;
+                $.each(res.data.Data, (i, e) => {
+                    html += `<option value='${e.Record_ID}'> ${e.ItemName}</option>`
+                })
+                $("#representList").html(html)
+
+            }
+        })
+    }
+    function getItem() {
+        $('#select_item').attr('placeholder', "");
+        var itemid = $("#select_item").val();
+        let itemname = $("#representList option[value=" + itemid + "]").text();
+        /*  var itemname = $("#representList").text()*/
+        console.log(itemname + "         =          =" + itemid)
+        selecteditemid = itemid
+
+        $('#select_item').val("")
+        $('#select_item').attr('placeholder', itemname);
+        LoadPage($("#DateFrom").val(), $("#DateTo").val())
+    }
+</script>

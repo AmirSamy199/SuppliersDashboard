@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = @SuppliersDashboard.Resources.llayout.suppliers;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Model = ViewBag.Suppliers;
+}
+
+<div class="col-12">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">@SuppliersDashboard.Resources.llayout.suppliers </h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">@SuppliersDashboard.Resources.pages.name </th>
+                        <th scope="col">@SuppliersDashboard.Resources.pages.responperson</th>
+                        <th scope="col">@SuppliersDashboard.Resources.pages.address </th>
+                        <th scope="col">@SuppliersDashboard.Resources.pages.phone </th>
+                        <th scope="col"> @SuppliersDashboard.Resources.pages.details </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@(Model.IndexOf(item)+1)</th>
+                            <td>@item.CompanyName</td>
+                            <td>@item.Responsible_Person</td>
+                            <td>@item.Address</td>
+                            <td>@item.Telephone1</td>
+                            <td><a class="btn btn-sm btn-outline-primary" href="/Supplier/Details/@item.Record_ID">@SuppliersDashboard.Resources.pages.todaydetails</a></td>
+                            <td><a class="btn btn-sm btn-outline-primary" href="/Supplier/AllDetails/@item.Record_ID">@SuppliersDashboard.Resources.pages.alldetails</a></td>
+                            
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+              
+<!-- Table End -->

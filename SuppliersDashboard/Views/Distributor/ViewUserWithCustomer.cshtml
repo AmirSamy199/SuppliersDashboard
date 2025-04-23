@@ -1,0 +1,146 @@
+﻿@using SuppliersDashboard.ViewModels
+@{
+    Select_SalesSummry_For_CusAndBranches_Pro Model = (Select_SalesSummry_For_CusAndBranches_Pro)ViewBag.Model;
+    ViewBag.Title = "ViewUserWithCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container p-lg-3">
+
+    
+
+    <h2> @SuppliersDashboard.Resources.pages.distributor : @ViewBag.User </h2>
+    <h2> @SuppliersDashboard.Resources.pages.customer  : @ViewBag.Customer </h2>
+
+    <h2> </h2>
+    <div class="row">
+
+
+        <div class="col-lg-3 p-3 " >
+            <p class="text-center">
+                @SuppliersDashboard.Resources.pages.totalpil
+            </p>
+            <p class="text-primary text-center">
+                @Model.TotalPil   
+            </p>
+        </div>
+       <div class="col-lg-3 p-3 " >
+            <p class="text-center">
+                @SuppliersDashboard.Resources.pages.tbbeforediscount
+            </p>
+            <p class="text-primary text-center">
+                @Model.TotalPillBeforDiscount   
+            </p>
+        </div>
+       
+      <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.tbdiscount
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalPilDiscount   
+                </p>
+      </div>
+       
+        <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.tbafterdiscount
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalPilAfterDiscount   
+                </p>
+      </div>
+       
+      <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.titemcount
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalItemsQount   
+                </p>
+      </div>
+       
+      <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.titemdiscount
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalItemsDiscount   
+                </p>
+      </div>
+       
+    
+     <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.totalpilcash
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalPilCach   
+                </p>
+      </div>
+        <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.totalpilagil
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalPilAgel   
+                </p>
+      </div>
+       
+        <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.numofbranches
+                </p>
+                <p class="text-primary text-center">
+                    @Model.NumOfBranches   
+                </p>
+      </div>
+       
+     <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.totalpilnet
+                </p>
+                <p class="text-primary text-center">
+                    @Model.TotalPilNet   
+                </p>
+      </div>
+         <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.remamount
+                </p>
+                <p class="text-primary text-center">
+                    @Model.ReturnAmount   
+                </p>
+      </div>
+       
+     <div class="col-lg-3 p-3 " >
+                <p class="text-center">
+                    @SuppliersDashboard.Resources.pages.collection
+                </p>
+                <p class="text-primary text-center">
+                    @Model.Collection   
+                </p>
+      </div>
+       
+    
+    
+   
+     
+     
+     
+        
+    </div>
+    </div>
+
+
+    <script>
+        $.ajax({
+            url: "/Distributor/GetUserWithCustomers?UserId=" + $("#BaseUserId").val(),
+            type: "get",
+            data: "",
+            success: function (res) {
+               // console.log(res)
+
+            }
+
+        })
+    </script>

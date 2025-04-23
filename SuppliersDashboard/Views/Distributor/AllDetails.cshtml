@@ -1,0 +1,190 @@
+﻿
+
+@{
+    ViewBag.Title = "Distributor Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<input type="hidden" value="@ViewBag.Id" id="BaseId" />
+
+<div class="container">
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2" id="SupplierName">
+        </h1>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpil
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPil">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbbeforediscount
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPillBeforDiscount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbafterdiscount
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilAfterDiscount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbafterdiscount
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilDiscount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.titemcount
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalItemsQount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.titemdiscount
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalItemsDiscount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilcash
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilCach">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilagil
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilAgel">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.msrofat
+
+                </h2>
+            </div>
+            <div class="text-info" id="Msrofat">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilnet
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilNet">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.ramount
+
+                </h2>
+            </div>
+            <div class="text-info" id="ReturnAmount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.collection
+
+                </h2>
+            </div>
+            <div class="text-info" id="Collection">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $.ajax({
+      //  url: "//scopos-khattab.cloud/api/Suppliers/GetDistributerNameByUserId?Id=" + $("#BaseId").val(),
+        url: "/Distributor/GetDistributerNameByUserId?Id=" + $("#BaseId").val(),
+        async: false,
+        type: "get",
+        data: {},
+        success: function (res) {
+            $("#SupplierName").text(res.data );
+        }
+    })
+
+
+    $.ajax({
+       // url: "//scopos-khattab.cloud/api/Report/GetAllselesSummry?Userid='" + $("#BaseId").val() + "'",
+        url: "/Distributor/GetAllselesSummry?Userid='" + $("#BaseId").val() + "'",
+        async: false,
+        type: "get",
+        data: {},
+        success: function (res) {
+
+            $("#TotalPil").text(res.Item.TotalPil);
+            $("#TotalPillBeforDiscount").text(res.Item.TotalPillBeforDiscount);
+            $("#TotalPilDiscount").text(res.Item.TotalPilDiscount);
+            $("#TotalPilAfterDiscount").text(res.Item.TotalPilAfterDiscount);
+            $("#TotalItemsQount").text(res.Item.TotalItemsQount);
+            $("#TotalItemsDiscount").text(res.Item.TotalItemsDiscount);
+            $("#TotalPilCach").text(res.Item.TotalPilCach);
+            $("#TotalPilAgel").text(res.Item.TotalPilAgel);
+            $("#Msrofat").text(res.Item.Msrofat);
+            $("#TotalPilNet").text(res.Item.TotalPilNet);
+            $("#ReturnAmount").text(res.Item.ReturnAmount);
+            $("#Collection").text(res.Item.Collection);
+
+        }
+    })
+</script>

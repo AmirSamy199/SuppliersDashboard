@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewBag.Title = "استلام وتسليم المخزن";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
+}
+
+<div id="printer" class="">
+    <style>
+        .editor {
+            background: unset;
+            border: unset;
+            outline: unset;
+            width: 100px;
+            text-align: center !important;
+        }
+
+            .editor:focus {
+                border-bottom: 1px solid #0094ff;
+            }
+
+        th, td {
+            text-align: center !important;
+        }
+    </style>
+    <label class="form-label-title text-center col-lg-12 " for="name" style="font-size: 24px;">
+        @ViewBag.Message
+    </label>
+
+
+
+
+
+
+    @if (ViewBag.State == 0)
+    {
+        <div class="text-center p-5">
+            <button class="btn btn-primary" onclick="ConfirmCloseStoreKeeperDay()">@SuppliersDashboard.Resources.pages.Shift     </button>
+
+        </div>
+    }
+    @if (ViewBag.State == 1 || ViewBag.State == 2)
+    {
+        <style>
+            td, th {
+                text-align: center !important;
+                border: 2px solid !important;
+            }
+
+            table {
+                margin: 10px;
+                border-collapse: collapse !important;
+            }
+        </style>
+        <div class=" card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table-responsive table table-striped " style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>@SuppliersDashboard.Resources.llayout.ProductName </th>
+                                <th>@SuppliersDashboard.Resources.pages.Defaultquantity  </th>
+                                <th>@SuppliersDashboard.Resources.pages.Actualquantity  </th>
+                                <th>@SuppliersDashboard.Resources.pages.Impotence   </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.StoreItems != null)
+                            {
+                                foreach (var item in ViewBag.StoreItems)
+                                {
+                                    <tr>
+                                        <td> @(++counter)</td>
+                                        <td>
+                                            @item.iTEMnAME
+                                        </td>
+                                        <td>@item.QUNTTATY</td>
+                                        @if (ViewBag.State == 1)
+                                        {
+                                            <td>
+
+                                                <input type="number" onclick="ChangeActualNumber(@item.RecordID , '@item.iTEMnAME' , @item.Actual_QUANTITY , this )" value="@item.Actual_QUANTITY" class="editor" />
+
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Actual_QUANTITY</td>
+
+                                        }
+                                        <td>@item.Difference</td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr><td colspan="3"> @SuppliersDashboard.Resources.llayout.nocategories </td> </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+
+
+    <div class="row  d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+
+            @if (ViewBag.State == 1)
+            {
+                <button class="btn btn-primary col-12 btn-lg " onclick="DeliverandReceiveStore('D')"> @SuppliersDashboard.Resources.pages.String4</button>
+
+            }
+            @if (ViewBag.State == 2)
+            {
+                <button class="btn btn-primary col-12 btn-lg" onclick="DeliverandReceiveStore('R')">@SuppliersDashboard.Resources.pages.String31 </button>
+            }
+        </div>
+        @if (ViewBag.State != 0)
+        {
+            <div class="col-lg-4 text-center p-3">
+                <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+
+            </div>
+        }
+    </div>
+
+</div>
+<script>
+
+    function DeliverandReceiveStore(id) {
+        if (id == 'R') {
+            let html = `<div class='text-center' >
+                                                                        <h2 class='p-3 text-center'> هل انت متاكد من   استلام البضاعة من المخزن  </h2>
+                                                                         <button class="btn btn-primary" onclick="ConfirmDeliverandReceiveStore('R')"> تاكيد استلام البضاعة </button>
+                                                                        </div>`
+            ShowModal(html)
+        } if (id == 'D') {
+
+            let html = `<div class='text-center' >
+                                                                        <h2 class='p-3 text-center'> هل انت متاكد من تسليم البضاعة والانصراف </h2>
+                                                                         <button class="btn btn-primary" onclick="ConfirmDeliverandReceiveStore('D')"> تاكيد تسليم البضاعة </button>
+                                                                        </div>`
+            ShowModal(html)
+        }
+    }
+    function ConfirmCloseStoreKeeperDay() {
+        let html = `<div class='text-center' >
+                                                                        <h2 class='p-3 text-center'> هل انت متاكد من  اغلاق الوردية  والانصراف </h2>
+                                                                         <button class="btn btn-primary" onclick="CloseStoreKeeperDay()">اغلاق وردية وانصراف    </button>
+
+                                                                        </div>`
+        ShowModal(html)
+    }
+    function ConfirmDeliverandReceiveStore(type) {
+        $.ajax({
+            url: "/Screens/ConfirmDeliverandReceiveStore",
+            type: "post",
+            data: {
+                type: type
+            }, success: (res) => {
+                ShowModal(`<h2 class='text-center p-4'>${res.data.Message}</h2>`)
+
+            }
+        })
+    }
+    function ChangeActualNumber(ID, name, actual, ele) {
+        let html = `
+                                                                        <div class="p-4">
+                                                                            <h2 class="text-center p-2">${name} </h2>
+                                                                            <p class="text-center"> قيمة قديمة : ${actual}</p>
+                                                                            <input  class="form-control" placeholder="ادخل القيمة الجديدة " type="number" id="newactualvalue"/>
+                                                                            <div class="p-3">
+                                                                                <button class="btn btn-primary" onclick="SubmitChangeActualQuantity(${ID})"> تعديل السعر </button>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        `
+        ShowModal(html)
+    }
+    function SubmitChangeActualQuantity(ID) {
+        let value = $("#newactualvalue").val()
+        if (value == "" || value < 0) {
+
+            alert("ادخل قيمة صحيحة ");
+        } else {
+            $.ajax({
+                url: "/Screens/SubmitChangeActualQuantity",
+                type: "post",
+                data: {
+                    ID: ID,
+                    Value: value
+                }, success: (res) => {
+                    ShowModal(`<h2 class='text-center p-4'>${res.data.Message}</h2>`)
+                    if (res.data.State == 1) {
+
+                        setTimeout(() => {
+                            location.reload()
+                        }, 3000)
+                    }
+                }
+            })
+        }
+
+
+    }
+    function CloseStoreKeeperDay() {
+        $.ajax({
+            url: "/Screens/CloseStoreKeeperDay",
+            type: "post",
+
+            success: (res) => {
+
+                if (res.data.State == 5) {
+                    ShowModal(`<h2 class='p-5 text-center'>${res.data.Data}</h2>`)
+                } else {
+                    location.reload()
+                }
+            }
+        })
+    }
+</script>

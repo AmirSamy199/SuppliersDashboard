@@ -1,0 +1,75 @@
+﻿@model List<SuppliersDashboard.ViewModels.warehouse_Requst_V>
+@{
+    ViewBag.Title = "المشتريات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                اسم المنتج
+                            </th>
+                            <th>
+                                العدد
+                            </th>
+                            <th>
+                                التاريخ
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count != 0)
+                        {
+
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.ItemName
+                                    </td>
+                                    <td>
+                                        @item.Item_Count
+                                    </td>
+                                    <td>
+                                        @item._Edit_date
+
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-outline-primary" onclick="ConfirmRequest()"> قبول  </button>
+    </div>
+</div>
+
+
+<script>
+    function ConfirmRequest() {
+        $.ajax({
+            url: "/WareHousing/ConfirmMoshtrayat",
+            type: "post",
+            success: (res) => {
+                ShowModal(res.data.Message);
+                setTimeout(() => { location.reload() }, 3000)
+            }
+
+        })
+    }
+</script>

@@ -1,0 +1,204 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "SubWareHouseGuard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+@Html.Partial("_reportHeader")
+
+<div class="text-center">
+
+    <input class="form-control" id="sreachPillsTable" list="representList" placeholder=" بحث......." style="width:50%;margin:auto" onkeyup="SearchInTable('sreachPillsTable','table')" />
+
+</div>
+
+<div id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1.5px solid #000 !important;
+        }
+
+        th {
+            color: #000 !important;
+            font-weight: bold !important;
+            background-color: #ccc !important
+        }
+
+        table {
+            border-collapse: collapse !important;
+            width: 100% !important
+        }
+
+        #table_filter {
+            display: none
+        }
+    </style>
+
+
+
+    <h2 class="text-center p-3 text-primary" id="messageheader">
+    </h2>
+
+
+    <div id="tablediv" class="collapse p-3">
+
+
+        <table class="table table-bordered  table-striped" id="table">
+            <tbody id="tablebody">
+            </tbody>
+        </table>
+
+    </div>
+
+    <h2 class="text-center p-3 text-muted collapse" id="notdatafound">
+        @llayout.no
+    </h2>
+    <h2 class="text-center p-3 text-muted collapse" id="choosedistributorh2">
+        @pages.selectdistributor
+    </h2>
+
+</div>
+
+
+
+
+<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">@llayout.Execl </button>
+</div>
+<script>
+    $(document).ready(function () {
+       
+  
+    $("#distributorId").change(() => { loadPage() })
+   /* $("#DistributorIdInput").change(() => { loadPage() })*/
+    $("#DateFrom").change(() => { loadPage() })
+    $("#DateTo").change(() => { loadPage() })
+    });
+
+    let name = ``
+    let header = ``
+    let headerdetail = ``
+    loadPage()
+    function loadPage() {
+
+        let distributorId = $("#distributorId").val();
+        if (distributorId == "0") {
+            $(`#choosedistributorh2`).removeClass("collapse")
+            $(`#tablediv`).addClass("hide")
+            return
+        }
+        $(`#choosedistributorh2`).addClass("collapse")
+
+        let datefrom = $("#DateFrom").val();
+        let dateto = $("#DateTo").val();
+        let url = `/NewReports/SubWareHouseGuardJson?UserId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+        $.post(url, (res) => {
+
+
+            if (res.Data.length <= 0) {
+                name = `للمندوب `
+                $(`#notdatafound`).removeClass("collapse")
+                $(`#tablediv`).addClass("collapse")
+
+            } else {
+               ///////. re intiate
+
+                let header = `
+                        <table class="table table-bordered  table-striped" id="table">      
+                        <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>الصنف</th>
+                                    <th>قبل</th>
+                                    <th>وارد</th>
+                                    <th>صادر</th>
+                                    <th>بعد</th>
+                                    <th>التاريخ</th>
+                                    <th>تفاصيل</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablebody">
+                            </tbody>
+                        </table>
+                        `
+               
+                $("#tablediv").html(header)
+               ///////. re intiate
+
+               console.log(res.Data)
+                let counter = 1 
+                $("#table").dataTable({
+                    pageLength: 25,
+                    data: res.Data,
+                    columns: [
+                        { data: null, render: (x, y, z) => { return `<span item='${x.ItemId}' data = "${x.BillNo}" class='tdspan'>${counter++}</span>`; }},
+                        {data: "ItemName" },
+                        {data: "CountBefore"},
+                        {data: "Wared" },
+                        {data: "Sader" },
+                        {data: "CountAfter" },
+                        {data: "_Date"  },
+                        {data: "Message" },
+                    ]
+
+
+                }
+                )
+
+                $(`#notdatafound`).addClass("collapse")
+                $(`#tablediv`).removeClass("collapse")
+              
+            }
+
+            header = res.Message 
+            headerdetail = " في الفترة من " + datefrom + " الي " + dateto
+            $("#messageheader").text(header + " " + headerdetail)
+
+            ///// make trs clickable 
+            clickabletr('tdspan')
+            seperateItems()
+         
+        })
+
+
+    }
+    function seperateItems() {
+        let tttds = $('.tdspan')
+        let cureitem = 0;
+        $.each(tttds, (i, e) => {
+            
+            if (cureitem == 0) {
+                cureitem = $(e).attr('item')
+            } else {
+                if (cureitem.toString() != $(e).attr('item').toString()) {
+                    cureitem = $(e).attr('item')
+                    $(e).parent().parent().before(`<tr><td style='background-color:#937979' colspan='8'></td></tr>`)
+                }
+
+
+            }
+        })
+
+        //// WOrk As Loop Or REcursion
+        $('.paginate_button ').click(() => { seperateItems() })
+
+    }
+  
+    function excel() {
+        let distributorId = $("#distributorId").val();
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        let url = `/NewReports/SubWareHouseGuardExcel?UserId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+
+        LayoutExcel(url, $("#messageheader").text())
+    }
+
+
+    function reIntiateTable(tableselector) {
+       
+    }
+</script>

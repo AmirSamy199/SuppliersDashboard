@@ -1,0 +1,368 @@
+﻿
+@{
+    ViewBag.Title = @SuppliersDashboard.Resources.llayout.storerequests;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+
+    .editorinput {
+        outline: unset;
+        background: unset;
+        border: unset;
+    }
+
+    .body {
+        padding: 30px;
+    }
+
+    .editorinput:focus {
+        border-bottom: 1px solid #009CFF;
+    }
+
+    button {
+        margin: 0 10px;
+    }
+</style>
+
+<input type="hidden" id="salesid" value="0" />
+<div class="body" id="">
+    <div class="p-2">
+
+        @*<select onchange="LoadPage()"  class="form-control form-select m-2"  id="salesid" >
+                <option value="-1">
+                    اختر البائع
+                </option>
+                @foreach(var item in ViewBag.Sales)
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+
+            </select>*@
+
+        <div class="row">
+            <div class="p-2 col-lg-3 col-sm-6 ">
+                <div class="text-center p-2" style="font-size:32px">
+                    العدد : <strong> @ViewBag.SalesCount </strong>
+                </div>
+            </div>
+            <div class="p-2 col-lg-4 col-sm-6 " style="cursor:pointer">
+
+                <div style=" border-radius:10px" class="text-center p-3 ">
+                    <input onkeyup="searchsales(this)" class="form-control form-inline" placeholder="بحث  " />
+                </div>
+            </div>
+
+            <div class="p-2 col-lg-3 col-sm-6 " style="cursor:pointer">
+
+                <div style=" border-radius:10px" class="text-center p-3 collapse" id="anothersale">
+                    <button class="btn btn-sm btn-outline-primary " onclick="displaysetting()"> اختيار بائع اخر </button>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="row  collapse show " id="allsales">
+
+
+
+
+            @foreach (var item in ViewBag.Sales)
+            {
+
+                <div class="p-2 col-lg-4 col-sm-6 search-div" style="cursor:pointer" onclick="LoadPage(@item.Value,'@item.Text')">
+                    <div style="border:1px solid #009CFF ; border-radius:10px" class="text-center">
+                        @item.Text
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+
+
+        <div id="tablecollapse" class="collapse">
+            <h2 id="salehead" class=" text-center collapse">
+            </h2>
+            <div class="alert text-center " id="msg2">
+                <style>
+                    td, th {
+                        text-align: center !important;
+                        border: 2px solid !important;
+                    }
+
+                    table {
+                        margin: 10px;
+                        border-collapse: collapse !important;
+                    }
+                </style>
+            </div>
+                <div class="card pd-20  card-ERB ">
+                    <div class="  table-responsive  ">
+
+                        <div id="tablecollapse ">
+                            <table class="table-responsive table table-striped " style="width:100%" id="Table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="">#</th>
+                                        <th scope="col" style="">@SuppliersDashboard.Resources.pages.name </th>
+                                        <th scope="col" style="">@SuppliersDashboard.Resources.pages.count </th>
+                                        <th scope="col" style="">Sales </th>
+                                        <th scope="col" style="">StoreKeeper </th>
+                                        <th scope="col" style="">Date </th>
+                                        <th scope="col" style='text-align:Center'> @SuppliersDashboard.Resources.pages.action </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="TableBody">
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="text-center" id="acceptarea">
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+@section scripts{
+
+    <script>
+        function displaysetting() {
+            $("#allsales").collapse("show")
+        }
+
+        function searchsales(element) {
+
+            let filter = $(element).val().toUpperCase()
+
+            var divs = document.querySelectorAll(".search-div");
+            for (let i = 0; i < divs.length; i++) {
+               let d = divs[i];
+                let txtValue = d.textContent || d.innerText ;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    divs[i].style.display = "";
+                } else {
+                    divs[i].style.display = "none";
+                }
+            }
+        }
+        function LoadPage(id,name) {
+            startloader();
+            $("#salehead").text(name);
+            $("#salehead").collapse("show");
+            $("#allsales").collapse("hide");
+            let sales = id;
+            //let sales = $("#salesid").val()
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/GetPendingWareHouseRequests?sales="+sales,
+                data: {},
+                success: (res) => {
+                    $("#spinner").addClass("show");
+                    drawTable(res.data.Data)
+                    $("#tablecollapse").show()
+                     $("#anothersale").collapse("show");
+                    $("#spinner").removeClass("show");
+                    let html = ` <div class='row'>
+                    <div class='col-lg-3 text-center p-4'> <button class='btn btn-primary col-lg-3' onclick='confirmRequest(${sales})'>@SuppliersDashboard.Resources.pages.accept </button>  </div>
+
+
+                   <div class='col-lg-3 text-center p-4'> <button class='btn btn-primary col-lg-3' onclick='DeleteAllSalesRequests(${sales})'>@SuppliersDashboard.Resources.pages.reject  </button>  </div>
+
+
+
+                    <div class=" col-lg-3 text-center p-4">
+                         <a class="btn btn-outline-danger" href="/Report/PendingRequest?SaleId='${sales}'&SalesName='${name}'"><i class="fa fa-solid fa-print"></i> @SuppliersDashboard.Resources.llayout.print</a>
+                    </div>
+
+
+
+                             </div>   `
+                    $("#acceptarea").html(html)
+                    $("#msg2").text(res.msg)
+                }
+            })
+        }
+
+
+
+        function drawTable(data) {
+
+            $("#Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+                data: data,
+                "columns": [
+                    { "data": "RecordID", "name": "RecordID", "width": "Auto" },
+                    { "data": "ItemName", "name": "ItemName", "width": "Auto" },
+                    //{ "data": "Item_Count", "name": "Item_Count", "width": "Auto" },
+                    {
+                        data: null, render: function (data, c, d) {
+                            return "<input  onClick='this.select()'  type = 'number' style='width:60px' class='addcount editorinput' id='countinput-" + data.RecordID + "' onkeyup='change(" + data.RecordID + ")' value=" + data.Item_Count + " /> "
+                        }
+                    },
+                    { "data": "SalesName", "name": "SalesName", "width": "Auto" },
+                    // { "data": "StorekeeperName", "name": "StorekeeperName", "width": "Auto" },
+                    {
+                        "data": null, render: () => {
+                            return "@ViewBag.userName"
+                        }
+                    },
+                    { "data": "_Edit_date", "name": "_Edit_date", "width": "Auto" },
+                    {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+                            let html = ` <button id='deletebtn-${data.RecordID}'  onclick='deleteRequest(${data.RecordID})' style='margin :0 7px ' class='btn btn-sm btn-outline-danger '> حذف</button>`
+                            html += " <button style='display:none' id='confirm-" + data.RecordID + "' class=' btn btn-succes ' onclick='submitchange(" + data.RecordID + ",this)'>@SuppliersDashboard.Resources.llayout.change  </button> "
+                            return html;
+
+                        }
+                    }
+
+                ]
+            })
+
+
+        }
+
+        function deleteRequest(id) {
+            let html = `<div class='p-4'> <p>  هل انت متاكد من الحذف ؟ </p> <div clss='text-center '></div>  <button style='margin :0 7px ' class='btn btn-sm btn-danger ' onclick="confirmDeleteRequest(${id})"> @SuppliersDashboard.Resources.llayout.delete</button></div> `
+            $("#modalcontent").html(html)
+            $("#myModal").modal("show")
+        }
+        function change(id ) {
+
+            $("#confirm-" + id).css("display", "inline");
+
+        }
+
+        function confirmDeleteRequest(id) {
+
+
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/DeleteRequest?ID=" + id,
+                data: {},
+                success: (res) => {
+                    if (res.data.State == 1) {
+
+                        $("#myModal").modal("hide")
+                        $("#deletebtn-" + id).parent().parent().hide(2000);
+                    }
+
+
+                }
+            })
+
+
+        }
+
+        function confirmRequest(id) {
+
+
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/ConfirmReq",
+                data: {
+                    ID: id
+                },
+                success: (res) => {
+
+                    if (res.data.State == 1) {
+
+                        showSuccessOperation(res.data.Message)
+
+
+                        setTimeout(() => { location.reload() }, 3000)
+                    } else {
+                        showDangerOperation(res.data.Message)
+                    }
+
+                }
+            })
+        }
+        function DeleteAllSalesRequests(id) {
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/DeleteAllWareRequest",
+                data: {
+                    ID: id
+                },
+                success: (res) => {
+
+                    if (res.data.State == 1) {
+
+                        showSuccessOperation(res.data.Message)
+
+
+                        setTimeout(() => { location.reload() }, 3000)
+                    }
+
+                }
+            })
+        }
+        function submitchange(id,element) {
+            let value = $("#countinput-" + id).val();
+            $.ajax({
+                type: "post",
+                url: "/WareHousing/SubmitChange",
+                data: {
+                    ID: id,
+                    value:value
+                },
+                success: (res) => {
+                    if (res.data.State == 1) {
+                        showSuccessOperation(res.data.Message)
+                        $(element).css("display", "none")
+                    } else {
+                        showDangerOperation(res.data.Message)
+
+                    }
+
+                }
+            })
+
+
+
+
+        }
+    </script>
+
+
+}

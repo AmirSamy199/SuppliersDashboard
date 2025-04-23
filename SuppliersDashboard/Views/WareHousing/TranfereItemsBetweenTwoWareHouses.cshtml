@@ -1,0 +1,301 @@
+﻿@using SuppliersDashboard.ViewModels
+@using SuppliersDashboard.Models
+@*@model Response<List<warehouse_Base_v>>*@
+@{
+    ViewBag.Title = "TranfereItemsBetweenTwoWareHouses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+
+                </div>
+                <div class="col-lg-4">
+                    <h2 class="h2 text-center"> مخزون @ViewBag.StoreName </h2>
+
+                </div>
+                <div class="col-lg-4 text-left">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div>
+            <div class="container">
+                <div class=" card-ERB ">
+                    <div class="  table-responsive  ">
+
+                        <div id="tablecollapse ">
+                            <table id="deeptable" class="table table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            الاسم
+                                        </th>
+                                        <th>
+                                            الكمية
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@if (Model != null)
+                                        {
+
+                                            @if (Model.Data.Count > 0)
+                                            {
+
+
+
+                                                @foreach (var item in Model.Data)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @(i++)
+                                                        </td>
+                                                        <td>
+                                                            @item.ItemName
+                                                        </td>
+                                                        <td>
+                                                            @item.bal
+                                                        </td>
+
+                                                    </tr>
+                                                }
+
+
+
+                                            }
+                                        }*@
+                                </tbody>
+                            </table>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row  d-flex justify-content-around p-3">
+                <div class="col-lg-4 text-center p-3">
+
+                    <button class="btn btn-primary col-12 btn-lg " onclick="$('.receivederrequestsdivs').collapse('hide');$('.senderrequestsdivs').collapse('show'); ">
+                        الطلبات الصادرة
+                    </button>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <button class="btn btn-primary col-12 btn-lg " onclick="$('.receivederrequestsdivs').collapse('show');$('.senderrequestsdivs').collapse('hide'); ">
+                        الطلبات الواردة
+                    </button>
+                </div>
+
+            </div>
+            <div class="container">
+                <div class="senderrequestsdivs collapse show">
+
+
+                    <h3 class="text-center text-success p-2"> طلبات تسليم بضاعة للمخازن  </h3>
+
+
+                    @if (ViewBag.SendersRequests.Count > 0)
+                    {
+                        foreach (requestwithheader item in ViewBag.SendersRequests)
+                        {
+                            <h3 class="h3 text-secondary">@item.StoreName </h3>
+                            <table class="table table-striped">
+
+                                <tbody>
+                                    @foreach (var x in item.requests)
+                                    {
+                                        <tr>
+                                            <th> @x.ItemName</th>
+                                            <th> @x.bal</th>
+                                            <th>  </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+
+                            <div class="row  d-flex justify-content-around">
+                                <div class="col-lg-4 text-center p-3">
+                                    <button class="btn btn-primary col-12 btn-lg " style="min-width:150px" onclick="sure(' هل انت متاكد من قبول الطلب ؟  ', 'قبول' ,`AcceptRequest(@item.StoreId,'sender')` )">
+                                        قبول
+                                    </button>
+                                </div>
+                                 <div class="col-lg-4 text-center p-3">
+                                    <button class="btn btn-danger col-12 btn-lg " style="min-width:150px" onclick="sure(' هل انت متاكد من رفض الطلب ؟  ', 'رفض' ,`RejectRequest(@item.StoreId,'sender')` )">
+                                        رفض
+                                    </button>
+                                </div>
+
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-center"> لا يوجد طلبات صادرة حتي الان </p>
+                    }
+
+
+
+                </div>
+                <div class="receivederrequestsdivs collapse">
+
+                    <h3 class="text-center text-success p-2"> طلبات استلام بضاعة من المخازن  </h3>
+
+                    @if (ViewBag.ReceivedRequests.Count > 0)
+                    {
+                        foreach (requestwithheader item in ViewBag.ReceivedRequests)
+                        {
+                            <h3 class="h3 text-secondary">@item.StoreName </h3>
+                            <table class="table table-striped">
+
+                                <tbody>
+                                    @foreach (var x in item.requests)
+                                    {
+                                        <tr>
+                                            <th> @x.ItemName</th>
+                                            <th> @x.bal</th>
+                                           @* <th> <button class="btn btn-primary" onclick="editrequest(@item.StoreId , @ViewBag.MyWarehouseId , @x.ItemId , '@x.ItemName' )">  تعديل  </button> </th>*@
+                                            <th> <button class="btn btn-danger" onclick="sure('هل انت متاكد من الحذف ؟ ' , 'حذف' ,`deleterequest(@item.StoreId , @ViewBag.MyWarehouseId, @x.ItemId )`)"> حذف </button> </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="row  d-flex justify-content-around">
+                                <div class="col-lg-4 text-center p-3">
+                                    <button class="btn btn-primary col-12 btn-lg " style="min-width:150px" onclick="sure(' هل انت متاكد من قبول الطلب ؟  ', 'قبول' ,`AcceptRequest(@item.StoreId)` )">
+                                        قبول
+                                    </button>
+                                    <span style="display:inline-block; width:20px"></span>
+                                    <button class="btn btn-primary col-12 btn-lg " style="min-width:150px" onclick="sure(' هل انت متاكد من  حذف كل الطلبات ؟  ', 'حذف' ,`deleteallrequest(@item.StoreId , @ViewBag.MyWarehouseId )` )">
+                                        حذف الكل
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-center"> لا يوجد طلبات استلام حتي الان </p>
+
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        // Your code here
+        $.post(`/Warehousing/WarehouseBalance?WarehouseId=@ViewBag.MyWarehouseId`, (res) => {
+            let i = 1
+            $('#deeptable').dataTable({
+                'iDisplayLength': 10,
+                "bDestroy": true,
+                "responsive": true,
+                data: res.Data,
+                columns: [
+                    {
+                        "data": null, "name": null, render: () => {
+                            return i++
+                        }, "width": "Auto"
+                    },
+                    { "data": "ItemName", "name": "ItemName", "width": "Auto" },
+                    { "data": "bal", "name": "bal", "width": "Auto" },
+
+                ]
+            });
+        })
+
+
+    });
+
+    function AcceptRequest(warehouseId, type) {
+        console.log(warehouseId + " " + type)
+        let url = `/Warehousing/AcceptWareRequest?WareId=${warehouseId}&type=${type}`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+
+    function RejectRequest(warehouseId, type) {
+        console.log(warehouseId + " " + type)
+        let url = `/Warehousing/RejectWareRequest?WareId=${warehouseId}&type=${type}`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+
+    function editrequest(fromstoreId, tostoreId, itemId , itemname) {
+
+        let html = `
+        <div class='p-3'>
+        <h3 class='text-center ' >
+         تعديل كمية الصنف
+         ${itemname}
+        </h3>
+        <div>
+        <label class='form-label'> ادخل الكمية الجديدة </label>
+         <input class='form-control' type='number' onclick='this.select()' placeholder='ادخل الكمية الجديدة ' id = 'newquantity' >
+        </div>
+        <div class='p-2 text-center'>
+        <button class='btn btn-success' onclick='submiteditrequest(${fromstoreId} , ${tostoreId} , ${itemId})' >
+        تعديل
+        </button>
+        </div>
+        </div>
+        `
+
+        ShowModal(html)
+
+
+    }
+    function submiteditrequest(fromstoreId, tostoreId, itemId) {
+        var newquantity = $("#newquantity").val()
+        if (newquantity > 0) {
+            let url = `/Warehousing/EditDeleteWareRequest?FromWareHouseId=${fromstoreId}&ToWareHouseId=${tostoreId}&TypeId=edit&ItemId=${itemId}&All=0&NewQuantity=${newquantity}`
+            $.post(url, (res) => {
+                displaymsg(res.Message)
+            })
+        }
+
+    }
+
+    function deleterequest(fromstoreId, tostoreId, itemId) {
+        let url = `/Warehousing/EditDeleteWareRequest?FromWareHouseId=${fromstoreId}&ToWareHouseId=${tostoreId}&TypeId=delete&ItemId=${itemId}&All=0&NewQuantity=0`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+    function deleteallrequest(fromstoreId, tostoreId) {
+
+        let url = `/Warehousing/EditDeleteWareRequest?FromWareHouseId=${fromstoreId}&ToWareHouseId=${tostoreId}&TypeId=delete&ItemId=0&All=1&NewQuantity=0`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+</script>
+

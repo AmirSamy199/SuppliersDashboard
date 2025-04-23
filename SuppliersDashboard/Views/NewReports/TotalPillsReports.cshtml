@@ -1,0 +1,298 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "TotalPillsReports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+@*<h2>TotalPillsReports</h2>*@
+<div class="row d-flex justify-content-around">
+    <div class="col-lg-6 d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">@pages.iin </div>
+        <div class="col-lg-8 text-center p-3" ">
+            <input class="form-control" type="date" id="DateFrom" />
+        </div>
+    </div>
+    <div class="col-lg-6 d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3"> @pages.from </div>
+        <div class="col-lg-8 text-center p-3">
+            <input class="form-control" type="date" id="DateTo" />
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="row d-flex justify-content-around col-lg-12 text-center p-3">
+
+    <input class="form-control col-lg-6 text-center" id="sreachPillsTable" list="representList" placeholder=" بحث......." style="width:50%;margin:auto" onkeyup="SearchInTable('sreachPillsTable','totalpillsTabletotalpillsTable')" />
+
+</div>
+
+<div class="p-4" id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1.5px solid #000 !important;
+        }
+
+        th {
+            color: #000 !important;
+            font-weight: bold !important;
+            background-color: #ccc !important
+        }
+
+        table {
+            border-collapse: collapse !important
+        }
+    </style>
+
+
+
+
+
+    <div class="row d-flex justify-content-around col-lg-12 text-center p-3">
+
+        <h2 class="text-center p-3 text-primary" id="messagebillreport">
+        </h2>
+    </div>
+
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+
+                <table class="table table-bordered  table-striped" id="totalpillsTabletotalpillsTable">
+                    <thead>
+                        <tr>
+                            <th>@pages.billno </th>
+
+                            <th>@pages.Movementtype </th>
+
+                            <th>@Items.Date</th>
+                            <th>@pages.customername </th>
+                            <th>@pages.distributor</th>
+                            <th>@pages.totalprice</th>
+                            <th>@pages.cond</th>
+                            <th>@pages.therest</th>
+                            @*<th>الرصيد</th>*@
+                            <th> @pages.text</th>
+                        </tr>
+                    </thead>
+                    <tbody id="totalpilltableBody">
+                        @*@if (ViewBag.TotalPills.Data!= null)
+                            {
+
+                                foreach (var item in ViewBag.TotalPills.Data)
+                                {
+                                    <tr>
+                                        <td>@item.BillNo</td>
+                                        <td>@item.TransactionType</td>
+                                        <td>@item.NameOfBranch</td>
+                                        <td>@item.NameOfSales</td>
+                                        <td>@item.TotalAmount</td>
+                                        <td>@item.CollectionAmount</td>
+                                        <td>@item.DefferedAmount</td>
+
+                                        @if (item.IsNoDocument == 0)
+                                        {
+                                            <td><i class="fa fa-times" aria-hidden="true"></i> </td>
+                                        }
+                                        else
+                                        {
+                                    <td><i class="fa fa-check" aria-hidden="true"></i> </td>
+                                        }
+
+                                    </tr>
+                                }
+                            }*@
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center p-3 text-muted" id="notdatafound">
+    </h2>
+</div>
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">@llayout.Execl </button>
+
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#DateTo").change(() => {
+            drowtablePills($("#DateFrom").val(), $("#DateTo").val())
+
+        })
+        $("#DateFrom").change(() => {
+            drowtablePills($("#DateFrom").val(), $("#DateTo").val())
+
+
+        })
+
+
+    })
+
+
+    let currentdate = new Date();
+    let m = currentdate.getMonth() + 1;
+    if (m < 10) m = "0" + m
+    let d = currentdate.getDate();
+    if (d < 10) d = "0" + d
+    let dd = "" + currentdate.getFullYear() + "-" + m + "-" + d
+    drowtablePills($("#DateFrom").val(), $("#DateTo").val())
+    $("#DateFrom").val(dd)
+    $("#DateTo").val(dd)
+ 
+    function drowtablePills(dataform, datato) {
+        $.ajax({
+            url: "/NewReports/GetTotalBillReportByDateJson",
+            type: "post",
+            data: {
+                DateForm: dataform,
+                DateTo: datato
+            },
+            success: function (res) {
+                if (res.data.Data.length == 0) {
+                    $("#notdatafound").text(" No Data Found")
+                } else {
+                    $("#notdatafound").text("")
+                    $("#messagebillreport").text(res.data.Message)
+
+                    $("#totalpillsTabletotalpillsTable").dataTable({
+                        'iDisplayLength': 25,
+                        "bDestroy": true,
+                        "responsive": true,
+
+                        data: res.data.Data,
+                        "columns": [
+
+                            {
+                                "data": null, render: (x, y, z) => {
+                                    return `<span class='billnospan' data='${x.BillNo}'>${x.BillNo}</span>`
+                                }
+                            },
+
+                            { "data": "TransactionType", "name": "TransactionType", "width": "Auto" },
+                            { "data": "TransactionDate", "name": "TransactionDate", "width": "Auto" },
+                            { "data": "NameOfBranch", "name": "NameOfBranch", "width": "Auto" },
+                            { "data": "NameOfSales", "name": "NameOfSales", "width": "Auto" },
+                            { "data": "TotalAmount", "name": "TotalAmount", "width": "Auto" },
+                            { "data": "CollectionAmount", "name": "CollectionAmount", "width": "Auto" },
+                            { "data": "DefferedAmount", "name": "DefferedAmount", "width": "Auto" },
+                            {
+                                "data": null, render: function (data, i, e) {
+                                    let icon = ``;
+                                    if (data.IsNoDocument === 1) {
+                                        icon = ` <div id='b-${data.BillNo}' style='cursor:pointer' onclick='changeDocumentState( ${data.BillNo},0 )'><span> يوجد</span><i class="fa fa-times p-1" aria-hidden="true"></i></div>`
+                                    } else {
+                                        icon = `<div id='b-${data.BillNo}' style='cursor:pointer'  onclick='changeDocumentState( ${data.BillNo},1)'><span> لا يوجد</span><i class="fa fa-check p-1" aria-hidden="true"></i></div>`
+                                    }
+                                    return icon
+                                },
+
+                            },
+
+                        ]
+                    })
+
+                    $('#totalpillsTabletotalpillsTable_filter').hide();
+                    clickabletr('billnospan')
+                }
+
+
+            },
+
+            error: function () {
+
+            }
+
+        })
+    }
+    function Print() {
+        $("#databillsreport").css("display", "none")
+        $("#totalpillsTabletotalpillsTable_paginate").css("display", "none")
+        $("#totalpillsTabletotalpillsTable_info").css("display", "none")
+        $("#sreachPillsTable").css("display", "none")
+        LayoutPrint()
+
+
+
+    }
+    function excel() {
+
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        if (datefrom == "" && dateto == "") {
+            datefrom = "-"
+            dateto = "-"
+        }
+        //let ItemID = $("#ItemIdInput").val()
+
+        //let h = $("#head").text()
+        LayoutExcel(`/NewReports/BillReportByDateExcel?FromDate=${datefrom}&ToDate=${dateto}`, $("#messagebillreport").text())
+    }
+    function changeDocumentState(billNo, state) {
+        let message = ""
+
+        if (state === 0) {
+            message = "هل انت متاكد من التغيير الي لا يوجد "
+        } else { // 1
+            message = "هل انت متاكد من التغيير الي  يوجد "
+        }
+        let html = `
+                    <div class="p-3">
+                            <h2 class="h2 text-center p-2 ">
+                            ${message}
+                            </h2>
+                            <div class="p-3 text-center">
+                                <button class="btn btn-primary " onclick="Confirmchangedocument(${billNo},${state})"> تاكيد  </button>
+                            </div>
+
+                        </div>
+                    `
+        ShowModal(html);
+
+    }
+
+    function Confirmchangedocument(billNo, State) {
+        $.ajax({
+            url: "/NewReports/ChangeDocumentState",
+            type: "post",
+            data: {
+                BillNo: billNo,
+                State: State
+            }, success: (res) => {
+                res.data = res.data.replace('"', '').replace('"', '')
+                let ht = ``
+                if (res.data === "1") {
+                    ht = ` <div style='cursor:pointer' onclick='changeDocumentState( ${billNo},0 )'><span> يوجد</span><i class="fa fa-times p-1" aria-hidden="true"></i></div>`
+                } else if (res.data == "0") {
+                    ht = `<div style='cursor:pointer'  onclick='changeDocumentState( ${billNo},1)'><span> لا يوجد</span> <i class="fa fa-check p-1" aria-hidden="true"></i></div>`
+                }
+
+
+                let x = $('#b-' + billNo).parent()
+                $(x).html(ht)
+                $("#myModal").modal("hide")
+            }
+        })
+    }
+</script>

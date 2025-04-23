@@ -1,0 +1,112 @@
+﻿@using SuppliersDashboard.Resources
+<div class="text-center ">
+
+
+    @if (ViewBag.ShowItems != null)
+    {
+
+        <div class="row d-flex justify-content-around">
+
+            <select class="form-control"  id="itemId" >
+
+            </select>
+            @*<input type="hidden" id="itemId" value="0" />
+            <div class="col-lg-6  text-center">
+                <input list="itemslistoption" name="itemslistoption" class="form-control" placeholder="اختار صنف" id="ItemIdInput" />
+                <datalist id="itemslistoption">
+                </datalist>
+            </div>*@
+        </div>
+    }
+    @if (ViewBag.ShowDistributors != null)
+    {
+
+        <div class="row d-flex justify-content-around">
+            <select class="form-control" id="distributorId">
+            </select>
+            @*<input type="hidden" id="distributorId" value="0" />
+            <div class="col-lg-6 text-center ">
+                <input list="distributorslistoption" name="distributorslistoption" class="form-control" placeholder="اختار مندوب" id="DistributorIdInput" />
+                <datalist id="distributorslistoption">
+                </datalist>
+            </div>*@
+        </div>
+    }
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3">@pages.from </div>
+            <div class="col-lg-8 text-center p-3" ">
+                <input class="form-control" type="date" id="DateFrom" />
+            </div>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3"> @pages.iin </div>
+            <div class="col-lg-8 text-center p-3">
+                <input class="form-control" type="date" id="DateTo" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $("#DateFrom").val(getFirstDayInMonth())
+    $("#DateTo").val(getLastDayInMonth())
+</script>
+
+
+@if (ViewBag.ShowItem != null)
+{
+    <script>
+        $.ajax({
+            url: "/Items/GetAllItemsFromTable",
+            type: "post",
+            data: {
+
+            }, success: (res) => {
+
+                let html = `<option value='0'> اختر الصنف</option>`;
+                $.each(res.data.Data, (i, e) => {
+                    html += `<option value='${e.Record_ID}'> ${e.ItemName}</option>`
+                })
+               // $("#itemslistoption").html(html)
+                $("#itemId").html(html)
+            }
+        })
+        //$("#ItemIdInput").change(() => {
+        //    let id = $("#ItemIdInput").val();
+        //    $("#itemId").val(id)
+        //    let name = $('#itemslistoption option[value="' + id + '"]').text()
+        //    $("#ItemIdInput").attr("placeholder", name)
+        //    $("#ItemIdInput").val("")
+        //})
+    </script>
+}
+@if (ViewBag.ShowDistributors != null)
+{
+    <script>
+        $.ajax({
+            url: "/Selector/GetAllDistributorsUsers",
+            type: "post",
+            data: {
+
+            }, success: (res) => {
+
+
+                let html = `<option value='0'> اختر المندوب</option>` ;
+                $.each(res.data.Data, (i, e) => {
+                    html += `<option value='${e.Id}'> ${e.Value}</option>`
+                })
+                //$("#distributorslistoption").html(html)
+                $("#distributorId").html(html)
+            }
+        })
+        //$("#DistributorIdInput").change(() => {
+        //    let id = $("#DistributorIdInput").val();
+        //    $("#distributorId").val(id)
+        //    let name = $('#distributorslistoption option[value="' + id + '"]').text()
+        //    $("#DistributorIdInput").attr("placeholder", name)
+        //    $("#DistributorIdInput").val("")
+        //})
+    </script>
+}

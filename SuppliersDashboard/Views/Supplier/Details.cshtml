@@ -1,0 +1,299 @@
+﻿@model  SuppliersDashboard.ViewModels.SupplierDetailsVM
+@{
+    // ViewBag.Title = Model.Message;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" value="@ViewBag.Id" id="BaseId" />
+<div class="container">
+
+    <div>
+
+        <input type="date" id="DateInput" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="changeData()" />
+
+
+    </div>
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2" id="SupplierName">
+        </h1>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpil
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPil">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbbeforediscount
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPillBeforDiscount">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbafterdiscount
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilAfterDiscount">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbdiscount
+
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilDiscount">
+
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.titemcount
+                </h2>
+            </div>
+            <div class="text-info" id="TotalItemsQount">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.titemdiscount
+                </h2>
+            </div>
+            <div class="text-info" id="TotalItemsDiscount">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilcash
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilCach">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilagil
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilAgel">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.msrofat
+                </h2>
+            </div>
+            <div class="text-info" id="Msrofat">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilnet
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilNet">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.ramount
+                </h2>
+            </div>
+            <div class="text-info" id="ReturnAmount">
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.collection
+                </h2>
+            </div>
+            <div class="text-info" id="Collection">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2">
+            @SuppliersDashboard.Resources.pages.bills
+        </h1>
+    </div>
+    <table id="BillsTable" class="display BillsTable">
+        <thead>
+            <tr>
+                <th>@SuppliersDashboard.Resources.pages.billno</th>
+                <th>@SuppliersDashboard.Resources.pages.adddate</th>
+                <th>@SuppliersDashboard.Resources.pages.distributor</th>
+                <th>--</th>
+            </tr>
+        </thead>
+
+    </table>
+    <div id="nobills">@SuppliersDashboard.Resources.pages.nobillsexisttoday</div>
+
+</div>
+
+<div class="container">
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2">
+            @SuppliersDashboard.Resources.pages.distributors
+        </h1>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@SuppliersDashboard.Resources.pages.name </th>
+                    <th scope="col"> -- </th>
+                    <th scope="col"> -- </th>
+                </tr>
+            </thead>
+            <tbody id="distributerstablebody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function changeData() {
+        var dd = new Date($('#DateInput').val());
+        let y = dd.getFullYear();
+        let m = dd.getMonth() + 1;
+        let d = dd.getDate();
+        $('#spinner').addClass("show");
+        $.ajax({
+            url: "/Supplier/SupplierDetails?Id=" + $("#BaseId").val() + "&Year=" + y + "&Month=" + m + "&Day=" + d,
+           // url: "http://scopos-khattab.cloud/api/Suppliers/GetSuppliersDataByday?Id=" + $("#BaseId").val() + "&Year=" + y + "&Month=" + m + "&Day=" + d,
+            async: false,
+            type: "get",
+            contentType:"JSON",
+            data: {},
+            success: function (res) {
+                $('#spinner').removeClass('show');
+                writeContent(res);
+
+            }
+        })
+        $.ajax({
+           // url: "//scopos-khattab.cloud/api/Suppliers/GetBillsToSupplierInDay?Id=" + $("#BaseId").val() + "&Year=" + y + "&Month=" + m + "&Day=" + d,
+            url: "/Supplier/GetBillsToSupplierInDay?Id=" + $("#BaseId").val() + "&Year=" + y + "&Month=" + m + "&Day=" + d,
+            async: false,
+            type: "get",
+            data: {},
+
+            success: function (res) {
+                //bills exist
+                if (res.State == 2) {
+                    $("#nobills").hide();
+                    $('#BillsTable').DataTable({
+                        "destroy": true, // In order to reinitialize the datatable
+                        "pagination": true, // For Pagination
+                        "sorting": true, // For sorting
+                        "aaData": res.data,
+                        "columns": [{
+                            "data": "BillNo",
+                        }, {
+                            "data": "BillDateString",
+                        }, {
+                            "data": "DisName",
+                            }, {
+                                "data": null, "render": function (o) { return ' <a type="button" href="/Bills/Details/' + o.BillNo + '" class="btn btn-sm btn-outline-primary" >@SuppliersDashboard.Resources.pages.details</a>' }
+
+
+                        }]
+                    });
+                    $('#BillsTable').css("width", "100%");
+                    $('#BillsTable').show();
+                } else {
+                    //there is no bills today
+                    $('#BillsTable').hide();
+                    $("#BillsTable_wrapper").hide();
+                    $("#nobills").show();
+                }
+
+
+            }
+
+        })
+
+
+    }
+
+    function writeContent(res) {
+        $("#SupplierName").text(res.SupplierName + "--اليوم--");
+        $("#TotalPil").text(res.data.TotalPil);
+        $("#TotalPillBeforDiscount").text(res.data.TotalPillBeforDiscount);
+        $("#TotalPilDiscount").text(res.data.TotalPilDiscount);
+        $("#TotalPilAfterDiscount").text(res.data.TotalPilAfterDiscount);
+        $("#TotalItemsQount").text(res.data.TotalItemsQount);
+        $("#TotalItemsDiscount").text(res.data.TotalItemsDiscount);
+        $("#TotalPilCach").text(res.data.TotalPilCach);
+        $("#TotalPilAgel").text(res.data.TotalPilAgel);
+        $("#Msrofat").text(res.data.Msrofat);
+        $("#TotalPilNet").text(res.data.TotalPilNet);
+        $("#ReturnAmount").text(res.data.ReturnAmount);
+        $("#Collection").text(res.data.Collection);
+    }
+
+    $('#spinner').addClass('show');
+    $.ajax({
+       // url: "//scopos-khattab.cloud/api/Suppliers/GetDistributersToSupplier?Id=" + $("#BaseId").val(),
+        url: "/Supplier/GetDistributersToSupplier?Id=" + $("#BaseId").val(),
+        async: false,
+        type: "get",
+        data: {},
+
+        success: function (res) {
+            let x = "";
+            $.each(res.data, function (i, e) {
+                x += "<tr><th scope=\"row\">" + (i + 1) + "</th><td>" + e.Distributor + "</td><td> <a class=\"btn btn-sm btn-outline-primary\" href=\"/Distributor/Details/" + e.UserId + "\"> @SuppliersDashboard.Resources.pages.todaydetails </a></td><td><a class=\"btn btn-sm btn-outline-primary\" href=\"/Distributor/AllDetails/" + e.UserId + "\">@SuppliersDashboard.Resources.pages.alldetails </a></td></tr>"
+            })
+            $("#distributerstablebody").html(x);
+            $('#spinner').removeClass('show');
+
+        }
+
+    })
+    changeData();
+
+
+</script>
+@if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+{
+    <script>
+
+        let dd = new Date();
+        let d = dd.getDate();
+        if (d < 10)
+            d = "0" + d;
+        let m = dd.getMonth() + 1;
+        if (m < 10)
+            m = "0" + m;
+        let y = dd.getFullYear();
+        let fullday = y + "-" + m + "-" + d
+
+        $("#DateInput").val(fullday);
+    </script>
+ }

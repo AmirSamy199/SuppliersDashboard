@@ -1,0 +1,124 @@
+﻿@using SuppliersDashboard.Resources
+<div id="hide">
+    <div class="modal-header pd-y-20 pd-x-25">
+        <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">@Banks.NewBank</h6>
+      
+    </div>
+    <div class="modal-body pd-25">
+        <div class=" form-layout form-layout-4">
+            <div class="row">
+                <label class="col-sm-4 form-control-label">@Banks.BankName: <span class="tx-danger"></span></label>
+                <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                    <input type="text" class="form-control" placeholder="please enter The Bank Name" id="BankName">
+                </div>
+
+            </div><!-- row -->
+            <br />
+            <div class="row mg-t-20">
+                <label class="col-sm-4 form-control-label">@Banks.BankAccount: <span class="tx-danger"></span></label>
+                <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                    <input type="text" class="form-control" placeholder="please enter The Bank Account" id="AccNo">
+                </div>
+            </div>
+            <br />
+            <div class="row mg-t-20">
+                <label class="col-sm-4 form-control-label">@Banks.BankAddress: <span class="tx-danger"></span></label>
+                <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                    <input type="text" class="form-control" placeholder="please enter The Bank Address" id="Address">
+                </div>
+            </div>
+            <hr />
+            <div class="row mg-t-20">
+                <label class="col-sm-4 form-control-label">@Banks.IBAN: <span class="tx-danger"></span></label>
+                <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                    <input type="text" class="form-control" placeholder="please enter The Bank IBAN" id="IBAN">
+                </div>
+            </div>
+            <br />
+            <div class="row mg-t-20">
+                <label class="col-sm-4 form-control-label">@Banks.Swiftcode: <span class="tx-danger"></span></label>
+                <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                    <input type="text" class="form-control" placeholder="please enter The Bank Swiftcode" id="swift">
+                </div>
+            </div>
+            <hr />
+            <div class="row mg-t-20">
+                <label class="col-sm-4 form-control-label">@Banks.terms: <span class="tx-danger"></span></label>
+                <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                    <input type="text" class="form-control" placeholder="please enter The Bank terms" id="terms">
+                </div>
+            </div>
+            <br />
+            <div id="error">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="submit" class="btn btn-primary mg-r-5">@Banks.Submit</button>
+        <button id="cancel" class="btn btn-secondary">@Banks.Cancel</button>
+    </div><!-- form-layout-footer -->
+</div>
+<script>
+    $('#cancel').click(function () {
+        $('#hide').hide();
+        $('input').val('');
+    });
+
+    $('#submit').click(function () {
+        if (IsValid()) {
+            $('#error ul').empty();
+            $.ajax({
+                url: '/Bank/NewBank',
+                type: "post",
+                data: {
+                    Bankname: $('#BankName').val(),
+                    address: $('#Address').val(),
+                    accountNo: $('#AccNo').val(),
+                    IBANCode: $('#IBAN').val(),
+                    swiftCode: $('#swift').val(),
+                    terms: $('#terms').val()
+                },
+                success: function (data) {
+                    LoadTable();
+                    $('#modal').modal('hide');
+                },
+                error: function () {
+
+                },
+            })
+        }
+    });
+    function IsValid() {
+        $('#error ul').empty();
+        var error = false;
+        if ($('#BankName').val().length == 0) {
+            error = true;
+        }
+        if ($('#AccNo').val().length == 0) {
+            error = true;
+        }
+        if ($('#Address').val().length == 0) {
+            error = true;
+        }
+        if ($('#IBAN').val().length == 0) {
+            error = true;
+        }
+        if ($('#swift').val().length == 0) {
+            error = true;
+        }
+        if ($('#terms').val().length == 0) {
+            error = true;
+        }
+        if (error) {
+            $('#error ul').append("<li class='text-danger'>Enter all required fields</li>");
+            //$('#error ul').append("<li class='text-danger'>اكمل جميع البيانات المطلوبة</li>");
+        }
+
+        return !error;
+    }
+
+</script>
+

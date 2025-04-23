@@ -1,0 +1,156 @@
+﻿
+@using SuppliersDashboard.ViewModels
+@using SuppliersDashboard.Models
+@model Response<List<RegisterOnlineShopRequest_tbl>>
+@{
+    ViewBag.Title = "OnlineShopRequests";
+    int i = 1;
+}
+<table class="table table-borderd table-striped">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Mobile
+            </th>
+            <th>
+                CompanyName
+            </th>
+            <th>BranchName</th>
+            <th>OfficeName</th>
+            <th>Address</th>
+            <th>Edit Branch </th>
+            <th>Accept</th>
+            <th>Reject</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>
+                        @(i++)
+                    </td>
+                    <td>@item.Mobile</td>
+                    <td>@item.CompanyName</td>
+                    <td>@item.BranchName</td>
+                    <td>@item.OfficeName</td>
+                    <td>@item.Address</td>
+                    <td><button class="btn btn-primary" onclick="editbranch(@item.RecordId)"> Edit Branch </button> </td>
+                    <td>
+                        @if (item.OnlineBranchId != 0)
+                        {
+
+
+                            <button class="btn btn-primary" onclick="sure('هل انت متاكد من قبول الطلب' ,'قبول', 'acceptrequest(@item.RecordId)'  )" > Accept </button>
+
+                        }
+                        else
+                        {
+                            <span>   اختر الفرع</span>
+                        }
+                    </td>
+                    <td><button class="btn btn-primary" onclick="sure('هل انت متاكد من رفض الطلب' ,  'رفض', 'rejectrequest(@item.RecordId)')"> Reject </button> </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div id="companyoption" style="display:none">
+
+    @foreach (var item in ViewBag.Companies)
+    {
+        <option value="@item.Id">
+            @item.Value
+        </option>
+    }
+</div>
+
+
+<script>
+    function editbranch(id) {
+        let html = `
+        <div class='row p-3'>
+        <input type='hidden' id='reqid' value='${id}' />
+            <div class='col-12 p-2'>
+            <label>اختر الشركة    </label>
+
+            <select onchange='comidchange(this.value)' class='form-control' id='comid'>
+            ${$('#companyoption').html() }
+            </select>
+        </div>
+           <div class='col-12 p-2'>
+               <label>اختر الفرع    </label>
+
+               <select id='branchid' class='form-control'>
+               
+               </select>
+   </div>
+
+   <div class='col-12 p-2'>
+   <button class='btn btn-primary w-100' onclick='submiteditbranch()'> تعديل </button>
+   </div>
+        </div>
+        `
+        ShowModal(html)
+    }
+
+
+    function comidchange(comid) {
+        console.log('comid')
+        console.log(comid)
+        $.ajax({
+            url: "/Screens/GetBranches",
+            type: "post",
+            data: {
+                ComID: comid
+            },
+            success: (res) => {
+                console.log('res')
+                console.log(res)
+                let branches = res.data;
+                let html2 = "<option  value='0'>اختر الفرع</option>"
+                $.each(branches, (i, e) => {
+                    html2 += `<option value='${e.Branch_ID}'>${e.branchName}</option>`
+                })
+                $("#branchid").html(html2)
+            }
+        })
+    }
+
+    function submiteditbranch(){
+        let brid = $("#branchid").val()
+        console.log(branchid)
+        let reqid = $("#reqid").val()
+        console.log(reqid)
+
+        $.get(`/Admin/EditOnlineBranchRequest?reqid=${reqid}&brid=${brid}`, (res) => {
+            location.reload()
+        })
+    }
+
+    function acceptrequest(id) {
+        let url = `/Admin/AcceptShopAccountRegistrationRequest?Id=${id}`
+        $.get(url, (res) => {
+            let html = `<h3 class='p-3 text-center text-success'> ${res.Message}</h3>`
+
+            ShowModal(html)
+            setTimeout(() => { location.reload() }, 3000)
+        })
+    }
+    function rejectrequest(id) {
+        let url = `/Admin/RejectShopAccountRegistrationRequest?Id=${id}`
+        $.get(url, (res) => {
+            let html = `<h3 class='p-3 text-center text-success'> ${res.Message}</h3>`
+
+            ShowModal(html)
+            setTimeout(() => { location.reload() }, 3000)
+
+        })
+    }
+</script>

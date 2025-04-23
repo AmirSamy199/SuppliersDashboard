@@ -1,0 +1,48 @@
+﻿
+<input type="hidden" id="distributorId" value="0" />
+<div class="">
+    <input list="distributorslistoption" name="distributorslistoption" class="form-control" placeholder="اختار مندوب" id="DistributorIdInput" />
+    <datalist id="distributorslistoption">
+    </datalist>
+</div>
+
+<script>
+    $.ajax({
+        url: "/Selector/GetAllDistributorsUsers",
+        type: "post",
+        data: {
+
+        }, success: (res) => {
+
+
+            let html;
+            $.each(res.data.Data, (i, e) => {
+                html += `<option value='${e.Id}'> ${e.Value}</option>`
+            })
+            $("#distributorslistoption").html(html)
+        }
+    })
+            $("#DistributorIdInput").change(() => {
+                let id = $("#DistributorIdInput").val();
+                $("#distributorId").val(id)
+                let name = $('#distributorslistoption option[value="' + id + '"]').text()
+                $("#DistributorIdInput").attr("placeholder", name)
+                $("#DistributorIdInput").val("")
+                @if(ViewBag.DisChanged != null)
+            {
+   
+             @ViewBag.DisChanged
+
+
+}
+
+            })
+
+    </script>
+@if (ViewBag.DisChanged != null)
+{
+    @*<script>
+             @ViewBag.DisChanged
+
+    </script>*@
+}

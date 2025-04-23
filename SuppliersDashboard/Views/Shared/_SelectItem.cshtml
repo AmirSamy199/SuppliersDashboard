@@ -1,0 +1,24 @@
+﻿<input type="hidden" id="itemId" value="0" />
+<div class="">
+    <input list="itemslistoption" name="itemslistoption" class="form-control" placeholder="اختار صنف" id="ItemIdInput" />
+    <datalist id="itemslistoption">
+    </datalist>
+</div>
+<script>
+
+    $.post(`/Items/GetAllItemsFromTable`, (res) => {
+        let html;
+        $.each(res.data.Data, (i, e) => {
+            html += `<option value='${e.Record_ID}'> ${e.ItemName}</option>`
+        })
+        $("#itemslistoption").html(html)
+    })
+                 
+        $("#ItemIdInput").change(() => {
+        let selctitemid = $("#ItemIdInput").val();
+            $("#itemId").val(selctitemid)
+            let name = $('#itemslistoption option[value="' + selctitemid + '"]').text()
+        $("#ItemIdInput").attr("placeholder", name)
+        $("#ItemIdInput").val("")
+        })
+</script>

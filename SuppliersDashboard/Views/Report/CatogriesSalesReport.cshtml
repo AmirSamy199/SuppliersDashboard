@@ -1,0 +1,328 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "CatogriesSalesReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="p-4" id="printer">
+
+
+    <style>
+        th, td {
+            border: 1px solid #ccc !important;
+            text-align: center
+        }
+
+        table {
+            border-collapse: collapse !important
+        }
+    </style>
+    <div class="row" style="margin:30px">
+        <div class="p-2 col-lg-3 col-sm-12">
+            المورد :
+            <select id="supplierselect" class="form-control form-select">
+                <option> @SuppliersDashboard.Resources.pages.choosesupplier </option>
+                @foreach (var item in ViewBag.Suppliers)
+                {
+                    <option value="@item.Record_ID"> @item.CompanyName </option>
+                }
+            </select>
+        </div>
+        <div class="p-2 col-lg-3 col-sm-12">
+            @pages.Group :
+            <select id="categoryselect" class="form-control form-select">
+                <option value="0">@llayout.Groups</option>
+
+            </select>
+        </div>
+        <div class="p-2 col-lg-3 col-sm-12">
+            المندوب :
+            <input type="hidden" id="userid" value="0" />
+            <input class="form-control"  list="allusers" name="allusers" placeholder="@pages.distributors  " onchange="changeuserselect(this)">
+            <datalist id="allusers">
+                @if (ViewBag.Users != null)
+                {
+                    foreach (var item in ViewBag.Users)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                }
+            </datalist>
+
+        </div>
+        <div class="p-2 col-lg-3 col-sm-12">
+            الفرع :
+            <input type="hidden" id="branchid" value="0" />
+            <input class="form-control" list="allbranches" name="allbranches" id="branchinput" placeholder="@pages.selectBranch " onchange="changebranchselect(this)">
+            <datalist id="allbranches">
+                @if (ViewBag.Users != null)
+                {
+                    foreach (var item in ViewBag.Branches)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                }
+            </datalist>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <div class="row p-4">
+        <div class="col-lg-1"> @pages.iin </div>
+        <div class="col-lg-5">
+            <input class="form-control" type="date" id="DateFrom" />
+        </div>
+        <div class="col-lg-1"> @pages.from </div>
+        <div class="col-lg-5">
+            <input class="form-control" type="date" id="DateTo" />
+
+        </div>
+
+
+    </div>
+
+    <div class="container">
+        <h1 class="h1 p-3 text-center" id="head">
+        </h1>
+
+
+        <div id="headtablediv" class="collapse">
+            <table class="table table-hover table-bordered table-responsive" id="headTable">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            @pages.Group
+                        </th>
+                        <th>
+                           @pages.distributor
+                        </th>
+                        <th>
+                            @pages.size
+                        </th>
+                        <th>
+                            @pages.totalprice
+                        </th>
+                        <th>
+                            @pages.discount
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">@llayout.Execl </button>
+</div>
+<input type="hidden" id="twice" value="0" />
+<script>
+    window.onload = (event) => {
+        LoadPage()
+    };
+
+
+
+    $("#DateFrom").change(() => {
+        LoadPage()
+    })
+    $("#DateTo").change(() => {
+        LoadPage()
+    })
+    $("#branchid").change(() => {
+        dd
+        LoadPage()
+    })
+    $("#categoryselect").change(() => {
+        LoadPage()
+    })
+    $("#userid").change(() => {
+        LoadPage()
+    })
+    let headers = [];
+    let details = [];
+   
+    let currentdate = new Date();
+    let m = currentdate.getMonth() + 1;
+    if (m < 10) m = "0" + m
+    let d = currentdate.getDate();
+    if (d < 10) d = "0" + d
+    var dd = "" + currentdate.getFullYear() + "-" + m + "-" + d
+    $("#DateFrom").val(dd)
+    $("#DateTo").val(dd)
+
+    function changeuserselect(ele) {
+        
+        let id = $(ele).val()
+        $("#userid").val(id)
+        let name = $('#allusers option[value="' + id + '"]').text()
+        $(ele).attr("placeholder", name)
+        $(ele).val("")
+        LoadPage()
+    }
+    function changebranchselect(ele) {
+        
+        let id = $(ele).val()
+        $("#branchid").val(id)
+        let name = $('#allbranches option[value="' + id + '"]').text()
+        $(ele).attr("placeholder", name)
+        $(ele).val("")
+        LoadPage()
+    }
+    $("#supplierselect").change(() => {
+        let value = $("#supplierselect").val();
+
+        changeCategoriesselect(value)
+
+
+    });
+    function changeCategoriesselect(value) {
+        $.ajax({
+            type: "post",
+            url: "/Items/GetCategories",
+            data: {
+                SupId: value
+            }, success: (res) => {
+
+                let html = "<option value='0'>كل المجموعات</option>"
+                $.each(res.data.Data, (i, e) => {
+                    html += "<option value='" + e.Id + "'>" + e.Value + "</option>"
+
+                })
+
+                $("#categoryselect").html(html)
+            }
+        });
+
+    }
+    function LoadPage() {
+        startloader();
+
+        let branchid = $("#branchid").val()
+        let userid = $("#userid").val()
+        let catid = $("#categoryselect").val()
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+
+
+        if (datefrom == "" || datefrom == null) {
+            datefrom = dd
+
+        }
+        if (dateto == "" || dateto == null) {
+
+            dateto = dd
+        }
+        $.ajax({
+            url: "/Report/CatogriesSalesReportJson",
+            type: "post",
+            data: {
+                CategoryID: catid,
+                BranchID: branchid,
+                UserID: userid,
+                DateFrom: datefrom,
+                DateTo: dateto
+
+            },
+            success: (res) => {
+
+                endloader()
+                $("#head").text(res.data.Message)
+                headers = res.data.Data.Heads;
+                details = res.data.Data.Details;
+                let ciunter = 1
+                debugger
+                if (headers.length > 0) {
+                    console.log(headers)
+                    $("#headtablediv").collapse("show")
+                    $("#headTable").dataTable({
+                        'iDisplayLength': 25,
+                        "bDestroy": true,
+                        "bSearchable": true,
+                        "responsive": true,
+                        "language": {
+                            "searchPlaceholder": 'Search...',
+                            "sSearch": '',
+                            "lengthMenu": '_MENU_ items/page',
+                        },
+                        data: headers,
+                        "columns": [
+                            {
+                                "data": null, render: function () {
+                                    return ciunter++
+                                }
+                            },
+                            { "data": "CategoryName", "CategoryName": "Items", "width": "Auto" },
+                            { "data": "Name", "name": "Name", "width": "Auto" },
+                            { "data": "size", "name": "size", "width": "Auto" },
+                            { "data": "TotalPrice", "name": "TotalPrice", "width": "Auto" },
+                            { "data": "Discount", "name": "Discount", "width": "Auto" }
+
+
+                        ]
+                    })
+                } else {
+                    $("#headtablediv").collapse("hide")
+                 
+                }
+            }
+        })
+
+    }
+
+    function excel() {
+
+        let branchid = $("#branchid").val()
+        let userid = $("#userid").val()
+        let catid = $("#categoryselect").val()
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+
+
+        let h = $("#head").text()
+        // int CategoryID , int UserID , int BranchID , string DateFrom , string DateTo
+        LayoutExcel(`/Report/ItemCategoriesSalesFromToExcel?CategoryID=${catid}&BranchID=${branchid}&UserID=${userid}&DateFrom=${datefrom}&DateTo=${dateto}`, `${h}`)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    function endloader() {
+        $("#spinner").removeClass("show");
+    }
+    function ShowModal(html) {
+        $("#modalcontent").html(html)
+        $("#myModal").modal("show")
+    }
+    function startloader() {
+        $("#spinner").addClass("show");
+    }
+
+</script>
+

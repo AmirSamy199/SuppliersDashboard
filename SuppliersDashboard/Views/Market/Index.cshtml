@@ -1,0 +1,161 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SelectList companies = ViewBag.Companies;
+}
+
+<div class="col-12">
+    <div class=" rounded  p-4 pb-1">
+        @*<select class="form-select form-select-lg mb-3" id="ComID" aria-l>
+                <option value="">اختر الشركة </option>
+            </select>*@
+
+        <input id="ComID" list="compsList" class="form-control mb-3" placeholder="اختر الشركة" style="text-align:right;font-size:20px; font-weight:bold" />
+        <datalist id="compsList">
+            @foreach (var item in companies)
+            {
+                <option value=@item.Value>@item.Text</option>
+            }
+        </datalist>
+    </div>
+    <div style="padding:50px" class="h2  text-center collapse show" id="defaulthead">
+        من فضك اختر الشركة اولا
+    </div>
+
+    <div class=" rounded  p-4 pt-1" id="Content">
+        @*<div>
+                <button class="btn btn-outline-primary " onclick="ViewChain()"> مطالبة مالية   </button>
+            </div>*@
+        <div class="col-sm-12 col-xl-6 " style="margin-left:50%">
+            <div class=" rounded  p-md-4">
+                <input class="form-control form-control-sm" type="text" id="SearchBar" placeholder="Search">
+            </div>
+        </div>
+        <h6 class="h3">@llayout.Branch  </h6>
+        <div class=" card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table" id="Table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">@pages.name  </th>
+                                <th scope="col">@pages.oldrem   </th>
+
+                                <th scope="col" style=" text-align:Center"> @pages.accountstatement   </th>
+                            </tr>
+                        </thead>
+                        <tbody id="TableBody">
+                        </tbody>
+                    </table>
+                    <div style="text-align: center;">
+                        <h5 class="text-primary">@SuppliersDashboard.Resources.pages.pagges</h5>
+                    </div>
+                    <div class='btn - group me - 2' style="width: 100%;" id="Pages">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @{
+        <script>
+            //function ViewChain() {
+            //    let comid = $("#ComID").val();
+            //    let name = $("#ComID option:selected").text()
+
+            //    console.log("this name of comapany : " + name + " and this is id of it : " + comid);
+
+            //    window.location.href = `/Market/ViewChain?ComId=${comid}&ComName='${name}''`;
+            //}
+            $(document).ready(function () {
+                document.getElementById("Content").style.display = "none";
+            })
+            var GData = [];
+
+            function LoadData() {
+                startloader();
+                if ($('#ComID').val() != "") {
+                    document.getElementById("Content").style.display = "block";
+                    $("#defaulthead").removeClass("show")
+                    $.ajax({
+                        type: "post",
+                        url: "/Market/LoadData",
+                        data: { ComID: parseInt($('#ComID').val()),},
+                        datatype: "json",
+                        traditional: true,
+                        success: function (data) {
+                            GData = data;
+                            Table(data, 1)
+                            endloader();
+                        }
+                    });
+                }
+            }
+
+            function Table(Data, PN, Search) {
+
+                var DataTabel = JSON.parse(JSON.stringify(Data));
+                var PageSize = 20
+                var start = (PN - 1) * PageSize
+                var end = start + PageSize
+
+                if (Search != null && Search != "") {
+                    var FilteredData = [];
+                    for (let item in DataTabel.data) {
+                        if (DataTabel.data[item].item.includes(Search))
+                            FilteredData.push(DataTabel.data[item]);
+                    }
+                    DataTabel.data = FilteredData;
+                }
+
+                var items = DataTabel.data.slice(start, end)
+
+                document.getElementById("TableBody").innerHTML = " ";
+                document.getElementById("Pages").innerHTML = " ";
+                for (let item in items) {
+
+                    @*document.getElementById("TableBody").innerHTML += "<tr> <th > <label>" + String(Number(item) + 1) + "</label></th> <th > <label style='direction: rtl'>" + items[item].item + "</label></th>"
+                        + "<td style='text-align:Center'><a class='btn btn-sm btn-outline-primary' href='/Market/Details?MarketID=" + items[item].Customer_ID + "&ComID=" + parseInt($('#ComID').val()) + "'>@SuppliersDashboard.Resources.pages.details</a></td ></tr > "*@
+
+                    //document.getElementById("TableBody").innerHTML += `<tr> <th > <label>${String(Number(item) + 1)} </label></th> <th > <label style='direction: rtl'>${items[item].item}</label></th><th > <label style='direction: rtl'>${items[item].Unpaid_deferred}</label></th>
+                    //   <td style='text-align:Center'>
+                    //   <a class='btn btn-primary col-12 btn-lg' href='/Market/AccountStatement?BranchId=${items[item].Branch_ID}&BranchName="${items[item].item}"'>كشف حساب </a>
+                    //   </td ></tr >`
+                    document.getElementById("TableBody").innerHTML += `<tr> <th > <label>${String(Number(item) + 1)} </label></th> <th > <label style='direction: rtl'>${items[item].item}</label></th><th > <label style='direction: rtl'>${items[item].Unpaid_deferred}</label></th>
+                       <td style='text-align:Center'>
+                       <a class='btn btn-primary col-12 btn-lg' href='/FastReport/Branch?branchId=${items[item].Branch_ID}&reporttype=23'>كشف حساب </a>
+                       </td ></tr >`
+                }
+                var p = Math.ceil(DataTabel.data.length / 20);
+                for (let i = 1; i <= p; i++) {
+                    document.getElementById("Pages").innerHTML += "<button type='button' id='Pbtn' onclick='Table(" + JSON.stringify(Data) + "," + i + "," + '$("#SearchBar").val()' + ")' class='btn btn-primary' style='margin-left:10px; margin-bottom:5px;'>" + i + "</button>"
+                }
+
+            }
+
+            $('#ComID').change(function () {
+                //let datalist = document.getElementById("ComID");
+                if ($('#ComID').val() != "") {
+
+                    LoadData();
+
+                    let name = $("#compsList option[value='" + $('#ComID').val() + "']").text()
+
+
+
+                    $("#ComID").val("")
+                    $("#ComID").attr("placeholder",name)
+                }
+            })
+
+            $("#SearchBar").keyup(function () {
+                Table(GData, 1, $("#SearchBar").val());
+            })
+        </script>
+    }
+}
+

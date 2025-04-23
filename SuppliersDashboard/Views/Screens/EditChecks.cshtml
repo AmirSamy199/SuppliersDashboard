@@ -1,0 +1,138 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "Edit Checks ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int iterator = 1;
+}
+
+<div class="p-3">
+    <h2 class="text-center">@llayout.Checks   </h2>
+    <div class="p-3">
+        <div class="row d-flex justify-content-around">
+            <div class="col-lg-6 text-center p-3">
+                <input class="form-control" placeholder="بحث" type="text" id="search" onkeyup="Search('search','mydiv')" />
+            </div>
+
+        </div>
+    </div>
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 2px solid !important;
+        }
+
+        table {
+            margin: 10px;
+            border-collapse: collapse !important;
+        }
+    </style>
+    @if (ViewBag.Checks == null || ViewBag.Checks.Count == 0)
+    {
+        <div>
+            <h4 class="text-center p-4">
+                لا يوجد داتا
+            </h4>
+
+        </div>
+    }
+    else
+    {
+        <div class="collapse"  > 
+        <div id="table-scroll ">
+            <table class="table-responsive table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            @pages.distributor
+                        </th>
+                        <th>
+                            @pages.customer
+                        </th>
+                        <th>
+                            @Items.Date
+                        </th>
+                        <th>
+                            @pages.time
+                        </th>
+                        <th>
+                            @llayout.checknumber
+                        </th>
+                        <th>
+                            @pages.paid
+                        </th>
+                        <th>
+                            @Banks.BankName
+                        </th>
+                        <th>
+                            @pages.edit
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SuppliersDashboard.Models.MoneyPaperModel item in ViewBag.Checks)
+                    {
+                        <tr class="mydiv">
+                            <td>
+                                @(iterator++)
+                            </td>
+                            <td>@item.UserName</td>
+                            <td>@item.BranchName</td>
+                            <td>@item._Date</td>
+                            <td>@item._Time</td>
+                            <td>@item.CheckNumber</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Bank</td>
+                            <td><button class="btn btn-success " onclick="EditCheck(@item.TranId,'@item.CheckNumber' ,@item.Amount )">    @pages.edit</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+    </div>
+
+    <script>
+        function EditCheck(Id, No, amount) {
+
+            let html = `
+                            <div class='p-3' style='min-width:500px'>
+                            <h3 class='text-center'>
+                            تعديل شيك رقم
+                            ${No}
+                            </h3>
+                            <div class='p-2'>
+                            <label> المبلغ </label>
+
+                            </div>
+                            <div class='p-2'>
+                            <input placeholder ='المبلغ' value='${amount}' type='number' id='newvalue' class='form-control'>
+                            </div>
+                            <div class='text-center' p-4>
+                            <button class="btn btn-success " onclick="SubmitEditCheck(${Id})"> تعديل</button>
+                            </div>
+                            </div>
+                            `
+
+            ShowModal(html)
+        }
+        function SubmitEditCheck(Id) {
+            let newvalue = $("#newvalue").val()
+
+            let url = `/Screens/SubmitEditCheck?TranId=${Id}&Amount=${newvalue}`
+            $.get(url, (res) => {
+                if (res.data.State == 1) {
+                    showSuccessOperation(res.data.Message)
+                    setTimeout(() => { location.reload() }, 4000)
+                } else {
+                    showDangerOperation(res.data.Message)
+                }
+
+            })
+
+        }
+    </script>

@@ -1,0 +1,107 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = SuppliersDashboard.Resources.pages.UsersRegistrationRequests;
+}
+
+
+<div class="container">
+
+    <h6 id="alertMessage" class="text-primary">  </h6>
+    <h6 id="dangerMessage" class="text-danger">  </h6>
+    <table class="table table-striped">
+        <thead id="requests-table-header">
+            <tr>
+                <th>#</th>
+                <th>@SuppliersDashboard.Resources.pages.name </th>
+                <th> @SuppliersDashboard.Resources.pages.adddate </th>
+                <th> @SuppliersDashboard.Resources.pages.distributor </th>
+                <th>@SuppliersDashboard.Resources.pages.accept </th>
+                <th> @SuppliersDashboard.Resources.pages.reject </th>
+            </tr>
+        </thead>
+        <tbody id="requests-table-body">
+
+        </tbody>
+    </table>
+
+
+
+
+</div>
+
+
+<script>
+    "use strict";
+    $.ajax({
+        type: "get",
+        url: "/Supplier/GetPendingRegistrationRequests",
+        async: false,
+        success: function (res) {
+            console.log(res)
+            if (res.Status == 2) {
+                let x = "";
+                $.each(res.data, function (i, e) {
+                    x += "<tr id='req-" + e.Record_ID + "'> <td>" + (i + 1) + "</td><td>" + e.UserName + "</td><td>" + e._Request_date + "</td><td>" + e.Distributor_Group_Name + "</td><td> <button class='btn btn-sm btn-outline-primary' onclick='ConfirmRequest(" + e.Record_ID + ")'> @SuppliersDashboard.Resources.pages.confirm </button>  </td><td> <button class='btn btn-sm btn-outline-danger' onclick='RejectRequest(" + e.Record_ID + ")'> @SuppliersDashboard.Resources.pages.reject </button><td></tr>";
+
+                })
+                $("#requests-table-body").html(x);
+            } else if (res.Status == 1) {
+                $("#requests-table-body").html("<div>@SuppliersDashboard.Resources.pages.nopendingrequestfound</div>");
+                $("#requests-table-header").hide();
+
+            }
+        }
+    })
+    function ConfirmRequest(Id) {
+        $.ajax({
+            type: "get",
+            url: "/Supplier/AcceptRegistrationRequest?Reg_Id=" + Id,
+            async: false,
+            success: function (res) {
+                if (res.State == 2) {
+                    $("#alertMessage").text(res.Message);
+                    $("#alertMessage").show();
+                    setTimeout(function () {
+                        $("#alertMessage").hide();
+                    }, 5000)
+                    $("#req-" + Id).hide(3000);
+                } else if (res.State == 1) {
+                    dangerMessage
+                    $("#dangerMessage").text(res.Message);
+                    $("#dangerMessage").show();
+                    setTimeout(function () {
+                        $("#dangerMessage").hide();
+                    }, 3000)
+
+                }
+            }
+        })
+    }
+    function RejectRequest(Id) {
+
+        $.ajax({
+            type: "get",
+          
+            url: "/Supplier/RejectRegistrationRequest?Reg_Id=" + Id,
+            async: false,
+            success: function (res) {
+                if (res.State == 2) {
+                    $("#dangerMessage").text(res.Message);
+                    $("#dangerMessage").show();
+                    setTimeout(function () {
+                        $("#dangerMessage").hide();
+                    }, 5000)
+                    $("#req-" + Id).hide(3000);
+                } else if (res.State == 1) {
+
+                    $("#dangerMessage").text(res.Message);
+                    $("#dangerMessage").show();
+                    setTimeout(function () {
+                        $("#dangerMessage").hide();
+                    }, 3000)
+
+                }
+            }
+        })
+    }
+</script>

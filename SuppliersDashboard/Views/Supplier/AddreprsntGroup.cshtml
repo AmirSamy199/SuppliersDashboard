@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewBag.Title = "Add Distributor Group";
+}
+
+<div class="container p-4">
+    <div class="row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <div class="rounded h-100 p-4">
+                <h2 class="text-center p-3">اضافة مجموعة مندوبين </h2>
+                <div class="text-center" style="display:none" id="adddisgrpupvalidatemsg"> <span class="text-danger">@SuppliersDashboard.Resources.llayout.plzfillallfields </span></div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">@SuppliersDashboard.Resources.pages.name </label>
+                    <input type="text" class="form-control" id="adddisgroupname" aria-describedby="emailHelp">
+
+                </div>
+                <div class="mb-3">
+                    <label for="adddisgroupagent" class="form-label">@SuppliersDashboard.Resources.pages.supervisor </label>
+
+
+                    <select class="form-control" id="adddisgroupagent">
+                        @if (ViewBag.Agents != null)
+                        {
+                            foreach (var it in ViewBag.Agents)
+                            {
+
+                                <option value="@it.Id"> @it.Value</option>
+                            }
+                        }
+                    </select>
+                    @*<input type="hidden" value="0" id="adddisgroupagent">
+                    <input name="agentlist" list="agentlist" value="" placeholder="@SuppliersDashboard.Resources.pages.supervisor  " class="form-control" id="adddisgroupagentselect">
+                    <datalist id="agentlist">
+                      
+                    </datalist>*@
+
+                </div>
+
+                <div class="row d-flex justify-content-around">
+
+                    <div class="col-lg-4 text-center p-3">
+                        <button class="btn btn-primary col-12 btn-lg" onclick="SubmitadddisgroupForm()" class="btn btn-primary">اضافة مجموعة </button>
+                    </div>
+
+                </div>
+                @*<button onclick="SubmitadddisgroupForm()" class="btn btn-primary">اضافة مجموعة </button>*@
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+<div class="container p-4">
+    <div class="row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <div class="rounded h-100 p-4">
+                <h2 class="text-center p-3">اضافة  مندوب </h2>
+                <div class="text-center" style="display:none" id="adddisgrpupvalidatemsg"> <span class="text-danger">@SuppliersDashboard.Resources.llayout.plzfillallfields </span></div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">@SuppliersDashboard.Resources.pages.name </label>
+                    <input type="text" class="form-control" id="salesuserName" aria-describedby="emailHelp">
+
+                </div>
+                <div class="mb-3">
+                    <label for="adddisgroupagent" class="form-label">المجموعة </label>
+                   <select class="form-control" id="groupId" >
+                       @if (ViewBag.Groups!=null)
+            {
+                           foreach(var item in ViewBag.Groups)
+                {
+
+                <option value="@item.Id">
+                    @item.Value
+                </option>
+                }
+            }
+                   </select>
+                  
+
+                </div>
+
+                <div class="row d-flex justify-content-around">
+
+                    <div class="col-lg-4 text-center p-3">
+                        <button class="btn btn-primary col-12 btn-lg" onclick="submitaddsales()" class="btn btn-primary">اضافة مندوب </button>
+                    </div>
+
+                </div>
+                @*<button onclick="SubmitadddisgroupForm()" class="btn btn-primary">اضافة مجموعة </button>*@
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+        $("#adddisgroupagentselect").change(() => {
+            let id = $("#adddisgroupagentselect").val()
+            let text = $("#agentlist option[value='" + id + "']").text();
+            $("#adddisgroupagent").val(id);
+            $("#adddisgroupagentselect").val('')
+            $("#adddisgroupagentselect").attr("placeholder", text)
+        })
+
+
+        function SubmitForm() {
+            let name = $("#name").val();
+            let responsableperson = $("#responsableperson").val();
+            let telephone = $("#telephone").val();
+            let address = $("#address").val();
+            if (validationInputValue(name) && validationInputValue(responsableperson) && validationInputValue(telephone) && validationInputValue(validationInputValue)) {
+                $.ajax({
+                    type: "post",
+                    url: "/Supplier/AddSupplier",
+                    data: {
+                        name: name,
+                        responsableperson: responsableperson,
+                        telephone: telephone,
+                        address: address
+                    },
+                    success: (res) => {
+                        //$("#modalcontent").text(res.data.Message)
+                        let html = `<h1 class='text-center p-5'> ${res.data.Message}</h1>`
+                        $("#modalcontent").html(html)
+                        $("#myModal").modal("show")
+
+                        formEmpty();
+
+                    }
+                })
+
+            } else {
+                shownotValidationMessage();
+            }
+
+        }
+        function SubmitadddisgroupForm() {
+
+            let disname = $("#adddisgroupname").val();
+            let dis = $("#adddisgroupagent").val();
+            if (disname == "") {
+                $("#adddisgrpupvalidatemsg").fadeIn(3000, () => {
+                    $("#adddisgrpupvalidatemsg").fadeOut(3000)
+                });
+            } else {
+
+                $.ajax({
+                    type: "post",
+                    url: "/Supplier/AddDisGroup",
+
+                    data: {
+                        name: disname,
+                        Agent: dis
+                    },
+                    success: (res) => {
+
+                        let html = `<h1 class='text-center p-5'> ${res.data.Message}</h1>`
+                        $("#modalcontent").html(html)
+                        $("#myModal").modal("show")
+
+                        formEmpty();
+
+                    }
+                })
+            }
+
+        }
+        function submitaddsales() {
+
+            let name = $("#salesuserName").val();
+            let group = $("#groupId").val();
+            if (name == "") {
+                
+            } else {
+
+                $.ajax({
+                    type: "post",
+                    url: "/Supplier/AddSalesMan",
+
+                    data: {
+                        UserName: name,
+                        GroupId: group
+                    },
+                    success: (res) => {
+
+                        let html = `<h1 class='text-center p-5'> ${res.Message}</h1>`
+                        $("#modalcontent").html(html)
+                        $("#myModal").modal("show")
+
+                        formEmpty();
+
+                    }
+                })
+            }
+
+        }
+
+
+
+
+        function validationInputValue(value) {
+            if (value == null || value == "" || value == undefined || value == 0)
+                return false;
+            return true;
+        }
+        function formEmpty() {
+            $("#adddisgroupname").val("")
+            $("#name").val('');
+            $("#responsableperson").val('');
+            $("#telephone").val('');
+            $("#address").val('');
+        }
+
+        function shownotValidationMessage() {
+            $("#validationmsg").fadeIn(3000, () => {
+                $("#validationmsg").fadeOut(3000)
+            });
+        }
+
+
+    </script>
+
+
+}

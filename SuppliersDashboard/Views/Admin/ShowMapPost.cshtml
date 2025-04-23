@@ -1,0 +1,87 @@
+﻿@model SuppliersDashboard.ViewModels.TrackingResponse
+@{
+    ViewBag.Title = "Show Map";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="printer ">
+        <div class="card pd-20  card-ERB ">
+            <div class="  table-responsive  ">
+                <div id="map" dir="rtl" style="height: 500px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var map = L.map('map').setView([26.820553, 30.802498], 6); // Centered on Egypt with an appropriate zoom level
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: ' @ViewBag.Name | @ViewBag.Date'
+
+        }).addTo(map);
+
+        var carIcon = L.icon({
+            iconUrl: "https://admin-dawar.unoerp.app/Content/Images/car.png",
+            iconSize: [32, 32], // Size of the icon
+            iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        var BrancesIcon = L.icon({
+            iconUrl: "https://admin-dawar.unoerp.app/Content/Images/store.png",
+            iconSize: [32, 32], // Size of the icon
+            iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        var BillIcon = L.icon({
+            iconUrl: "https://admin-dawar.unoerp.app/Content/Images/bill.png",
+            iconSize: [32, 32], // Size of the icon
+            iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        var locations = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data));
+        var Brances = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.branches));
+        var Biils = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.bills));
+        console.log(locations);
+        locations.forEach(function (location) {
+            console.log(location);
+            let CarIconInLoop = L.icon({
+                iconUrl: "https://admin-dawar.unoerp.app/Images/GPS/" + location.SerialNo + ".png",
+                iconSize: [50, 50], // Size of the icon
+                iconAnchor: [8, 50], // Point of the icon which will correspond to marker's location
+                popupAnchor: [0, -50] // Point from which the popup should open relative to the iconAnchor
+            });
+            //var CarIconInLoop = "https://admin-dawar.unoerp.app/Images/GPS/" + location.SerialNo +".png"
+            L.marker([location.latitude, location.longitude], { icon: CarIconInLoop }).addTo(map)
+                .bindPopup(`
+                <div class="popup-content" style="direction: ltr;">
+                    <div><span style="color: #070606;" class="label">Date :</span> ${new Date(location.Date).toLocaleDateString()}</div>
+                    <div><span style="color: #070606;" class="label">Time :</span> ${location.Time}</div>
+                    <div><span style="color: #070606;" class="label">Finish Date :</span> ${new Date(location.FinishDate).toLocaleDateString()}</div>
+                    <div><span style="color: #070606;" class="label">All Time :</span> ${location.Message}</div>
+                </div>`);
+        });
+
+        Biils.forEach(function (location) {
+            L.marker([location.Latitude, location.Longitude], { icon: BillIcon }).addTo(map)
+                .bindPopup(`
+                <div class="popup-content" style="direction: ltr;">
+                    <div><span style="color: #070606;" class="label">Bill Number :</span> ${location.BillNo}</div>
+                    <div><span style="color: #070606;" class="label">Branch Name :</span> ${location.BranchName}</div>
+                    <div><span style="color: #070606;" class="label">Total Amount After Discount :</span> ${location.TotalAmountAfterDiscount}</div>
+                </div>`);
+        });
+        Brances.forEach(function (location) {
+            L.marker([location.Latitude, location.Longitude], { icon: BrancesIcon }).addTo(map)
+                .bindPopup(`
+                <div class="popup-content" style="direction: ltr;">
+                    <div><span style="color: #070606;" class="label">Branch Name :</span> ${location.BranchName}</div>
+                    <div><span style="color: #070606;" class="label">Address :</span> ${location.Address}</div>
+                </div>`);
+        });
+
+    });
+</script>

@@ -1,0 +1,191 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "MoneyPaper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using SuppliersDashboard.Resources
+
+@Html.Partial("_reportHeader")
+
+
+<div class="text-center">
+
+    <input class="form-control col-lg-6 text-center" id="sreachPillsTable" list="representList" placeholder=" بحث......." style="width:50%;margin:auto" onkeyup="SearchInTable('sreachPillsTable','table')" />
+
+</div>
+
+<div id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1.5px solid #000 !important;
+        }
+
+        th {
+            color: #000 !important;
+            font-weight: bold !important;
+            background-color: #ccc !important
+        }
+
+        table {
+            border-collapse: collapse !important;
+            width: 100% !important
+        }
+
+        #table_filter {
+            display: none
+        }
+    </style>
+
+
+
+    <h2 class="text-center p-3 text-primary" id="messageheader">
+    </h2>
+
+
+
+    <div class="  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <table class="table table-bordered  table-striped" id="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>@pages.distributor</th>
+                            <th>@llayout.Branch</th>
+                            <th>@Items.Date</th>
+                            <th> @pages.time</th>
+                            <th>  @pages.quantity </th>
+                            <th>  @Banks.BankName</th>
+                            <th>@llayout.checknumber  </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablebody">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center p-3 text-muted collapse" id="notdatafound">
+        @llayout.no
+    </h2>
+    <h2 class="text-center p-3 text-muted collapse" id="choosedistributorh2">
+        @pages.selectdistributor
+    </h2>
+
+</div>
+
+
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">@llayout.Execl </button>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#distributorId").change(() => { loadPage() })
+        $("#DistributorIdInput").change(() => { loadPage() })
+        $("#DateFrom").change(() => { loadPage() })
+        $("#DateTo").change(() => { loadPage() })
+    })
+
+ 
+
+    let name = ``
+    let header = ``
+    let headerdetail = ``
+    loadPage()
+    function loadPage() {
+
+        let distributorId = $("#distributorId").val();
+
+        $(`#choosedistributorh2`).addClass("collapse")
+
+        let datefrom = $("#DateFrom").val();
+        let dateto = $("#DateTo").val();
+        let url = `/NewReports/MoneyPaperJson?UserId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+        $.post(url, (res) => {
+
+
+            if (res.Data.length <= 0) {
+                name = `للمندوبين  `
+                $(`#notdatafound`).removeClass("collapse")
+                $(`#tablediv`).addClass("collapse")
+
+            } else {
+                let header = `
+                               <table class="table table-bordered  table-striped" id="table">
+                                    <thead>
+                                        <tr>
+                                          <tr>
+                            <th>#</th>
+                            <th>المندوب</th>
+                            <th>الفرع</th>
+                            <th>التاريخ</th>
+                            <th> الوقت</th>
+                            <th>  الكمية </th>
+                            <th>  البنك</th>
+                            <th>رقم الشيك  </th>
+                        </tr>
+                                    </thead>
+                                    <tbody id="tablebody">
+                                    </tbody>
+                                </table>
+                                `
+                $("#tablediv").html(header)
+
+                let counter = 1;
+                $("#table").dataTable({
+                    "pageLength": 25,
+                    data: res.Data,
+                    columns: [
+                        { data: null, render: () => { return counter++ } },
+                        { data: "UserName" },
+                        { data: "BranchName" },
+                        { data: "_Date" },
+                        { data: "_Time" },
+                        { data: "Amount" },
+                        { data: "Bank" },
+                        { data: "CheckNumber" },
+
+
+                    ]
+
+                });
+                $(`#notdatafound`).addClass("collapse")
+                $(`#tablediv`).removeClass("collapse")
+
+
+            }
+            header = res.Message
+            headerdetail = " في الفترة من " + datefrom + " الي " + dateto
+            $("#messageheader").text(header + " " + headerdetail)
+        })
+
+
+    }
+    function excel() {
+        let distributorId = $("#distributorId").val();
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        let url = `/NewReports/MoneyPaperExcel?UserId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+
+        LayoutExcel(url, $("#messageheader").text())
+    }
+</script>
+
+

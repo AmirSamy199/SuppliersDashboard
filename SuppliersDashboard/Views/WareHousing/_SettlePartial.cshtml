@@ -1,0 +1,218 @@
+﻿@using SuppliersDashboard.Resources
+<style>
+    .modal-content {
+        min-width: 900px
+    }
+</style>
+<h2 class="p-2 text-center">
+
+    @pages.Settle_Item
+    @ViewBag.ItemName
+</h2>
+<h3 class="p-2 text-center">
+    @ViewBag.Size
+    KG
+</h3>
+
+<div class="row">
+    <div class="col-12 text-center text-danger" id="text-danger">
+
+    </div>
+    <div class="col-12 p-2">
+        <label class="form-label">
+            @pages.Size_of_Transaction
+        </label>
+        <input class="form-control" type="number" id="Size_of_Transaction" value="@ViewBag.Size" onclick="this.select()" />
+    </div>
+
+    <div class="col-12 p-2">
+        <label class="form-label">
+            @pages.SettlementType
+        </label>
+        <select class="form-control" id="SettlementType" onchange="settletypechanged(parseInt(String(this.value)))">
+            @foreach (var item in ViewBag.SettlmentTypes)
+            {
+                <option value="@item.Id"> @item.Value </option>
+            }
+
+        </select>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 collapse" id="3collapse">
+
+        <div class="col-12 p-2">
+            <label class="form-label">
+                @pages.Warehouse
+            </label>
+            <select class="form-control" id="warehouseId">
+                <option value="0"> اختر مخزن</option>
+                @foreach (var item in ViewBag.Warehouse.Data)
+                {
+                    <option value="@item.Id"> @item.Value </option>
+                }
+
+            </select>
+
+        </div>
+
+
+        <div class="col-12 p-2">
+            <label class="form-label">
+                @pages.Settle_Item
+            </label>
+            <select class="form-control" id="warehouseItemId">
+                @*<option value="0"> اختر صنف</option>*@
+
+                @foreach (var item in ViewBag.CategoryItems)
+                {
+                    <option data-size="@item.size" value="@item.Record_ID"> @item.ItemName </option>
+                }
+
+            </select>
+
+        </div>
+
+
+
+        <div class="col-12 text-center p-3 ">
+
+            <button class="btn btn-primary " onclick="submitsettelment(3 , '@ViewBag.SettlmentTypes[3].Value' , this)">
+                @pages.Settle
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-12 text-center p-3 collapse" id="2collapse">
+
+        <button class="btn btn-primary " onclick="submitsettelment(2 , '@ViewBag.SettlmentTypes[2].Value' , this)">
+            @pages.Settle
+        </button>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-12  text-center p-3 collapse" id="1collapse">
+        <button class="btn btn-primary " onclick="submitsettelment(1 , '@ViewBag.SettlmentTypes[1].Value' , this)">
+            @pages.Settle
+        </button>
+    </div>
+
+</div>
+<script>
+    function settletypechanged(ele) {
+        $("#text-danger").text('')
+
+        if (ele == 3) {
+            $("#3collapse").collapse('show')
+            $("#2collapse").collapse('hide')
+            $("#1collapse").collapse('hide')
+        } else if (ele == 0) {
+            $("#3collapse").collapse('hide')
+            $("#2collapse").collapse('hide')
+            $("#1collapse").collapse('hide')
+        } else if (ele == 1) {
+            $("#3collapse").collapse('hide')
+            $("#2collapse").collapse('hide')
+            $("#1collapse").collapse('show')
+        } else if (ele == 2) {
+            $("#3collapse").collapse('hide')
+            $("#2collapse").collapse('show')
+            $("#1collapse").collapse('hide')
+        }
+
+        else {
+
+        }
+    }
+
+    function submitsettelment(id, typename , ele) {
+        $("#text-danger").text('')
+        let json = {
+            itemId: @ViewBag.ItemId,
+    
+                 subValue:0.0,
+            SettleId: id,
+            SettleDesc: typename,
+                 debitwarehouseId: @ViewBag.debitWarehouseId,
+                 creditwarehouseId:0,
+                 SettledWarehouseItemId:0,
+                 SettledWarehouseItemCount:0
+
+        }
+
+        let typeId = id
+        let allvalue = @ViewBag.Size
+        let subvalue = parseFloat(String($("#Size_of_Transaction").val()))
+        json.SettleId = typeId;
+        json.SettleDesc = typename;
+        json.subValue = subvalue;
+
+        if (subvalue == 0) {
+            $("#text-danger").text('ادخل كميات صحيحة')
+            return
+        }
+
+        if (subvalue > allvalue) {
+            $("#text-danger").text('الكمية المراد تسويتها اكبر من الكمية المتاحة')
+
+            return
+        }
+
+        if (typeId == 3) {
+            let warehouseId = parseInt(String($("#warehouseId").val()))
+            if (warehouseId == 0) {
+                $("#text-danger").text('ادخل المخزن')
+                return
+            }
+
+            let warehouseItemId = parseInt(String($("#warehouseItemId").val()))
+            if (warehouseItemId == 0) {
+                $("#text-danger").text('ادخل الصنف ')
+                return
+            }
+            let oneitemsize = parseFloat(String($(`#warehouseItemId option[value='${warehouseItemId}']`).attr('data-size')))
+            console.log('oneitemsize', oneitemsize)
+            let warehouseItemCount = subvalue / oneitemsize;
+            let def = subvalue % oneitemsize;
+            console.log(subvalue)
+            console.log(oneitemsize)
+
+            console.log(def)
+            if (def > 0.1) {
+                $("#text-danger").text('لا بد من ان يكون الكمية المسواه تساوي اضعاف حجم المنتج')
+                return
+            }
+
+
+            $(ele).attr('disabled', 'disabled')
+
+            //creditwarehouseId: 0,
+            //    SettledWarehouseItemId: 0,
+            //        SettledWarehouseItemCount: 0
+            json.creditwarehouseId = warehouseId;
+            json.SettledWarehouseItemId = warehouseItemId;
+            json.SettledWarehouseItemCount = warehouseItemCount; 
+
+        } else {
+            $(ele).attr('disabled', 'disabled')
+            json.subValue = subvalue;
+
+        }
+
+        let posturl = `/WareHousing/submitsettelment`
+
+        $.post(posturl, json, (res) => {
+            console.log(res)
+            displaymsg(res)
+            LoadTable()
+        })
+        console.log(json)
+    }
+</script>

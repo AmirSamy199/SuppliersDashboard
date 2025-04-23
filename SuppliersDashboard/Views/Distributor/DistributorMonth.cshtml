@@ -1,0 +1,568 @@
+﻿@model SuppliersDashboard.ViewModels.AllDistributorDay
+@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "DistributorMonth";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .chart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust the height as needed */
+    }
+
+    .homediv {
+        transition: 0.5s ease-in-out;
+    }
+
+        .homediv > div:hover {
+            transform: translateY(-5px);
+            box-shadow: #ccc 3px 3px 9px;
+        }
+
+
+    .false {
+        background-color: #f8d7da
+    }
+
+    .true {
+        background-color: #d4edda
+    }
+
+    .speration {
+        margin-top: 10px
+    }
+
+    .hiderDistribute {
+        background-color: #009cff21;
+        padding-right: 10px;
+        margin-bottom: 10px;
+        margin-top: 5px
+    }
+</style>
+<div class="container p-4" style="background-color: #F3F6F9" id="printer">
+    @*<h2>
+            @ViewBag.DefaultSales
+        </h2>*@
+
+    <div class="row">
+
+        <div class="homediv col-sm-12 col-lg-12 " style="cursor: pointer; transform: translateY(5px); margin-bottom:15px ">
+            <div class="rounded @*d-flex*@ align-items-center justify-content-between p-4  " style="background-color: #009cff21 ">
+                @* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+                <div class="">
+
+                    <h1 class="text-center">شهرية المندوب @Model.SalesName</h1>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="homediv col-sm-12 col-lg-12  " style="cursor: pointer; transform: translateY(5px); margin-bottom: 15px ">
+            <div class="rounded @*d-flex*@ align-items-center justify-content-between p-4  " style="background-color: #009cff21 ">
+                @* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+                <div class="">
+
+                    <div style="position: absolute;top:50% ; left:50%;transform: translate(-50%,0);">
+                        <h3 id="Salesprecnt"></h3>
+                    </div>
+                    <canvas id="myChart" style="width: 100%; height:253px">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+
+        @*header sales*@
+        <div class="homediv col-sm-12 col-lg-12  " style="cursor: pointer">
+            <div class="rounded @*d-flex*@ align-items-center justify-content-between p-3 hiderDistribute">
+                @* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+                <div class="">
+                    @* <p class="mb-2">@SuppliersDashboard.Resources.llayout.suppliers</p>*@
+                    <h1>المبيعات</h1>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 ">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+                        <th><h4>@pages.totalpil</h4></th>
+                        <th>
+                            <h4>
+                                @pages.tbbeforediscount
+                            </h4>
+                        </th>
+
+                        <th>
+
+                            <h4>
+                                @pages.tbafterdiscount
+                            </h4>
+                        </th>
+                        <th>
+                            <h4>
+                                @pages.tbdiscount
+                            </h4>
+                        </th>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+
+
+                    <tr class="tr">
+                        <td>
+                            <h5>
+
+                                @Model.TotalPil
+                            </h5>
+                        </td>
+
+                        <td>
+                            <h5>
+                                @Model.TotalPillBeforDiscount
+                            </h5>
+                        </td>
+
+                        <td>
+                            <h5>
+                                @Model.TotalPilAfterDiscount
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                @Model.TotalPilDiscount
+                            </h5>
+                        </td>
+
+
+
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 ">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+
+                        <th>
+
+                            <h4>
+                                @pages.titemcount
+                            </h4>
+                        </th>
+
+                        <th><h4>@pages.titemdiscount</h4></th>
+
+                        <th>
+                            <h4>
+                                @pages.totalpilcash
+                            </h4>
+                        </th>
+                        <th>
+
+                            <h4>
+                                @pages.totalpilagil
+                            </h4>
+                        </th>
+                        
+                        <th>
+
+                            <h4>
+                           @llayout.Moneyshortage
+                            </h4>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+
+                    <tr class="tr">
+
+                        <td>
+                            <h5>
+                                @Model.TotalItemsQount
+                            </h5>
+                        </td>
+
+                        <td>
+
+                            <h5>
+
+                                @Model.TotalItemsDiscount
+                            </h5>
+                        </td>
+
+                        <td>
+                            <h5>
+                                @Model.TotalPilCach
+                            </h5>
+                        </td>
+                        <td>
+                            <h5>
+                                @Model.TotalPilAgel
+                            </h5>
+                        </td>
+
+                        <td>
+                            @if (Model.CashShortFall > 0)
+                            {
+                                <h5 style="color:red">
+                                    @Model.CashShortFall
+                                </h5>
+                            }
+                           else
+                            {
+                                <h5 style="color:green">
+                                    @Model.CashShortFall
+                                </h5>
+                            }
+                        </td>
+
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 ">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+
+                        <th>
+
+                            <h4>
+                                @pages.msrofat
+                            </h4>
+                        </th>
+
+                        <th><h4>@pages.totalpilnet</h4></th>
+
+                        @*<th>
+                            <h4>
+                                @pages.ramount
+                            </h4>
+                        </th>*@
+                        <th>
+
+                            <h4>
+                                @pages.collection
+                            </h4>
+                        </th>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+
+
+                    <tr class="tr">
+                        <td>
+                            <h5>
+                                @Model.Msrofat
+                            </h5>
+                        </td>
+
+                        <td>
+
+                            <h5>
+
+                                @Model.TotalPilNet
+                            </h5>
+                        </td>
+
+                        @*<td>
+                            <h5>
+                                @Model.ReturnAmount
+                            </h5>
+                        </td>*@
+                        <td>
+                            <h5>
+                                @Model.Collection
+                            </h5>
+                        </td>
+
+
+
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+        @*header money*@
+        <div class="homediv col-sm-12 col-lg-12  " style="cursor: pointer">
+            <div class="rounded @*d-flex*@ align-items-center justify-content-between p-3 hiderDistribute">
+                @* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+                <div class="">
+                    @* <p class="mb-2">@SuppliersDashboard.Resources.llayout.suppliers</p>*@
+                    <h1>القبض</h1>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 m-2">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+                        <th><h3>     @llayout.Deficitpaymentpapers</h3></th>
+                        <th>
+                            <h3>
+                                @llayout.Totalpayment
+                            </h3>
+                        </th>
+                        <th>
+                            <h3>
+                                @llayout.shortfallpayment
+                            </h3>
+                        </th>
+                        <th>
+
+                            <h3>
+                                @llayout.Deficitpaymentpapers
+                            </h3>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+
+                    <tr class="tr">
+                        <td>
+                            <h4>
+
+                                @Model.MoneyReceiptPapers_count
+                            </h4>
+                        </td>
+
+                        <td>
+                            <h4>
+                                @Model.MoneyReceiptPapers_Amount
+                            </h4>
+                        </td>
+                        <td>
+                            @if (@Model.MoneyPaperCountShortFall > 0)
+                            {
+                                <h4 style="color:red">
+                                    @Model.MoneyPaperCountShortFall
+                                </h4>
+                            }
+                            else
+                            {
+                                <h4 style="color:green">
+                                    @Model.MoneyPaperCountShortFall
+                                </h4>
+                            }
+
+                        </td>
+                        <td>
+
+                            @if (Model.MoneyPaperAmountShortFall > 0)
+                            {
+                                <h4 style="color:red">
+                                    @Model.MoneyPaperAmountShortFall
+                                </h4>
+                            }
+                            else
+                            {
+                                <h4 style="color:green">
+                                    @Model.MoneyPaperAmountShortFall
+                                </h4>
+                            }
+                        </td>
+
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+        @*header money*@
+        <div class="homediv col-sm-12 col-lg-12  " style="cursor: pointer">
+            <div class="rounded @*d-flex*@ align-items-center justify-content-between p-3 hiderDistribute">
+                @* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+                <div class="">
+                    @* <p class="mb-2">@SuppliersDashboard.Resources.llayout.suppliers</p>*@
+                    <h1>الاجل</h1>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 m-2">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="tr">
+                        <th><h3>@llayout.Deficitpaymentpapers1</h3></th>
+                        <th>
+                            <h3>
+                                @llayout.Totalpayment1
+                            </h3>
+                        </th>
+                        <th>
+                            <h3>
+                                @llayout.Deficitpaymentpapers1
+                            </h3>
+                        </th>
+                        <th>
+
+                            <h3>
+                                @llayout.shortfallpayment1
+                            </h3>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+
+                    <tr class="tr">
+                        <td>
+                            <h4>
+
+                                @Model.DeferredMoneyPaper_count
+                            </h4>
+                        </td>
+
+                        <td>
+                            <h4>
+                                @Model.DeferredMoneyPaper_Amount
+                            </h4>
+                        </td>
+                        <td>
+                            @if (Model.CollectionPaperCountShortFall > 0)
+                            {
+                                <h4 style="color:red">
+                                    @Model.CollectionPaperCountShortFall
+                                </h4>
+
+                            }
+                            else
+                            {
+                                <h4 style="color:green">
+                                    @Model.CollectionPaperCountShortFall
+                                </h4>
+                            }
+
+
+                        </td>
+                        <td>
+
+                            @if (Model.CollectionPaperAmountShortFall > 0)
+                            {
+                                <h4 style="color:red">
+                                    @Model.CollectionPaperAmountShortFall
+                                </h4>
+                            }
+                            else
+                            {
+                                <h4 style="color:green">
+                                    @Model.CollectionPaperAmountShortFall
+                                </h4>
+                            }
+
+                        </td>
+
+                    </tr>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+</div>
+<div class="text-center p-4" style="background-color: #F3F6F9" >
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> طباعة</button>
+    <span style="width:20px"> </span>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+    $(document).ready(function () {
+        DrowCharSale(@ViewBag.DefaultSales, @Model.TotalPilAfterDiscount);
+   // DrowCharSale(50000, 25000);
+    })
+
+    function DrowCharSale(Total, sales) {
+        const xValues = ["Sales", "Total Sales"];
+        salese = sales * 2
+        const yValues = [sales, Total];
+        const barColors = [
+            "#00aba9",
+            "#b91d47",
+        ];
+
+        const chartOptions = {
+            type: "doughnut",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: "sales percentage",
+                },
+
+                animation: {
+                    duration: 3000,
+                    easing: 'easeInOutQuart',
+                    animateRotate: true, // Enable rotation animation
+                    animateScale: false,// Adjust the duration (in milliseconds)
+                },
+
+            },
+        };
+
+        new Chart("myChart", chartOptions);
+       
+        setTimeout(function () {
+            $("#Salesprecnt").animate({ opacity: 0 }, 1000, function () {
+                $(this).text(`${Math.round(((sales / Total) * 100) * 10) / 10}%`).animate({ opacity: 1 }, 1000);
+            });
+        }, 1000);
+    }
+
+
+
+
+</script>

@@ -1,0 +1,672 @@
+﻿@{ ViewBag.Title = "Index"; }
+<style>
+    select2-show-search {
+        width: 100%;
+    }
+
+    .select2-search__field {
+        max-width: 100%;
+    }
+
+    span {
+        width: inherit;
+    }
+
+    @@media (max-width: 575px) {
+        .col-sm-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    #table-scroll {
+        overflow: auto;
+        margin-top: 10px;
+    }
+</style>
+
+
+<div class="card pd-20 pd-sm-40">
+    <div class="p-4 d-flex justify-content-around">
+    <div class="col-lg-4 text-center ">
+        <button type="button" id="AddEmployee" onclick="AddEmployee()" class="btn btn-primary col-12 ">
+
+            @SuppliersDashboard.Resources.llayout.AddEmployee
+        </button>
+    </div>
+    </div>
+    <br />
+    <div class="table-wrapper" >
+        <div id="table-scroll">
+            <table id="dtBasicExample2" class="table display responsive nowrap " width="100%">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            @SuppliersDashboard.Resources.Employees.Name
+                        </th>
+                        <th>
+                            @SuppliersDashboard.Resources.Employees.Email
+                        </th>
+                        <th>
+                            @SuppliersDashboard.Resources.Employees.Phone
+                        </th>
+                        <th>
+                            @SuppliersDashboard.Resources.Employees.DateOfBirth
+                        </th>
+                        <th>
+                            @SuppliersDashboard.Resources.Employees.Title
+                        </th>
+                        <th>
+                            @SuppliersDashboard.Resources.Employees.PositionType
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+    <div id="FileError">
+    </div>
+</div>
+<!--<div id="BasicModal" class="modal fade">
+    <div class="modal-dialog  bg-white " id="ModalContainer" style="">
+
+    </div>--><!-- modal-dialog -->
+<!--</div>-->
+<div class="modal" id="deebmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog " style="min-width:85%"  role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body" id="deebmodal2">
+              
+            </div>
+         
+        </div>
+    </div>
+</div>
+<script>
+
+  
+    function cloesmodel() {
+    
+        $('#deebmodal').modal('hide');
+    }
+
+    $(document).ready(function () {
+        
+    /*    UpdateSelect2Index();*/
+
+        LoadGrid();
+
+        $('#EditBtn').hide();
+    });
+    function DegreeJobs1(DegreeCode) {
+       
+        $.ajax({
+            url: '/Employee/DegreeJobs',
+            type: "Post",
+            data: {
+                DegreeCode: $("#ddlDepartment").val(),
+            },
+            beforeSend: function () {
+            },
+            success: function (data1) {
+           
+
+               
+                var Jobs = "<option>-- Select Manager --</option>";
+                for (var i = 0; i < data1.data1.length; i++) {
+                  
+                    Jobs = Jobs + "<option value = " + data1.data1[i].Value + " >" + data1.data1[i].Text + "</option>";
+                }
+                $('#JobsList1').html(Jobs);
+
+
+
+
+
+            }
+        }); }
+   
+
+    function Validate() {
+        debugger
+        var VAL = $('#Email').val();
+
+        var email = new RegExp("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@@[a-zA-Z0-9.-]+$");
+
+        if (email.test(VAL)) {
+            $("#CheckEmail").css("display", "none");
+        }
+        else {
+            $("#CheckEmail").css("display", "block");
+        }
+    };
+    function Gender() {
+        debugger
+        if ($('#Gender').val() == 1) {
+            $("#ddlMilitary_Status").prop("disabled", false);
+
+        }
+        else {
+            $("#ddlMilitary_Status").prop("disabled", true);
+
+        }
+    }
+    function UpdateSelect2Index() {
+        $('.Select2').select2({
+            closeOnSelect: true
+        });
+        var elements = document.getElementsByClassName('select2');
+        Array.from(elements).forEach(function (element) {
+            element.style.width = null;
+        });
+    }
+    function InsuranceStatus() {
+        debugger
+        if ($('#InsuranceStatus').val() == 1) {
+            $("#SocialSecurityStartDate").prop("disabled", false);
+            $("#CompanyinsuranceDate").prop("disabled", true);
+
+
+        }
+        else {
+            $("#CompanyinsuranceDate").prop("disabled", false);
+            $("#SocialSecurityStartDate").prop("disabled", true);
+
+
+        }
+    }
+    function GetDat() {
+        debugger
+        if ($('#ddlMilitary_Status').val() == 1 || $('#ddlMilitary_Status').val() == 2 || $('#ddlMilitary_Status').val() == 4) {
+            $("#MilitaryDate").prop("disabled", false);
+
+
+        }
+        else {
+            $("#MilitaryDate").prop("disabled", true);
+
+
+
+        }
+    }
+
+    function DegreeJobs(DegreeCode) {
+        $.ajax({
+            url: '/Employee/DegreeJobs',
+            type: "Post",
+            data: {
+                DegreeCode: $("#ddlDegree").val(),
+            },
+            beforeSend: function () {
+            },
+            success: function (data) {
+                debugger
+                var Jobs = "<option>-- Select Job --</option>";
+                for (var i = 0; i < data.data.length; i++) {
+                    Jobs = Jobs + "<option value = " + data.data[i].Value + " >" + data.data[i].Text + "</option>";
+                }
+                $('#JobsList').html(Jobs);
+
+                var Grades = "<option>-- Select Grade --</option>";
+                for (var i = 0; i < data.Grade.length; i++) {
+                    Grades = Grades + "<option value = " + data.Grade[i].Value + " >" + data.Grade[i].Text + "</option>";
+                }
+                $('#Categories').html(Grades);
+                $('#Categories').change(function () {
+                    debugger
+                    $.ajax({
+                        url: '/Employee/Joblevel',
+                        type: "Post",
+                        data: {
+                            Grade: $("#Categories").val(),
+                        },
+                        beforeSend: function () {
+                        },
+                        success: function (data) {
+                            debugger
+                            var Joblevels = "<option>-- Select Title --</option>";
+                            for (var i = 0; i < data.data.length; i++) {
+                                Joblevels = Joblevels + "<option value = " + data.data[i].Value + " >" + data.data[i].Text + "</option>";
+                            }
+                            $('#jobLevel').html(Joblevels);
+
+                        }
+                    });
+
+                });
+
+
+            }
+        });
+    }
+
+    function LoadGrid() {
+
+        $('#dtBasicExample2').DataTable({
+            "processing": true, // for show progress bar
+            "bDestroy": true,
+            "bSearchable": true,
+            "responsive": true,
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+                lengthMenu: 'MENU items/page',
+            },
+            "ajax": {
+                "url": "/Employee/LoadGrid",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                {
+                    "data": null, "name": "Count", "width": "auto", "render": function (data, type, full, meta) {
+                        return meta.row + 1;
+                    }
+                },
+                { "data": "EnglishName", "name": "Name", "width": "auto" },
+                { "data": "Email", "name": "Email", "width": "auto" },
+                { "data": "Phone", "name": "Phone", "width": "auto" },
+                { "data": "_Date_of_Birth", "name": "_Date_of_Birth", "width": "auto" },
+                { "data": "jobLevel", "name": "jobLevel", "width": "auto" },
+                { "data": "TypeName", "name": "TypeName", "width": "auto" },
+                {
+                    data: null, render: function (data, type, row) {
+
+                        return "<a href='#' onclick=EditEmployee('" + data.RecordID + "') >Edit</a><button class='btn btn-secondary' onclick=Details('" + data.Employee_ID + "') style='margin-left:20px;'>Details</button>";
+                    }
+                },
+            ]
+        });
+        // $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+
+    }
+    function AddEmployee() {
+
+        $.ajax({
+            url: '/Employee/AddEmployees',
+            type: "Get",
+            beforeSend: function () {
+            },
+            success: function (data) {
+                $('#deebmodal2').html(data);
+                $('#deebmodal').modal('show');
+                $('#EditBtn').hide();
+                UpdateSelect2();
+                $('.select2-show-search').select2({
+                    minimumResultsForSearch: '',
+                    dropdownParent: $('#ModalContainer')
+                });
+
+                $('#ddlCountry').change(function () {
+
+                    if ($('#ddlCountry').val() == "EG") {
+                        $("#CheckSpan").show().delay().fadeOut(5000);
+                        $("#CheckPhone").show().delay().fadeOut(5000);
+                        var input = document.getElementById('Phone');
+                        input.value = input.value + '+20';
+                    }
+                });
+            }
+        });
+
+    }
+    function GetJobC() {
+
+        document.getElementById('jobLevel').value = document.getElementById('Categories').value;
+    }
+    function IDCheck() {
+
+        if ($("#NationalID").val().length < 14 || $("#NationalID").val().length > 14) {
+            $("#CheckSpan").css("display", "Block");
+        }
+        else {
+            $("#CheckSpan").css("display", "none");
+        }
+
+
+    }
+
+
+
+    function Shifts() {
+        $.ajax({
+            url: '/Employee/Shifts',
+            type: "Post",
+            data: {
+                ComID: $("#ddlCompany").val(),
+            },
+            beforeSend: function () {
+            },
+            success: function (data) {
+                debugger
+                var Shifts = "<option>-- Select Shifts --</option>";
+                for (var i = 0; i < data.data.length; i++) {
+                    Shifts = Shifts + "<option value = " + data.data[i].Value + " >" + data.data[i].Text + "</option>";
+                }
+                $('#Shift').html(Shifts);
+
+            }
+        });
+    }
+
+    function PhoneCheck() {
+        if ($("#Phone").val().length < 13 || $("#Phone").val().length > 13) {
+            $("#CheckPhone").css("display", "Block");
+        }
+        else {
+            $("#CheckPhone").css("display", "none");
+        }
+    }
+    function IsValid() {
+        if ($('#EmployeeName').val() && $('#EmployeeARName').val() && $('#InsuranceNumber').val() && $('#Email').val() && $('#Location').val() && $('#Phone').val() && $('#DateOfHiring').val()
+            && $('#DateOfBirth').val()) {
+            return true;
+        }
+        return false;
+    }
+    function UploadFile() {
+        debugger
+        var fileUpload = $("#file").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+        fileData.append(files[0].name, files[0]);
+        $.ajax({
+            url: '/Employees/UploadFile',
+            type: "Post",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data:
+                fileData,
+            beforeSend: function () {
+            },
+            success: function (data) {
+            }
+        });
+    }
+    function Download(id) {
+        $.ajax({
+            url: '/Employee/Download',
+            type: "Post",
+
+            data: {
+                id: id
+            },
+            datatype: 'json',
+            traditional: true,
+            beforeSend: function () {
+            },
+            success: function (data) {
+                debugger
+
+
+            }
+        });
+    }
+
+    function SubmitEmployee() {
+        if (IsValid()) {
+            
+
+            $.ajax({
+                url: '/Employee/AddEmployee',
+                type: "Post",
+                data: {
+
+                    EmployeeName: $('#EmployeeName').val(),
+                    EmployeeARName: $('#EmployeeARName').val(),
+                    NationalID: $('#NationalID').val(),
+                    InsuranceNumber: $('#InsuranceNumber').val(),
+                    Email: $('#Email').val(),
+                    Location: $('#Location').val(),
+                    Phone: $('#Phone').val(),
+                    DateOfHiring: $('#DateOfHiring').val(),
+                    DateOfBirth: $('#DateOfBirth').val(),
+                    EndOfHiring: $('#EndOfHiring').val(),
+                    Title: $('#ddlTitle').val(),
+                    Gender: $('#Gender').val(),
+                    PositionType: $('#ddlPostions').val(),
+                    Country: $('#ddlCountry').val(),
+                    Department: $('#ddlDepartment').val(),
+                    Company: $('#ddlCompany').val(),
+                    Degree: $('#ddlDegree').val(),
+                    Job: $('#JobsList').val(),
+                    Manager: $('#ddlManager').val(),
+                    EmployeeSalary: $('#EmployeeSalary').val(),
+                    jobLevel: $('#jobLevel').val(),
+                    jobCategories: $('#Categories').val(),
+                    ID_StartDate: $('#ID_StartDate').val(),
+                    ID_ExpDate: $('#ID_ExpDate').val(),
+                    Graduation_Date: $('#GraduationDate').val(),
+                    Edu_Grade: $('#ddlEducationGrade').val(),
+                    Military_Status: $('#ddlMilitary_Status').val(),
+                    Place_Of_Birth: $('#Place_Of_Birth').val(),
+                    MotherName: $('#MotherName').val(),
+                    University: $('#ddlUniversity').val(),
+                    Martial_Status: $('#Martial_Status').val(),
+                    ProbationDate: $('#ProbationDate').val(),
+                    SocialSecurityStartDate: $('#SocialSecurityStartDate').val(),
+                    Religion: $('#ddlReligion').val(),
+                    Shift: $('#Shift').val(),
+                    InsuranceStatus: $('#InsuranceStatus').val(),
+                    MilitaryDate: $('#MilitaryDate').val(),
+                    CompanyinsuranceDate: $('#CompanyinsuranceDate').val(),
+
+
+
+                },
+                beforeSend: function () {
+
+                },
+                success: function (data) {
+                 
+                    $('#deebmodal').modal('hide');
+
+
+                    LoadGrid();
+                }
+            });
+        }
+        else {
+            $("#ValidSpan").show().delay().fadeOut(5000);
+            $("#BasicModal").animate({
+                scrollTop: 5
+            }, "slow");
+        }
+    }
+    //function SubmitEmployee() {
+    //    if (IsValid()) {
+    //    debugger;
+    //    var fileUpload = $("#file").get(0);
+    //    var files = fileUpload.files;
+    //    var fileData = new FormData();
+
+    //    for (var i = 0; i < files.length; i++) {
+    //        var fname = files[i].name;
+    //        var re = /(\.doc|\.docx|\.pdf|\.xlxs)$/i;
+    //        if (!re.exec(fname)) {
+    //            alert("File extension not supported!");
+    //            return false;
+    //        }
+    //        else {
+    //            fileData.append("Files", files[i]);
+    //        }
+    //    }
+    //    fileData.append('EmployeeName', $('#EmployeeName').val());
+    //    fileData.append('EmployeeARName', $('#EmployeeARName').val());
+    //    fileData.append('NationalID',$('#NationalID').val());
+    //    fileData.append('InsuranceNumber', $('#InsuranceNumber').val());
+    //    fileData.append('Email', $('#Email').val());
+    //    fileData.append('Location', $('#Location').val());
+    //    fileData.append('Phone', $('#Phone').val());
+    //    fileData.append('DateOfHiring', $('#DateOfHiring').val());
+    //    fileData.append('DateOfBirth', $('#DateOfBirth').val());
+    //    fileData.append('Gender', $('#Gender').val());
+    //    fileData.append('PositionType', $('#ddlPostions').val());
+    //    fileData.append('Country', $('#ddlCountry').val());
+    //    fileData.append('Department', $('#ddlDepartment').val());
+    //    fileData.append('Company', $('#ddlCompany').val());
+    //    fileData.append('Degree', $('#ddlDegree').val());
+    //    fileData.append('Job', $('#JobsList').val());
+    //    fileData.append('Manager', $('#ddlManager').val());
+    //    fileData.append('EmployeeSalary', $('#EmployeeSalary').val());
+    //    fileData.append('jobLevel', $('#jobLevel').val());
+    //    fileData.append('jobCategories', $('#Categories').val());
+    //    fileData.append('ID_StartDate', $('#ID_StartDate').val());
+    //    fileData.append('ID_ExpDate', $('#ID_ExpDate').val());
+    //    fileData.append('Graduation_Date', $('#GraduationDate').val());
+    //    fileData.append('Edu_Grade', $('#ddlEducationGrade').val());
+    //    fileData.append('Military_Status', $('#ddlMilitary_Status').val());
+    //    fileData.append('Place_Of_Birth', $('#Place_Of_Birth').val());
+    //    fileData.append('MotherName', $('#MotherName').val());
+    //    fileData.append('University', $('#ddlUniversity').val());
+    //    fileData.append('Martial_Status', $('#Martial_Status').val());
+    //    fileData.append('SocialSecurityStartDate', $('#SocialSecurityStartDate').val());
+    //    fileData.append('Religion', $('#ddlReligion').val());
+    //    fileData.append('Shift', $('#Shift').val());
+    //    fileData.append('InsuranceStatus', $('#InsuranceStatus').val());
+    //    fileData.append('MilitaryDate', $('#MilitaryDate').val());
+    //    fileData.append('CompanyinsuranceDate', $('#CompanyinsuranceDate').val());
+    //        $.ajax({
+    //            url: '/Employees/AddEmployee',
+    //            type: "Post",
+    //            data: fileData,
+    //            contentType: false,
+    //            processData: false,
+    //            cache: false,
+    //            beforeSend: function () {
+
+    //            },
+    //            success: function (data) {
+
+    //                $('#BasicModal').modal('hide');
+    //                LoadGrid();
+    //            }
+    //        });
+    //    }
+    //    else {
+    //        $("#ValidSpan").show().delay().fadeOut(5000);
+    //        $("#BasicModal").animate({
+    //            scrollTop: 5
+    //        }, "slow");
+    //    }
+    //}
+    function EditEmployee(id) {
+
+        $.ajax({
+            url: '/Employee/EditEmployee',
+            type: "Get",
+            data: {
+                RecordID: id,
+            },
+            beforeSend: function () {
+            },
+            success: function (data) {
+               
+
+                $('#deebmodal2').html(data);
+                $('#deebmodal').modal('show');
+                $('#AddBtn').hide();
+                UpdateSelect2();
+                $('.select2-show-search').select2({
+                    minimumResultsForSearch: '',
+                    dropdownParent: $('#ModalContainer')
+                });
+                Gender();
+                $("#file").change(function () {
+                    
+                    var file = $('#file').get(0).files[0].name;
+                   
+                    $('.custom-file-control').text(file);
+                    UploadFile();
+
+                });
+
+            }
+        });
+    }
+
+    function SubmitEditEmployee(id) {
+        $.ajax({
+            url: '/Employee/SubmitEditEmployee',
+            type: "Post",
+            data: {
+                RecordID: id,
+                EmployeeName: $('#EmployeeName').val(),
+                EmployeeARName: $('#EmployeeARName').val(),
+                NationalID: $('#NationalID').val(),
+                InsuranceNumber: $('#InsuranceNumber').val(),
+                Email: $('#Email').val(),
+                Location: $('#Location').val(),
+                Phone: $('#Phone').val(),
+                DateOfHiring: $('#DateOfHiring').val(),
+                DateOfBirth: $('#DateOfBirth').val(),
+                EndOfHiring: $('#EndOfHiring').val(),
+                Title: $('#ddlTitle').val(),
+                Gender: $('#Gender').val(),
+                PositionType: $('#ddlPostions').val(),
+                Country: $('#ddlCountry').val(),
+                Department: $('#ddlDepartment').val(),
+                Company: $('#ddlCompany').val(),
+                Degree: $('#ddlDegree').val(),
+                Job: $('#JobsList').val(),
+                Manager: $('#ddlManager').val(),
+                EmployeeSalary: $('#EmployeeSalary').val(),
+                jobLevel: $('#jobLevel').val(),
+                jobCategories: $('#Categories').val(),
+                ID_StartDate: $('#ID_StartDate').val(),
+                ID_ExpDate: $('#ID_ExpDate').val(),
+                Graduation_Date: $('#GraduationDate').val(),
+                Edu_Grade: $('#ddlEducationGrade').val(),
+                Military_Status: $('#ddlMilitary_Status').val(),
+                Place_Of_Birth: $('#Place_Of_Birth').val(),
+                MotherName: $('#MotherName').val(),
+                University: $('#ddlUniversity').val(),
+                Martial_Status: $('#Martial_Status').val(),
+                ProbationDate: $('#ProbationDate').val(),
+                SocialSecurityStartDate: $('#SocialSecurityStartDate').val(),
+                Religion: $('#ddlReligion').val(),
+                Shift: $('#Shift').val(),
+                InsuranceStatus: $('#InsuranceStatus').val(),
+                MilitaryDate: $('#MilitaryDate').val(),
+                CompanyinsuranceDate: $('#CompanyinsuranceDate').val(),
+
+
+
+            },
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+              
+                $('#deebmodal').modal('hide');;
+                LoadGrid();
+            }
+        });
+    }
+    function Details(id) {
+        $.ajax({
+            url: '/Employee/Details',
+            type: "Get",
+            data: {
+                RecordID: id,
+            },
+            beforeSend: function () {
+            },
+            success: function (data) {
+                debugger
+                $('#deebmodal2').html(data);
+                $('#deebmodal').modal('show');
+
+            }
+        });
+    }
+
+
+
+</script>

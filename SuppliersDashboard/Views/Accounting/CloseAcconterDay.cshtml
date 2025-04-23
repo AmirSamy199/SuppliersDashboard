@@ -1,0 +1,343 @@
+﻿@using SuppliersDashboard.Resources
+
+
+@{
+    ViewBag.Title = "CloseAcconterDay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!--<div class="homediv col-sm-12 col-lg-12 collapse " style="cursor: pointer; transform: translateY(5px); margin-bottom:15px " id="sucessCloseDay">
+    <div class="rounded @*d-flex*@ align-items-center justify-content-between p-2">-->
+@* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+<!--<div class="">
+
+            <h6 class="text-center alert alert-success">تم الاغلاق  وتصفية الخزنة بنجاح</h6>
+
+        </div>
+    </div>
+</div>-->
+<div id="printer">
+
+
+    @* /////////////////// *@
+
+
+    <!--<div class="homediv col-sm-12 col-lg-12 " style="cursor: pointer; transform: translateY(5px); margin-bottom:15px ">
+    <div class="rounded @*d-flex*@ align-items-center justify-content-between p-2">-->
+    @* <i class="fa fa-chart-area fa-3x text-primary"></i>*@
+    <!--<div class="">
+
+                <h1 class="text-center">الموجود  بالخزنة   </h1>
+
+            </div>
+        </div>
+    </div>-->
+
+    <div class="col-12 " style=";margin-bottom:15px">
+        <div class="card pd-20  card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table table-success table-bordered">
+                        <thead id="headWerahouse">
+
+
+                        </thead>
+                        <tbody>
+                            <tr class="tr" id="bobyWerahoouse"></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* /////////////////// *@
+    <label class="form-label-title text-center col-lg-12 col-md-3 " for="name" style="font-size: 24px;">
+        يومية
+        @ViewBag.Name
+    </label>
+
+
+    <style>
+        #dailyDeliveryTitle {
+            text-align: center !important;
+            margin-top: 10px;
+        }
+
+
+
+        td, th {
+            text-align: center !important;
+        }
+
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .large-button {
+            padding: 10px 30px;
+            font-size: 18px;
+        }
+
+        .button-container .btn {
+            margin: 0 10px;
+        }
+    </style>
+
+
+    <div>
+        <div class="card pd-20  card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>المبلغ الفعلي</th>
+                                <th>قمية ورق القبض</th>
+                                <th>عدد ورق القبض</th>
+                                <th>قمية أجل</th>
+                                <th>عدد أجل</th>
+                                <th>مصروفات</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Header != null)
+                            {
+
+                                foreach (var item in ViewBag.Header)
+                                {
+                                    <tr>
+
+                                        <td>@item.actual_amount</td>
+                                        <td>@item.Actual_MoneyReceiptPapers_Amount</td>
+                                        <td>@item.Actual_MoneyReceiptPapers_count</td>
+                                        <td>@item.Actual_DeferredMoneyPaper_Amount</td>
+                                        <td>@item.Actual_DeferredMoneyPaper_count</td>
+                                        <td>@item.Masrofat </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="toggleHiddenTable(this)">عرض التفاصيل </button>
+
+        </div>
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="validatecloseday()">اغلاق اليومية</button>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+
+        </div>
+
+    </div>
+
+    <div id="hiddenTable" class="collapse" style="">
+        <h3 id="dailyDeliveryTitle">تفاصيل الخزنة</h3>
+        <div style="overflow-x: scroll; overflow-y: hidden;">
+
+            <table class="table  table-hover table-bordered">
+                <!--HERE Display Header -->
+                <thead>
+                    <tr>
+
+                        <th>اسم الموزع</th>
+                        <th>المبلغ الفعلي</th>
+                        <th>قمية ورق القبض</th>
+                        <th>عدد ورق القبض</th>
+                        <th>قمية أجل</th>
+                        <th>عدد أجل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.Details != null)
+                    {
+
+                        foreach (var item in ViewBag.Details)
+                        {
+                            <tr>
+
+                                <td>@item.UserName</td>
+                                <td>@item.actual_amount</td>
+                                <td>@item.Actual_MoneyReceiptPapers_Amount</td>
+                                <td>@item.Actual_MoneyReceiptPapers_count</td>
+                                <td>@item.Actual_DeferredMoneyPaper_Amount</td>
+                                <td>@item.Actual_DeferredMoneyPaper_count</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<div class="text-center d-flex justify-content-around" style="margin-top:25px">
+    <button class="btn btn-primary large-button" onclick="popConfirmCloseDay()">اغلاق وتصفيه الخزنة</button>
+
+
+</div>
+
+
+
+<script>
+    GetMoneySaveBalance()
+
+
+    function GetMoneySaveBalance() {
+        $.ajax({
+            url: "/Accounting/GetMoneySaveBalance",
+            type: "post",
+
+            success: (res) => {
+                console.log(res.data)
+                let bodyworehuse = $("#bobyWerahoouse")
+                let headWerahouse = $("#headWerahouse")
+                headWerahouse.append(
+                    "<tr >" +
+                    "<th> المبلغ الفعلي</th>" +
+                    "<th>  قمية ورق القبض</th>" +
+                    "<th>  اورق القبض</th>" +
+                    "<th> قمية أجل</th>" +
+                    "<th>اورق أجل</th >" +
+                    "<th>مصروفات</th >" +
+
+                    "</tr>"
+
+                )
+
+                bodyworehuse.append(
+                    "<td> " + res.data.Item.actual_amount + " </td>" +
+                    "<td> " + res.data.Item.Actual_MoneyReceiptPapers_Amount + "</td>" +
+                    "<td>" + res.data.Item.Actual_MoneyReceiptPapers_count + "</td>" +
+                    "<td> " + res.data.Item.Actual_DeferredMoneyPaper_Amount + "</td>" +
+                    "<td>" + res.data.Item.Actual_DeferredMoneyPaper_count + "</td>"+
+                    "<td>" + res.data.Item.Masrofat + "</td>"
+
+                )
+
+
+            }
+        })
+    }
+
+      function popConfirmCloseDay() {
+        ShowModal(
+            `
+                <div class='p-4'>
+                <h2 class='text-center'>متاكد من اغلاق وتصفيه الخزنة ؟ </h2>
+                </div>
+
+                <div class='p-3 text-center'>
+
+            <button class="btn btn-primary" onclick="CloseAndCleanMoneySafeDay()">اغلاق وتصفيه الخزنة</button>
+                </div>
+
+                `
+
+
+        )
+
+    }
+    function CloseAndCleanMoneySafeDay() {
+        $.ajax({
+            url: "/Accounting/CloseAndCleanMoneySafeDay",
+            type: "post",
+            data: {
+                AccounterId:@(SuppliersDashboard.Helper.Cokie.UserGet().Id),
+            },
+            success: (res) => {
+                if (res.data.State == 1) {
+                    location.reload();
+
+                } else {
+                    ShowModal(res.data.Message)
+                }
+
+            }
+        })
+    }
+
+    function toggleHiddenTable(ele) {
+        var hiddenTable = document.getElementById("hiddenTable");
+        $("#hiddenTable").toggleClass("show")
+        if ($("#hiddenTable").hasClass("show")) {
+            $(ele).text("اخفاء التفاصيل")
+        } else {
+            $(ele).text("عرض التفاصيل")
+
+        }
+
+        //if (hiddenTable.style.display === "none") {
+        //    hiddenTable.style.display = "block";
+        //} else {
+        //    hiddenTable.style.display = "none";
+        //}
+    }
+
+    function Print() {
+
+        $(".btn").addClass("d-none")
+        LayoutPrint()
+        $(".btn").removeClass("d-none")
+
+    }
+    function validatecloseday() {
+        ShowModal(`
+                <div class='p-4'>
+                <h2 class='text-center'>متاكد من اغلاق اليومية ؟ </h2>
+                </div>
+
+                <div class='p-3 text-center'>
+
+            <button class="btn btn-primary" onclick="submitcloseday()">اغلاق اليومية</button>
+                </div>
+
+                `)
+    }
+
+    function submitcloseday() {
+        $.ajax({
+            url: "/Accounting/SubmitCloseAccounterDay",
+            type: "post",
+            data: {},
+            success: (res) => {
+
+                ShowModal(res.data.Message)
+                setTimeout(() => { location.reload() }, 3000)
+            }
+        })
+    }
+
+    //function RemoveResultMessage() {
+
+
+    //    setTimeout(function () {
+
+    //        location.reload();
+    //    }, 2000)
+    //}
+</script>

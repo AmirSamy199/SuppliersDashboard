@@ -1,0 +1,78 @@
+﻿
+@model List<SuppliersDashboard.Models.Expenses_v>
+
+@{
+    int i = 1;
+}
+
+
+<div class="container">
+    <h2 class="text-center p-3">  تفاصيل المصاريف</h2>
+    <div class="table-div p-2">
+
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th> نوع المصروف </th>
+                    <th>  المبلغ </th>
+                    <th> تعليق </th>
+                    <th>  المسئول </th>
+                    <th>   </th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var a in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(i++)
+                            </td>
+                            <td>
+                                @a.ExpenseType
+                            </td>
+                            <td>
+                                @a.Amount
+                            </td>
+                            <td>
+                                @a.comment
+                            </td>
+                            <td> @a.ResponseMan</td>
+                            <td> <button class="btn btn-lg btn-danger" onclick="sure('هل انت مناكد من حذف المصروف' , 'حذف' , 'deleteExpense(@a.Record_ID)' )" > حذف </button> </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<style>
+    .modal-content {
+        width: 200% !important;
+        /*left: 50%;*/
+    }
+</style>
+
+<script>
+    function deleteExpense(id) {
+        let url = `/Distributor/DeleteMasrof?Id=${id}`
+        $.post(url, (res) => {
+            console.log(res)
+            displaymsg(res.Message)
+            setTimeout(() => {
+                location.reload()
+            }, 3000)
+        })
+    }
+</script>
+

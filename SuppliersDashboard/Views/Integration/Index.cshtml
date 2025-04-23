@@ -1,0 +1,679 @@
+﻿
+@{
+    ViewBag.Title = "Integration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .Buttons {
+        float: left;
+        width: 17%;
+        height: 150px;
+        margin-left: 30px;
+        margin-top: 10px
+    }
+
+
+    @@keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+    @@-webkit-keyframes rotate {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    .Circle {
+        width: 70px;
+        height: 70px;
+        /*   margin: 110px auto 0;*/
+        margin-top: 20px;
+        margin-left: 76px;
+        margin-right: 76px;
+        border: solid 10px #244bff;
+        border-radius: 50%;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        -webkit-transition: all 0.5s ease-in;
+        -webkit-animation-name: rotate;
+        -webkit-animation-duration: 1.0s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        transition: all 0.5s ease-in;
+        animation-name: rotate;
+        animation-duration: 1.0s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        display: none;
+    }
+
+    .cardPD-ERB {
+        padding-right: 80px;
+    }
+</style>
+<div class="cardPD-ERB">
+    @*<input type="hidden" id="Login_URL" />
+        <input type="hidden" id="client_id" />
+        <input type="hidden" id="client_secret" />*@
+    @*<input type="hidden" id="DocumentSubmissions_URL" />*@
+    <div class="row justify-content-around" style=" width:100%; margin:auto ;">
+
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2  ">
+            <button onclick="ViewBills(3)" type="button" class="btn btn-outline-success Buttons" id="Valid" style="cursor: pointer; width: 100%; height: 100%;">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-check-square fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <lable style="margin-top: 20px; float: left; font-size:large; width: 100%"> Valid</lable>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable id="ValidLable" style="width:100%; font-size:large"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(0)" type="button" class="btn btn-outline-warning Buttons" id="Pending" style="cursor: pointer; width: 100%; height: 100%;">
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-exclamation-circle fa-4x" id="sss" aria-hidden="true"></i>
+                        <div class="row justify-content-center" id="ss" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px;  float: left; width: 100%; font-size: larger;"> Pending</lable>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable id="PendingLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(1)" type="button" class="btn btn-outline-success Buttons" id="Submitted" style="cursor: pointer; width: 100%; height: 100%;">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-thumbs-up fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;"> Submitted</lable>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable id="SubmitLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(7)" type="button" class="btn btn-outline-success Buttons" id="Received" style="cursor:pointer; width:100%; height:100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-envelope fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;"> Received</lable>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable id="RevievedLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2  px-2">
+            <button onclick="ViewBills(100)" type="button" class="btn btn-outline-secondary Buttons" id="Total" style="cursor: pointer; width: 100%; height: 100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-archive fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;"> Total</lable>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable id="TotalLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+
+    </div>
+    <div class="row mb-4 justify-content-around" style=" width: 100%; margin: auto; margin-top: 15px; ">
+
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(4)" type="button" class="btn btn-outline-danger Buttons" id="Invalid" style="cursor:pointer; margin-top:10px; width:100%; height: 100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-window-close fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;"> Invalid</lable>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style="width:auto">
+                            <div class="col-lg-12">
+                                <lable id="InvalidLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(5)" type="button" class="btn btn-outline-danger Buttons" id="Canceled" style="cursor: pointer; margin-top: 10px; width: 100%; height: 100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-ban fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;"> Canceled</lable>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" style="width:auto">
+                            <div class="col-lg-12">
+                                <lable id="CancelLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(2)" type="button" class="btn btn-outline-danger Buttons" id="UnSubmitted" style="cursor:pointer; margin-top:10px; width:100%; height:100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-thumbs-down fa-4x" aria-hidden="true"></i>
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: medium;"> UnSubmitted</lable>
+                            </div>
+                            <div class="col-lg-12 justify-content-center">
+                                <lable id="UnSubLable" style="width: 100%; font-size: large;"></lable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(6)" type="button" class="btn btn-outline-danger Buttons" id="Rejected" style="cursor:pointer; margin-top:10px; width:100%; height:100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-envelope-open fa-4x" aria-hidden="true"></i>
+
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;"> Rejected</lable>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 justify-content-center">
+                            <lable id="RejectLable" style="width: 100%; font-size: large;"></lable>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-12 mb-2 px-2 ">
+            <button onclick="ViewBills(10)" type="button" class="btn btn-outline-warning Buttons" id="Holding" style="cursor:pointer; margin-top:10px; width:100%; height:100%">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <i class="fa fa-pause-circle fa-4x" aria-hidden="true"></i>
+
+                        <div class="row justify-content-center" style=" width:auto;">
+                            <div class="col-lg-12">
+                                <lable style="margin-top: 20px; float: left; width: 100%; font-size: large;">Holding</lable>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 justify-content-center">
+                            <lable id="HoldLable" style="width: 100%; font-size: large;"></lable>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary btn-lg col-12" onclick="GetValidation()"> GetValidation</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary  btn-lg col-12" onclick="Submit()"> SUBMIT</button>
+
+    </div>
+
+</div>
+<!--<div class="row  p-5">
+    <div class="p-4 d-flex justify-content-around">
+        <button class="btn btn-dark col-3 p-3" type="button" onclick="GetValidation()"> GetValidation</button>
+        <button class="btn btn-primary col-3 p-3" type="button" onclick="Submit()"> SUBMIT</button>
+    </div>
+
+    <div-->
+@*
+    style="width: 70px; height: 70px; float: left; margin-top: -20px; margin-left: 30px;"*@
+<!--class="Circle">
+        <div class="loadingio-spinner-ripple-54u5vdn1kvw">
+        </div>
+        <hr />
+
+        <div class="ldio-maw9271jofa">
+            <div></div><div></div>
+        </div>
+    </div>
+</div>-->
+
+
+
+
+<div class="  card-ERB ">
+    <div class="  table-responsive  ">
+
+        <div id="table-scroll ">
+            <table id="dtBasicExample" class="table display responsive nowrap table-responsive" width="100%">
+
+                <thead>
+                    <tr>
+                        <th @*style="width:48px;"*@> INo</th>
+                        <th> InvoiceDate</th>
+                        <th> ReceiverName</th>
+                        <th> TaxNumber</th>
+                        <th> TotalAmount</th>
+                        <th> DocumentType</th>
+                        <th> TransferDate</th>
+                        <th> Status</th>
+                        <th> UUID</th>
+                        <th> Action</th>
+                    </tr>
+                </thead>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="ModalContainer">
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ActionView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="ActionModalContainer">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#Loading').modal('show');
+            //GetLogin();
+            GetData();
+            timer;
+            $("#TotalFeild").prop('disabled', true);
+            $("#ValidFeild").prop('disabled', true);
+            $("#CanceledFeild").prop('disabled', true);
+            $("#InvalidFeild").prop('disabled', true);
+            $("#RejectedFeild").prop('disabled', true);
+            $("#PendingFeild").prop('disabled', true);
+            $('#staticBackdrop').modal('hide');
+            $('#ActionView').modal('hide');
+            setTimeout(function () {
+                $('#Loading').modal('hide');
+            }, 1000);
+        });
+        function GetData() {
+            var Bills = "";
+            $.ajax({
+                url: '/Integration/GetData',
+                type: "Post",
+                data: {
+
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    $("#ValidLable").html("(" + data.data.Valid + ")");
+                    $("#PendingLable").html("(" + data.data.Pending + ")");
+                    $("#SubmitLable").html("(" + data.data.Submitted + ")");
+                    $("#RevievedLable").html("(" + data.data.Received + ")");
+                    $("#TotalLable").html("(" + data.Total + ")");
+                    $("#InvalidLable").html("(" + data.data.InValid + ")");
+                    $("#UnSubLable").html("(" + data.data.Unsubmitted + ")");
+                    $("#CancelLable").html("(" + data.data.Canceled + ")");
+                    $("#RejectLable").html("(" + data.data.Rejected + ")");
+                    $("#HoldLable").html("(" + data.data.Hold + ")");
+                    ViewBills(100);
+                }
+            });
+        }
+        function ViewBills(id) {
+
+            $('#dtBasicExample').DataTable({
+                "bDestroy": true, // Reinitialize DataTable every time
+                "bSearchable": true, // Enable searching
+                "responsive": true, // Enable responsive design
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+                "ajax": {
+                    "url": "/Integration/LoadGrid", // URL to fetch data from
+                    "type": "POST", // HTTP request type
+                    "data": {
+                        "RecordID": id, // Additional data to send with the request
+                    },
+                    "datatype": "json" // Expected data type of the response
+                },
+                "columns": [ // Column definitions
+
+                    { "data": "Invoice_No", "name": "InvoiceNo", "width": "Auto" },
+                    { "data": "Invoice_Date", "name": "InvoiceDate", "width": "Auto" },
+                    { "data": "Receiver_Name", "name": "ReceiverName", "width": "Auto" },
+                    { "data": "TAX_No", "name": "TaxNumber", "width": "Auto" },
+                    { "data": "Total_Amount", "name": "TotalAmount", "width": "Auto" },
+                    { "data": "Document_Type", "name": "DocumentType", "width": "Auto" },
+                    //{ "data": "_transfer_date", "name": "TransferDate", "width": "Auto" },
+                    {
+                        "data": null, render: (data, x, y) => {
+                            if (data._transfer_date == '1900-01-01 12:00 AM' || data._transfer_date == '' || data._transfer_date == null)//Default
+                                data._transfer_date = '-'
+                            return data._transfer_date
+
+                        }
+                    },
+                    {
+                        data: null, render: function (data, type, row) {
+                            return "<a href='#Reasons' onclick=ViewResons('" + data.Bill_RecordID + "'); data-toggle='tooltip' data-placement='top' >" + data.validation + "</a>";
+                        }
+                    },
+                    { "data": "uuid", "name": "UUID", "width": "auto" },
+                    {
+                        data: null, render: function (data, type, row) {
+
+                            return "<div id='ActionResult" + data.Invoice_No + "'><a href='#Reasons' onclick=ViewAction(" + data.Bill_RecordID + "); data-toggle='tooltip' data-placement='top' >Action</a></div>";
+                        }
+                    }
+                ]
+            });
+            //    $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+        }
+        //function GetLogin() {
+        //    $.ajax({
+        //        url: '/Integration/GetLogin',
+        //        type: "Post",
+        //        data: {
+
+        //        },
+        //        datatype: "json",
+        //        traditional: true,
+        //        success: function (data) {
+        //            log(data)
+        //            $("#Login_URL").val(data.data.Login_URL);
+        //            $("#client_id").val(data.data.client_id);
+        //            $("#client_secret").val(data.data.client_secret);
+        //            $("#DocumentSubmissions_URL").val(data.data.DocumentSubmissions_URL);
+
+        //        }
+        //    });
+        //}
+        function GetValidation() {
+            $.ajax({
+                url: '/Integration/GetValidation',
+                type: "Post",
+                data: {
+                    //Login_URL: $("#Login_URL").val(),
+                    //client_id: $("#client_id").val(),
+                    //client_secret: $("#client_secret").val(),
+                    //DocumentSubmissions_URL: $("#DocumentSubmissions_URL").val()
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    GetData();
+
+                    $('#AddArea').collapse().show();
+                    $("#TotalFeild").val(data.TotalAction);
+                    $("#ValidFeild").val(data.Valid);
+                    $("#CanceledFeild").val(data.Cancelled);
+                    $("#InvalidFeild").val(data.Invalid);
+                    $("#RejectedFeild").val(data.Rejected);
+                    $("#PendingFeild").val(data.Pending);
+                    ViewBills(100);
+                }
+            });
+        }
+        var timer = setInterval(function () {
+            EndLooping()
+        }, 3000);
+        function Submit() {
+
+            $.ajax({
+                url: '/Integration/Submit',
+                type: "Post",
+                data: {
+
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+        function Check() {
+            timer;
+
+        }
+        function EndLooping() {
+            $.ajax({
+                url: '/Integration/EndLoop',
+                type: "Post",
+                data: {
+
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    if (data.data.RunStutes == 1) {
+                        //location.reload();
+                        $(".Circle").css("display", "Block");
+                    }
+                    else if (data.data.RunStutes == 0) {
+                        clearInterval(timer);
+                        $(".Circle").css("display", "none");
+                    }
+                }
+            });
+        }
+        function CloseFeild() {
+            $('#AddArea').collapse().hide();
+
+        }
+        function CloseReason() {
+            $('#staticBackdrop').modal('hide');
+        }
+        function ViewResons(id) {
+
+            $.ajax({
+                url: '/Integration/ViewResons',
+                type: "Post",
+                data: {
+                    RecordID: id
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#ModalContainer').html(data);
+                    $('#staticBackdrop').modal('show');
+                    $("#Reasons").prop('disabled', true);
+                }
+            });
+        }
+        function ViewAction(id) {
+
+            $.ajax({
+                url: '/Integration/ViewAction',
+                type: "Post",
+                data: {
+                    RecordID: id
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#ActionModalContainer').html(data);
+                    $('#ActionView').modal('show');
+                }
+            });
+        }
+        function CloseBtn(id) {
+
+            $('#ActionView').modal('hide');
+
+        }
+        function Resubmit(id) {
+            $.ajax({
+                url: '/Integration/Resubmit',
+                type: "Post",
+                data: {
+                    RecordID: id
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#ActionView').modal('hide');
+                    $(".Circle").css("display", "Block");
+                    location.reload();
+
+
+                }
+            });
+        }
+        function Cancel(id) {
+            $.ajax({
+                url: '/Integration/Cancel',
+                type: "Post",
+                data: {
+                    RecordID: id
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#ActionView').modal('hide');
+                    GetData();
+                    ViewBills(100)
+
+                }
+            });
+        }
+        function Hold(id) {
+            $.ajax({
+                url: '/Integration/Hold',
+                type: "Post",
+                data: {
+                    RecordID: id
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#ActionView').modal('hide');
+                    GetData();
+                    ViewBills(100)
+
+                }
+            });
+        }
+        //function ShowInv() {
+        //    debugger
+        //    let uuid = $("#UUID").val();
+        //    $.get(`/Integration/ShowInv?UUID=${uuid}`, (res) => {
+        //        console.log(res)
+        //        debugger
+
+        //        openUrlInNewTab(res.url)
+        //        $('#ActionView').modal('hide');
+        //    })
+        //    //$.ajax({
+        //    //    url: '/Integration/ShowInv',
+        //    //    type: "Post",
+        //    //    data: {
+        //    //        //Login_URL: $("#Login_URL").val(),
+        //    //        //client_id: $("#client_id").val(),
+        //    //        //client_secret: $("#client_secret").val(),
+        //    //        //DocumentSubmissions_URL: $("#DocumentSubmissions_URL").val(),
+        //    //        UUID: $("#UUID").val(),
+        //    //    },
+        //    //    traditional: true,
+        //    //    success: function (data) {
+        //    //        console.log(data)
+        //    //        debugger
+
+        //    //        openUrlInNewTab(data.url)
+        //    //        $('#ActionView').modal('hide');
+        //    //    }
+
+        //    //});
+        //}
+    </script>
+}

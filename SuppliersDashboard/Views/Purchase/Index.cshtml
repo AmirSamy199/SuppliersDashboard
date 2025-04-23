@@ -1,0 +1,243 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btns {
+        padding: 0 10px;
+    }
+
+    #table-scroll {
+        overflow: auto;
+        margin-top: 10px;
+    }
+
+    #table-wrapper table {
+        width: 100%;
+    }
+
+    #ItemsDataTable .th {
+        display: block;
+    }
+
+    #ItemsDataTable .tr {
+        display: block;
+    }
+    .dataTables_wrapper {
+        overflow: auto;
+    }
+   
+</style>
+<div class="card pd-20 pd-sm-40 cardPD-ERB">
+    <input type="hidden" id="Login_URL" />
+    <input type="hidden" id="client_id" />
+    <input type="hidden" id="client_secret" />
+    <input type="hidden" id="DocumentSubmissions_URL" />
+    <div class="row " style=" width: 100%; margin: auto; display: flex; justify-content: space-evenly;">
+        <div class="col-lg-4 col-md-6 col-12 btns mb-3">
+            <button onclick="ViewBills(3)" type="button" class="btn btn-outline-success Buttons" id="Valid" style="cursor: pointer; width: 100%; height: 100%;">
+                <div class="row justify-content-center ">
+                    <div class="col-lg-12">
+                        @*<img src="~/Images/359-3593674_daily-tips-tools-blue-check-png-icon.png" style="width:20%" />*@
+                        <i class="fa fa-check-square fa-4x" aria-hidden="true"></i>
+
+
+                    </div>
+                </div>
+                <div class="row justify-content-center" style=" width:auto;">
+                    <div class="col-lg-12">
+                        <div class="row ">
+                            <lable style="margin-top: 20px; float: left; font-size:x-large; width: 100%"> Valid</lable>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center" style=" width:auto;">
+                    <div class="col-lg-12">
+                        <lable id="ValidLable" style="width:100%; font-size:large"></lable>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 btns mb-3">
+            <button onclick="ViewBills(6)" type="button" class="btn btn-outline-danger Buttons" id="Pending" style="cursor: pointer; width: 100%; height: 100%;">
+                <div class="row justify-content-center ">
+                    <div class="col-lg-12">
+                        <i class="fa fa-window-close fa-4x" aria-hidden="true"></i>
+
+                    </div>
+                </div>
+                <div class="row justify-content-center" style=" width:auto;">
+                    <div class="col-lg-12 ">
+                        <lable style="margin-top: 20px; float: left; width: 100%; font-size: x-large;"> Rejected</lable>
+                    </div>
+                </div>
+                <div class="row justify-content-center" style=" width:auto;">
+                    <div class="col-lg-12">
+                        <lable id="RejectLable" style="width: 100%; font-size: large;"></lable>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 btns mb-3">
+            <button onclick="ViewBills(100)" type="button" class="btn btn-outline-secondary Buttons" id="Submitted" style="cursor: pointer; width: 100%; height: 100%;">
+                <div class="row justify-content-center  ">
+                    <div class="col-lg-12">
+                        <i class="fa fa-archive fa-4x" aria-hidden="true"></i>
+
+                    </div>
+                </div>
+                <div class="row justify-content-center" style=" width:auto;">
+                    <div class="col-lg-12">
+                        <lable style="margin-top: 20px; float: left; width: 100%; font-size: x-large;"> Total</lable>
+                    </div>
+                </div>
+                <div class="row justify-content-center" style=" width:auto;">
+                    <div class="col-lg-12">
+                        <lable id="TotalLable" style="width: 100%; font-size: large;"></lable>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="d-grid gap-2 col-3  grid-ERB PurchaseEnglish ">
+        <button onclick="GetPurchase()" type="button" class="btn btn-success" style="/*width: 100%;*/ text-align: center; font-size: medium; height: 60%; /*margin-left: 30px;*/ float: right; " id="Total">
+             GetPurchase
+        </button>
+    </div>
+</div>
+<div class="card pd-20 card-ERB">
+    <div class="table-wrapper table-wrapperPurchase table-wrapperPurchase2 "  style="overflow:auto">
+    @*style="padding-left: 46px; margin-right: 50px;"*@>
+        <div id="table-scroll">
+            <table id="dtBasicExample" class="table display responsive nowrap" width="100%">
+                <thead>
+                    <tr>
+                        <th class="all"> InternalId</th>
+                        <th class="all"> DateTimeIssued</th>
+                        <th class="all"> IssuerName</th>
+                        <th class="all"> IssuerId</th>
+                        <th class="all"> DType</th>
+                        <th class="all"> TotalSales</th>
+                        <th class="all"> TotalDiscount</th>
+                        <th class="all"> NetAmount</th>
+                        <th class="all"> Total</th>
+                        <th class="all"> Status</th>
+                        <th class="all"> UUID</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            GetData();
+            GetLogin();
+            ViewBills(100);
+        });
+        function ViewBills(id) {
+            $('#dtBasicExample').DataTable({
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+                "ajax": {
+                    "url": "/Purchase/LoadGrid",
+                    "type": "POST",
+                    "data": {
+                        "RecordID": id,
+                    },
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "internalId", "name": "internalId", "width": "auto" },
+                    { "data": "_dateTimeIssued", "name": "dateTimeIssued", "width": "auto" },
+                    { "data": "issuerName", "name": "issuerName", "width": "auto" },
+                    { "data": "issuerId", "name": "issuerId", "width": "auto" },
+                    { "data": "documentTypeNamePrimaryLang", "name": "documentTypeNamePrimaryLang", "width": "auto" },
+                    { "data": "totalSales", "name": "totalSales", "width": "auto" },
+                    { "data": "totalDiscount", "name": "totalDiscount", "width": "auto" },
+                    { "data": "netAmount", "name": "netAmount", "width": "auto" },
+                    { "data": "total", "name": "total", "width": "auto" },
+                    { "data": "status", "name": "status", "width": "auto" },
+                    { "data": "uuid", "name": "uuid", "width": "auto" },
+                ]
+            });
+            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+        }
+        function GetData() {
+
+            var Bills = "";
+            $.ajax({
+                url: '/Purchase/GetData',
+                type: "Post",
+                data: {
+
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $("#ValidLable").append(data.data);
+                    $("#TotalLable").append(data.Total);
+                    $("#RejectLable").append(data.Rejected);
+                    //    ViewBills(100);
+                }
+            });
+        }
+        function GetLogin() {
+
+            $.ajax({
+                url: '/Integration/GetLogin',
+                type: "Post",
+                data: {
+
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $("#Login_URL").val(data.data.Login_URL);
+                    $("#client_id").val(data.data.client_id);
+                    $("#client_secret").val(data.data.client_secret);
+                    $("#DocumentSubmissions_URL").val(data.data.DocumentSubmissions_URL);
+
+                }
+            });
+        }
+        function GetPurchase() {
+            $.ajax({
+                url: '/Purchase/GetPurchase',
+                type: "Post",
+                data: {
+                    Login_URL: $("#Login_URL").val(),
+                    client_id: $("#client_id").val(),
+                    client_secret: $("#client_secret").val(),
+                    DocumentSubmissions_URL: $("#DocumentSubmissions_URL").val(),
+                    ValidBtn: $("#ValidLable").text(),
+                    RejectedBtn: $("#RejectLable").text(),
+                    TotalBtn: $("#TotalLable").text()
+                },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    ViewBills(100)
+                }
+            });
+        }
+    </script>
+}
+
+
+

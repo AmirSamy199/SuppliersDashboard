@@ -1,0 +1,200 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "AllDistributorReportsDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-4">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3">@pages.from</div>
+            <div class="col-lg-8 text-center p-3">
+                <input class="form-control" type="date" id="DateFrom" />
+            </div>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3"> @pages.iin </div>
+            <div class="col-lg-8 text-center p-3">
+                <input class="form-control" type="date" id="DateTo" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="printer">
+        <style>
+            td, th {
+                border: 1px solid #ddd !important;
+            }
+        </style>
+        <h2 class="p-3 text-center " id="head"> </h2>
+        <div class="  card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablediv" class="collapse">
+                    <table style="width:100%" id="table" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> #   </th>
+                                <th> الموزع   </th>
+                                <th> عدد الفواتير    </th>
+                                <th>  الفواتير    </th>
+                                <th>الخصم    </th>
+                                <th>اجل     </th>
+                                <th>مصروفات     </th>
+                                <th>تحصيل     </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> طباعة</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">تنزيل اكسيل </button>
+
+    </div>
+</div>
+@*<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> طباعة</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">تنزيل اكسيل </button>
+</div>*@
+<input type="hidden" id="twice" value="0" />
+
+
+<script>
+
+    $("#DateFrom").change(() => {
+        if ($("#DateTo").val() != "") {
+            LoadGrid($("#DateFrom").val(), $("#DateTo").val())
+        }
+    })
+    $("#DateTo").change(() => {
+        if ($("#DateFrom").val() != "") {
+            LoadGrid($("#DateFrom").val(), $("#DateTo").val())
+        }
+    })
+    LoadGrid('-', '-')
+
+    function LoadGrid(datefrom, dateto) {
+
+        startloader()
+        setTimeout(() => { endloader() }, 3000)
+        $.ajax({
+            url: "/Report/AllDistributorReportsDetailsJSON",
+            type: "post",
+            data: {
+                DateFrom: datefrom,
+                DateTo: dateto
+            }, success: (res) => {
+                console.log(res)
+                endloader()
+                if (res.data.State == 1) {
+                    let counter = 1;
+                    if ($("#twice").val() == 0) {
+
+
+                        $("#table").dataTable({
+                            'iDisplayLength': 25,
+                            "bDestroy": true,
+                            "bSearchable": true,
+                            "responsive": true,
+                            "language": {
+                                "searchPlaceholder": 'Search...',
+                                "sSearch": '',
+                                "lengthMenu": '_MENU_ items/page',
+                            },
+                            data: res.data.Data,
+                            "columns": [
+                                {
+                                    "data": null, render: function () {
+                                        return counter++
+                                    }
+                                },
+                                {
+                                    "data": null, render: function (data, i, e) {
+                                        return data.SalesName + " " + data.SalesId
+                                    }
+                                },
+                                { "data": "TotalPil", "name": "TotalPil", "width": "Auto" },
+                                { "data": "TotalPilNet", "name": "TotalPilNet", "width": "Auto" },
+                                { "data": "TotalPilDiscount", "name": "TotalPilDiscount", "width": "Auto" },
+                                { "data": "TotalPilAgel", "name": "TotalPilAgel", "width": "Auto" },
+                                { "data": "Msrofat", "name": "Msrofat", "width": "Auto" },
+                                { "data": "Collection", "name": "Collection", "width": "Auto" },
+
+
+                            ]
+                        })
+                    }
+                    $("#tablediv").collapse("show")
+                } else {
+
+                    $("#tablediv").collapse("hide")
+                }
+                $("#head").text(res.data.Message)
+            }
+        })
+
+
+    }
+    ///
+
+    function Print() {
+        $("#twice").val(1)
+        $("#Table_length").addClass("d-none")
+        $("#Table_paginate").addClass("d-none")
+        $("#Table_filter").addClass("d-none")
+        $("#Table_info").addClass("d-none")
+        $("#table_length").addClass("d-none")
+        $("#table_paginate").addClass("d-none")
+        $("#table_filter").addClass("d-none")
+        $("#table_info").addClass("d-none")
+        let df = $("#DateFrom").val()
+        let dt = $("#DateTo").val()
+
+        LayoutPrint()
+
+        $("#DateFrom").val(df)
+        $("#DateTo").val(dt)
+
+    }
+    function excel() {
+
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        if (datefrom == "" && dateto == "") {
+            datefrom = "-"
+            dateto = "-"
+        }
+        let ItemID = $("#ItemIdInput").val()
+
+        let h = $("#head").text()
+        LayoutExcel(`/Report/AllDistributorReportsDetailsExcel?DateFrom=${datefrom}&DateTo=${dateto}`, `${h}`)
+    }
+
+    function endloader() {
+        $("#spinner").removeClass("show");
+    }
+    function ShowModal(html) {
+        $("#modalcontent").html(html)
+        $("#myModal").modal("show")
+    }
+    function startloader() {
+        $("#spinner").addClass("show");
+    }
+</script>

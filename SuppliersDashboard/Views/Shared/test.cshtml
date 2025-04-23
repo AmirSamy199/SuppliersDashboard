@@ -1,0 +1,1045 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    bool IsSignIn = true;
+    var User = SuppliersDashboard.Helper.Cokie.UserGet();
+    if (User.Id == 0 ) { User = new SuppliersDashboard.Models.User { UserName = "UserName" }; IsSignIn = true; }
+
+}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <style>
+        /* Sidebar Styles */
+        .sidebar-wrapper {
+            background-color: #333;
+            color: #fff;
+            width: 300px;
+            height: 100vh;
+            overflow-y: auto;
+            padding-top: 20px;
+            /* Adjust padding as needed */
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .logo-wrapper img {
+                max-width: 100px;
+                /* Adjust logo size as needed */
+            }
+
+        .sidebar-main {
+            padding: 0 10px;
+        }
+
+        .sidebar-links {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .sidebar-list {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-link {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+            .sidebar-link:hover {
+                background-color: #555;
+            }
+
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .according-menu {
+            margin-left: auto;
+        }
+
+        .sidebar-submenu {
+            list-style-type: none;
+            padding-left: 20px;
+            display: none;
+        }
+
+            .sidebar-submenu a {
+                color: #fff;
+                text-decoration: none;
+                display: block;
+                padding: 5px 0;
+            }
+
+                .sidebar-submenu a:hover {
+                    background-color: #555;
+                }
+
+        /* Simplebar Styles */
+        .simplebar-content {
+            padding-right: 15px;
+        }
+
+        .simplebar-track.simplebar-vertical {
+            width: 6px !important;
+            background-color: #555;
+        }
+
+        .simplebar-scrollbar {
+            background-color: #888;
+            border-radius: 3px;
+        }
+
+        /* Icon Styles */
+        .ri {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        .fa {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+    </style>
+    <link href="~/back-end/assets/css/style.css?v=3.4.1" rel="stylesheet" />
+
+    <!-- meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+    <meta charset="utf-8">
+    <title>الدوار لمنتجات الالبان  </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    @* meta to complete http requests on host succefully  *@
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <link href="~/back-end/assets/css/style.css?v=3.4.1" rel="stylesheet" />
+    <!-- Favicon -->
+    <link href="~/Content/img/UNO.png" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    @*data tables cdns*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="~/Content/css/style.css?v=3.4.1" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script src="~/Content/js/Deebjs.js"></script>
+
+
+
+
+    <!-- Google font -->
+    <!-- Linear Icon css -->
+    <link rel="stylesheet" href="~/back-end/assets/css/linearicon.css">
+
+    <!-- Fontawesome css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/font-awesome.css">
+
+    <!-- Themify icon css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/themify.css">
+
+    <!--Dropzon css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/dropzone.css">
+
+    <!-- Feather icon css-->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/feather-icon.css">
+
+    <!-- remixicon css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/remixicon.css">
+
+    <!-- Select2 css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/select2.min.css">
+
+    <!-- Plugins css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/chartist.css">
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/date-picker.css">
+
+    <!-- Bootstrap css -->
+    <link href="~/back-end/assets/css/vendors/bootstrap.css?v=3.4.1" rel="stylesheet" />
+
+    <!-- Bootstrap-tag input css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/vendors/bootstrap-tagsinput.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- App css -->
+    <link rel="stylesheet" type="text/css" href="~/back-end/assets/css/style.css?v=3.4.1">
+</head>
+
+<body>
+    <!-- tap on top start -->
+    <div class="tap-top">
+        <span class="lnr lnr-chevron-up"></span>
+    </div>
+    <!-- tap on tap end -->
+    <!-- page-wrapper start -->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        <!-- Page Header Start-->
+        <div class="page-header">
+            <div class="header-wrapper m-0">
+                <div class="header-logo-wrapper p-0">
+                    <div class="logo-wrapper">
+                        <a href="index.html">
+                            <img class="img-fluid main-logo" src="~/Content/img/UNO.png" alt="logo">
+                            <img class="img-fluid white-logo" src="~/Content/img/UNO.png" alt="logo">
+                        </a>
+                    </div>
+                    <div class="toggle-sidebar">
+                        <i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
+                        <a href="index.html">
+                            <img class="img-fluid main-logo" src="~/Content/img/UNO.png" alt="logo">
+                            <img class="img-fluid white-logo" src="~/Content/img/UNO.png" alt="logo">
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="nav-right col-6 pull-right right-header p-0">
+                    <ul class="nav-menus">
+
+
+
+                        <li>
+                            @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+                            {
+                                <a class="user-name-hide media-body" onclick="ChangeToLTR()" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> En</a>
+                            }
+                            else
+                            {
+                                <a class="user-name-hide media-body" onclick="ChangeToRTL()" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> Ar</a>
+                            }
+                        </li>
+
+                        <li>
+                            <div class="mode">
+                                <i class="ri-moon-line"></i>
+                            </div>
+                        </li>
+                        <li class="profile-nav onhover-dropdown pe-0 me-0">
+                            <div class="media profile-media">
+                                <img class="user-profile rounded-circle" src="~/back-end/assets/images/users/4.jpg" alt="">
+                                <div class="user-name-hide media-body">
+                                    <span>@User.UserName</span>
+                                    <p class="mb-0 font-roboto">@User.groupname<i class="middle ri-arrow-down-s-line"></i></p>
+                                </div>
+                            </div>
+                            <ul class="profile-dropdown onhover-show-div">
+                                <li>
+                                    <a href="all-users.html">
+                                        <i data-feather="users"></i>
+                                        <span>@User.UserName </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    @if (IsSignIn)
+                                    {
+                                        <a href="/Account/LogOut" data-bs-toggle="modal" data-bs-target="#staticBackdrop">@SuppliersDashboard.Resources.llayout.logout</a>
+                                    }
+                                    else
+                                    {
+
+                                        <a href="/Account/LogIn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">@SuppliersDashboard.Resources.llayout.signin</a>
+                                    }
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header Ends-->
+        <!-- Page Body start -->
+        <div class="page-body-wrapper">
+             Page Sidebar Start
+            <div class="sidebar-wrapper">
+        <div id="sidebarEffect"></div>
+        <div>
+            <div class="logo-wrapper logo-wrapper-center">
+                <a href="/Home/Index" data-bs-original-title="" title="">
+                    <img class="img-fluid for-white" src="~/Content/img/UNO.png" alt="logo">
+                </a>
+                <div class="back-btn">
+                    <i class="fa fa-angle-left"></i>
+                </div>
+                <div class="toggle-sidebar">
+                    <i class="ri-apps-line status_toggle middle sidebar-toggle"></i>
+                </div>
+            </div>
+            <div class="logo-icon-wrapper">
+                <a href="/Home/Index">
+                    <img class="img-fluid main-logo main-white" src="~/Content/img/UNO.png" alt="logo">
+                    <img class="img-fluid main-logo main-dark" src="~/Content/img/UNO.png"
+                         alt="logo">
+                </a>
+            </div>
+            <nav class="sidebar-main">
+                <div class="left-arrow" id="left-arrow">
+                    <i data-feather="arrow-left"></i>
+                </div>
+
+                <div id="sidebar-menu">
+                    <ul class="sidebar-links" id="simple-bar">
+                        <li class="back-btn"></li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title link-nav" href="/Home/Index">
+                                <i class="ri-home-line"></i>
+                                <span>@pages.dawarmalik</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list">
+
+                            <a style="text-align: center;" class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-store-3-line"></i>
+                                <span>@llayout.operations</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li class='onlyone'> <a href="/Distributor/GroupUsers" class="dropdown-item"> @llayout.Delegatemanagement  </a> </li>
+                                <li>
+                                    <a href="javascript:void(0)" class=" sidebar-lin  dropdown-item linear-icon-link" onclick='ShowSecond("ul1" , this)'>  @llayout.wareHouse &nbsp;&nbsp;&nbsp;&nbsp;  <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i></a>
+                                    <ul class='secondul collapse' id='ul1'>
+
+
+                                        <li> <a href="/Screens/DeliverStore" class=" showstore3mliatcollapse  dropdown-item">  * @llayout.shift   </a> </li>
+
+
+                                        <li>   <a href="/WareHousing/PendingWareHouseRequests" class="  showstore3mliatcollapse  dropdown-item">  * @llayout.Give_Products_To_Representative  </a>                     </li>
+
+
+                                        <li>   <a href="/WareHousing/PendingMardodatWareHouseRequests" class="  showstore3mliatcollapse  dropdown-item">  * @llayout.Receive_Products_To_Representative  </a>               </li>
+
+                                        <li>   <a href="/WareHousing/StoreGard" class="  showstore3mliatcollapse  dropdown-item  ">  * @llayout.Inventory_of_accounts  </a>                                            </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul3" , this)'> @llayout.the_safe  &nbsp;&nbsp;&nbsp;<i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>   </a>
+                                    <ul class='secondul collapse' id='ul3'>
+                                        <li>   <a href="/Accounting/CloseAcconterDay" class="   dropdown-item">  * @llayout.shift   </a> </li>
+
+
+                                    </ul>
+                                </li>
+                                <li class='onlyone'>   <a href="/Screens/Sale" class="dropdown-item">  @llayout.sale </a></li>
+
+
+                                <li class='onlyone'>   <a href="/Screens/Collection" class="dropdown-item">  @llayout.Collection </a></li>
+
+                                <li class='onlyone'>   <a href="/Screens/Buy" class="dropdown-item">  @llayout.Purchases </a> </li>
+
+                                <li class='onlyone'>  <a href="/Screens/Masrofat" class="dropdown-item">  @llayout.Expenses </a>  </li>
+
+                                <li class='onlyone'>  <a href="/Screens/EditChecks" class="dropdown-item">   @llayout.Checks </a>  </li>
+
+                                <li class='onlyone'>  <a href="/Screens/SettleAccount" class="dropdown-item">  @llayout.clear</a>  </li>
+                            </ul>
+
+                        </li>
+
+
+
+                        <li class="sidebar-list">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-list-check-2"></i>
+                                <span>@llayout.reports</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+
+                                <li class='onlyone'> <a href="/CP/SalesCPReport" class="dropdown-item  ">   @llayout.Commission_project </a>                   </li>
+
+                                <li class='onlyone'> <a href="/WareHousing/StoreGard" class="dropdown-item  "> @llayout.Ware_House_Review </a>                   </li>
+
+                                <li class='onlyone'>        <a href="/Distributor/CustomerDeffers" class="dropdown-item"> @llayout.Indebtedness</a>        </li>
+
+                                <li class='onlyone'>        <a href="/NewReports/BillLatersReport" class="dropdown-item"> @llayout.Invoicearrears</a>        </li>
+
+
+
+
+                                <li class='onlyone'>        <a href="/NewReports/TotalPillsReports" class="dropdown-item">@llayout.Invoice_totals </a>         </li>
+
+                                <li class='onlyone'>        <a href="/NewReports/ExpensesReports" class="dropdown-item"> @llayout.Expenses </a>         </li>
+
+                                <li class='onlyone'>        <a href="/NewReports/MoneyPaper" class="dropdown-item">   @llayout.Paymentpapers  </a>         </li>
+
+
+                                <li class='onlyone'>        <a href="/NewReports/Subwarehouseguard" class="dropdown-item"> @llayout.sub  </a>         </li>
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul222" , this)'> @llayout.inability  &nbsp;&nbsp;&nbsp;  <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i> </a>
+                                    <ul class='secondul collapse' id='ul222'>
+
+
+
+                                        <li>     <a href="/NewReports/ShortFalls" class="dropdown-item  "> &nbsp;&nbsp;&nbsp;* @llayout.Storeshortage     </a>                       </li>
+
+                                        <li>    <a href="/NewReports/MoneyShortFalls" class="dropdown-item  "> &nbsp;&nbsp;&nbsp;&nbsp;* @llayout.Moneyshortage       </a>          </li>
+
+
+
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul2" , this)'> @llayout.items &nbsp;&nbsp;&nbsp;  <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>  </a>
+                                    <ul class='secondul collapse' id='ul2'>
+
+                                        <li>     <a href="/Report/ItemCard" class="dropdown-item debitsreportscollapse ">&nbsp;&nbsp;&nbsp;* @llayout.Item_Transaction    </a>                       </li>
+
+                                        <li>     <a href="/Report/ItemCard" class="dropdown-item debitsreportscollapse "> &nbsp;&nbsp;&nbsp;*@llayout.Item_Transaction    </a>                       </li>
+
+                                        <li>    <a href="/NewReports/itemDistributors" class="dropdown-item debitsreportscollapse ">  &nbsp;&nbsp;&nbsp;*   @llayout.s  </a>          </li>
+
+                                        <li>    <a href="/NewReports/TotalItemsSales" class="dropdown-item debitsreportscollapse ">&nbsp;&nbsp;&nbsp;*  @llayout.e       </a>          </li>
+
+                                        <li>    <a href="/NewREports/ItemsReport" class="dropdown-item debitsreportscollapse ">    &nbsp;&nbsp;&nbsp;* @llayout.g   </a>          </li>
+
+                                        <li>    <a href="/NewReports/TotalCategoriesSalesReport" class="dropdown-item debitsreportscollapse "> &nbsp;&nbsp;&nbsp;*  @llayout.Group_Total_Sale     </a>          </li>
+
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul333" , this)'> @llayout.Customers &nbsp;&nbsp;&nbsp; <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>  </a>
+                                    <ul class='secondul collapse' id='ul333'>
+
+
+                                        <li>    <a href="/Branch/BranchDetails" class="dropdown-item Branchesreportscollapse ">   @llayout.Customer_Details   </a> </li>
+
+
+
+                                        <li>      <a href="/Market/Index" class="   dropdown-item branshsettingcollapse ">@llayout.Account_statement</a>    </li>
+
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul-15" , this)'> @llayout.distributors &nbsp;&nbsp;&nbsp;  <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>   </a>
+                                    <ul class='secondul collapse' id='ul-15'>
+                                        <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item Branchesreportscollapse "> &nbsp;&nbsp;&nbsp;*  @llayout.Distributors_Sales   </a> </li>
+                                    </ul>
+                                </li>
+
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul-r-1" , this)'> KPIS    </a>
+                                    <ul class='secondul collapse' id='ul-r-1'>
+                                        <li>    <a href="/KPIS/Distributors" class="dropdown-item  ">   @llayout.Distributors_Details   </a> </li>
+                                        <li>    <a href="/KPIS/ItemsKPI" class="dropdown-item  ">       @llayout.Items_Details   </a> </li>
+                                        <li>    <a href="/KPIS/BranchesKPI" class="dropdown-item  ">    @llayout.Customer_Details   </a> </li>
+                                        <li>    <a href="/KPIS/PriceListKPI" class="dropdown-item  ">   @llayout.Prices_Details   </a> </li>
+                                        <li>    <a href="/DashboardSuppliers/Index" class="dropdown-item  ">                  @llayout.dawar  </a> </li>
+                                    </ul>
+                                </li>
+
+
+
+
+
+
+
+                            </ul>
+
+                        </li>
+
+
+
+                        <li class="sidebar-list">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-list-settings-line"></i>
+                                <span>@llayout.setting</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+
+                                <li class='onlyone'>  <a href="/Bank/index" class="dropdown-item">      @llayout.addbank   </a>  </li>
+
+                                <li class='onlyone'> <a href="/Employee/Index" class="dropdown-item  ">  @llayout.addCustomer  </a>                   </li>
+
+                                <li class='onlyone'> <a href="/Admin/UsersManagement" class="dropdown-item  ">  @llayout.Users_Management </a>                   </li>
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("set1" , this)'>  @llayout.items    <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>  </a><ul class='secondul collapse' id='set1'>
+
+
+                                        <li>     <a href="/Items/ItemSetting" class="   dropdown-item itemssettingcollapse ">     @llayout.Add_Or_Stop_Item   </a>          </li>
+
+                                        <li>        <a href="/Items/Specialprice" class="   dropdown-item itemssettingcollapse "> @llayout.Special_Prices   </a>              </li>
+
+                                        <li>        <a href="/Items/AddItemPrice" class="   dropdown-item itemssettingcollapse "> @llayout.Edit_Prices     </a>         </li>
+
+
+                                        <li>        <a href="/Supplier/EditItemsPrices" class="   dropdown-item itemssettingcollapse ">  @llayout.updateprice    </a>         </li>
+
+
+                                    </ul>
+                                </li>
+
+
+
+
+
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("set2" , this)'> @llayout.Customers    </a><ul class='secondul collapse' id='set2'>
+
+
+
+                                        <li>      <a href="/Branch/EditBranchData" class="   dropdown-item branshsettingcollapse ">  @llayout.Edit_Customer_Details </a></li>
+
+
+                                        <li>      <a href="/Branch/AddBranch" class="   dropdown-item branshsettingcollapse ">   @llayout.Add_Customer      </a>                     </li>
+
+
+                                        <li>      <a href="/Branch/AddOpeningBalance" class="   dropdown-item branshsettingcollapse ">   @llayout.Add_opening_balance       </a>    </li>
+
+
+
+                                    </ul>
+                                </li>
+
+
+
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("set4" , this)'> @llayout.Regions   <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>   </a><ul class='secondul collapse' id='set4'>
+                                        <li>      <a href="/Screens/AddRange" class="   dropdown-item branshsettingcollapse ">   @llayout.Add_Region_Or_neighborhood    </a>             </li>
+                                    </ul>
+                                </li>
+
+
+
+
+
+
+
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("set3" , this)'> @llayout.suppliers     <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i> </a> <ul class='secondul collapse' id='set3'>
+
+
+
+                                        <li> <a href="/Supplier/Seting" class="   suppliersettingcollapse dropdown-item suppliersettingcollapse ">   @llayout.Edit_Or_Stop_Supplier   </a> </li>
+
+
+                                        <li>  <a href="/Supplier/Add" class="   suppliersettingcollapse dropdown-item  ">  @llayout.Add_Supplier     </a> </li>
+
+
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick='ShowSecond("ul5" , this)'> @llayout.Sales_channels   <i class='fas fa-arrow-alt-circle-right' style='font-size:20px'></i>   </a>
+                                    <ul class='secondul collapse' id='ul5'>
+
+
+
+                                        <li> <a href="/Branch/AddEditAgent" class="dropdown-item Branchesreportscollapse ">*  *  @llayout.addandeditagents   </a> </li>
+
+
+                                        <li>  <a href="/Supplier/AddreprsntGroup" class="   suppliersettingcollapse dropdown-item  ">   @llayout.Add_Distributors_Group     </a> </li>
+
+
+
+                                    </ul>
+                                </li>
+
+
+
+
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a href="/Admin/OnlineRequest" class="dropdown-item">
+
+                                <i class="ri-user-3-line"></i>
+                                <span>@llayout.reqest</span>
+                            </a>
+
+                        </li>
+             <li class="sidebar-list">
+        <a class="sidebar-link sidebar-title link-nav" href="media.html">
+            <i class="ri-price-tag-3-line"></i>
+            <span>Media</span>
+        </a>
+    </li> 
+            <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-archive-line"></i>
+                                <span>@llayout.Invoice</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+
+                                <li class='onlyone'>
+                                    <a href="/Integration/Get_All_Bill" class="dropdown-item">
+                                        @llayout.sendBill
+                                    </a>
+                                </li>
+
+                                <li class='onlyone'>  <a href="/Integration/index" class="dropdown-item">  @llayout.integration</a>  </li>
+
+
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-list">
+                            <a href="/Account/LogOut" class="dropdown-item">
+
+                                <i class="ri-user-3-line"></i>
+                                <span>@SuppliersDashboard.Resources.llayout.logout</span>
+                            </a>
+
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="right-arrow" id="right-arrow">
+                    <i data-feather="arrow-right"></i>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+
+            <div class="sidebar-wrapper">
+                <div class="logo-wrapper">
+                    <a href="/Home/Index" data-bs-original-title="" title="">
+                        <img class="img-fluid for-white" src="https://localhost:44391/Content/img/UNO.png" alt="logo">
+                    </a>
+                </div>
+                <nav class="sidebar-main">
+                    <ul class="sidebar-links" id="simple-bar" data-simplebar="init">
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="/Home/Index">
+                                <i class="ri-home-line"></i>
+                                <span>Al-Dawar Dairy Products</span>
+                                <div class="according-menu"><i class="ri-arrow-right-s-line"></i></div>
+                            </a>
+                        </li>
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title active" href="javascript:void(0)">
+                                <i class="ri-store-3-line"></i>
+                                <span>Operations</span>
+                                <div class="according-menu"><i class="ri-arrow-down-s-line"></i></div>
+                            </a>
+                            <ul class="sidebar-submenu" style="display: block;">
+                                <li class="onlyone"> <a href="/Distributor/GroupUsers" class="dropdown-item">Distributor Management </a> </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="sidebar-lin dropdown-item linear-icon-link active" onclick="ShowSecond(&quot;ul1&quot; , this)"> WareHouse &nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-arrow-alt-circle-right" style="font-size:20px"></i></a>
+                                    <ul class="secondul collapse" id="ul1" style="display: block;">
+
+                                        <li> <a href="/Screens/DeliverStore" class="showstore3mliatcollapse dropdown-item"> Recieve / Give shift </a> </li>
+
+                                        <li> <a href="/WareHousing/PendingWareHouseRequests" class="showstore3mliatcollapse dropdown-item">Give Products To Representative </a> </li>
+
+                                        <li> <a href="/WareHousing/PendingMardodatWareHouseRequests" class="showstore3mliatcollapse dropdown-item active">Receive Products To Representative </a> </li>
+
+                                        <li> <a href="/WareHousing/StoreGard" class="showstore3mliatcollapse dropdown-item"> Inventory of accounts </a> </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item" onclick="ShowSecond(&quot;ul3&quot; , this)"> Money Safe<i class="fas fa-arrow-alt-circle-right" style="font-size:20px"></i> </a>
+                                    <ul class="secondul collapse" id="ul3">
+                                        <li> <a href="/Accounting/CloseAcconterDay" class="dropdown-item">Recieve / Give shift </a> </li>
+
+                                    </ul>
+                                </li>
+                                <li class="onlyone"> <a href="/Screens/Sale" class="dropdown-item"> Sale </a></li>
+
+                                <li class="onlyone"> <a href="/Screens/Collection" class="dropdown-item"> Collection </a></li>
+
+                                <li class="onlyone"> <a href="/Screens/Buy" class="dropdown-item"> Purchases </a> </li>
+
+                                <li class="onlyone"> <a href="/Screens/Masrofat" class="dropdown-item"> Expenses </a> </li>
+
+                                <li class="onlyone"> <a href="/Screens/EditChecks" class="dropdown-item"> Update Checks </a> </li>
+
+                                <li class="onlyone"> <a href="/Screens/SettleAccount" class="dropdown-item"> Clearing today's account for the representative</a> </li>
+                            </ul>
+                        </li>
+                         Add more sidebar list items as needed 
+                    </ul>
+                </nav>
+            </div>
+s
+             Page Sidebar Ends
+
+            <div class="page-body">
+
+
+                @RenderBody()
+                 New Product Add End 
+                 footer Start 
+                <div class="container-fluid">
+                    <footer class="footer">
+                        <div class="row">
+                            <div class="col-md-12 footer-copyright text-center">
+                                <p class="mb-0">Copyright 2022 © Fastkart theme by pixelstrap</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                 footer End 
+            </div>
+             Container-fluid End 
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End -->
+    <!-- Modal Start -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-title" id="staticBackdropLabel">Logging Out</h5>
+                    <p>Are you sure you want to log out?</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    <div class="button-box">
+                        <button type="button" class="btn btn--no" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn--yes btn-primary" onclick="window.location.href='/Account/LogOut'">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered ">
+            <div class="modal-content" id="modalContainer">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: max-content;">
+                <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalcontent" style=" margin: auto;">
+                    ...
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+        <div class="modal-dialog  modal-dialog-centered ">
+
+            <div class="modal-content" id="modalcontent" style="">
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal End -->
+    <!-- latest js -->
+    <script src="~/back-end/assets/js/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="~/back-end/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- feather icon js -->
+    <script src="~/back-end/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/back-end/assets/js/icons/feather-icon/feather-icon.js"></script>
+
+    <!-- scrollbar simplebar js -->
+    <script src="~/back-end/assets/js/scrollbar/simplebar.js"></script>
+    <script src="~/back-end/assets/js/scrollbar/custom.js"></script>
+
+    <!-- Sidebar js -->
+    <script src="~/back-end/assets/js/config.js"></script>
+
+    <!-- bootstrap tag-input js -->
+    <script src="~/back-end/assets/js/bootstrap-tagsinput.min.js"></script>
+    <script src="~/back-end/assets/js/sidebar-menu.js"></script>
+
+    <!-- customizer js -->
+    <script src="~/back-end/assets/js/customizer.js?v=3.4.1"></script>
+    <!--Dropzon js -->
+    <script src="~/back-end/assets/js/dropzone/dropzone.js"></script>
+    <script src="~/back-end/assets/js/dropzone/dropzone-script.js"></script>
+
+    <!-- Plugins js -->
+    <script src="~/back-end/assets/js/notify/bootstrap-notify.min.js"></script>
+    <script src="~/back-end/assets/js/notify/index.js"></script>
+
+    <!-- select2 js -->
+    <script src="~/back-end/assets/js/select2.min.js"></script>
+    <script src="~/Content/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="~/back-end/assets/js/select2-custom.js"></script>
+
+    <!-- sidebar effect -->
+    <script src="~/back-end/assets/js/sidebareffect.js"></script>
+
+    <!-- Theme js -->
+    <script src="~/back-end/assets/js/script.js"></script>
+    <script src="~/Content/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+
+        function endloader() {
+            $("#spinner").removeClass("show");
+        }
+        function ShowModal(html) {
+            $("#modalcontent").html(html)
+            $("#myModal").modal("show")
+
+        }
+        function CloseModal() {
+            $("#myModal").modal("hide")
+
+        }
+        function startloader() {
+            $("#spinner").addClass("show");
+        }
+
+
+
+        function GetdateString(dd) {
+            try {
+                let date = new Date(dd);
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let hours = date.getHours();
+                let minutes = date.getMinutes();
+
+                return year + "/" + month + "/" + day + "  " + hours + ":" + minutes;
+            } catch {
+                return dd;
+            }
+        }
+
+        function ChangeToLTR() {
+            localStorage.setItem("rtlMode", "ltr");
+
+        }
+        function ChangeToRTL() {
+            localStorage.setItem("rtlMode", "rtl");
+
+        }
+        function LayoutV2Print() {
+
+            let httt = $("#printer").html();
+            let object = {
+                Value: String(httt)
+            }
+            let x = JSON.stringify(object)
+
+            window.location.href = "/Home/Print?obj=" + x.replace('"', '*')
+        }
+        function LayoutPrint() {
+            $(".ignore-in-report").css("display", "none")
+            $("td:has(.ignore-in-report-span)").css("display", "none")
+            $("#Table_length").addClass("d-none")
+            $("#Table_paginate").addClass("d-none")
+            $("#Table_filter").addClass("d-none")
+            $("#Table_info").addClass("d-none")
+            $("#table_length").addClass("d-none")
+            $("#table_paginate").addClass("d-none")
+            $("#table_filter").addClass("d-none")
+            $("#table_info").addClass("d-none")
+            var restorepage = $('body').html();
+            var printcontent = $('#printer').clone();
+            $('body').empty().html(printcontent);
+            window.print();
+            location.reload()
+            $('body').html(restorepage);
+            $("#Table_length").removeClass("d-none")
+            $("#Table_paginate").removeClass("d-none")
+            $("#Table_filter").removeClass("d-none")
+            $("#Table_info").removeClass("d-none")
+            $("#table_length").removeClass("d-none")
+            $("#table_paginate").removeClass("d-none")
+            $("#table_filter").removeClass("d-none")
+            $("#table_info").removeClass("d-none")
+        }
+        function LayoutExcel(url, name) {
+            startloader()
+            $.ajax({
+                url: url,
+                type: "post",
+                success: function (res) {
+                    ClickLink(res.url, name + " " + GetdateString(new Date()))
+                    endloader();
+                }
+            })
+        }
+
+        function SearchInTable(inputId, tableId) {
+            // Declare variables
+
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById(inputId);
+            filter = input.value.toUpperCase();
+            table = document.getElementById(tableId);
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+
+
+                let tds = tr[i].getElementsByTagName("td");
+                for (let x = 0; x < tds.length; x++) {
+                    td = tds[x];
+
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+
+        function Search(inputId, divclass) {
+            // Declare variables
+            debugger
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById(inputId);
+            filter = input.value.toUpperCase();
+
+            tr = document.getElementsByClassName(divclass);
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                let ele = tr[i]
+                txtValue = ele.textContent || ele.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    ele.style.display = "";
+
+                } else {
+                    ele.style.display = "none";
+                }
+
+
+            }
+        }
+        function clickabletr(spanclass) {
+            let spans = document.getElementsByClassName(`${spanclass}`)
+            $.each(spans, (i, e) => {
+                let spanbilno = $(e).attr(`data`)
+                $(e).parent().parent().attr('onclick', `viewBill(${spanbilno})`)
+            })
+        }
+        function viewBill(number) {
+
+            if (number <= 0)
+                return
+            let isvalid = 0;
+            try {
+                isvalid = parseInt(number)
+
+            } catch {
+                return
+            }
+
+            $.ajax({
+                url: "/CHIJpbnRlcg/Encrypt",
+                type: "post",
+                data: {
+                    key: String(number)
+                }, success: (res) => {
+
+
+
+                    let a = document.createElement('a')
+                    a.target = "_blank"
+                    a.href = `/chijpbnrlcg/T1UHSfl6oRmBLZg7E44aAg?QmlsbE5v=${res}`
+
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a)
+
+                }
+
+            })
+        }
+        function ShowSecond(id, ele) {
+
+            $("#" + id).toggleClass("show")
+            if ($("#" + id).hasClass("show")) {
+                $(ele).parent().css("list-style-type", "disclosure-open")
+            } else {
+                $(ele).parent().css("list-style-type", "disclosure-closed")
+
+            }
+        }
+    </script>
+    <!-- Template Javascript -->
+    <script src="~/Content/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+
+
+</body>
+
+</html>

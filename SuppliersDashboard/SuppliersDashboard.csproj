@@ -1,0 +1,1864 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3C0933A6-141B-4A3A-9E01-F2CFDF21FA0C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SuppliersDashboard</RootNamespace>
+    <AssemblyName>SuppliersDashboard</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <IISExpressSSLPort>44391</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MixedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=23.7.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.23.7.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="BitMiracle.LibTiff.NET, Version=2.4.649.0, Culture=neutral, PublicKeyToken=53879b3e20e7a7d6, processorArchitecture=MSIL">
+      <HintPath>..\packages\BitMiracle.LibTiff.NET.2.4.649\lib\net40\BitMiracle.LibTiff.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Connibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Connibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport, Version=2020.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\TechnologyAndBusinessIntegration\ScoposERB\ScoposERB\Helper\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Compat, Version=2020.3.2.0, Culture=neutral, PublicKeyToken=406e1f4c3c8ef97e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\TechnologyAndBusinessIntegration\ScoposERB\ScoposERB\Helper\FastReport.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Web, Version=2020.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\TechnologyAndBusinessIntegration\ScoposERB\ScoposERB\Helper\FastReport.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="IronSoftware.Drawing.Common, Version=2023.6.1.0, Culture=neutral, PublicKeyToken=8d7e55c97b3e9835, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronSoftware.System.Drawing.2023.6.1\lib\netstandard2.0\IronSoftware.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Antiforgery.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Antiforgery.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization.Policy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.Policy.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.Policy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Diagnostics.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Diagnostics.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Diagnostics.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.JsonPatch, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.JsonPatch.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.JsonPatch.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Core.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.DataAnnotations, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.DataAnnotations.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Formatters.Json, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Formatters.Json.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Formatters.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.ViewFeatures.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.ResponseCaching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.ResponseCaching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyModel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyModel.2.1.0\lib\net451\Microsoft.Extensions.DependencyModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Hosting.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Localization.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.2.2.0\lib\netstandard2.0\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.ImageSharp.2.1.3\lib\net472\SixLabors.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SuppliersDashboard.resources">
+      <HintPath>..\..\..\SuppliersDashboardEdit\newdawar\bin\ar\SuppliersDashboard.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.Globalization.Extensions" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Xml, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.4.5.0\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Parallel" />
+    <Reference Include="System.Threading.Thread" />
+    <Reference Include="System.Threading.ThreadPool" />
+    <Reference Include="System.Threading.Timer" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.10\lib\net47\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.10\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BL\AddTransactionsService.cs" />
+    <Compile Include="BL\BrotherServicesValidators.cs" />
+    <Compile Include="BL\CollectionService.cs" />
+    <Compile Include="BL\CurrencyService.cs" />
+    <Compile Include="BL\ETALoginService.cs" />
+    <Compile Include="BL\ExpensesAndIncomesSetting.cs" />
+    <Compile Include="BL\Helper\BanksFilter.cs" />
+    <Compile Include="BL\Helper\ConfirmFilter.cs" />
+    <Compile Include="BL\Helper\Converter.cs" />
+    <Compile Include="BL\Helper\CookieModel.cs" />
+    <Compile Include="BL\Helper\Country_Title_Position.cs" />
+    <Compile Include="BL\Helper\CustomersFilter.cs" />
+    <Compile Include="BL\Helper\DeepHelper.cs" />
+    <Compile Include="BL\Helper\DepartmentFilter.cs" />
+    <Compile Include="BL\Helper\IntegrationFilter.cs" />
+    <Compile Include="BL\Helper\ItemsFilter.cs" />
+    <Compile Include="BL\Helper\OperationFilter.cs" />
+    <Compile Include="BL\Helper\PurchaseFilter.cs" />
+    <Compile Include="BL\Helper\ReportFilter.cs" />
+    <Compile Include="BL\Helper\SalesFilter.cs" />
+    <Compile Include="BL\Helper\ScoposOrUno.cs" />
+    <Compile Include="BL\Helper\Select.cs" />
+    <Compile Include="BL\Helper\Settings.cs" />
+    <Compile Include="BL\Helper\Statics\ApplicationSetting.cs" />
+    <Compile Include="BL\Helper\SupplierFilter.cs" />
+    <Compile Include="BL\Helper\TbiAdmin.cs" />
+    <Compile Include="BL\Helper\TbiServer.cs" />
+    <Compile Include="BL\Helper\TimoutFilter.cs" />
+    <Compile Include="BL\Helper\Utility.cs" />
+    <Compile Include="BL\InvoiceRepo.cs" />
+    <Compile Include="BL\Model\AccModels\Acc_Accounts_tbl.cs" />
+    <Compile Include="BL\Model\AccModels\Acc_Bank_Check_Tbl.cs" />
+    <Compile Include="BL\Model\AccModels\Acc_general_journal_entry.cs" />
+    <Compile Include="BL\Model\AccModels\ACC_Transaction.cs" />
+    <Compile Include="BL\Model\AccModels\Acc_x_Category.cs" />
+    <Compile Include="BL\Model\AccountGrid.cs" />
+    <Compile Include="BL\Model\AccTreeGrid.cs" />
+    <Compile Include="BL\Model\ACIDModel.cs" />
+    <Compile Include="BL\Model\APIHandler.cs" />
+    <Compile Include="BL\Model\AssignShifts.cs" />
+    <Compile Include="BL\Model\Attendence.cs" />
+    <Compile Include="BL\Model\Bill_Tbl.cs" />
+    <Compile Include="BL\Model\BranchsGrid.cs" />
+    <Compile Include="BL\Model\BrotherItems.cs" />
+    <Compile Include="BL\Model\BRO_RequestServices_TBL.cs" />
+    <Compile Include="BL\Model\Cars_Grid.cs" />
+    <Compile Include="BL\Model\Category.cs" />
+    <Compile Include="BL\Model\ChequeGrid.cs" />
+    <Compile Include="BL\Model\ClearanceModel.cs" />
+    <Compile Include="BL\Model\CollectionGrid.cs" />
+    <Compile Include="BL\Model\CompanyDetails.cs" />
+    <Compile Include="BL\Model\CompanySettings.cs" />
+    <Compile Include="BL\Model\completedRequest_V.cs" />
+    <Compile Include="BL\Model\Com_Tbl.cs" />
+    <Compile Include="BL\Model\ConfirmDash.cs" />
+    <Compile Include="BL\Model\ConfirmInvoice.cs" />
+    <Compile Include="BL\Model\Content.cs" />
+    <Compile Include="BL\Model\Country.cs" />
+    <Compile Include="BL\Model\CustomersFilerError.cs" />
+    <Compile Include="BL\Model\C_City_Tbl.cs" />
+    <Compile Include="BL\Model\C_costcenter_Tbl.cs" />
+    <Compile Include="BL\Model\C_Default_Tbl.cs" />
+    <Compile Include="BL\Model\C_Screen_TBL.cs" />
+    <Compile Include="BL\Model\C_Tran_Module_TBL.cs" />
+    <Compile Include="BL\Model\DeductionAction.cs" />
+    <Compile Include="BL\Model\DegreesAndJobs.cs" />
+    <Compile Include="BL\Model\Departments.cs" />
+    <Compile Include="BL\Model\Document.cs" />
+    <Compile Include="BL\Model\DomesticModel.cs" />
+    <Compile Include="BL\Model\EditParent.cs" />
+    <Compile Include="BL\Model\EGYCAModel.cs" />
+    <Compile Include="BL\Model\Employees.cs" />
+    <Compile Include="BL\WarehouseService.cs" />
+    <Compile Include="Constants\Setting.cs" />
+    <Compile Include="Controllers\AsSalesmanController.cs" />
+    <Compile Include="Controllers\BankController.cs" />
+    <Compile Include="Controllers\CustomeDesginController.cs" />
+    <Compile Include="Controllers\FastReportController.cs" />
+    <Compile Include="Controllers\PriceListController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SalesOFclient1Controller.cs" />
+    <Compile Include="Controllers\SelectorController.cs" />
+    <Compile Include="Filters\FunctionFilter.cs" />
+    <Compile Include="Helper\Cokie.cs" />
+    <Compile Include="Models\BankInfo_tbl.cs" />
+    <Compile Include="Models\Bill_Detiles_Tbl.cs" />
+    <Compile Include="Models\Bill_Report_V.cs" />
+    <Compile Include="Models\Bill_Tbl.cs" />
+    <Compile Include="Models\Branch_tbl.cs" />
+    <Compile Include="Models\ETA_Bill_Detiles_Tbl.cs" />
+    <Compile Include="Models\ETA_Bill_Tax_Tbl.cs" />
+    <Compile Include="Models\ETA_Bill_Tbl.cs" />
+    <Compile Include="Models\ETA_document_Tbl.cs" />
+    <Compile Include="BL\Model\Evn_Bill_Detiles_Tbl.cs" />
+    <Compile Include="BL\Model\Evn_Bill_Tax_Tbl.cs" />
+    <Compile Include="BL\Model\Evn_Bill_Tbl.cs" />
+    <Compile Include="BL\Model\ExcuseAction.cs" />
+    <Compile Include="BL\Model\ExpensesItems.cs" />
+    <Compile Include="BL\Model\ExpensesNFeesGrid.cs" />
+    <Compile Include="BL\Model\FreeHandModel.cs" />
+    <Compile Include="BL\Model\FreightModel.cs" />
+    <Compile Include="BL\Model\Get_AllCustomer_Debit.cs" />
+    <Compile Include="BL\Model\HrAttendance.cs" />
+    <Compile Include="BL\Model\HR_Categories.cs" />
+    <Compile Include="BL\Model\HR_MonthlySalary.cs" />
+    <Compile Include="BL\Model\HR_PDScreen.cs" />
+    <Compile Include="BL\Model\HR_PD_Screen_.cs" />
+    <Compile Include="BL\Model\HR_Vacation_Exchange.cs" />
+    <Compile Include="BL\Model\Insurance.cs" />
+    <Compile Include="BL\Model\InsuranseModel.cs" />
+    <Compile Include="BL\Model\Integration.cs" />
+    <Compile Include="BL\Model\InvoiceCalculations.cs" />
+    <Compile Include="BL\Model\InvoiceData.cs" />
+    <Compile Include="BL\Model\InvoiceDetails.cs" />
+    <Compile Include="BL\Model\InvoiceDetailsItem.cs" />
+    <Compile Include="BL\Model\InvoiceItems.cs" />
+    <Compile Include="BL\Model\Item.cs" />
+    <Compile Include="BL\Model\Joblevels.cs" />
+    <Compile Include="BL\Model\LanguageMang.cs" />
+    <Compile Include="BL\Model\LevelsGrid.cs" />
+    <Compile Include="BL\Model\MissionAction.cs" />
+    <Compile Include="BL\Model\Model1.cs" />
+    <Compile Include="BL\Model\NewEmloyee.cs" />
+    <Compile Include="BL\Model\Notification.cs" />
+    <Compile Include="BL\Model\PayRoleAttend.cs" />
+    <Compile Include="BL\Model\PointGrid.cs" />
+    <Compile Include="BL\Model\PRDetailscs.cs" />
+    <Compile Include="BL\Model\Purchases_Class.cs" />
+    <Compile Include="BL\Model\RequestGrid.cs" />
+    <Compile Include="BL\Model\RequestGridV2.cs" />
+    <Compile Include="BL\Model\RequestGridV3.cs" />
+    <Compile Include="BL\Model\RequestHeaderAndDetails.cs" />
+    <Compile Include="BL\Model\RequestInfo.cs" />
+    <Compile Include="BL\Model\RequestModel.cs" />
+    <Compile Include="BL\Model\Request_V.cs" />
+    <Compile Include="BL\Model\service.cs" />
+    <Compile Include="BL\Model\ServiceGrid.cs" />
+    <Compile Include="BL\Model\Services.cs" />
+    <Compile Include="BL\Model\SubCategory.cs" />
+    <Compile Include="BL\Model\TerminationOfStaff.cs" />
+    <Compile Include="BL\Model\Token.cs" />
+    <Compile Include="BL\Model\Transactions.cs" />
+    <Compile Include="BL\Model\TransactionSteps.cs" />
+    <Compile Include="BL\Model\UploadFiles.cs" />
+    <Compile Include="BL\Model\User.cs" />
+    <Compile Include="BL\Model\VacationBooking_V.cs" />
+    <Compile Include="BL\Model\VacationSettings.cs" />
+    <Compile Include="BL\Model\VendorsGrid.cs" />
+    <Compile Include="BL\Model\VendorsRequest.cs" />
+    <Compile Include="BL\Model\Views\BGValidInvoices_V.cs" />
+    <Compile Include="BL\Model\violationsAction.cs" />
+    <Compile Include="BL\Model\WareHosingModel.cs" />
+    <Compile Include="BL\Model\X_Category.cs" />
+    <Compile Include="BL\New Models\AddBillModel.cs" />
+    <Compile Include="BL\New Models\BillDetilesEntity.cs" />
+    <Compile Include="BL\New Models\BillEntity.cs" />
+    <Compile Include="BL\New Models\Bill_Tax_Tbl.cs" />
+    <Compile Include="BL\New Models\Bro_Collection_V.cs" />
+    <Compile Include="BL\RequestRepo.cs" />
+    <Compile Include="BL\TreasuryService.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountingController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BillsController.cs" />
+    <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\CHIJpbnRlcgController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CPController.cs" />
+    <Compile Include="Controllers\DashboardSuppliersController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\DistributorController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IntegrationController.cs" />
+    <Compile Include="Controllers\InvoiceBillController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\KPISController.cs" />
+    <Compile Include="Controllers\MarketController.cs" />
+    <Compile Include="Controllers\MoneySaveController.cs" />
+    <Compile Include="Controllers\NewReportsController.cs" />
+    <Compile Include="Controllers\ReportActionsController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ScreensController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\WareHousingController.cs" />
+    <Compile Include="DTOS\BRO_RequestServices_DTO.cs" />
+    <Compile Include="Filters\MyAuthFilter.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ClienHelp.cs" />
+    <Compile Include="Helper\Converter.cs" />
+    <Compile Include="Helper\EldeebExcel.cs" />
+    <Compile Include="Helper\HttpClientHelper.cs" />
+    <Compile Include="Models\AccountReportModel.cs" />
+    <Compile Include="Models\AgentsLevels_tbl.cs" />
+    <Compile Include="Models\AssignShifts.cs" />
+    <Compile Include="Models\Com_Tbl.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\CP\CommisionModel.cs" />
+    <Compile Include="Models\CP\CPMonthModel.cs" />
+    <Compile Include="Models\Department_Tbl.cs" />
+    <Compile Include="Models\Employees.cs" />
+    <Compile Include="Models\Employee\AgentsLevels_tbl.cs" />
+    <Compile Include="Models\Employee\Category_Tbl.cs" />
+    <Compile Include="Models\Employee\collection_tbl.cs" />
+    <Compile Include="Models\Employee\CompanyType.cs" />
+    <Compile Include="Models\Employee\Com_Tbl.cs" />
+    <Compile Include="Models\Employee\Country_TBL.cs" />
+    <Compile Include="Models\Employee\Currency_Tbl.cs" />
+    <Compile Include="Models\Employee\Distributor_Group_Tbl.cs" />
+    <Compile Include="Models\Employee\EmployeeType_tbl.cs" />
+    <Compile Include="Models\Employee\ExpenseType_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_ComRules_tbl.cs" />
+    <Compile Include="Models\Employee\HR_Deduction_Types.cs" />
+    <Compile Include="Models\Employee\HR_Degree_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_Education_Grade_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_Employee_bonus.cs" />
+    <Compile Include="Models\Employee\HR_Employee_TBL.cs" />
+    <Compile Include="Models\Employee\HR_ExcusesActions.cs" />
+    <Compile Include="Models\Employee\HR_Excuses_Types.cs" />
+    <Compile Include="Models\Employee\HR_Insurance_TBL.cs" />
+    <Compile Include="Models\Employee\HR_Jobs_Levels.cs" />
+    <Compile Include="Models\Employee\HR_Jobs_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_leaveBalance_tbl.cs" />
+    <Compile Include="Models\Employee\HR_leave_type_tbl.cs" />
+    <Compile Include="Models\Employee\HR_Location_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_Military_Status_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_MissionsActions.cs" />
+    <Compile Include="Models\Employee\HR_Missions_Types.cs" />
+    <Compile Include="Models\Employee\HR_Monthly_Salary.cs" />
+    <Compile Include="Models\Employee\HR_Payment_Methods.cs" />
+    <Compile Include="Models\Employee\HR_Religion_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_TerminationOfStaff.cs" />
+    <Compile Include="Models\Employee\HR_University_Tbl.cs" />
+    <Compile Include="Models\Employee\HR_Vacation_Types.cs" />
+    <Compile Include="Models\Employee\Items_Tbl.cs" />
+    <Compile Include="Models\Employee\Model1.cs" />
+    <Compile Include="Models\GetUser.cs" />
+    <Compile Include="Models\HandHeldSalesDailyTrackerHead.cs" />
+    <Compile Include="Models\HR_Religion_Tbl.cs" />
+    <Compile Include="Models\Items_Tbl.cs" />
+    <Compile Include="Models\Items_tbl1.cs" />
+    <Compile Include="Models\Joblevels.cs" />
+    <Compile Include="Models\LanguageMang.cs" />
+    <Compile Include="Models\MainWarehouseReturnBalance_V.cs" />
+    <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\Model2.cs" />
+    <Compile Include="Models\Model3.cs" />
+    <Compile Include="Models\Model4.cs" />
+    <Compile Include="Models\NewEmloyee.cs" />
+    <Compile Include="Models\PositionType_Tbl.cs" />
+    <Compile Include="Models\RegisterOnlineShopRequest_tbl.cs" />
+    <Compile Include="Models\ReportModels\ItemSalesREportVM.cs" />
+    <Compile Include="Models\SalesTrackerModel.cs" />
+    <Compile Include="Models\Special_Price_V.cs" />
+    <Compile Include="Models\SubWarehouseReturnBalance_V.cs" />
+    <Compile Include="Models\UploadFiles.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\VAT_tbl.cs" />
+    <Compile Include="Models\VAT_tbl1.cs" />
+    <Compile Include="Models\warehouse_Base_Requst_Tbl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AccountingService.cs" />
+    <Compile Include="Repository\AgentService.cs" />
+    <Compile Include="Repository\CPService.cs" />
+    <Compile Include="Repository\Getter.cs" />
+    <Compile Include="Repository\SelectService.cs" />
+    <Compile Include="Resources\Banks.ar.Designer.cs" />
+    <Compile Include="Resources\Banks.Designer.cs" />
+    <Compile Include="Resources\Employees.ar.Designer.cs" />
+    <Compile Include="Resources\Employees.Designer.cs" />
+    <Compile Include="Resources\Items.ar.Designer.cs" />
+    <Compile Include="Resources\Items.Designer.cs" />
+    <Compile Include="Resources\llayout.ar.Designer.cs">
+      <DependentUpon>llayout.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\llayout.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>llayout.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\pages.ar.Designer.cs">
+      <DependentUpon>pages.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\pages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BranchService.cs" />
+    <Compile Include="Services\DistributorService.cs" />
+    <Compile Include="Services\ItemService.cs" />
+    <Compile Include="Services\NewReportService.cs" />
+    <Compile Include="Services\OperationsService.cs" />
+    <Compile Include="Services\ReportService.cs" />
+    <Compile Include="ViewModels\AA_GetItemSalesBranchDistriutorDateByCategories_V.cs" />
+    <Compile Include="ViewModels\AllDistributorDay.cs" />
+    <Compile Include="ViewModels\AnalysisGenere.cs" />
+    <Compile Include="ViewModels\AssignItems_V.cs" />
+    <Compile Include="ViewModels\billsTrackingModel.cs" />
+    <Compile Include="ViewModels\BillTotalReport.cs" />
+    <Compile Include="ViewModels\DetailsVM.cs" />
+    <Compile Include="ViewModels\DistributerGroupDetailsSelect.cs" />
+    <Compile Include="ViewModels\DistributorSupplierBill.cs" />
+    <Compile Include="ViewModels\DistributorUser.cs" />
+    <Compile Include="ViewModels\Items_Tbl.cs" />
+    <Compile Include="ViewModels\LogInVM.cs" />
+    <Compile Include="ViewModels\MarketTableVM.cs" />
+    <Compile Include="ViewModels\Mortaga3.cs" />
+    <Compile Include="ViewModels\NewItem.cs" />
+    <Compile Include="ViewModels\RegisterRequestDT.cs" />
+    <Compile Include="ViewModels\AnalysisSuppliersHead.cs" />
+    <Compile Include="ViewModels\ReportVM\ChartData.cs" />
+    <Compile Include="ViewModels\ReportVM\StoreGardVM.cs" />
+    <Compile Include="ViewModels\ReportVM\StoreGuardDefaultVM.cs" />
+    <Compile Include="ViewModels\Response.cs" />
+    <Compile Include="ViewModels\ShowMap_VM.cs" />
+    <Compile Include="ViewModels\SignUpVM.cs" />
+    <Compile Include="ViewModels\Small_Branch_tbl.cs" />
+    <Compile Include="ViewModels\SupplierDetailsVM.cs" />
+    <Compile Include="ViewModels\SupplierVM.cs" />
+    <Compile Include="ViewModels\Supplier_Tbl.cs" />
+    <Compile Include="ViewModels\warehouse_main_V.cs" />
+    <Compile Include="ViewModels\warehouse_Requst_V.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="abcr\app-assets\css\app.css" />
+    <Content Include="abcr\app-assets\css\StyleSheet1.css" />
+    <Content Include="abcr\app-assets\fonts\feather\fonts\feather2467.svg" />
+    <Content Include="abcr\app-assets\fonts\feather\style.min.css" />
+    <Content Include="abcr\app-assets\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="abcr\app-assets\fonts\meteocons\style.min.css" />
+    <Content Include="abcr\app-assets\fonts\simple-line-icons\fonts\Simple-Line-Icons.svg" />
+    <Content Include="abcr\app-assets\fonts\simple-line-icons\style.css" />
+    <Content Include="abcr\app-assets\img\flags\br.png" />
+    <Content Include="abcr\app-assets\img\flags\de.png" />
+    <Content Include="abcr\app-assets\img\flags\es.png" />
+    <Content Include="abcr\app-assets\img\flags\us.png" />
+    <Content Include="abcr\app-assets\img\gallery\1.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\10.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\11.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\12.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\14.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\16.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\17.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\18.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\19.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\2.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\20.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\21.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\22.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\23.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\24.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\25.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\26.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\27.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\28.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\29.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\3.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\30.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\31.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\32.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\33.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\4.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\5.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\6.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\7.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\8.jpg" />
+    <Content Include="abcr\app-assets\img\gallery\9.jpg" />
+    <Content Include="abcr\app-assets\img\ico\apple-icon-120.html" />
+    <Content Include="abcr\app-assets\img\ico\apple-icon-152.html" />
+    <Content Include="abcr\app-assets\img\ico\apple-icon-60.html" />
+    <Content Include="abcr\app-assets\img\ico\apple-icon-76.html" />
+    <Content Include="abcr\app-assets\img\ico\favicon-32.png" />
+    <Content Include="abcr\app-assets\img\logo.png" />
+    <Content Include="abcr\app-assets\img\pages\sativa.png" />
+    <Content Include="abcr\app-assets\img\pages\signature-scan.png" />
+    <Content Include="abcr\app-assets\img\pattern_h.png" />
+    <Content Include="abcr\app-assets\img\photos\01.jpg" />
+    <Content Include="abcr\app-assets\img\photos\02.jpg" />
+    <Content Include="abcr\app-assets\img\photos\03.jpg" />
+    <Content Include="abcr\app-assets\img\photos\04.jpg" />
+    <Content Include="abcr\app-assets\img\photos\05.jpg" />
+    <Content Include="abcr\app-assets\img\photos\1.jpg" />
+    <Content Include="abcr\app-assets\img\photos\14.jpg" />
+    <Content Include="abcr\app-assets\img\photos\15.jpg" />
+    <Content Include="abcr\app-assets\img\photos\16.jpg" />
+    <Content Include="abcr\app-assets\img\photos\17.jpg" />
+    <Content Include="abcr\app-assets\img\photos\2.jpg" />
+    <Content Include="abcr\app-assets\img\photos\3.jpg" />
+    <Content Include="abcr\app-assets\img\photos\4.jpg" />
+    <Content Include="abcr\app-assets\img\photos\5.jpg" />
+    <Content Include="abcr\app-assets\img\photos\7.jpg" />
+    <Content Include="abcr\app-assets\img\photos\8.jpg" />
+    <Content Include="abcr\app-assets\img\portfolio\portfolio-1.jpg" />
+    <Content Include="abcr\app-assets\img\portfolio\portfolio-2.jpg" />
+    <Content Include="abcr\app-assets\img\portfolio\portfolio-3.jpg" />
+    <Content Include="abcr\app-assets\img\portfolio\portfolio-4.jpg" />
+    <Content Include="abcr\app-assets\img\portfolio\portfolio-5.jpg" />
+    <Content Include="abcr\app-assets\img\portfolio\portfolio-6.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\medium\avatar-m-9.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-1.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-11.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-12.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-14.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-15.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-16.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-17.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-18.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-19.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-20.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-21.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-22.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-23.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-24.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-27.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-3.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-4.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-5.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-6.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-7.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-8.jpg" />
+    <Content Include="abcr\app-assets\img\portrait\small\avatar-s-9.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\01.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\02.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\03.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\04.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\05.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\06.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\07.jpg" />
+    <Content Include="abcr\app-assets\img\sidebar-bg\08.jpg" />
+    <Content Include="abcr\app-assets\img\slide.PNG" />
+    <Content Include="abcr\app-assets\img\slide2.PNG" />
+    <Content Include="abcr\app-assets\img\slide3.PNG" />
+    <Content Include="abcr\app-assets\img\width-600\portfolio-14.jpg" />
+    <Content Include="abcr\app-assets\js\app-sidebar.js" />
+    <Content Include="abcr\app-assets\js\app.js" />
+    <Content Include="abcr\app-assets\js\chartist.js" />
+    <Content Include="abcr\app-assets\js\chartjs.js" />
+    <Content Include="abcr\app-assets\js\chat.js" />
+    <Content Include="abcr\app-assets\js\coming-soon.js" />
+    <Content Include="abcr\app-assets\js\components-modal.min.js" />
+    <Content Include="abcr\app-assets\js\customizer.js" />
+    <Content Include="abcr\app-assets\js\dashboard-analytics.js" />
+    <Content Include="abcr\app-assets\js\dashboard-ecommerce.js" />
+    <Content Include="abcr\app-assets\js\data-tables\datatable-advanced.js" />
+    <Content Include="abcr\app-assets\js\data-tables\datatable-api.js" />
+    <Content Include="abcr\app-assets\js\data-tables\datatable-basic.js" />
+    <Content Include="abcr\app-assets\js\data-tables\datatable-styling.js" />
+    <Content Include="abcr\app-assets\js\data-tables\datatables-sources.js" />
+    <Content Include="abcr\app-assets\js\draggable.js" />
+    <Content Include="abcr\app-assets\js\dropzone.js" />
+    <Content Include="abcr\app-assets\js\form-typeahead.js" />
+    <Content Include="abcr\app-assets\js\form-validation.js" />
+    <Content Include="abcr\app-assets\js\fullcalendar.js" />
+    <Content Include="abcr\app-assets\js\horizontal-timeline.min.js" />
+    <Content Include="abcr\app-assets\js\maps.js" />
+    <Content Include="abcr\app-assets\js\notification-sidebar.js" />
+    <Content Include="abcr\app-assets\js\pick-a-datetime.js" />
+    <Content Include="abcr\app-assets\js\popover.js" />
+    <Content Include="abcr\app-assets\js\quill.min.js" />
+    <Content Include="abcr\app-assets\js\rating.js" />
+    <Content Include="abcr\app-assets\js\sweet-alerts.js" />
+    <Content Include="abcr\app-assets\js\switch.min.js" />
+    <Content Include="abcr\app-assets\js\tagging.js" />
+    <Content Include="abcr\app-assets\js\taskboard.js" />
+    <Content Include="abcr\app-assets\js\toastr.min.js" />
+    <Content Include="abcr\app-assets\js\tooltip.js" />
+    <Content Include="abcr\app-assets\js\tour.min.js" />
+    <Content Include="abcr\app-assets\js\wizard-steps.js" />
+    <Content Include="abcr\app-assets\vendors\css\chartist.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\dragula.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\dropzone.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_AMS-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_AMS-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_AMS-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_AMS-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Bold-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Bold-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Bold-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Bold.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Caligraphic-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Bold-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Bold-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Bold-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Bold.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Fraktur-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Bold-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Bold-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Bold-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Bold.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Italic-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Italic-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Italic-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Italic.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Math-Italic-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Math-Italic-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Math-Italic.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_SansSerif-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_SansSerif-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_SansSerif-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_SansSerif-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Script-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Script-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Script-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Script-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size1-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size1-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size1-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size1-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size2-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size2-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size2-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size2-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size3-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size3-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size3-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size3-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size4-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size4-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size4-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Size4-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Typewriter-Regular-2.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Typewriter-Regular-3.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Typewriter-Regular-4.html" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Typewriter-Regular.html" />
+    <Content Include="abcr\app-assets\vendors\css\fullcalendar.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\hopscotch.css" />
+    <Content Include="abcr\app-assets\vendors\css\katex.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\monokai-sublime.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\perfect-scrollbar.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\pickadate\pickadate.css" />
+    <Content Include="abcr\app-assets\vendors\css\prism.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\quill.bubble.css" />
+    <Content Include="abcr\app-assets\vendors\css\quill.snow.css" />
+    <Content Include="abcr\app-assets\vendors\css\raty\fonts\raty.svg" />
+    <Content Include="abcr\app-assets\vendors\css\raty\jquery.raty.css" />
+    <Content Include="abcr\app-assets\vendors\css\sweetalert2.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\switchery.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\tables\datatable\datatables.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\tables\datatable\responsive.dataTables.min.css" />
+    <Content Include="abcr\app-assets\vendors\css\tagging.css" />
+    <Content Include="abcr\app-assets\vendors\css\toastr.css" />
+    <Content Include="abcr\app-assets\vendors\css\wizard.css" />
+    <Content Include="abcr\app-assets\vendors\img\tour\cross.html" />
+    <Content Include="abcr\app-assets\vendors\js\chart.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\chartist.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\core\bootstrap.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\core\jquery-3.3.1.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\core\popper.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\buttons.flash.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\buttons.html5.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\buttons.print.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\dataTables.buttons.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\datatables.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\dataTables.responsive.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\jszip.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\pdfmake.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\datatable\vfs_fonts.js" />
+    <Content Include="abcr\app-assets\vendors\js\dragula.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\dropzone.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\fullcalendar.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\gmaps.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\highlight.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\hopscotch.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\jqBootstrapValidation.js" />
+    <Content Include="abcr\app-assets\vendors\js\jquery-ui.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\jquery.countdown.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\jquery.matchHeight-min.js" />
+    <Content Include="abcr\app-assets\vendors\js\jquery.raty.js" />
+    <Content Include="abcr\app-assets\vendors\js\jquery.steps.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\jquery.validate.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\katex.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\moment.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\pace\pace.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\perfect-scrollbar.jquery.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\pickadate\legacy.js" />
+    <Content Include="abcr\app-assets\vendors\js\pickadate\picker.date.js" />
+    <Content Include="abcr\app-assets\vendors\js\pickadate\picker.js" />
+    <Content Include="abcr\app-assets\vendors\js\pickadate\picker.time.js" />
+    <Content Include="abcr\app-assets\vendors\js\prism.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\quill.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\screenfull.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\sweetalert2.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\switchery.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\tagging.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\toastr.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\typeahead\bloodhound.min.js" />
+    <Content Include="abcr\app-assets\vendors\js\typeahead\handlebars.js" />
+    <Content Include="abcr\app-assets\vendors\js\typeahead\typeahead.bundle.min.js" />
+    <Content Include="back-end\assets\assets\images\landing\email-bg.html" />
+    <Content Include="back-end\assets\assets\images\landing\title.html" />
+    <Content Include="back-end\assets\css\datatables.css" />
+    <Content Include="back-end\assets\css\linearicon.css" />
+    <Content Include="back-end\assets\css\ratio.css" />
+    <Content Include="back-end\assets\css\remixicon.css" />
+    <Content Include="back-end\assets\css\select2.min.css" />
+    <Content Include="back-end\assets\css\style.css" />
+    <Content Include="back-end\assets\css\vector-map.css" />
+    <Content Include="back-end\assets\css\vendors\animate.css" />
+    <Content Include="back-end\assets\css\vendors\bootstrap-tagsinput.css" />
+    <Content Include="back-end\assets\css\vendors\bootstrap.css" />
+    <Content Include="back-end\assets\css\vendors\chartist.css" />
+    <Content Include="back-end\assets\css\vendors\date-picker.css" />
+    <Content Include="back-end\assets\css\vendors\dropzone-spritemap.html" />
+    <Content Include="back-end\assets\css\vendors\dropzone.css" />
+    <Content Include="back-end\assets\css\vendors\feather-icon.css" />
+    <Content Include="back-end\assets\css\vendors\font-awesome.css" />
+    <Content Include="back-end\assets\css\vendors\fonts\slick-2.html" />
+    <Content Include="back-end\assets\css\vendors\fonts\slick-3.html" />
+    <Content Include="back-end\assets\css\vendors\fonts\slick-4.html" />
+    <Content Include="back-end\assets\css\vendors\fonts\slick.html" />
+    <Content Include="back-end\assets\css\vendors\fonts\slickd41d.html" />
+    <Content Include="back-end\assets\css\vendors\scrollbar.css" />
+    <Content Include="back-end\assets\css\vendors\slick.css" />
+    <Content Include="back-end\assets\css\vendors\themify.css" />
+    <Content Include="back-end\assets\fonts\fa-brands-400.svg" />
+    <Content Include="back-end\assets\fonts\fa-regular-400.svg" />
+    <Content Include="back-end\assets\fonts\fa-solid-900.svg" />
+    <Content Include="back-end\assets\fonts\remixicondf6d.svg" />
+    <Content Include="back-end\assets\fonts\themify\themify9f24.svg" />
+    <Content Include="back-end\assets\images\ajax-loader.gif" />
+    <Content Include="back-end\assets\images\bg.png" />
+    <Content Include="back-end\assets\images\dashboard\bg.html" />
+    <Content Include="back-end\assets\images\favicon.png" />
+    <Content Include="back-end\assets\images\hour.html" />
+    <Content Include="back-end\assets\images\icon\down-.html" />
+    <Content Include="back-end\assets\images\landing\leaf-right.html" />
+    <Content Include="back-end\assets\images\landing\left-left.html" />
+    <Content Include="back-end\assets\images\logo-large.png" />
+    <Content Include="back-end\assets\images\logo-light.png" />
+    <Content Include="back-end\assets\images\logo.png" />
+    <Content Include="back-end\assets\images\logo\1-white.png" />
+    <Content Include="back-end\assets\images\logo\1.png" />
+    <Content Include="back-end\assets\images\logo\full-white.png" />
+    <Content Include="back-end\assets\images\logo\logo-white.png" />
+    <Content Include="back-end\assets\images\logo\logo.png" />
+    <Content Include="back-end\assets\images\min.html" />
+    <Content Include="back-end\assets\images\other-images\bg-profile.html" />
+    <Content Include="back-end\assets\images\other-images\boxbg.html" />
+    <Content Include="back-end\assets\images\other-images\calender-bg.html" />
+    <Content Include="back-end\assets\images\other-images\clock-face.html" />
+    <Content Include="back-end\assets\images\other-images\coming-soon-bg.html" />
+    <Content Include="back-end\assets\images\other-images\maintenance-bg.html" />
+    <Content Include="back-end\assets\images\other-images\mobile-clock-wallpaper.html" />
+    <Content Include="back-end\assets\images\product\1.png" />
+    <Content Include="back-end\assets\images\product\10.png" />
+    <Content Include="back-end\assets\images\product\11.png" />
+    <Content Include="back-end\assets\images\product\13.png" />
+    <Content Include="back-end\assets\images\product\14.png" />
+    <Content Include="back-end\assets\images\product\16.png" />
+    <Content Include="back-end\assets\images\product\2.png" />
+    <Content Include="back-end\assets\images\product\20.png" />
+    <Content Include="back-end\assets\images\product\3.png" />
+    <Content Include="back-end\assets\images\product\4.png" />
+    <Content Include="back-end\assets\images\product\5.png" />
+    <Content Include="back-end\assets\images\product\6.png" />
+    <Content Include="back-end\assets\images\product\7.png" />
+    <Content Include="back-end\assets\images\product\8.png" />
+    <Content Include="back-end\assets\images\product\9.png" />
+    <Content Include="back-end\assets\images\profile\1.jpg" />
+    <Content Include="back-end\assets\images\profile\2.jpg" />
+    <Content Include="back-end\assets\images\profile\3.jpg" />
+    <Content Include="back-end\assets\images\sec.html" />
+    <Content Include="back-end\assets\images\social-app\social-image.html" />
+    <Content Include="back-end\assets\images\users\1.jpg" />
+    <Content Include="back-end\assets\images\users\2.jpg" />
+    <Content Include="back-end\assets\images\users\3.jpg" />
+    <Content Include="back-end\assets\images\users\4.jpg" />
+    <Content Include="back-end\assets\images\users\5.jpg" />
+    <Content Include="back-end\assets\js\bootstrap-tagsinput.min.js" />
+    <Content Include="back-end\assets\js\bootstrap\bootstrap.bundle.min.js" />
+    <Content Include="back-end\assets\js\chart\apex-chart\apex-chart.js" />
+    <Content Include="back-end\assets\js\chart\apex-chart\apex-chart1.js" />
+    <Content Include="back-end\assets\js\chart\apex-chart\chart-custom.js" />
+    <Content Include="back-end\assets\js\chart\apex-chart\chart-custom1.js" />
+    <Content Include="back-end\assets\js\chart\apex-chart\moment.min.js" />
+    <Content Include="back-end\assets\js\chart\apex-chart\stock-prices.js" />
+    <Content Include="back-end\assets\js\checkbox-all-check.js" />
+    <Content Include="back-end\assets\js\ckeditor-custom.js" />
+    <Content Include="back-end\assets\js\ckeditor.js" />
+    <Content Include="back-end\assets\js\config.js" />
+    <Content Include="back-end\assets\js\custom-data-table.js" />
+    <Content Include="back-end\assets\js\custom-slick.js" />
+    <Content Include="back-end\assets\js\customizer.js" />
+    <Content Include="back-end\assets\js\dropzone\dropzone-script.js" />
+    <Content Include="back-end\assets\js\dropzone\dropzone.js" />
+    <Content Include="back-end\assets\js\icons\feather-icon\feather-icon.js" />
+    <Content Include="back-end\assets\js\icons\feather-icon\feather.min.js" />
+    <Content Include="back-end\assets\js\jquery-3.6.0.min.js" />
+    <Content Include="back-end\assets\js\jquery.dataTables.js" />
+    <Content Include="back-end\assets\js\notify\bootstrap-notify.min.js" />
+    <Content Include="back-end\assets\js\notify\index.js" />
+    <Content Include="back-end\assets\js\ratio.js" />
+    <Content Include="back-end\assets\js\script.js" />
+    <Content Include="back-end\assets\js\scrollbar\custom.js" />
+    <Content Include="back-end\assets\js\scrollbar\simplebar.js" />
+    <Content Include="back-end\assets\js\select2-custom.js" />
+    <Content Include="back-end\assets\js\select2.min.js" />
+    <Content Include="back-end\assets\js\sidebar-menu.js" />
+    <Content Include="back-end\assets\js\sidebareffect.js" />
+    <Content Include="back-end\assets\js\slick.min.js" />
+    <Content Include="back-end\assets\js\tooltip-init.js" />
+    <Content Include="back-end\assets\svg\breakfast.svg" />
+    <Content Include="back-end\assets\svg\cup.svg" />
+    <Content Include="back-end\assets\svg\frozen.svg" />
+    <Content Include="back-end\assets\svg\meats.svg" />
+    <Content Include="back-end\assets\svg\milk.svg" />
+    <Content Include="back-end\assets\svg\pet.svg" />
+    <Content Include="back-end\assets\svg\vegetable.svg" />
+    <Content Include="BL\Helper\Connibrary.dll" />
+    <Content Include="BL\Helper\FastReport.Compat.dll" />
+    <Content Include="BL\Helper\FastReport.dll" />
+    <Content Include="BL\Helper\FastReport.Web.dll" />
+    <Content Include="Connibrary.dll" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\FastReport\18XXXSettleReturnsReport.frx" />
+    <Content Include="Content\Images\bill.png" />
+    <Content Include="Content\Images\car.png" />
+    <Content Include="Content\Images\store.png" />
+    <Content Include="Content\img\testimonial-1.jpg" />
+    <Content Include="Content\img\testimonial-2.jpg" />
+    <Content Include="Content\img\UNO.png" />
+    <Content Include="Content\img\unologo.png" />
+    <Content Include="Content\img\user.jpg" />
+    <Content Include="Content\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\js\bootstrap.min.css" />
+    <Content Include="Content\js\Deebjs.js" />
+    <Content Include="Content\js\main.js" />
+    <Content Include="Content\lib\chart\chart.min.js" />
+    <Content Include="Content\lib\easing\easing.js" />
+    <Content Include="Content\lib\easing\easing.min.js" />
+    <Content Include="Content\lib\owlcarousel\assets\ajax-loader.gif" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.carousel.css" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.carousel.min.css" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.theme.default.css" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.theme.default.min.css" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.theme.green.css" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.theme.green.min.css" />
+    <Content Include="Content\lib\owlcarousel\assets\owl.video.play.png" />
+    <Content Include="Content\lib\owlcarousel\owl.carousel.js" />
+    <Content Include="Content\lib\owlcarousel\owl.carousel.min.js" />
+    <Content Include="Content\lib\tempusdominus\css\tempusdominus-bootstrap-4.css" />
+    <Content Include="Content\lib\tempusdominus\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Content\lib\tempusdominus\js\moment-timezone.min.js" />
+    <Content Include="Content\lib\tempusdominus\js\moment.min.js" />
+    <Content Include="Content\lib\tempusdominus\js\tempusdominus-bootstrap-4.js" />
+    <Content Include="Content\lib\tempusdominus\js\tempusdominus-bootstrap-4.min.js" />
+    <Content Include="Content\lib\waypoints\waypoints.min.js" />
+    <Content Include="FastReport.Compat.dll" />
+    <Content Include="FastReport.dll" />
+    <Content Include="FastReport.Web.dll" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\1293006.png" />
+    <Content Include="Images\2931154-200.png" />
+    <Content Include="Images\359-3593674_daily-tips-tools-blue-check-png-icon.png" />
+    <Content Include="Images\817729_close_395x512.png" />
+    <Content Include="Images\cancel-icon-Recovered.png" />
+    <Content Include="Images\cancel-icon.png" />
+    <Content Include="Images\car.png" />
+    <Content Include="Images\grant-icon-2.jpg" />
+    <Content Include="Images\grant-icon-2.png" />
+    <Content Include="Images\icon-menu-png-5.jpg" />
+    <Content Include="Images\img_234956.png" />
+    <Content Include="Images\img_365301.png.png" />
+    <Content Include="Images\img_512856.png" />
+    <Content Include="Images\info-icon-png-transparent-8.jpg" />
+    <Content Include="Images\info-icon-png-transparent-8.png" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\pending-disposal-1-512.png" />
+    <Content Include="Images\reject-icon-1.jpg" />
+    <Content Include="Images\reject-icon-1.png" />
+    <Content Include="Images\success-green-check-mark-icon.svg" />
+    <Content Include="Images\thumbs-down-37u.png" />
+    <Content Include="Images\total-business.png" />
+    <Content Include="Images\TPI logo color.png" />
+    <Content Include="NewDesgin\assets\css\nucleo-icons.css" />
+    <Content Include="NewDesgin\assets\css\nucleo-svg.css" />
+    <Content Include="NewDesgin\assets\css\soft-ui-dashboard.css" />
+    <Content Include="NewDesgin\assets\css\soft-ui-dashboard.min.css" />
+    <Content Include="NewDesgin\assets\fonts\nucleo-icons.svg" />
+    <Content Include="NewDesgin\assets\img\apple-icon.png" />
+    <Content Include="NewDesgin\assets\img\bruce-mars.jpg" />
+    <Content Include="NewDesgin\assets\img\curved-images\curved0.jpg" />
+    <Content Include="NewDesgin\assets\img\curved-images\curved1.jpg" />
+    <Content Include="NewDesgin\assets\img\curved-images\curved14.jpg" />
+    <Content Include="NewDesgin\assets\img\curved-images\curved6.jpg" />
+    <Content Include="NewDesgin\assets\img\curved-images\curved8.jpg" />
+    <Content Include="NewDesgin\assets\img\curved-images\white-curved.jpeg" />
+    <Content Include="NewDesgin\assets\img\down-arrow-dark.svg" />
+    <Content Include="NewDesgin\assets\img\down-arrow.svg" />
+    <Content Include="NewDesgin\assets\img\favicon.png" />
+    <Content Include="NewDesgin\assets\img\home-decor-1.jpg" />
+    <Content Include="NewDesgin\assets\img\home-decor-2.jpg" />
+    <Content Include="NewDesgin\assets\img\home-decor-3.jpg" />
+    <Content Include="NewDesgin\assets\img\illustrations\rocket-white.png" />
+    <Content Include="NewDesgin\assets\img\ivana-square.jpg" />
+    <Content Include="NewDesgin\assets\img\ivancik.jpg" />
+    <Content Include="NewDesgin\assets\img\kal-visuals-square.jpg" />
+    <Content Include="NewDesgin\assets\img\logo-ct.png" />
+    <Content Include="NewDesgin\assets\img\logos\mastercard.png" />
+    <Content Include="NewDesgin\assets\img\logos\visa.png" />
+    <Content Include="NewDesgin\assets\img\marie.jpg" />
+    <Content Include="NewDesgin\assets\img\shapes\waves-white.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\icon-sun-cloud.png" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-atlassian.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-invision.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-jira.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-slack.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-spotify.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-webdev.svg" />
+    <Content Include="NewDesgin\assets\img\small-logos\logo-xd.svg" />
+    <Content Include="NewDesgin\assets\img\team-1.jpg" />
+    <Content Include="NewDesgin\assets\img\team-2.jpg" />
+    <Content Include="NewDesgin\assets\img\team-3.jpg" />
+    <Content Include="NewDesgin\assets\img\team-4.jpg" />
+    <Content Include="NewDesgin\assets\img\vr-bg.jpg" />
+    <Content Include="NewDesgin\assets\js\core\bootstrap.min.js" />
+    <Content Include="NewDesgin\assets\js\core\popper.min.js" />
+    <Content Include="NewDesgin\assets\js\plugins\bootstrap-notify.js" />
+    <Content Include="NewDesgin\assets\js\plugins\Chart.extension.js" />
+    <Content Include="NewDesgin\assets\js\plugins\chartjs.min.js" />
+    <Content Include="NewDesgin\assets\js\plugins\choices.min.js" />
+    <Content Include="NewDesgin\assets\js\plugins\fullcalendar.min.js" />
+    <Content Include="NewDesgin\assets\js\plugins\perfect-scrollbar.min.js" />
+    <Content Include="NewDesgin\assets\js\plugins\smooth-scrollbar.min.js" />
+    <Content Include="NewDesgin\assets\js\soft-ui-dashboard.js" />
+    <Content Include="NewDesgin\assets\js\soft-ui-dashboard.min.js" />
+    <Content Include="NewDesgin\docs\documentation.html" />
+    <Content Include="NewDesgin\media\soft-ui-dashboard-intro.gif" />
+    <Content Include="NewDesgin\media\soft-ui-dashboard-screen-billing.png" />
+    <Content Include="NewDesgin\media\soft-ui-dashboard-screen-login.png" />
+    <Content Include="NewDesgin\media\soft-ui-dashboard-screen-profile.png" />
+    <Content Include="NewDesgin\media\soft-ui-dashboard-screen-rtl.png" />
+    <Content Include="NewDesgin\media\soft-ui-dashboard-screen.png" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\lib\owlcarousel\LICENSE" />
+    <Content Include="Content\lib\waypoints\links.php" />
+    <Content Include="Content\scss\bootstrap.scss" />
+    <Content Include="Content\scss\bootstrap\scss\bootstrap-grid.scss" />
+    <Content Include="Content\scss\bootstrap\scss\bootstrap-reboot.scss" />
+    <Content Include="Content\scss\bootstrap\scss\bootstrap-utilities.scss" />
+    <Content Include="Content\scss\bootstrap\scss\bootstrap.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_floating-labels.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_form-check.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_form-control.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_form-range.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_form-select.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_form-text.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_input-group.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_labels.scss" />
+    <Content Include="Content\scss\bootstrap\scss\forms\_validation.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_clearfix.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_colored-links.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_position.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_ratio.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_stretched-link.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_text-truncation.scss" />
+    <Content Include="Content\scss\bootstrap\scss\helpers\_visually-hidden.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_alert.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_border-radius.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_box-shadow.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_breakpoints.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_buttons.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_caret.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_clearfix.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_color-scheme.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_container.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_deprecate.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_forms.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_gradients.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_grid.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_image.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_list-group.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_lists.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_pagination.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_reset-text.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_resize.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_table-variants.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_text-truncate.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_transition.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_utilities.scss" />
+    <Content Include="Content\scss\bootstrap\scss\mixins\_visually-hidden.scss" />
+    <Content Include="Content\scss\bootstrap\scss\utilities\_api.scss" />
+    <Content Include="Content\scss\bootstrap\scss\vendor\_rfs.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_accordion.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_alert.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_badge.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_breadcrumb.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_button-group.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_buttons.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_card.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_carousel.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_close.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_containers.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_dropdown.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_forms.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_functions.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_grid.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_helpers.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_images.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_list-group.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_mixins.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_modal.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_nav.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_navbar.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_offcanvas.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_pagination.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_popover.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_progress.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_reboot.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_root.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_spinners.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_tables.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_toasts.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_tooltip.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_transitions.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_type.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_utilities.scss" />
+    <Content Include="Content\scss\bootstrap\scss\_variables.scss" />
+    <Content Include="Content\js\bootstrap.min.css.map" />
+    <Content Include="back-end\assets\fonts\fa-brands-400.eot" />
+    <Content Include="back-end\assets\fonts\fa-brands-400.ttf" />
+    <Content Include="back-end\assets\fonts\fa-brands-400.woff" />
+    <Content Include="back-end\assets\fonts\fa-brands-400.woff2" />
+    <Content Include="back-end\assets\fonts\fa-brands-400d41d.eot" />
+    <Content Include="back-end\assets\fonts\fa-regular-400.eot" />
+    <Content Include="back-end\assets\fonts\fa-regular-400.ttf" />
+    <Content Include="back-end\assets\fonts\fa-regular-400.woff" />
+    <Content Include="back-end\assets\fonts\fa-regular-400.woff2" />
+    <Content Include="back-end\assets\fonts\fa-regular-400d41d.eot" />
+    <Content Include="back-end\assets\fonts\fa-solid-900.eot" />
+    <Content Include="back-end\assets\fonts\fa-solid-900.ttf" />
+    <Content Include="back-end\assets\fonts\fa-solid-900.woff" />
+    <Content Include="back-end\assets\fonts\fa-solid-900.woff2" />
+    <Content Include="back-end\assets\fonts\fa-solid-900d41d.eot" />
+    <Content Include="back-end\assets\fonts\remixicondf6d.eot" />
+    <Content Include="back-end\assets\fonts\remixicondf6d.ttf" />
+    <Content Include="back-end\assets\fonts\remixicondf6d.woff" />
+    <Content Include="back-end\assets\fonts\remixicondf6d.woff2" />
+    <Content Include="back-end\assets\fonts\themify\themify9f24.eot" />
+    <Content Include="back-end\assets\fonts\themify\themify9f24.ttf" />
+    <Content Include="back-end\assets\fonts\themify\themify9f24.woff" />
+    <Content Include="back-end\assets\fonts\themify\themifyd41d.eot" />
+    <Content Include="abcr\app-assets\fonts\feather\fonts\feather2467.eot" />
+    <Content Include="abcr\app-assets\fonts\feather\fonts\feather2467.ttf" />
+    <Content Include="abcr\app-assets\fonts\feather\fonts\feather2467.woff" />
+    <Content Include="abcr\app-assets\fonts\meteocons\fonts\meteoconsddea.eot" />
+    <Content Include="abcr\app-assets\fonts\meteocons\fonts\meteoconsddea.ttf" />
+    <Content Include="abcr\app-assets\fonts\simple-line-icons\fonts\Simple-Line-Icons.eot" />
+    <Content Include="abcr\app-assets\fonts\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="abcr\app-assets\fonts\simple-line-icons\fonts\Simple-Line-Iconsd41d.eot" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Main-Regular.woff2" />
+    <Content Include="abcr\app-assets\vendors\css\fonts\KaTeX_Math-Italic.woff2" />
+    <Content Include="abcr\app-assets\vendors\css\raty\fonts\raty.eot" />
+    <Content Include="abcr\app-assets\vendors\css\raty\fonts\raty.ttf" />
+    <Content Include="abcr\app-assets\vendors\css\raty\fonts\raty.woff" />
+    <Content Include="abcr\app-assets\vendors\css\raty\fonts\ratyd41d.eot" />
+    <Content Include="Content\FastReport\BillReports old one.frx" />
+    <Content Include="Content\FastReport\BillReports.frx" />
+    <Content Include="Content\FastReport\ExpensesReports.frx" />
+    <Content Include="Content\FastReport\Report1SubWareHouseRequests.frx" />
+    <Content Include="Content\FastReport\XXXAgentBillReport.frx" />
+    <Content Include="Content\FastReport\XXXBranchBillReport.frx" />
+    <Content Include="Content\FastReport\XXXCompanyBillReport.frx" />
+    <Content Include="Content\FastReport\XXXMoneySafeDetails.frx" />
+    <Content Include="Content\FastReport\XXXMoneySafeTotals.frx" />
+    <Content Include="Content\FastReport\XXXSalesManBillReport.frx" />
+    <Content Include="Content\Excels\Excel.xlsx" />
+    <Content Include="Content\FastReport\XXXSalesFuelReport.frx" />
+    <Content Include="Content\FastReport\XXXWarehouseTransactionHeadrs.frx" />
+    <Content Include="Content\FastReport\XXXBinReport.frx" />
+    <Content Include="Content\Invoice Printed\GMEJT20J7QNP46W3HXC4WYNH10.pdf" />
+    <Content Include="Content\FastReport\XXXBranchReturnsDetailsReport 17.frx" />
+    <Content Include="Content\FastReport\XXXBranchReturnsHeaderReport 16.frx" />
+    <Content Include="Content\FastReport\XXXSalesmanReturnsHeadersReport 15.frx" />
+    <Content Include="Content\FastReport\XXXSalesmanReturnsDetailsReport 14.frx" />
+    <Content Include="Content\FastReport\19MagalatReportforSalesMan.frx" />
+    <Content Include="Content\FastReport\20MagalatReportforBranches.frx" />
+    <Content Include="Content\FastReport\21MagalatReportforAgents.frx" />
+    <Content Include="Content\FastReport\22SalesManCollection.frx" />
+    <Content Include="NewDesgin\assets\css\soft-ui-dashboard.css.map" />
+    <Content Include="NewDesgin\assets\fonts\nucleo-icons.eot" />
+    <Content Include="NewDesgin\assets\fonts\nucleo-icons.ttf" />
+    <Content Include="NewDesgin\assets\fonts\nucleo-icons.woff" />
+    <Content Include="NewDesgin\assets\fonts\nucleo-icons.woff2" />
+    <Content Include="NewDesgin\assets\fonts\nucleo.eot" />
+    <Content Include="NewDesgin\assets\fonts\nucleo.ttf" />
+    <Content Include="NewDesgin\assets\fonts\nucleo.woff" />
+    <Content Include="NewDesgin\assets\fonts\nucleo.woff2" />
+    <Content Include="NewDesgin\assets\js\soft-ui-dashboard.js.map" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\badges\_badge-circle.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\badges\_badge-dot.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\badges\_badge-floating.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\badges\_badge.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\bootstrap-grid.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\bootstrap-reboot.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\bootstrap-utilities.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\bootstrap.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_floating-labels.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_form-check.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_form-control.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_form-range.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_form-select.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_form-text.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_input-group.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_labels.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\forms\_validation.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_clearfix.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_colored-links.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_position.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_ratio.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_stretched-link.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_text-truncation.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\helpers\_visually-hidden.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_alert.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_box-shadow.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_breakpoints.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_buttons.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_caret.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_color-scheme.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_container.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_deprecate.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_forms.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_gradients.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_grid.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_image.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_list-group.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_lists.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_pagination.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_resize.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_table-variants.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_text-truncate.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_transition.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_utilities.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\mixins\_visually-hidden.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\utilities\_api.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\vendor\_rfs.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_accordion.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_alert.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_badge.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_breadcrumb.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_button-group.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_buttons.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_card.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_carousel.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_close.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_containers.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_dropdown.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_forms.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_functions.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_grid.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_helpers.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_images.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_list-group.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_mixins.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_modal.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_nav.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_navbar.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_offcanvas.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_pagination.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_popover.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_progress.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_reboot.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_root.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_spinners.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_tables.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_toasts.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_tooltip.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_transitions.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_type.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_utilities.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\bootstrap\_variables.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\cards\card-background.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\cards\card-blog.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\cards\card-horizontal.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\cards\card-pricing.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\cards\card-profile.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\custom\_styles.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\custom\_variables.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_form-check.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_form-select.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_form-switch.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_forms.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_input-group.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_inputs.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\forms\_labels.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\mixins\mixins.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\mixins\_badge.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\mixins\_colored-shadows.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\mixins\_hover.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\mixins\_social-buttons.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\free\plugins.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\free\_flatpickr.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\free\_nouislider.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\free\_perfect-scrollbar.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\free\_prism.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\multi-step.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\plugins-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_carousel-slick.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_choices.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_datatable-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_datatable.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_dragula.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_dropzone.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_fullcalendar-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_fullcalendar.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_glidejs.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_highlight.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_kanban.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_leaflet.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_list-check.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_photoswipe.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_quill.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_rating-widget.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_sweetalert2-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\plugins\pro\_sweetalert2.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\theme-pro.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\theme.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_animations.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_avatars.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_badge.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_breadcrumb.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_cards-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_cards.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_choices.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_dropdowns.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_fixed-plugin.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_form-switch.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_full-calendar.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_header.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_info-areas.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_misc-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_misc.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_navbar-vertical.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_navbar.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_pagination.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_rtl.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_social-buttons.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_table.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_timeline.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_utilities-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_utilities.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\variables\_virtual-reality.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_accordion.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_alert.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_avatars.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_backgrounds.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_badge.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_breadcrumbs.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_buttons.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_cards-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_cards.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_components.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_dropdown-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_dropdown.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_dropup.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_fixed-plugin.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_floating-elements.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_footer.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_forms.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_gradients.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_header.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_info-areas.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_list-check.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_misc-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_misc.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_nav.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_navbar-vertical-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_navbar-vertical.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_navbar.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_pagination.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_popovers.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_progress.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_rtl-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_rtl.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_social-buttons.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_tables.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_tilt.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_timeline.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_tooltips.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_typography.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_utilities-extend.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_utilities.scss" />
+    <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_variables.scss" />
+    <None Include="Properties\PublishProfiles\backup.E-Card.ltd - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DAWAR.amergroup.online - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DAWAR.amergroup.online - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\DAWAR.amergroup.pubxml" />
+    <None Include="Properties\PublishProfiles\dawar.unoerp.app - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\dawar.unoerp.app - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\dawar.unoerp.app - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\dawar.unoerp.app - Web Deploy3.pubxml" />
+    <None Include="Properties\PublishProfiles\dawar.unoerp.app - Web Deploy4.pubxml" />
+    <None Include="Properties\PublishProfiles\dawar.unoerp.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FT.tbico.cloud - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FT.tbico.cloud - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\FT.tbico.cloud - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\FT.tbico.pubxml" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\Details.cshtml" />
+    <Content Include="Views\Supplier\AllDetails.cshtml" />
+    <Content Include="Views\Market\Index.cshtml" />
+    <Content Include="Views\Distributor\Details.cshtml" />
+    <Content Include="Views\Distributor\AllDetails.cshtml" />
+    <Content Include="Views\Bills\Details.cshtml" />
+    <Content Include="Views\Market\Details.cshtml" />
+    <Content Include="Views\Supplier\UsersRegistrationRequests.cshtml" />
+    <Content Include="Views\Distributor\GroupUsers.cshtml" />
+    <Content Include="Views\Distributor\ViewCustomer.cshtml" />
+    <Content Include="Views\Distributor\ViewUserWithCustomer.cshtml" />
+    <Content Include="Views\Distributor\ViewUserCustomerBills.cshtml" />
+    <Content Include="Views\Company\WareHouse.cshtml" />
+    <Content Include="Views\WareHousing\PendingWareHouseRequests.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Supplier\Seting.cshtml" />
+    <Content Include="Views\Supplier\Add.cshtml" />
+    <Content Include="Views\Items\ItemSetting.cshtml" />
+    <Content Include="Views\Items\_AddItem.cshtml" />
+    <Content Include="Views\Distributor\AddBranchException.cshtml" />
+    <Content Include="Views\WareHousing\PendingMardodatWareHouseRequests.cshtml" />
+    <Content Include="Views\Distributor\Accounting.cshtml" />
+    <Content Include="Views\WareHousing\PendingMotg3atWareHouseRequests.cshtml" />
+    <Content Include="Views\Items\AddItemPrice.cshtml" />
+    <Content Include="Views\Report\Itemcard.cshtml" />
+    <Content Include="Views\Report\SalesMardodReport.cshtml" />
+    <Content Include="Views\Report\SalesMortga3Report.cshtml" />
+    <Content Include="Views\Report\BranchReport.cshtml" />
+    <Content Include="Views\Bills\BillsDetails.cshtml" />
+    <Content Include="Views\WareHousing\PendingMoshtrayatWareHouseRequests.cshtml" />
+    <Content Include="Views\Home\AccessDenied.cshtml" />
+    <Content Include="Views\Printer\PrintBill.cshtml" />
+    <Content Include="Views\CHIJpbnRlcg\T1UHSfl6oRmBLZg7E44aAg.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Report\StoreGard.cshtml" />
+    <Content Include="Views\Report\PendingRequest.cshtml" />
+    <Content Include="Views\Market\AccountStatement.cshtml" />
+    <Content Include="Views\Distributor\CustomerDeffers.cshtml" />
+    <Content Include="Views\Distributor\CustomerLaters.cshtml" />
+    <Content Include="Views\Market\ViewChain.cshtml" />
+    <Content Include="Views\WareHousing\StoreGard.cshtml" />
+    <Content Include="Views\Screens\Sale.cshtml" />
+    <Content Include="Views\Screens\Buy.cshtml" />
+    <Content Include="Views\Screens\Masrofat.cshtml" />
+    <Content Include="Views\Screens\PrintBuyBill.cshtml" />
+    <Content Include="Views\Items\Specialprice.cshtml" />
+    <Content Include="Views\Branch\AddBranch.cshtml" />
+    <Content Include="Views\Screens\DeliverStore.cshtml" />
+    <Content Include="Views\Screens\AddRange.cshtml" />
+    <Content Include="Views\Report\ItemSales.cshtml" />
+    <Content Include="Views\Branch\BranchDetails.cshtml" />
+    <Content Include="Views\Branch\AddOpeningBalance.cshtml" />
+    <Content Include="Views\Report\AllDistributorReportsDetails.cshtml" />
+    <Content Include="Views\Report\CatogriesSalesReport.cshtml" />
+    <Content Include="Views\Distributor\DistributorMonth.cshtml" />
+    <Content Include="Views\Screens\CreateMortg3at.cshtml" />
+    <Content Include="Views\Accounting\CloseAcconterDay.cshtml" />
+    <Content Include="Views\KPIS\Distributors.cshtml" />
+    <Content Include="Views\KPIS\ItemsKPI.cshtml" />
+    <Content Include="Views\KPIS\PriceListKPI.cshtml" />
+    <Content Include="Views\KPIS\BranchesKPI.cshtml" />
+    <Content Include="Views\Branch\EditBranchData.cshtml" />
+    <Content Include="Views\NewReports\TotalItemsSales.cshtml" />
+    <Content Include="Views\NewReports\TotalCategoriesSalesReport.cshtml" />
+    <Content Include="Views\Admin\UsersManagement.cshtml" />
+    <Content Include="Views\PartialManageAdmin\ManageUser.cshtml" />
+    <Content Include="Views\PartialManageAdmin\ManageGroup.cshtml" />
+    <Content Include="Views\NewReports\ExpensesReports.cshtml" />
+    <Content Include="Views\NewReports\TotalPillsReports.cshtml" />
+    <Content Include="Views\Supplier\AddreprsntGroup.cshtml" />
+    <Content Include="Views\Branch\AddEditAgent.cshtml" />
+    <Content Include="Views\DashboardSuppliers\Index.cshtml" />
+    <Content Include="Views\Supplier\DistributorGroups.cshtml" />
+    <Content Include="Views\NewReports\ShortFalls.cshtml" />
+    <Content Include="Views\NewReports\SubWareHouseGuard.cshtml" />
+    <Content Include="Views\Shared\_reportHeader.cshtml" />
+    <Content Include="Views\NewReports\MoneyShortFalls.cshtml" />
+    <Content Include="Views\NewReports\MoneyPaper.cshtml" />
+    <Content Include="Views\Screens\Collection.cshtml" />
+    <Content Include="Views\Screens\_Collect.cshtml" />
+    <Content Include="Views\Screens\EditChecks.cshtml" />
+    <Content Include="Views\Screens\SettleAccount.cshtml" />
+    <Content Include="Views\Distributor\_EditSalesMen.cshtml" />
+    <Content Include="Views\Shared\_SelectItem.cshtml" />
+    <Content Include="Views\CP\SalesCPReport.cshtml" />
+    <Content Include="Views\Shared\_SelectDistributor.cshtml" />
+    <Content Include="Views\CP\_DisCPReport.cshtml" />
+    <Content Include="Views\NewReports\ItemsReport.cshtml" />
+    <Content Include="Views\Branch\_EditDisGroup.cshtml" />
+    <Content Include="Views\CP\_CloseDistributorMonth.cshtml" />
+    <Content Include="Views\NewReports\BillLatersReport.cshtml" />
+    <Content Include="Views\Admin\OnlineRequest.cshtml" />
+    <Content Include="Views\Admin\OnlineRequestdatlis.cshtml" />
+    <Content Include="Views\NewReports\itemDistributors.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Shared\_Employee.cshtml" />
+    <Content Include="Views\Employee\_EditEmployees.cshtml" />
+    <Content Include="Views\Employee\_EmployeeDetails.cshtml" />
+    <Content Include="Views\Employee\_Employees.cshtml" />
+    <Content Include="Views\Admin\getRequestdatlis.cshtml" />
+    <Content Include="Views\Admin\get.cshtml" />
+    <Content Include="Views\Supplier\EditItemsPrices.cshtml" />
+    <Content Include="Views\InvoiceBill\Index.cshtml" />
+    <Content Include="Views\Admin\OnlineRequest_for_User.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Integration\Index.cshtml" />
+    <Content Include="Views\Integration\_ViewActions.cshtml" />
+    <Content Include="Views\Integration\_ViewReasons.cshtml" />
+    <Content Include="Views\Purchase\Index.cshtml" />
+    <Content Include="Views\Integration\Get_All_Bill.cshtml" />
+    <Content Include="Views\Bank\Index.cshtml" />
+    <Content Include="Views\Bank\EditBank.cshtml" />
+    <Content Include="Views\Bank\NewBank.cshtml" />
+    <Content Include="Views\Shared\_newUILayout.cshtml" />
+    <Content Include="Views\Account\oldlogin.cshtml" />
+    <Content Include="Views\Shared\test.cshtml" />
+    <Content Include="Views\Account\test.cshtml" />
+    <Content Include="Views\DashboardSuppliers\HomeDashboard.cshtml" />
+    <Content Include="Views\WareHousing\TranfereItemsBetweenTwoWareHouses.cshtml" />
+    <Content Include="Views\WareHousing\AddWarehouseRequest.cshtml" />
+    <Content Include="Views\WareHousing\WareHousesSetting.cshtml" />
+    <Content Include="Views\PriceList\Index.cshtml" />
+    <Content Include="Views\FastReport\Agent.cshtml" />
+    <Content Include="Views\FastReport\Branch.cshtml" />
+    <Content Include="Views\FastReport\Company.cshtml" />
+    <Content Include="Views\FastReport\Index.cshtml" />
+    <Content Include="Views\FastReport\Safe.cshtml" />
+    <Content Include="Views\SalesOFclient1\addsale.cshtml" />
+    <Content Include="Views\WareHousing\SettleReturns.cshtml" />
+    <Content Include="Views\WareHousing\_SettlePartial.cshtml" />
+    <Content Include="Views\AsSalesman\Index.cshtml" />
+    <Content Include="Views\Distributor\_AccountingCollectionDetails.cshtml" />
+    <Content Include="Views\Distributor\_AccountingDetails.cshtml" />
+    <Content Include="Views\Distributor\_AccountingExpensesDetails.cshtml" />
+    <Content Include="Views\Supplier\EditItemsPricesList.cshtml" />
+    <Content Include="Views\AsSalesman\_CarBalance.cshtml" />
+    <Content Include="Views\AsSalesman\_pendingReceiveItems.cshtml" />
+    <Content Include="Views\AsSalesman\_addWarehouseRequestPartial.cshtml" />
+    <Content Include="Views\AsSalesman\_SalePartial.cshtml" />
+    <Content Include="Views\AsSalesman\_pendingMardodatItems.cshtml" />
+    <Content Include="Views\AsSalesman\_closeDayRevision.cshtml" />
+    <Content Include="Views\Branch\EditoCompanyData.cshtml" />
+    <Content Include="Views\Admin\ShowMapPost.cshtml" />
+    <Content Include="Views\Admin\ShowMap.cshtml" />
+    <Content Include="Views\AsSalesman\_addReturnPartial.cshtml" />
+    <Content Include="Views\WareHousing\AnyWarehouseBalance.cshtml" />
+    <Content Include="Views\Admin\ShowBranchesMap.cshtml" />
+    <Content Include="Views\Admin\OnlineShopRequests.cshtml" />
+    <Content Include="Views\Items\ConfirmUpdatePrice.cshtml" />
+    <Content Include="Views\FastReport\Items.cshtml" />
+    <Content Include="Views\Shared\_LayoutV2.cshtml" />
+    <Content Include="Views\CustomeDesgin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Employees\" />
+    <Folder Include="Views\MoneySave\" />
+    <Folder Include="Views\ReportActions\" />
+    <Folder Include="Views\Selector\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Banks.ar.resx" />
+    <EmbeddedResource Include="Resources\Banks.resx" />
+    <EmbeddedResource Include="Resources\Employees.ar.resx" />
+    <EmbeddedResource Include="Resources\Employees.resx" />
+    <EmbeddedResource Include="Resources\Items.ar.resx" />
+    <EmbeddedResource Include="Resources\Items.resx" />
+    <EmbeddedResource Include="Resources\llayout.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>llayout.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\llayout.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>llayout.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\pages.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>pages.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\pages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>pages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51195</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44391/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

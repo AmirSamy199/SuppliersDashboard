@@ -1,0 +1,276 @@
+﻿
+@using SuppliersDashboard.Resources
+<style>
+    .modal-content {
+        min-width: 200%
+    }
+</style>
+
+@if (ViewBag.Data != null)
+{
+
+    <div class="p-3" >
+        <label class="form-label-title text-center col-lg-12 col-md-3 mb-0" for="name">
+            @llayout.Update
+            @ViewBag.Data.Name
+        </label>
+
+        
+        <h5 id="dddd" class="text-center p-1 text-danger">
+        </h5>
+        <div class="row d-flex justify-content-around">
+
+            <div class="col-lg-6 p-2 text-center">
+                <label class="form-label-title col-lg-2 col-md-3 mb-0" for="name"> @llayout.name </label>
+                <h5 id="dddd" class="text-center p-1 text-danger"></h5>
+                <input id="name" onclick="this.select()" type="text" placeholder="@llayout.name  " class="form-control" value="@ViewBag.Data.Name" />
+            </div>
+            <div class="col-lg-6 p-2 text-center">
+                <label class="form-label-title col-lg-2 col-md-3 mb-0" for="disgroupid"> @llayout.Groups </label>
+                <h5 id="dddd" class="text-center p-1 text-danger"></h5>
+                <select id='disgroupid' class="form-control form-select" font-size: 1.2rem; value="@ViewBag.Disid">
+
+                    @if (ViewBag.Groups != null)
+                    {
+                        foreach (var item in ViewBag.Groups)
+                        {
+                            if (item.Id == @ViewBag.Data.DistributorGroupId)
+                            {
+                                <option selected value='@item.Id'>@item.Name</option>
+
+                            }
+                            else
+                            {
+                                <option value='@item.Id'>@item.Name</option>
+
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+            <div class="col-lg-6 p-2 text-center">
+                <label class="form-label-title " for="name"> السماح بتسجيل الفواتير بعيدا عن الفرع </label>
+                @if (@ViewBag.Data.AllowMakeInvoiceFarFromBranch == 1)
+                {
+
+
+
+                    <input checked id="AllowMakeInvoiceFarFromBranch" type="checkbox" style="width: 30px; height: 30px " />
+                }
+                else
+                {
+                    <input  id="AllowMakeInvoiceFarFromBranch" type="checkbox"  style="width: 30px; height: 30px" />
+
+                }
+            </div>
+
+            <div class="col-12">
+                <h6 class="text-center"> الاهداف</h6>
+            </div>
+            <div class="col-lg-6 p-2 text-center">
+                <label for="monthlytarget"> المبلغ المطلوب خلال الشهر  </label>
+                <input type="number" onclick="this.select()" id="MonthSalesAmount" placeholder="ادخل المبلغ " class="form-control" value="@ViewBag.Data.MonthSalesAmount" />
+            </div>
+            <div class="col-lg-6 p-2">
+                <label for="monthlytarget">    عدد الفواتير المطلوبة خلال الشهر  </label>
+                <input type="number" onclick="this.select()" id="MonthCoverageAmount" placeholder="ادخل العدد " class="form-control" value="@ViewBag.Data.MonthCoverageAmount" />
+            </div>
+            <div class="col-lg-6 p-2">
+                <label for="monthlytarget">    نسبة المرتجعات من المبيعات %  </label>
+                <input type="number" onclick="this.select()" id="MonthReturnAmount" placeholder="ادخل النسبة " class="form-control" value="@ViewBag.Data.MonthReturnAmount" />
+            </div>
+            <div class="col-12">
+                <h6 class="text-center">   النسب الشهرية للعمولة  </h6>
+            </div>
+            <div class="col-lg-6 p-2">
+                <label for="SalesPer">   نسبة المبيعات  </label>
+                <input type="number" onclick="this.select()" id="SalesPer" placeholder="ادخل النسبة " class="form-control" value="@ViewBag.Data.SalesPer" />
+            </div>
+            <div class="col-lg-6 p-2">
+                <label for="CoveragePer">    نسبة التغطية  </label>
+                <input type="number" onclick="this.select()" id="CoveragePer" placeholder="ادخل النسبة " class="form-control" value="@ViewBag.Data.CoveragePer" />
+            </div>
+            <div class="col-lg-6 p-2">
+                <label for="monthlytarget">   نسبة المنتجات %  </label>
+                <input type="number" onclick="this.select()" id="ItemsPer" placeholder="ادخل النسبة " class="form-control" value="@ViewBag.Data.ItemsPer" />
+            </div>
+            <div class="col-lg-6 p-2">
+                <label for="ReturnsPer">   نسبة المرتجعات %  </label>
+                <input type="number" onclick="this.select()" id="ReturnsPer" placeholder="ادخل النسبة " class="form-control" value="@ViewBag.Data.ReturnsPer" />
+            </div>
+            <div class="col-12">
+                <h6 class="text-center"> الاصناف</h6>
+            </div>
+            <div class="col-lg-5">
+                @Html.Partial("_SelectItem")
+            </div>
+            <div class="col-lg-3">
+                <input type="number" onclick="this.select()" placeholder="العدد" class="form-control" id="currentcount" />
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-primary" onclick="additem()"> Add </button>
+            </div>
+            <div class="col-12 p-2">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                الصنف
+                            </th>
+                            <th>
+                                العدد الشهري
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemtablebody">
+                        @foreach (var item in ViewBag.Data.AssignedMonthItems)
+                        {
+
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.ItemCount</td>
+                                <td>
+                                    <button class="btn btn-danger" onclick="removeitem(@item.ItemId)"> حذف</button>
+                                    <input type="hidden" class="old-item" id="@item.ItemId" name="@item.ItemName" count="@item.ItemCount" />
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <h5 id="dddd" class="text-center p-1 text-danger"></h5>
+
+            <div class="col-12 p-2 text-center d-flex justify-content-center">
+                @* <button class="btn btn-success" onclick="submitedituser(@ViewBag.Id)"> تعديل  </button>*@
+                <button class="btn btn-primary col-lg-4" onclick="submittEditSetting()"> @llayout.Update  </button>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function submittEditSetting() {
+            $("#dddd").text('')
+
+            let disname = $("#name").val()
+            let SalesPer = $("#SalesPer").val()
+            let CoveragePer = $("#CoveragePer").val()
+            let ItemsPer = $("#ItemsPer").val()
+            let ReturnsPer = $("#ReturnsPer").val()
+            let sumpercentages = parseFloat(SalesPer) + parseFloat(CoveragePer) + parseFloat(ItemsPer) + parseFloat(ReturnsPer)
+
+            let AllowMakeInvoiceFarFromBranch = 1;
+            if ($("#AllowMakeInvoiceFarFromBranch").is(":checked")) {
+                AllowMakeInvoiceFarFromBranch = 1;
+            } else {
+                AllowMakeInvoiceFarFromBranch = 0;
+            }
+            
+            if (disname == '') {
+                $("#dddd").text('ادخل اسم المندوب')
+                return
+            }
+            if (sumpercentages != 100) {
+
+                $("#dddd").text('ادخل  نسب صحيحة')
+                return
+            }
+
+
+
+
+            let ittems = []
+            $.each(currentuseritemss, (i, e) => {
+                let x = { SalemenId:@ViewBag.Id , ItemCount: e.count, ItemName : e.name, ItemId :e.id }
+                ittems.push(x)
+            })
+            let model = {
+                Id: @ViewBag.Id ,
+                Name: disname,
+                DistributorGroupId: $("#disgroupid").val(),
+                AssignedMonthItems: ittems,
+                SalesPer: SalesPer ,
+                CoveragePer: CoveragePer,
+                ItemsPer: ItemsPer,
+                ReturnsPer: ReturnsPer,
+                MonthSalesAmount: $("#MonthSalesAmount").val(),
+                MonthCoverageAmount: $("#MonthCoverageAmount").val(),
+                MonthReturnAmount: $("#MonthReturnAmount").val(),
+                AllowMakeInvoiceFarFromBranch: AllowMakeInvoiceFarFromBranch
+            }
+
+            let url =`/Distributor/SubmitEditSalesMen`
+            $.post(url, model, (res) => {
+                if (res.data.State == 1) {
+                    showSuccessOperation(res.data.Message)
+                } else {
+                    showDangerOperation(res.data.Message)
+                }
+
+            })
+        }
+        function additem() {
+
+            $("#dddd").text('')
+            let count = $("#currentcount").val()
+            if (count <= 0) {
+                $("#dddd").text('ادخل العدد  ')
+
+                return
+            }
+            if (currentuseritemss.length == 5) {
+                $("#dddd").text('مسموح بخمس اصناف فقط')
+                return
+            }
+            let iid = $("#itemId").val();
+            let namme = $("#ItemIdInput").attr("placeholder")
+            removeitem(iid)
+            currentuseritemss.push({id:iid , name :namme , count : count})
+            drawsmalltable()
+            $("#currentcount").val(0)
+            $("#ItemIdInput").attr('placeholder' , 'اختر الصنف')
+        }
+
+        function removeitem(id) {
+            currentuseritemss = currentuseritemss.filter(x => x.id != id);
+            drawsmalltable()
+
+        }
+            var currentuseritemss = []
+
+        function intiateolditems() {
+            let olditems = document.getElementsByClassName("old-item")
+            $.each(olditems, (i, e) => {
+                let id = $(e).attr('id')
+                let name = $(e).attr('name')
+                let count = $(e).attr('count')
+                currentuseritemss.push({ id: id, name: name, count: count })
+            })
+                drawsmalltable()
+
+        }
+        intiateolditems()
+        function drawsmalltable() {
+                let html =``
+            $.each(currentuseritemss, (i, e) => {
+
+                html +=`   <tr>
+                                <td>${e.name}</td>
+                                <td>${e.count}</td>
+                                <td>
+                                    <button class="btn btn-danger"  onclick='removeitem(${e.id})'> @llayout.delete</button>
+
+                                </td>
+                            </tr>`
+            })
+            $('#itemtablebody').html(html)
+        }
+
+    </script>
+}

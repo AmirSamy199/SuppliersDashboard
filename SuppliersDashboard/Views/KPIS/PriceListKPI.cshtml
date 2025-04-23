@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "PriceListKPI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 p-4">
+
+            <input type="text" id="myInput" class="form-control text-center" onkeyup="SearchInTable('myInput','mytable')" placeholder=".. بحث ...">
+        </div>
+
+    </div>
+
+    <div id="printer">
+        <style>
+            td, th {
+                text-align: center !important;
+                border: 1.5px solid #000 !important;
+            }
+
+            th {
+                color: #000 !important;
+                font-weight: bold !important;
+                background-color: #ccc !important
+            }
+
+            table {
+                border-collapse: collapse !important
+            }
+        </style>
+
+        <h2 class="text-center p-3">
+            @SuppliersDashboard.Resources.pages.pricemenu
+        </h2>
+
+
+
+        <div class="  card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table id="mytable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+
+
+                                <th>  @SuppliersDashboard.Resources.llayout.Item_ID </th>
+                                <th> @SuppliersDashboard.Resources.llayout.ProductName   </th>
+                                <th>  @SuppliersDashboard.Resources.pages.distributor   </th>
+                                <th>   @SuppliersDashboard.Resources.pages.type    </th>
+                                <th> @SuppliersDashboard.Resources.pages.sellprice    </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.PriceList != null)
+                            {
+
+                                foreach (var item in ViewBag.PriceList)
+                                {
+                                    <tr>
+
+                                        <td> @item.Item_ID </td>
+                                        <td> @item.ItemName  </td>
+                                        <td> @item.Distributor </td>
+                                        <td> @item.unitType_En </td>
+                                        <td> @item.Selling_Price </td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+        </div>
+    </div>
+    @*<div class="text-center p-4">
+            <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+        </div>*@
+</div>

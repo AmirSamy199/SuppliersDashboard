@@ -1,0 +1,541 @@
+﻿
+
+@using System.Globalization
+@using Microsoft.AspNetCore.Http
+@{
+    Layout = null;
+    var title = "LOGIN";
+   // var lang = Context.Request.Cookies["UserLang"] ?? "en";
+    var lang = Context.Request.Cookies["UserLang"].Value ?? "en";
+
+    var dir = lang == "ar" ? "rtl" : "ltr";
+    ViewData["Title"] = title;
+}
+
+
+@if (1 > 2)
+{
+    <html lang="en" class="loading">
+
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap" rel="stylesheet">
+        <link href="/Content/img/UNO.png" rel="icon">
+        <link href="~/abcr/app-assets/css/StyleSheet1.css" rel="stylesheet" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <meta charset="utf-8">
+        <title>Suppliers Dashboard - Sign Up</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+        <link rel="apple-touch-icon" sizes="60x60" href="~/abcr/app-assets/img/ico/apple-icon-60.html">
+        <link rel="apple-touch-icon" sizes="76x76" href="~/abcr/app-assets/img/ico/apple-icon-76.html">
+        <link rel="apple-touch-icon" sizes="120x120" href="~/abcr/app-assets/img/ico/apple-icon-120.html">
+        <link rel="apple-touch-icon" sizes="152x152" href="~/abcr/app-assets/img/ico/apple-icon-152.html">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/fonts/feather/style.min.css">
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/fonts/simple-line-icons/style.css">
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/fonts/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/vendors/css/perfect-scrollbar.min.css">
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/vendors/css/prism.min.css">
+
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/vendors/css/chartist.min.css">
+        <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/css/app.css">
+        <style>
+            body {
+                background: #031323;
+                overflow: hidden;
+            }
+
+            .fas {
+                width: 32px;
+            }
+
+            section {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+                background-size: 400% 400%;
+                animation: gradient 10s ease infinite;
+            }
+
+
+
+            .box {
+                position: relative;
+            }
+
+                .box .square {
+                    position: absolute;
+                    background: rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(5px);
+                    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    border-radius: 15px;
+                    animation: square 10s linear infinite;
+                    animation-delay: calc(-1s * var(--i));
+                }
+
+
+
+                    .box .square:nth-child(1) {
+                        width: 100px;
+                        height: 100px;
+                        top: -15px;
+                        right: -45px;
+                    }
+
+                    .box .square:nth-child(2) {
+                        width: 150px;
+                        height: 150px;
+                        top: 105px;
+                        left: -125px;
+                        z-index: 2;
+                    }
+
+                    .box .square:nth-child(3) {
+                        width: 60px;
+                        height: 60px;
+                        bottom: 85px;
+                        right: -45px;
+                        z-index: 2;
+                    }
+
+                    .box .square:nth-child(4) {
+                        width: 50px;
+                        height: 50px;
+                        bottom: 35px;
+                        left: -95px;
+                    }
+
+                    .box .square:nth-child(5) {
+                        width: 50px;
+                        height: 50px;
+                        top: -15px;
+                        left: -25px;
+                    }
+
+                    .box .square:nth-child(6) {
+                        width: 85px;
+                        height: 85px;
+                        top: 165px;
+                        right: -155px;
+                        z-index: 2;
+                    }
+
+            .container {
+                position: relative;
+                padding: 50px;
+                min-height: 380px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(5px);
+                border-radius: 10px;
+                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            }
+
+                .container::after {
+                    content: '';
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    bottom: 5px;
+                    left: 5px;
+                    border-radius: 5px;
+                    pointer-events: none;
+                    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 2%);
+                }
+
+            .form {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+
+                .form h2 {
+                    color: #fff;
+                    letter-spacing: 2px;
+                    margin-bottom: 30px;
+                }
+
+                .form .inputBx {
+                    position: relative;
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+
+                    .form .inputBx input {
+                        width: 100%;
+                        outline: none;
+                        border: none;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        background: rgba(255, 255, 255, 0.2);
+                        padding: 8px 10px;
+                        padding-left: 40px;
+                        border-radius: 15px;
+                        color: #fff;
+                        font-size: 16px;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+                    }
+
+                    .form .inputBx .password-control {
+                        position: absolute;
+                        top: 11px;
+                        right: 10px;
+                        display: inline-block;
+                        width: 20px;
+                        height: 20px;
+                        background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
+                        transition: 0.5s;
+                    }
+
+                    .form .inputBx .view {
+                        background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
+                        transition: 0.5s;
+                    }
+
+                    .form .inputBx .fas {
+                        position: absolute;
+                        top: 13px;
+                        left: 13px;
+                    }
+
+                    .form .inputBx input[type="submit"] {
+                        background: #fff;
+                        color: #111;
+                        max-width: 100px;
+                        padding: 8px 10px;
+                        box-shadow: none;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                        transition: 1.5s;
+                    }
+
+                        .form .inputBx input[type="submit"]:hover {
+                            background: linear-gradient(115deg, rgba(0, 0, 0, 0.10), rgba(255, 255, 255, 0.25));
+                            color: #fff;
+                            transition: 0.5s;
+                        }
+
+                    .form .inputBx input::placeholder {
+                        color: #fff;
+                    }
+
+                    .form .inputBx span {
+                        position: absolute;
+                        left: 30px;
+                        padding: 10px;
+                        display: inline-block;
+                        color: #fff;
+                        transition: 0.5s;
+                        pointer-events: none;
+                    }
+
+                    .form .inputBx input:focus ~ span,
+                    .form .inputBx input:valid ~ span {
+                        transform: translateX(-30px) translateY(-25px);
+                        font-size: 12px;
+                    }
+
+                .form p {
+                    color: #fff;
+                    font-size: 15px;
+                    margin-top: 5px;
+                }
+
+                    .form p a {
+                        color: #fff;
+                    }
+
+                        .form p a:hover {
+                            background-color: #000;
+                            background-image: linear-gradient(to right, #434343 0%, black 100%);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                        }
+
+            .remember {
+                position: relative;
+                display: inline-block;
+                color: #fff;
+                margin-bottom: 10px;
+                cursor: pointer;
+            }
+
+            .form .inputBx {
+                position: relative;
+                width: 100%;
+                margin-bottom: 20px;
+                font-weight: 600;
+                font-size: 17px;
+            }
+
+            .text-center img {
+                height: 90px;
+                margin-bottom: 25px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section>
+
+            <div class="box">
+
+                <div class="square" style="--i:0;"></div>
+                <div class="square" style="--i:1;"></div>
+                <div class="square" style="--i:2;"></div>
+                <div class="square" style="--i:3;"></div>
+                <div class="square" style="--i:4;"></div>
+                <div class="square" style="--i:5;"></div>
+
+                <div class="container" style="WIDTH: max-content; margin-top:2PX">
+                    <div class="form">
+                        <div class="text-center">
+                            <img src="~/Content/img/UNO.png">
+                        </div>
+                        <h2 style="text-align: center; font-weight: bold;opacity:50%">Dawar</h2>
+                        <h4 class="text-white" style="text-align: center">@ViewBag.Message</h4>
+
+                        <form action="/Account/LogIn" method="post">
+                            <div class="inputBx">
+                                <input type="text" name="phone" id="floatingText" required="required">
+                                <span>@SuppliersDashboard.Resources.llayout.loginusername</span>
+
+                            </div>
+                            <div class="inputBx password">
+                                <input type="password" name="password" id="floatingPassword" required="required">
+                                <span>@SuppliersDashboard.Resources.llayout.password</span>
+                                <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
+
+                            </div>
+
+                            <div class="inputBx">
+                                <input type="submit" value="Log in">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <script src="~/abcr/app-assets/vendors/js/core/jquery-3.3.1.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/core/popper.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/core/bootstrap.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/prism.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/jquery.matchHeight-min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/screenfull.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/pace/pace.min.js"></script>
+        <script src="~/abcr/app-assets/vendors/js/chartist.min.js"></script>
+        <script src="~/abcr/app-assets/js/app-sidebar.js"></script>
+        <script src="~/abcr/app-assets/js/notification-sidebar.js"></script>
+        <script src="~/abcr/app-assets/js/customizer.js"></script>
+        <script src="~/abcr/app-assets/js/dashboard-ecommerce.js"></script>
+        <script>
+            function show_hide_password(target) {
+                var input = document.getElementById('floatingPassword');
+                if (input.getAttribute('type') == 'password') {
+                    target.classList.add('view');
+                    input.setAttribute('type', 'text');
+                } else {
+                    target.classList.remove('view');
+                    input.setAttribute('type', 'password');
+                }
+                return false;
+            }
+        </script>
+    </body>
+</html>
+}
+else
+{
+
+
+<!DOCTYPE html>
+<html lang="@lang" dir="@dir">
+<head>
+    <title>@title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <!-- Fonts & Icons -->
+    <!-- Preconnect to external fonts providers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Import Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <!-- Tailwind CSS -->
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"> *@
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Tailwind config if needed -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Your HTML content here -->
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif !important;
+            background-color: #222;
+            color: #f1f1f1;
+        }
+
+        .form-control,
+        .form-control:focus {
+            background-color: #222;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease-in-out forwards;
+        }
+
+        @@keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col text-gray-200">
+    <!-- Header -->
+    <header class="sticky top-0 left-0 w-full h-24 flex flex-col items-center justify-center gap-0 z-50" dir="ltr">
+        <img id="header-logo" src="~/Content/img/unologo.png" alt="Logo" class="h-12" />
+        <span class="text-gray-500 text-xl font-bold tracking-wide">UNOPOS CENTER</span>
+    </header>
+
+    <!-- Login form -->
+    <div class="flex items-center justify-center px-4 fade-in" style="margin-top: 0px; height: calc(100vh - 200px);">
+        <div class="w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-lg overflow-hidden p-8 sm:p-12" @(lang == "ar" ? "dir=rtl" : "")>
+            <h2 class="text-center font-bold text-3xl mb-6 text-blue-600 transition duration-300 ease-in-out">
+                @(lang == "ar" ? "مرحباً بك" : "WELCOME")
+            </h2>
+
+            <!-- Submit -->
+            <form asp-controller="Account" asp-action="LogIn" method="post" class="space-y-6">
+                @Html.AntiForgeryToken()
+                <h4 class="text-white" style="text-align: center">@ViewBag.Message</h4>
+                <div>
+                    <label class="block text-gray-100 text-l" for="username">
+                        @(lang == "ar" ? "اسم المستخدم" : "Username")
+                    </label>
+                    <input type="text" id="username" name="phone" required autofocus
+                           placeholder="@(lang == "ar" ? "أدخل اسم المستخدم" : "Enter your username")"
+                           class="w-full mt-1 px-4 py-2 text-l bg-gray-900 text-gray-100 border border-gray-100 rounded-lg focus:outline-none focus:bg-blue-800">
+                </div>
+                <div>
+                    <label class="block text-gray-100 text-l" for="password">
+                        @(lang == "ar" ? "كلمة المرور" : "Password")
+                    </label>
+                    <input type="password" id="password" name="password" required autocomplete="on"
+                           placeholder="@(lang == "ar" ? "أدخل كلمة المرور" : "Enter your password")"
+                           class="w-full mt-1 px-4 py-2 text-l bg-gray-900 text-gray-100 border border-gray-100 rounded-lg focus:outline-none focus:bg-blue-800">
+                </div>
+                <button type="submit" id="loginBtn"
+                        class="w-full flex items-center justify-center gap-2 bg-blue-600 text-l text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200">
+                    <!-- Spinner hidden by default -->
+                    <svg id="spinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                    <span id="btnText">@(lang == "ar" ? "تسجيل الدخول" : "Login")</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="fixed bottom-15 text-xl left-0 alert alert-danger w-full flex items-center justify-center">
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- Footer -->
+    <div class="fixed bottom-0 left-0 w-full text-white text-center py-3 text-sm flex justify-between items-center px-4" dir="ltr">
+        <span>©2025 UNOPOS™ SOLUTIONS</span>
+        <button id="toggleLang"
+                class="px-4 py-1 text-sm border rounded bg-orange-600 text-white hover:bg-orange-800 transition duration-200 ">
+            @(lang == "ar" ? "ENG" : "عربي")
+        </button>
+    </div>
+
+    <script>
+
+        document.getElementById("toggleLang").addEventListener("click", function () {
+            const currentLang = document.documentElement.lang || 'en';
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            // change lang in cookies
+            document.cookie = `UserLang=${newLang}; path=/; max-age=31536000`;
+
+            // update html lang
+            document.documentElement.setAttribute("lang", newLang);
+            document.body.classList.add('fade-out');
+            setTimeout(() => location.reload(), 300);
+        });
+
+        window.onload = function () {
+            document.body.style.display = "block";
+            document.getElementById("username").focus();
+        };
+
+        // submit
+        document.querySelector("form").addEventListener("submit", function () {
+            // Display Spinner
+            document.getElementById("spinner").classList.remove("hidden");
+            btnText.textContent = document.documentElement.lang === "ar" ? "جاري تسجيل الدخول ..." : "Logging in ...";
+            document.getElementById("loginBtn").disabled = true;
+            document.getElementById("loginBtn").classList.add("opacity-70", "cursor-not-allowed");
+        });
+    </script>
+
+</body>
+</html>
+}
+
+

@@ -1,0 +1,167 @@
+﻿
+@model List<SuppliersDashboard.ViewModels.SelectCustomer_Statement_Pro>
+@{
+    int i = 1;
+    ViewBag.Title = "تقرير الفرع ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+</style>
+<div class="container">
+    <div id="printer">
+        <div>
+            <h2 class="h2 text-center m-3">
+                @ViewBag.BranchName
+            </h2>
+        </div>
+
+        <table id="table" class="table table-striped">
+
+
+
+            <thead>
+                <tr>
+                    <th> #</th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.billno
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.oldrem
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.remamount
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.amountrequired
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.salesamount
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.deffered
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.cash
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.adddate
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.collectionamount
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.typett
+                    </th>
+                    @*<th>
+                        @SuppliersDashboard.Resources.pages.location
+                    </th>
+                    <th>
+
+                    </th>*@
+
+                </thead>
+            <tbody>
+                @if(Model != null)
+            {
+
+                foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <td>
+                            @(i++)
+                        </td>
+                        <td>
+                            @item.BillNo
+                        </td>
+                        <td>
+                            @item.Old_RemainingAmount
+                        </td>
+                        <td>
+                            @item.RemainingAmount
+                        </td>
+                         <td>
+                            @item.Amount_Required
+                        </td>
+                           <td>
+                            @item.SalesAmount
+                        </td>
+                           <td>
+                            @item.Deferred
+                        </td>
+                           <td>
+                            @item.cash
+                        </td>
+                       
+                         <td>
+                            @item.Add_date
+                        </td>
+                       
+                         <td>
+                            @item.CollectionAmount
+                        </td>
+                       
+                         <td>
+                            @item.Typett
+                        </td>
+                       
+                     
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button class="btn btn-outline-success" onclick="Print()"> طباعة</button>
+    </div>
+    <div>
+        <button class="btn btn-outline-success" onclick="Excel()">تنزيل اكسيل </button>
+    </div>
+
+
+
+</div>
+<script>
+    //$("#table").dataTable();
+
+
+    function Print() {
+        var restorepage = $('body').html();
+
+        var printcontent = $('#printer').html();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+    function Excel() {
+        startloader()
+        $.ajax({
+            url: "/Report/GetBranchBillsExcel",
+            type: "post",
+            data: {
+                BranchId:@ViewBag.BranchId
+            },
+            success: function (res) {
+
+                ClickLink(res.url, 'تقرير الفرع  ' + '@ViewBag.BranchName' +'.xlsx')
+                endloader();
+
+            }
+        })
+    }
+</script>

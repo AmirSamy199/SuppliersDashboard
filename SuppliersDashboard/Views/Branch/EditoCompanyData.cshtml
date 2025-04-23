@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "EditCompanyData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2 class="text-center p-3">تعديل شركة </h2>
+<div class="row">
+    <div class="col-lg-4 p-3">  </div>
+    <div class="col-lg-4 p-3">
+        <input type="hidden" value="0" id="baseidinput" />
+        <input list="brancheslist" name="brancheslist" id="branchdatalist" class="form-control" placeholder="اختر الشركة " />
+        <datalist id="brancheslist">
+            <option value="0"> اختر شركة  </option>
+            @foreach (var item in ViewBag.Companies)
+            {
+                <option value="@item.Id">@item.Value </option>
+            }
+        </datalist>
+    </div>
+    <div class="col-lg-4 p-3">  </div>
+
+    <div class="collapse  p-5" id="grid">
+        <div class="row">
+            <div class="col-lg-4 p-2">
+                <label> اسم الشركة </label>
+                <input class="form-control" type="text" id="CompanyName" placeholder="اسم الشركة " />
+            </div>
+
+            <div class="col-lg-4 p-2">
+                <label>
+                    النوع
+                </label>
+                <select id="CompanyType" class="form-control ">
+                    @if (ViewBag.CompanyTypes != null)
+                    {
+
+                        foreach (var item in ViewBag.CompanyTypes)
+                        {
+                            <option value="@item.Id"> @item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-lg-4 p-2">
+                <label>
+                    قائمة الاسعار
+                </label>
+                <select id="PricesListId" class="form-control ">
+                    @if (ViewBag.PricesLists != null)
+                    {
+                        <option value="0"> اختر قائمة الاسعار</option>
+
+                        foreach (var item in ViewBag.PricesLists)
+                        {
+                            <option value="@item.Id"> @item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+
+
+
+
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <button class="btn btn-primary " onclick="SubmitEditCompanyData()"> تعديل البيانات الاساسية  </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<input id="Distributor_ID" type="hidden" />
+
+
+<script>
+
+
+
+    function SubmitEditCompanyData() {
+        let pricelistId = $("#PricesListId").val()
+
+        let model = {
+            Record_ID: $("#baseidinput").val(),
+            CompanyName: $("#CompanyName").val(),
+            CompanyType: $("#CompanyType").val(),
+            PriceListId: pricelistId
+        }
+
+        $.ajax({
+            url: "/Branch/SubmitEditCompanyData",
+            type: "post",
+            data: {
+                model:model
+            }, success: (res) => {
+                let html = `
+               <h4 class='text-center p-4'>
+               ${res.data.Message}
+               </h4>
+                `
+                ShowModal(html)
+            }
+
+        })
+    }
+    $("#branchdatalist").change(() => {
+
+        let baseid = $("#branchdatalist").val();
+        let basename = $(`#brancheslist option[value='${baseid}']`).text()
+        $("#baseidinput").val(baseid)
+        $("#branchdatalist").val("")
+        $("#header2").text( ` تعديل شركة  ${ basename } `)
+        $("#branchdatalist").attr("placeholder", basename)
+        $("#grid").collapse("hide")
+
+        LoadPage(baseid);
+    })
+
+    function LoadPage(baseid) {
+        $.ajax({
+            url: "/Branch/GetCompanyDataByID",
+            type: "post",
+            data: {
+                Id: baseid
+            },
+            success: (res) => {
+                let result = res.data.Data;
+                console.log(result)
+
+              
+                $("#CompanyName").val(result.CompanyName)
+        
+             
+                let opts = $("#CompanyType option")
+                $.each(opts, (i, e) => {
+
+                    let optvalue = $(e).attr('value')
+                    if (String(optvalue) == String(result.Type)) {
+                        $(e).attr('selected', true)
+
+                    } else {
+
+                    $(e).attr('selected', false)
+                    }
+                })
+                let pricelistopts = $("#PricesListId option")
+                $.each(pricelistopts, (i, e) => {
+
+                    let listvalue = $(e).attr('value')
+                    if (String(listvalue) == String(result.PriceListId)) {
+                        $(e).attr('selected', true)
+
+                    } else {
+
+                        $(e).attr('selected', false)
+                    }
+                })
+
+                $("#grid").collapse("show")
+            }
+        })
+    }
+
+  
+   
+</script>

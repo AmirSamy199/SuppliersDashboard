@@ -1,0 +1,69 @@
+﻿
+
+@model List<SuppliersDashboard.ViewModels.warehouse_main_V>
+@{
+    int i = 1;
+    ViewBag.Title = "جرد المخزن  ";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+<table id="table" class="table table-striped">
+
+
+
+    <thead>
+        <tr>
+            <th> #</th>
+            <th>
+                @SuppliersDashboard.Resources.@item.ItemName</th>
+            <th>
+                @SuppliersDashboard.Resources.pages.Available
+            </th>
+            <th>
+                @SuppliersDashboard.Resources.pages.inside
+            </th>
+            <th>
+                @SuppliersDashboard.Resources.pages.outside
+            </th>
+            <th>
+                ا  @SuppliersDashboard.Resources.llayout.company
+            </th>
+
+
+    </thead>
+    <tbody>
+        @if(Model != null)
+            {
+
+        foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @(i++)
+                </td>
+                <td>
+                    @item.ItemName
+                </td>
+                <td>
+                    @item.bal
+                </td>
+                <td>
+                    @item.iTEM_C
+                </td>
+                <td>
+                    @item.iTEM_d
+                </td>
+                <td>
+                    @item.CompanyName
+                </td>
+
+
+            </tr>
+        }
+            }
+    </tbody>
+</table>
+

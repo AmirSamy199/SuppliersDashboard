@@ -1,0 +1,75 @@
+﻿@model List<SuppliersDashboard.Models.Bill_Report_V>
+
+    @{
+    int i = 1;
+    }
+
+
+    <div class="container">
+        <h2 class="text-center p-3">  تفاصيل الفواتير</h2>
+        <div class="table-div p-2">
+
+            <div class=" card-ERB ">
+                <div class="  table-responsive  ">
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th> رقم القاتورة</th>
+                                    <th>  العميل </th>
+                                    <th>   مبلغ الفاتورة</th>
+                                    <th> مديونية قديمة </th>
+                                    <th>  تحصيل  </th>
+                                    <th>  المدفوع   </th>
+                                    <th>  المدفوع للفاتورة  </th>
+                                    <th>   الباقي من الفاتورة  </th>
+                                    <th>   الباقي    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(Model !=null && Model.Count > 0)
+                                {
+                                foreach(var a in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @(i++)
+                                    </td>
+                                    <td>
+                                        @a.BillNo
+                                    </td>
+                                    <td>
+                                        @a.BranchName
+                                    </td>
+                                    <td>
+                                        @a.TotalAmountAfterDiscount
+                                    </td>
+                                    <td> @a.Old_RemainingAmount</td>
+                                    <td> @a.CollectionAmount </td>
+                                    <td> @a.Cash </td>
+                                    <td> @a.BillCash </td>
+                                    <td> @a.DefferefinThisBill </td>
+                                    <td> @a.Deferred </td>
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <style>
+        .modal-content {
+            width: 200% !important;
+            /*left:50%;*/
+        }
+    </style>

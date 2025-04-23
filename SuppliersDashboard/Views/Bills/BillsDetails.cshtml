@@ -1,0 +1,114 @@
+﻿@model SuppliersDashboard.ViewModels.Bill_Details_model
+@using SuppliersDashboard.ViewModels
+@{
+    ViewBag.Title = "تفاصيل الفاتورة ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="p-4">
+
+        <h2 class="h4 text-center m-2"> المبيعات  </h2>
+        @if( Model.Sales == null|| Model.Sales.Count > 0 )
+            {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        الصنف 
+                    </th>
+                    <th>
+                        العدد  
+                    </th>
+ <th>
+                        سعر الوحدة  
+                    </th>
+ <th>
+                        السعر الكلي   
+                    </th>
+                     <th>
+                      الحجم
+                    </th>
+                     <th>
+                        الخصم
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+           @foreach(var item in Model.Sales)
+            {
+               <tr>
+                   <td>
+                       @item.Items
+                   </td>
+                <td>
+                       @item.NumberOfUnits
+                   </td>
+                <td>
+                       @item.UnitPrice
+                   </td>
+                <td>
+                       @item.TotalPrice
+                   </td>
+                <td>
+                       @item.size
+                   </td>
+                <td>
+                       @item.Discount
+                   </td>
+               
+               </tr>
+            }
+
+
+
+            </tbody>
+        </table>
+}
+else
+            {
+                <p class="text-center "> لا يوجد مبيعات في هذة الفاتورة </p>
+            }
+  
+    </div>
+    <div class="p-4">
+        <h2 class="h4 text-center m-2"> المرتجعات   </h2>
+        @if (Model.Returns == null || Model.Returns.Count > 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th> اسم الصنف </th>
+                        <th> العدد  </th>
+                        <th> الكمية  </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Returns)
+                    {
+                        <tr>
+                            <td>
+                                @item.ItemName
+                            </td>
+                            <td>
+                                @item.size
+                            </td>
+                            <td>
+                                @item.Amount
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+        else
+        {
+            <p class="text-center "> لا يوجد مرتجعات  في هذة الفاتورة </p>
+        }
+    </div>
+    </div>

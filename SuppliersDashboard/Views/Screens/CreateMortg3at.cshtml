@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewBag.Title = "شاشة المرتجعات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row p-4">
+    <div class="col-12 m-3 p-3 text-center">
+        <h1 class="text-center"> @ViewBag.PageMsg</h1>
+    </div>
+    <div class="col-12 m-3 d-flex justify-content-center align-items-center">
+        <select id="SelectedCates" class="form-select" style="width:40%">
+            <option value="0" selected>@SuppliersDashboard.Resources.pages.Selectitem</option>
+        </select>
+    </div>
+
+    <div class="col-12" id="printer">
+        <p class="text-center h2 "> @SuppliersDashboard.Resources.pages.Returns </p>
+
+        <table id="table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        @SuppliersDashboard.Resources.Items.ItemName
+                    </th>
+                    <th>
+                       @SuppliersDashboard.Resources.pages.count
+                    </th>
+                    <th>
+                      @SuppliersDashboard.Resources.pages.priceun
+                    </th>
+                    <th>
+                       @SuppliersDashboard.Resources.pages.totalpil
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+
+        </table>
+
+    </div>
+</div>
+<div class="text-center p-4" style="background-color: #F3F6F9">
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+    <span style="width:20px"> </span>
+</div>
+
+<script>
+    let AllItems = [];
+    let ReturnItem = [];
+    var price = 0;
+    var count = 0;
+
+    function drowpop(item) {
+        let html = `<div class='p-3'>
+            <h3 class='text-center'> ${item.ItemName}</h3>
+            <div class='row'>
+            <div class='col-12' > رقم الصنف:
+            <span class='text-primary' id='baeefelmakhzan'> ${item.ItemID}</span>
+            </div>
+            <div class='col-12'>
+            <label>كمية المرتجع </label>
+            <input class='form-control' type='number' value=${0} onkeyup='changecount(this)' />
+            </div>
+            <div class='col-12'>
+            <label>السعر </label>
+            <input class='form-control' type='number' value=${item.Selling_Price}  onkeyup='changecurrentprice(this)'/>
+            </div>
+
+
+            <div>
+         <div class="d-flex justify-content-center">   <button id='submitadditemtobill' class=' m-3 btn btn-sm btn-outline-primary' onclick='addreturnitems(${item.ItemID} )'> اضافة </button>
+        </div>
+
+            </div>
+            </div>
+            </div>`;
+        ShowModal(html)
+    }
+
+
+    function drowpopedit(item) {
+        let html = `<div class='p-3'>
+            <h3 class='text-center'> ${item.ItemName}</h3>
+            <div class='row'>
+            <div class='col-12' > رقم الصنف:
+            <span class='text-primary' id='baeefelmakhzan'> ${item.ItemID}</span>
+            </div>
+            <div class='col-12'>
+            <label>كمية المرتجع </label>
+            <input class='form-control' type='number' value=${item.itemCount} onkeyup='changecount(this)' />
+            </div>
+            <div class='col-12'>
+            <label>السعر </label>
+            <input class='form-control' type='number' value=${item.UnitPrice}  onkeyup='changecurrentprice(this)'/>
+            </div>
+
+
+            <div>
+            <div class="d-flex justify-content-center">
+            <button id='submitadditemtobill' class=' m-3 btn btn-sm btn-outline-primary' onclick='editreturnitem(${item.ItemID} )'> تعديل </button>
+                 </div>
+            </div>
+            </div>
+            </div>`;
+        ShowModal(html)
+    }
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "/Screens/Getitems",
+            type: "post",
+            success: function (res) {
+                AllItems = res.data;
+                $.each(res.data, function (index, value) {
+                    let opt = ` <option value="${value.ItemID}" >${value.ItemName}</option>`
+                    $("#SelectedCates").append(opt)
+                });
+            }
+        })
+
+    })
+    $("#SelectedCates").change(() => {
+        let value = $("#SelectedCates").val();
+
+
+        let item = AllItems.find((e) => e.ItemID == value);
+        price = item.Selling_Price
+        count = 0;
+
+
+        console.log(item)
+        drowpop(item)
+        $("#SelectedCates").val("0")
+    })
+
+    function addreturnitems(id) {
+
+        let item = AllItems.find((e) => e.ItemID == id)
+        let returnitem = {}
+        // return Item
+
+
+
+        if (count <= 0 ) {
+
+            alert("كمية المرتجع غير صحيحة")
+
+
+
+        }
+        else if (price <= 0 ) {
+            alert("  السعر المرتجع غير محدد ")
+
+
+        }
+         else {
+            returnitem = { ItemID: item.ItemID, ItemName: item.ItemName, itemCount: count, UnitPrice: price, TotalPrice: count * price }
+            ReturnItem.push(returnitem)
+            drawbill(ReturnItem)
+
+        }
+
+
+        // console.log(curitem.ItemName + curitem.availableCount)
+        $("#myModal").modal("hide")
+    }
+
+
+    function editreturnitem(id) {
+
+        let item = ReturnItem.find((e) => e.ItemID == id)
+        let returnitem = {}
+        // return Item
+
+
+
+        if (count <= 0) {
+
+            alert("كمية المرتجع غير صحيحة")
+
+
+
+        }
+        else if (price <= 0) {
+            alert("  السعر المرتجع غير محدد ")
+
+
+        }
+        else {
+            const indexToRemove = ReturnItem.indexOf(item);
+
+                ReturnItem.splice(indexToRemove, 1);
+
+            returnitem = { ItemID: item.ItemID, ItemName: item.ItemName, itemCount: count, UnitPrice: price, TotalPrice: count * price }
+            ReturnItem.push(returnitem)
+            drawbill(ReturnItem)
+
+        }
+
+
+        // console.log(curitem.ItemName + curitem.availableCount)
+        $("#myModal").modal("hide")
+    }
+
+    function drawbill(returnitems) {
+        if (returnitems.length > 0) {
+
+            let html = "";
+
+            $.each(returnitems, (i, e) => {
+
+                html += `<tr>
+                        <td> ${e.ItemName}
+                        </td>
+                        <td>${e.itemCount}
+                        </td>
+                        <td>${e.UnitPrice}
+                        </td>
+                        <td>${e.TotalPrice}
+                        </td>
+                        <td><button class='btn btn-outline-primary btn-sm' onclick='EditReturnItem(${e.ItemID})'>تعديل</button>
+                        |<button class='btn btn-outline-danger btn-sm' onclick='DeleteReturnItem(${i})' >حذف</button>
+                        </td>
+
+                        </tr>`
+
+            })
+            $("#tbody").html(html)
+
+
+        } else {
+            $("#tbody").html(" ")
+        }
+
+    }
+
+
+
+    function DeleteReturnItem(index){
+        ReturnItem.splice(index,1)
+
+        drawbill(ReturnItem)
+    }
+    function EditReturnItem(id) {
+        let edititem = ReturnItem.find((e) => e.ItemID == id)
+        console.log(edititem)
+
+        drowpopedit(edititem)
+    }
+    function changecurrentprice(ele) {
+        price = $(ele).val()
+
+    }
+    function changecount(ele) {
+        count = $(ele).val();
+
+    }
+</script>
+

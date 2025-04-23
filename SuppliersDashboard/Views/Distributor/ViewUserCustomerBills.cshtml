@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "ViewUserCustomerBills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+        outline: unset !important;
+    }
+    td , th{
+        text-align:center;
+    }
+
+    table.dataTable tbody td, tbody {
+        border-bottom: unset;
+    }
+
+
+    table.dataTable tfoot th {
+        border-top: unset !important;
+        outline: unset !important;
+    }
+</style>
+
+<div class=" p-lg-3">
+
+
+    <input type="hidden" id="CusID" value="@ViewBag.CustomerId" />
+    <input type="hidden" id="UserID"  value="@ViewBag.UserId" />
+ 
+    <h2> @SuppliersDashboard.Resources.pages.distributor : @ViewBag.User </h2>
+    <h2> @SuppliersDashboard.Resources.pages.customer  : @ViewBag.Customer </h2>
+
+
+
+    <table id="BillsTable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @SuppliersDashboard.Resources.pages.billno
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.oldrem
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.remamount
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.amountrequired
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.salesamount
+                </th> 
+                <th>
+                    @SuppliersDashboard.Resources.pages.deffered
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.cash
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.adddate
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.collectionamount
+                </th> 
+                <th>
+                    @SuppliersDashboard.Resources.pages.typett
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.location 
+                </th>
+                  <th>
+                   
+                </th>
+                  
+               
+            </tr>
+        </thead>
+    </table>
+
+
+
+
+</div>
+<script>
+
+    $.ajax({
+        url: "/Distributor/GetUserCustomerBills?UserID=" + $("#UserID").val() + "&CusID=" + $("#CusID").val(),
+        type: "get",
+        data: "",
+        success: function (res) {
+
+            DrawTable(res.data);
+        }
+
+    })
+    function DrawTable(data) {
+
+        $("#BillsTable").DataTable({
+            'iDisplayLength': "25",
+            "bDestroy": true,
+            "bSearchable": true,
+            "responsive": true,
+            "language": {
+                "searchPlaceholder": 'Search...',
+                "sSearch": '',
+                "lengthMenu": '_MENU_ items/page',
+            },
+            "data": data,
+            "columns": [
+                { "data": "BillNo", "name": "BillNo", "width": 'auto' },
+                { "data": "Old_RemainingAmount", "name": "Old_RemainingAmount", "width": 'auto' },
+                { "data": "RemainingAmount", "name": "RemainingAmount", "width": 'auto' },
+                { "data": "Amount_Required", "name": "Amount_Required", "width": 'auto' },
+                { "data": "SalesAmount", "name": "SalesAmount", "width": 'auto' },
+                { "data": "Deferred", "name": "Deferred", "width": 'auto' },
+                { "data": "cash", "name": "cash", "width": 'auto' },
+                { "data": "Add_date", "name": "Add_date", "width": 'auto' },
+                { "data": "CollectionAmount", "name": "CollectionAmount", "width": 'auto' },
+                { "data": "Typett", "name": "Typett", "width": 'auto' },
+                {
+                    "data": null, render: function (data, i, e) {
+                        return '  <a class="direction-link" target="_blank" href="//maps.google.com/maps?f=d&amp;daddr=' + data.Longitude + ',' + data.Latitude + '">  <i style="color:#f00" class="fa fa-map-marker"></i></a>'
+                    }
+                }, {
+                    "data": null, render: function (data, i, e) {
+                        return '  <a class="btn btn-sm btn-primary" href="/Bills/BillsDetails?BillNo='+data.BillNo+'&BranchNo=@ViewBag.CustomerId"> @SuppliersDashboard.Resources.pages.details</a>'
+                    }
+                },
+
+
+            ]
+        });
+    }
+</script>

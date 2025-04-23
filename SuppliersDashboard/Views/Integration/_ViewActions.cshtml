@@ -1,0 +1,84 @@
+﻿@model SuppliersDashboard.BL.Model.Bill_Tbl
+<style>
+    .select2 {
+        width: 100%;
+    }
+
+    .select2-search__field {
+        max-width: 100%;
+    }
+
+    span {
+        width: inherit;
+    }
+</style>
+<div class="modal-body">
+    <div class="form-horizontal">
+        <hr />
+        @if (Model.sendToeta == 0)
+        {
+            <h3>Pending...</h3>
+            <hr />
+            <button onclick="Hold(@Model.RecordID)" class="btn btn-warning" style="width:100%">Hold</button>
+        }
+        else if (Model.sendToeta == 1)
+        {
+            <h3>Submitted Invoice!</h3>
+        }
+        else if (Model.sendToeta == 2 || Model.sendToeta == 4)
+        {
+            <h3>Invalid Invoice!</h3>
+            <hr />
+            <button onclick="Resubmit(@Model.RecordID)" class="btn btn-danger" style="width:100%">Resubmit Invoice!</button>
+            <button onclick="CloseBtn(@Model.RecordID)" class="btn btn-danger" style="margin-top: 15px; margin-left:195px">Close</button>
+        }
+        else if (Model.sendToeta == 3)
+        {
+            <h3>Valid Invoice!</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button onclick="Cancel(@Model.RecordID)" class="btn btn-danger" style="width:100%">Cancel Invoice!</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <a target="_blank" href="/Integration/ViewDocument?UUID=@Model.uuid">  <img src="~/Images/pdf.png" style="width: 100%; margin:auto; cursor:pointer" @*onclick="ShowInv(@Model.RecordID)"*@ /></a>
+
+                
+                    <input type="hidden" value="@Model.uuid" id="UUID" />
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+            <button onclick="CloseBtn(@Model.RecordID)" class="btn btn-danger" style="margin-top: 15px; margin-left:195px">Close</button>
+        }
+        else if (Model.sendToeta == 5)
+        {
+            <h3>Cancelled Invoice!</h3>
+            <button onclick="CloseBtn(@Model.RecordID)" class="btn btn-danger" style="margin-top: 15px; margin-left:195px">Close</button>
+
+        }
+        else if (Model.sendToeta == 6)
+        {
+            <h3>Rejected Invoice!</h3>
+            <button onclick="CloseBtn(@Model.RecordID)" class="btn btn-danger" style="margin-top: 15px; margin-left:195px">Close</button>
+
+        }
+        else if (Model.sendToeta == 7)
+        {
+            <h3>Received Invoice!</h3>
+            <button onclick="Cancel(@Model.RecordID)" class="btn btn-danger" style="width:100%">Cancel Invoice!</button>
+            <button onclick="CloseBtn(@Model.RecordID)" class="btn btn-danger" style="margin-top: 15px; margin-left:195px">Close</button>
+
+        }
+        else if (Model.sendToeta == 10)
+        {
+            <h3>Holding!</h3>
+            <button onclick="Cancel(@Model.RecordID)" class="btn btn-danger" style="width:100%">Cancel Invoice!</button>
+            <button onclick="CloseBtn(@Model.RecordID)" class="btn btn-danger" style="margin-top: 15px; margin-left:195px">Close</button>
+
+        }
+    </div>
+</div>
+
+

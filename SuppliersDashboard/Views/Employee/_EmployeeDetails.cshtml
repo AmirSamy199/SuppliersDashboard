@@ -1,0 +1,261 @@
+﻿@model SuppliersDashboard.Models.Employees
+<style>
+   /* .modal .modal-body {
+        width: 280%;
+    }
+*/
+    label {
+        text-align: center;
+        padding: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+        margin-left: 0%;
+    }
+</style>
+<div class="modal-body pd-25">
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Name :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="EmployeeName">@Model.EnglishName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.ArabicName : </label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="EmployeeARName">@Model.ArabicName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Nationality :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Nationality">@Model.Nationality</p>
+        </div>
+    </div>
+
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.NationalID : </label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="NationalID">@Model.NationalID</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.ID_StartDate :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ID_StartDate">@Model.IDStartDate</p>
+
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.ID_ExpDate :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ID_ExpDate">@Model.IDExpDate</p>
+
+        </div>
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Email :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Email">@Model.Email</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Location :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Location">@Model.Address</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.DateOfBirth :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="DateOfBirth">@Model._Date_of_Birth</p>
+        </div>
+    </div>
+
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Place_Of_Birth :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Place_Of_Birth">@Model.Place_Of_Birth</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Phone :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Phone">@Model.Phone</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Department :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ddlDepartment">@Model.DepartmentName</p>
+        </div>
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Company :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ddlCompany">@Model.CompanyName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Manager :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ddlManager">@Model.ManagerName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.University :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ddlUniversity">@Model.UniversityName</p>
+        </div>
+    </div>
+    <div class="row mt-2">
+
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.EducationGrade :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ddlEducationGrade">@Model.GradeENName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.GraduationDate :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="GraduationDate">@Model.GraduationDate</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Degree :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ddlDegree">@Model.DegreeName</p>
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Job :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="JobsList">@Model.JobName</p>
+        </div>
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Categories :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="EmployeeSalary">@Model.jobCategories</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.jobLevel :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Title">@Model.jobLevel</p>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.PositionType :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Gender">@Model.TypeName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.EmployeeSalary :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="EmployeeSalary">@Model.EmployeeSalary</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Martial_Status :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Martial_Status">@Model.MartialStatusName</p>
+        </div>
+    </div>
+
+
+
+    <div class="row mt-2">
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.DateOfHiring :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="DateOfHiring">@Model._Date_of_hiring</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.ProbationDate :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="ProbationDate">@Model.Probation_Date</p>
+
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.EndOfHiring :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="EndOfHiring">@Model._End_of_hiring</p>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.InsuranceStatus : </label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="InsuranceStatus">@Model.InsuranceStatusName</p>
+        </div>
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.NoOfInsurancee : </label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="InsuranceNumber">@Model.EmployeeInsrance</p>
+        </div>
+        @if (Model.InsuranceStatus == 1)
+        {
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.SocialSecurityStartDate :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="SocialSecurityStartDate">@Model.SocialSecurityDate</p>
+            </div>
+        }
+        else
+        {
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.CompanyinsuranceDate :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="CompanyinsuranceDate">@Model.SocialSecurityDate</p>
+            </div>
+        }
+    </div>
+
+    <div class="row mt-2">
+
+        <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Gender :</label>
+        <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+            <p id="Gender">@Model.GenderName</p>
+        </div>
+        @if (Model.Gender == 1)
+        {
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57" id="MilitaryStatus">@SuppliersDashboard.Resources.Employees.Military_Status :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0" id="ddlMilitaryStatus">
+                <p id="ddlMilitary_Status">@Model.MilitaryStatusName</p>
+            </div>
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.MilitaryDate :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="MilitaryDate">@Model.Military_Date</p>
+            </div>
+        }
+        else
+        {
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Religion :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="Religion">@Model.ReligionName</p>
+            </div>
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.MotherName :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="MotherName">@Model.MotherName</p>
+            </div>
+        }
+
+
+    </div>
+    <div class="row mt-2">
+
+
+        @if (Model.Gender == 1)
+        {
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.Religion :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="Religion">@Model.ReligionName</p>
+            </div>
+            <label class="col-lg-2 form-control-label font-weight-bold" style="color: #163e57">@SuppliersDashboard.Resources.Employees.MotherName :</label>
+            <div class="col-lg-2 mg-t-10 mg-lg-t-0">
+                <p id="MotherName">@Model.MotherName</p>
+            </div>
+
+        }
+
+        @*<div class="col-lg-2" style="display: flex; justify-content: center; ">
+               <a href="@Url.Action("Download",new { id = Model.Employee_ID})" ><i class="fa fa-cloud-download mr-2" aria-hidden="true"></i>@SuppliersDashboard.Resources.Employees.Download</a>
+            </div>*@
+    </div>
+
+    <div class="row mt-2">
+
+        <button disabled type="button" class="btn btn-danger pd-x-20" data-dismiss="modal" onclick="cloesmodel()" style=" width: auto; height: 39px; margin-right: 2%;">@SuppliersDashboard.Resources.Items.Close</button>
+
+     </div>
+
+
+</div>
+

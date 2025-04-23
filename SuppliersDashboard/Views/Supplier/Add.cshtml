@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = @SuppliersDashboard.Resources.llayout.addsupplier;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container p-4">
+    <div class="row">
+        
+    <div class="col-lg-12 col-xl-12">
+
+        <div class=" rounded h-100 ">
+            <h2 class="p-3 text-center">@SuppliersDashboard.Resources.llayout.addsupplier </h2>
+            <div class="text-center" style="display:none" id="validationmsg"> <span class="text-danger">@SuppliersDashboard.Resources.llayout.plzfillallfields </span></div>
+            <div class="mb-3">
+                <label for="name" class="form-label">@SuppliersDashboard.Resources.pages.name </label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
+
+            </div>
+            <div class="mb-3">
+                <label for="responsableperson" class="form-label">@SuppliersDashboard.Resources.llayout.responsobileperson </label>
+                <input type="text" class="form-control" id="responsableperson">
+            </div>
+            <div class="mb-3">
+                <label for="telephone" class="form-label">@SuppliersDashboard.Resources.pages.phone  </label>
+                <input type="text" class="form-control" id="telephone" aria-describedby="telephone">
+
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">@SuppliersDashboard.Resources.llayout.address </label>
+                <input type="text" class="form-control" id="address">
+            </div>
+
+            <button onclick="SubmitForm()" class="btn btn-primary">@SuppliersDashboard.Resources.llayout.addsupplier </button>
+
+        </div>
+    </div>
+
+    
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+        function SubmitForm() {
+            let name = $("#name").val();
+            let responsableperson = $("#responsableperson").val();
+            let telephone = $("#telephone").val();
+            let address = $("#address").val();
+            if (validationInputValue(name) && validationInputValue(responsableperson) && validationInputValue(telephone) && validationInputValue(validationInputValue)) {
+                $.ajax({
+                    type: "post",
+                    url: "/Supplier/AddSupplier",
+                    data: {
+                        name: name,
+                        responsableperson: responsableperson,
+                        telephone: telephone,
+                        address: address
+                    },
+                    success: (res) => {
+                           //$("#modalcontent").text(res.data.Message)
+                            let html = `<h1 class='text-center p-5'> ${res.data.Message}</h1>`
+                            $("#modalcontent").html(html)
+                            $("#myModal").modal("show")
+
+                            formEmpty();
+                        
+                    }
+                })
+
+            } else {
+                shownotValidationMessage();
+            }
+
+        }
+        function SubmitadddisgroupForm() {
+            let disname = $("#adddisgroupname").val();
+            let agent = $("#adddisgroupagent").val();
+            if (disname == "" || agent <=0) {
+                $("#adddisgrpupvalidatemsg").fadeIn(3000, () => {
+                    $("#adddisgrpupvalidatemsg").fadeOut(3000)
+                });
+            } else {
+
+                $.ajax({
+                    type: "post",
+                    url: "/Supplier/AddDisGroup",
+                    data: {
+                        name: disname,
+                        Agent : agent
+                    },
+                    success: (res) => {
+                     
+                            let html = `<h1 class='text-center p-5'> ${res.data.Message}</h1>`
+                            $("#modalcontent").html(html)
+                            $("#myModal").modal("show")
+
+                            formEmpty();
+                        
+                    }
+                })
+            }
+
+        }
+        function validationInputValue(value) {
+            if (value == null || value == "" || value == undefined || value == 0)
+                return false;
+            return true;
+        }
+        function formEmpty() {
+            $("#adddisgroupname").val("")
+            $("#name").val('');
+           $("#responsableperson").val('');
+            $("#telephone").val('');
+             $("#address").val('');
+        }
+
+        function shownotValidationMessage() {
+            $("#validationmsg").fadeIn(3000, () => {
+                $("#validationmsg").fadeOut(3000)
+            });
+        }
+
+
+    </script>
+    
+    
+    }

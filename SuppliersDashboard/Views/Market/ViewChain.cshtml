@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "ViewChain";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 2px solid !important;
+        }
+
+        table {
+            margin: 10px;
+            border-collapse: collapse !important;
+        }
+    </style>
+
+
+    <h2 class="text-center p-4">
+        <span>
+           @SuppliersDashboard.Resources.pages.pp
+        </span>
+        <span>(  </span>
+        <span>@ViewBag.ComName  </span>
+        <span>)</span>
+    </h2>
+    <h2 class="text-center p-4">
+        <span>
+            @SuppliersDashboard.Resources.pages.about
+        </span>
+
+        (<span id="datefrom">  </span>)
+        <span>@SuppliersDashboard.Resources.pages._in  </span>
+        (<span id="dateto"></span>)
+    </h2>
+    <table id="table" style="width:100%" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.billno
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.Items.Date
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.llayout.Branch
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.Invoicevalue
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.Returns
+                </th>
+                <th>
+                    @SuppliersDashboard.Resources.pages.totalpilnet
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="LayoutExcel('/Report/KashfSelselaExcel?ComID=@ViewBag.ComID','مطالبة خاصة ب سلسلة @ViewBag.ComName')" id="excelbtn">@SuppliersDashboard.Resources.llayout.Execl</button>
+</div>
+
+<script>
+    let counter = 1;
+    $("#spinner").addClass("show");
+    $.ajax({
+        type: "post",
+        url: "/Market/GetViewChain",
+        data: {
+            ComID:@ViewBag.ComID , 
+        }
+        , success: (res) => {
+            debugger
+            $("#datefrom").text(res.datefrom)
+            $("#dateto").text(res.dateto)
+            if (res.data.State == 1) {
+
+              
+                drawTable(res.data.Data)
+
+            } else {
+
+            }
+            $("#spinner").removeClass("show");
+        }
+    })
+    function drawTable(data) {
+        $("#table").dataTable({
+            'iDisplayLength': 25,
+            "bDestroy": true,
+            "bSearchable": true,
+            "responsive": true,
+            "language": {
+                "searchPlaceholder": 'Search...',
+                "sSearch": '',
+                "lengthMenu": '_MENU_ items/page',
+            },
+            data: data,
+            "columns": [
+
+                {
+                    "data": null, render: () => {
+                        return counter++;
+                    }
+                },
+                { "data": "BillNo", "name": "BillNo", "width": "Auto" },
+                { "data": "_Add_Date", "name": "_Add_Date", "width": "Auto" },
+                { "data": "BranchName", "name": "BranchName", "width": "Auto" },
+
+                { "data": "SalesAmount", "name": "SalesAmount", "width": "Auto" },
+                { "data": "ReturnAmount", "name": "ReturnAmount", "width": "Auto" },
+
+                { "data": "bal", "name": "bal", "width": "Auto" }
+
+
+
+
+            ]
+
+        })
+    }
+
+</script>

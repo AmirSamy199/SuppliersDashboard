@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "ItemsKPI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 p-4 ">
+
+            <input type="text" id="myInput" class="form-control  text-center" onkeyup="SearchInTable('myInput','mytable')" placeholder=".. بحث ...">
+        </div>
+
+    </div>
+
+    <div id="printer">
+        <style>
+            td, th {
+                text-align: center !important;
+                border: 1.5px solid #000 !important;
+            }
+
+            th {
+                color: #000 !important;
+                font-weight: bold !important;
+                background-color: #ccc !important
+            }
+
+            table {
+                border-collapse: collapse !important
+            }
+        </style>
+
+        <h2 class="text-center p-3">
+            @SuppliersDashboard.Resources.Items.Itemss
+        </h2>
+
+
+        <div class="  card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+
+                    <table class="table table-bordered table-hover" id="mytable">
+                        <thead>
+                            <tr>
+                                <th>  @SuppliersDashboard.Resources.llayout.pro</th>
+                                <th> @SuppliersDashboard.Resources.llayout.ProductName   </th>
+                                <th> @SuppliersDashboard.Resources.Items.CategoryCode  </th>
+                                <th>@SuppliersDashboard.Resources.Items.CategoryName </th>
+                                <th> @SuppliersDashboard.Resources.pages.size  </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Items != null)
+                            {
+
+                                foreach (var item in ViewBag.Items)
+                                {
+                                    <tr>
+
+
+                                        <td> @item.Item_ID </td>
+                                        <td> @item.ItemName  </td>
+                                        <td> @item.ItemGroup_ID  </td>
+                                        <td> @item.CategoryName  </td>
+                                        <td> @item.size K.G </td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i>@SuppliersDashboard.Resources.llayout.print </button>
+        </div>
+    </div>
+    @*<div class="text-center p-4">
+           <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @SuppliersDashboard.Resources.llayout.print</button>
+    </div>*@
+</div>
+<script>
+
+</script>

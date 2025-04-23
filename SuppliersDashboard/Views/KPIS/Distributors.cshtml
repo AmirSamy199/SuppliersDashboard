@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Distributors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 p-4">
+
+            <input type="text" id="myInput" class="form-control text-center" onkeyup="SearchInTable('myInput','mytable')" placeholder=" بحث ...">
+        </div>
+
+    </div>
+
+    <div id="printer">
+        <style>
+            td, th {
+                text-align: center !important;
+                border: 1.5px solid #000 !important;
+            }
+
+            th {
+                color: #000 !important;
+                font-weight: bold !important;
+                background-color: #ccc !important
+            }
+
+            table {
+                border-collapse: collapse !important
+            }
+        </style>
+
+        <h2 class="text-center p-3">
+            @SuppliersDashboard.Resources.pages.distributors
+        </h2>
+
+
+
+        <div class="card-ERB ">
+            <div class="  table-responsive  ">
+
+                <table id="mytable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th> @SuppliersDashboard.Resources.pages.SalesCode </th>
+                            <th> @SuppliersDashboard.Resources.pages.name   </th>
+                            <th> @SuppliersDashboard.Resources.pages.Serial_No   </th>
+                            <th> @SuppliersDashboard.Resources.pages.Classification  </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.DISS)
+                        {
+                            <tr>
+                                <td> @item.RecordID </td>
+                                <td> @item.UserName  </td>
+                                <td> @item.Serial_No  </td>
+                                <td> @item.DisGroupName </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i>@SuppliersDashboard.Resources.llayout.print </button>
+        </div>
+    </div>
+    @*<div class="text-center p-4">
+        <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i>@SuppliersDashboard.Resources.llayout.print </button>
+    </div>*@
+</div>

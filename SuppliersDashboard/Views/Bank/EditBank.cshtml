@@ -1,0 +1,131 @@
+﻿@model  SuppliersDashboard.Models.BankInfo_tbl
+@using SuppliersDashboard.Resources
+
+<div class="modal-header pd-y-20 pd-x-25">
+    <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">@Banks.EditBank</h6>
+    @*<button id="Close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>*@
+</div>
+<div class="modal-body pd-25">
+    <div class="form-layout form-layout-4">
+        @Html.HiddenFor(m => m.RecordID, new { id = "ID" })
+        <div class="row mg-t-20">
+            <label class="col-sm-4 form-control-label">@Banks.BankName: <span class="tx-danger"></span></label>
+            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                @Html.TextBoxFor(m => m.bankName, new { @class = "form-control", id = "BankName", type = "text" })
+            </div>
+        </div><!-- row -->            <br />
+
+        <div class="row mg-t-20">
+            <label class="col-sm-4 form-control-label">@Banks.BankAccount: <span class="tx-danger"></span></label>
+            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                @Html.TextBoxFor(m => m.bankAccountNo, new { @class = "form-control", id = "AccNo" })
+
+            </div>
+        </div>            <br />
+
+        <div class="row mg-t-20">
+            <label class="col-sm-4 form-control-label">@Banks.BankAddress: <span class="tx-danger"></span></label>
+            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                @Html.TextBoxFor(m => m.bankAddress, new { @class = "form-control", id = "Address" })
+
+            </div>
+        </div>            <br />
+
+        <div class="row mg-t-20">
+            <label class="col-sm-4 form-control-label">@Banks.IBAN: <span class="tx-danger"></span></label>
+            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                @Html.TextBoxFor(m => m.bankAccountIBAN, new { @class = "form-control", id = "IBAN" })
+            </div>
+        </div>            <br />
+
+        <div class="row mg-t-20">
+            <label class="col-sm-4 form-control-label">@Banks.Swiftcode: <span class="tx-danger"></span></label>
+            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                @Html.TextBoxFor(m => m.swiftCode, new { @class = "form-control", id = "swift", type = "text" })
+
+            </div>
+        </div>            <br />
+
+        <div class="row mg-t-20">
+            <label class="col-sm-4 form-control-label">@Banks.terms:  <span class="tx-danger"></span></label>
+            <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                @Html.TextBoxFor(m => m.terms, new { @class = "form-control", id = "terms", type = "text" })
+
+            </div>
+        </div>            <br />
+
+        <div id="error">
+            <ul>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="submit" class="btn btn-primary mg-r-5">@pages.edit</button>
+    <button id="cancel" class="btn btn-secondary">@Banks.Cancel</button>
+</div><!-- form-layout-footer -->
+<script>
+    $('#cancel').click(function () {
+        $('#Close').trigger('click');
+    });
+
+    $('#submit').click(function () {
+
+        if (IsValid()) {
+            $('#error ul').empty();
+            $.ajax({
+                url: '/Bank/EditBank',
+                type: "post",
+                data: {
+                    Bankname: $('#BankName').val(),
+                    address: $('#Address').val(),
+                    accountNo: $('#AccNo').val(),
+                    IBANCode: $('#IBAN').val(),
+                    swiftCode: $('#swift').val(),
+                    terms: $('#terms').val(),
+                    id: $('#ID').val()
+                },
+                success: function (data) {
+                    LoadTable();
+                    $('#modal').modal('hide');
+                },
+                error: function () {
+
+                },
+            })
+        }
+    });
+    function IsValid() {
+        $('#error ul').empty();
+        var error = false;
+        if ($('#BankName').val().length == 0) {
+            error = true;
+        }
+        if ($('#AccNo').val().length == 0) {
+            error = true;
+        }
+        if ($('#Address').val().length == 0) {
+            error = true;
+        }
+        if ($('#IBAN').val().length == 0) {
+            error = true;
+        }
+        if ($('#swift').val().length == 0) {
+            error = true;
+        }
+        if ($('#terms').val().length == 0) {
+            error = true;
+        }
+        if (error) {
+            $('#error ul').append("<li class='text-danger'>Enter all required fields</li>");
+
+            //$('#error ul').append("<li class='text-danger'>اكمل جميع البيانات المطلوبة</li>");
+        }
+
+        return !error;
+    }
+</script>
+
+

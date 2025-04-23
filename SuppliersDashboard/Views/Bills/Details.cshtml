@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<input type="hidden" value="@ViewBag.BaseId"  id="BaseId"/>
+
+<div class="container">
+    <div class="text-center">
+        <h3 class="h5" id="headerhead">
+        </h3>
+    </div>
+    <div class="raw">
+        <div class="col-sm-4">
+            <h5 class="h7 text-primary"> @SuppliersDashboard.Resources.pages.billno</h5>
+            <div id="BillNo">
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h5 class="h7 text-primary"> @SuppliersDashboard.Resources.pages.adddate</h5>
+            <div id="BillDate">
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h5 class="h7 text-primary"> @SuppliersDashboard.Resources.pages.distributor</h5>
+            <div id="distributerName">
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h5 class="h7 text-primary"> @SuppliersDashboard.Resources.pages.tbbeforediscount</h5>
+            <div id="TotalAmountBeforDiscount">
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h5 class="h7 text-primary">@SuppliersDashboard.Resources.pages.tbafterdiscount</h5>
+            <div id="TotalAmountAfterDiscount">
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <table id="BillsDetailsTable" class="display BillsTable">
+        <thead>
+            <tr>
+        
+                <th scope="col">@SuppliersDashboard.Resources.pages.name </th>
+                <th scope="col"> @SuppliersDashboard.Resources.pages.count </th>
+                <th scope="col"> @SuppliersDashboard.Resources.pages.supplier </th>
+                <th scope="col"> @SuppliersDashboard.Resources.pages.discount </th>
+                <th scope="col"> @SuppliersDashboard.Resources.pages.size </th>
+                <th scope="col"> @SuppliersDashboard.Resources.pages.totalprice </th>
+                <th scope="col"> @SuppliersDashboard.Resources.pages.supplierprice</th>
+            </tr>
+        </thead>
+
+    </table>
+
+   
+
+</div>
+
+
+
+
+<script>
+
+
+    $("#spinner").addClass("Show");
+    $.ajax({
+        url: "/Bills/GetBillDetailsByBillNumber?Id= " + $("#BaseId").val(),
+       // url: "//scopos-khattab.cloud/api/Suppliers/GetBillDetailsByBillNumber?Id= " + $("#BaseId").val(),
+        async: false,
+        type: "get",
+        data: {},
+        success: function (res) {
+            if (res.State = 2) {
+                $("#headerhead").text(res.data.distributerName);
+                $("#BillDate").text(res.data.BillDateString);
+                $("#BillNo").text(res.data.BillNo);
+                $("#distributerName").text(res.data.distributerName);
+                $("#TotalAmountBeforDiscount").text(res.data.TotalAmountBeforDiscount);
+                $("#TotalAmountAfterDiscount").text(res.data.TotalAmountAfterDiscount);
+
+
+                $('#BillsDetailsTable').css("width","100%")
+                $('#BillsDetailsTable').DataTable({
+                    "destroy": true, // In order to reinitialize the datatable
+                    "pagination": true, // For Pagination
+                    "sorting": true, // For sorting
+                    "aaData": res.data.Items,
+                    "columns": [{
+                        "data": "ItemName",
+                          },
+                        {
+                        "data": "ItemCount",
+                        },
+                        {
+                        "data": "Supplier",
+                        }, {
+                            "data":"ItemDiscount"
+                        }, {
+                        "data": "ItemSize",
+                        }, {
+                            "data": "TotalPrice",
+                        }, {
+                            "data":"SupplyPrice"
+                        }
+                    ]
+                });
+                $("#spinner").removeClass("Show")
+            }
+        }
+    })
+</script>

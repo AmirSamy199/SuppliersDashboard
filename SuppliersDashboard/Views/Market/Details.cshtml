@@ -1,0 +1,203 @@
+﻿@model IEnumerable<SuppliersDashboard.ViewModels.DetailsData>
+@{
+    ViewBag.Title = @SuppliersDashboard.Resources.pages.details;
+    var ID = ViewBag.MarketID;
+    var supID = ViewBag.SupID;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid pt-4 " style="padding: 1.5rem;">
+    <div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.tbafterdiscount</p>
+                    <h6 class="mb-0" id="TotalAmountBeforDiscount"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.tbafterdiscount </p>
+                    <h6 class="mb-0" id="TotalAmountAfterDiscount"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-area fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.vat</p>
+                    <h6 class="mb-0" id="VAT"></h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.taavat</p>
+                    <h6 class="mb-0" id="TotalAmountAfterVAT"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-area fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.cash</p>
+                    <h6 class="mb-0" id="TotalCash"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.deffered</p>
+                    <h6 class="mb-0" id="TotalDeferred"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.ramount</p>
+                    <h6 class="mb-0" id="ReturnAmount"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">@SuppliersDashboard.Resources.pages.collectionamount</p>
+                    <h6 class="mb-0"id="CollectionAmount"></h6>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="col-12">
+    <div class="bg-light rounded h-100 p-4" id="Content">
+        <h6 class="h3">Markets Table </h6>
+        <div class="table-responsive">
+            <table class="table" id="Table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:">#</th>
+                        <th scope="col" style="width:10%">@SuppliersDashboard.Resources.pages.adddate</th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.tbbeforediscount </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.tbafterdiscount </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.vat </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.taavat </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.cash </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.deffered </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.collectionamount </th>
+                        <th scope="col" style="width:">@SuppliersDashboard.Resources.pages.ramount </th>
+                        <th scope="col" style="width:"> @SuppliersDashboard.Resources.pages.distributor</th>
+                    </tr>
+                </thead>
+                <tbody id="TableBody">
+                </tbody>
+            </table>
+            <div style="text-align: center;">
+                <h5 class="text-primary">@SuppliersDashboard.Resources.llayout.pages</h5>
+            </div>
+            <div class='btn - group me - 2' style="width: 100%;" id="Pages">
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @{
+        <script>
+            $(document).ready(function () {
+                LoadData();
+            })
+
+
+            function LoadData() {
+                if ($('#SupID').val() != "") {
+                    
+                    $.ajax({
+                        type: "post",
+                        url: "/Market/LoadDetailsTable",
+                        data: { MarketID: parseInt(@ID), SupID:  parseInt(@supID)},
+                        datatype: "json",
+                        traditional: true,
+                        success: function (data) {
+                            Table(data, 1)
+                        }
+                    });
+                }
+            }
+
+            function Table(Data, PN) {
+
+                var DataTabel = JSON.parse(JSON.stringify(Data));
+                var PageSize = 20
+                var start = (PN - 1) * PageSize
+                var end = start + PageSize
+
+                var items = DataTabel.data.slice(start, end)
+              
+                document.getElementById("TableBody").innerHTML = " ";
+                document.getElementById("Pages").innerHTML = " ";
+
+                var TotalAmountBeforDiscount = 0
+                var TotalAmountAfterDiscount = 0
+                var VAT = 0
+                var TotalAmountAfterVAT = 0
+                var TotalCash = 0
+                var TotalDeferred = 0
+                var ReturnAmount = 0
+                var CollectionAmount = 0
+
+                for (let item in items) {
+                    document.getElementById("TableBody").innerHTML += "<tr> <th> <label>" + String(Number(item) + 1) + "</label></th> <th> <label style='direction: rtl'>" + items[item].Date.substring(0, 10) + "</label></th>"
+                        + "<th> <label style='direction: rtl'>" + items[item].TotalAmountBeforDiscount + "</label></th>" + "<th> <label style='direction: rtl'>" + items[item].TotalAmountAfterDiscount + "</label></th>"
+                        + "<th> <label style='direction: rtl'>" + items[item].VAT + "</label></th>"
+                        + "<th> <label style='direction: rtl'>" + items[item].TotalAmountAfterVAT + "</label></th>" + "<th> <label style='direction: rtl'>" + items[item].Cash + "</label></th>"
+                        + "<th> <label style='direction: rtl'>" + items[item].Deferred + "</label></th>" + "<th> <label style='direction: rtl'>" + items[item].CollectionAmount + "</label></th>"
+                        + "<th> <label style='direction: rtl'>" + items[item].ReturnAmount + "</label></th>" + "<th> <label style='direction: rtl'>" + items[item].Distributor + "</label></th>"
+
+                    TotalAmountBeforDiscount += items[item].TotalAmountBeforDiscount;
+                    TotalAmountAfterDiscount += items[item].TotalAmountAfterDiscount;
+                    VAT += items[item].VAT;
+                    TotalAmountAfterVAT += items[item].TotalAmountAfterVAT;
+                    TotalCash += items[item].Cash;
+                    TotalDeferred += items[item].Deferred;
+                    ReturnAmount += items[item].ReturnAmount;
+                    CollectionAmount += items[item].CollectionAmount;
+                }
+                document.getElementById("TotalAmountBeforDiscount").innerText = TotalAmountBeforDiscount;
+                document.getElementById("TotalAmountAfterDiscount").innerText = TotalAmountAfterDiscount;
+                document.getElementById("VAT").innerText = VAT;
+                document.getElementById("TotalAmountAfterVAT").innerText = TotalAmountAfterVAT;
+                document.getElementById("TotalCash").innerText = TotalCash;
+                document.getElementById("TotalDeferred").innerText = TotalDeferred;
+                document.getElementById("ReturnAmount").innerText = ReturnAmount;
+                document.getElementById("CollectionAmount").innerText = CollectionAmount;
+
+           
+                var p = DataTabel.Pages
+                for (let i = 1; i <= p; i++) {
+                    document.getElementById("Pages").innerHTML += "<button type='button' id='Pbtn' onclick='Table(" + JSON.stringify(Data) + "," + i + ")' class='btn btn-primary' style='margin-left:10px; margin-bottom:5px;'>" + i + "</button>"
+                }
+
+            }
+           
+            $('#SupID').change(function () {
+                
+                LoadTable(1);
+            })
+        </script>
+    }
+}
+

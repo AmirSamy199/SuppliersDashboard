@@ -1,0 +1,345 @@
+﻿@using SuppliersDashboard.Controllers
+@model ConfirmUpdateListPriceModel
+@{
+    int i = 1;
+    int ii = 1;
+    int iii = 1;
+    ViewBag.Title = "ConfirmUpdatePrice";
+}
+
+<h2 class="h2 text-center"> طلبات تغيير الاسعار </h2>
+
+<div class="row">
+    <div class="col-lg-3 p-2">
+        <button onclick="$('#SpecialPrice').collapse('show'); $('#PriceList').collapse('hide');$('#DistributorPrice').collapse('hide'); " class="btn btn-primary w-100">
+            الاسعار الخاصة
+        </button>
+    </div>
+    <div class="col-lg-3 p-2">
+        <button onclick="$('#SpecialPrice').collapse('hide'); $('#PriceList').collapse('show');$('#DistributorPrice').collapse('hide');" class="btn btn-primary w-100">
+            قوائم الاسعار
+        </button>
+    </div>
+    <div class="col-lg-3 p-2">
+        <button class="btn btn-primary w-100" onclick="$('#SpecialPrice').collapse('hide'); $('#PriceList').collapse('hide');$('#DistributorPrice').collapse('show');">
+            مجموعات المناديب
+        </button>
+    </div>
+
+
+</div>
+
+<div>
+    <div class="collapse show" id="SpecialPrice">
+
+
+        @if (Model.SpecialPrice != null && Model.SpecialPrice.Count > 0)
+        {
+            <h3 class="p-3 text-center text-success">
+                للاسعار الخاصة
+            </h3>
+            <div class="row">
+                <div class="col-lg-3">
+                    <button class="btn btn-primary w-100 text-center" onclick="acceptallitemprice(1,'SpecialPrice')">
+                        قبول الكل
+                    </button>
+                </div>
+                <div class="col-lg-1">
+
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn btn-danger w-100 text-center" onclick="acceptallitemprice(2,'SpecialPrice')">
+                        رفض الكل
+                    </button>
+                </div>
+            </div>
+            <div style="height:20px"></div>
+            <table class="table-bordered table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            الصنف
+                        </th>
+                        <th>
+                            الفرع
+                        </th>
+                        <th>السعر</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SpecialPrice)
+                    {
+                        <tr>
+                            <td>
+                                @(i++)
+                            </td>
+                            <td>
+                                @item.ItemName
+                            </td>
+                            <td>
+                                @item.BaseName
+                            </td>
+                            <td>
+                                @item.Selling
+                            </td>
+                            <td>
+                                <button class="btn btn-success" onclick="acceptitemprice(1 , @item.BaseTableId , 'SpecialPrice' , this)">
+                                    قبول
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="acceptitemprice(2 , @item.BaseTableId , 'SpecialPrice' , this)">
+                                    رفض
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-center font-large-5 p-25">
+                لا يوجد طلبات معلقة
+                للاسعار الخاصة
+            </p>
+        }
+
+
+    </div>
+    <div id="PriceList" class="collapse">
+
+        <h3 class="p-3 text-center text-success">
+            لقوائم الاسعار
+        </h3>
+        <div class="row">
+            <div class="col-lg-3">
+                <button class="btn btn-primary w-100 text-center" onclick="acceptallitemprice(1,'PriceList')">
+                    قبول الكل
+                </button>
+            </div>
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-3">
+                <button class="btn btn-danger w-100 text-center" onclick="acceptallitemprice(2,'PriceList')">
+                    رفض الكل
+                </button>
+            </div>
+        </div>
+        <div style="height:20px"></div>
+
+        @if (Model.PriceList != null && Model.PriceList.Count > 0)
+        {
+
+            <table class="table-bordered table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            الصنف
+                        </th>
+                        <th>
+                            القائمة
+                        </th>
+                        <th>السعر</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PriceList)
+                    {
+                        <tr>
+                            <td>
+                                @(ii++)
+                            </td>
+                            <td>
+                                @item.ItemName
+                            </td>
+                            <td>
+                                @item.BaseName
+                            </td>
+                            <td>
+                                @item.Selling
+                            </td>
+                            <td>
+                                <button class="btn btn-success" onclick="acceptitemprice(1 , @item.BaseTableId , 'PriceList' , this)">
+                                    قبول
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="acceptitemprice(2 , @item.BaseTableId , 'PriceList',this)">
+                                    رفض
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-center font-large-5 p-25">
+                لا يوجد طلبات معلقة
+                لقوائم الاسعار
+            </p>
+        }
+
+
+    </div>
+    <div id="DistributorPrice" class="collapse">
+        @if (Model.Distributor != null && Model.Distributor.Count > 0)
+        {
+            <h3 class="p-3 text-center text-success">
+                لمجموعات المناديب
+            </h3>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <button class="btn btn-primary w-100 text-center" onclick="acceptallitemprice(1,'DistributorPrice')">
+                        قبول الكل
+                    </button>
+                </div>
+                <div class="col-lg-1">
+
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn btn-danger w-100 text-center" onclick="acceptallitemprice(2,'DistributorPrice')">
+                        رفض الكل
+                    </button>
+                </div>
+            </div>
+            <div style="height:20px"></div>
+
+            <table class="table-bordered table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            الصنف
+                        </th>
+                        <th>
+                            المجموعة
+                        </th>
+                        <th>السعر</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Distributor)
+                    {
+                        <tr>
+                            <td>
+                                @(iii++)
+                            </td>
+                            <td>
+                                @item.ItemName
+                            </td>
+                            <td>
+                                @item.BaseName
+                            </td>
+                            <td>
+                                @item.Selling
+                            </td>
+                            <td>
+                                <button class="btn btn-success" onclick="acceptitemprice(1 , @item.BaseTableId , 'DistributorPrice' , this)">
+                                    قبول
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="acceptitemprice(2 , @item.BaseTableId , 'DistributorPrice' , this)">
+                                    رفض
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-center font-large-5 p-25">
+                لا يوجد طلبات معلقة
+                لمجموعات المناديب
+            </p>
+        }
+
+
+    </div>
+
+</div>
+
+<script>
+    function acceptitemprice(newstatus, tableid, tabletype  ,btn) {
+        $.ajax({
+            type: "post",
+            url: "/Items/ConfirmUpdatePrice",
+            data: {
+                BaseTableId: tableid,
+                NewStatus : newstatus,
+                PriceType: tabletype
+            },
+            success: (res) => {
+                console.log(res)
+                showsuccessoperation(res.Message)
+                setTimeout(() => {
+
+                    $(btn).parent().parent().hide(1000)
+                }, 3000)
+            }
+        })
+
+      
+    }
+        function acceptallitemprice(newstatus, tabletype  ) {
+        $.ajax({
+            type: "post",
+            url: "/Items/ConfirmAllUpdatePrice",
+            data: {
+               
+                NewStatus : newstatus,
+                PriceType: tabletype
+            },
+            success: (res) => {
+                console.log(res)
+                showsuccessoperation(res.Message)
+                setTimeout(() => {
+                    location.reload()
+                }, 4000)
+            }
+        })
+
+      
+    }
+
+
+
+</script>
+
+
+
+
+

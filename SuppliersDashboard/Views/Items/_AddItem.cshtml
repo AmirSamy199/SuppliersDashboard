@@ -1,0 +1,313 @@
+﻿
+
+
+<div class="col-12">
+
+    <div class="row">
+        <div class="col-8">
+
+        </div> 
+        <div class="col-4">
+            <button class="btn btn-sm btn-outline-primary" onclick="AddNewCategory()"> @SuppliersDashboard.Resources.Items.AddCategory </button>
+        </div>
+
+    </div>
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">@SuppliersDashboard.Resources.pages.Additem </h6>
+        <div class="text-center">
+            <span style="display:none" id="additemerrormsg" class="text-danger"> </span>
+        </div>
+        <div class="row mb-3">
+            <label for="additemsupplierinput" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.pages.supplier1  </label>
+            <div class="col-sm-10">
+
+                <select id="additemsupplierinput" class="form-control col-9 form-select">
+                    @if (ViewBag.Suppliers != null)
+                    {
+                        <option> @SuppliersDashboard.Resources.pages.choosesupplier </option>
+                        foreach (var item in ViewBag.Suppliers)
+                        {
+                            <option value="@item.Record_ID"> @item.CompanyName </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="additemcategoryinput" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.pages.category  </label>
+            <div class="col-sm-10">
+                <select id="additemcategoryinput" class="form-control form-select">
+                    <option>--</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="additemnameinput" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.pages.name </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="additemnameinput">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="additembarcodeinput" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.pages.Barcode </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="additembarcodeinput">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="code" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.Items.ItemCode </label>
+            <div class="col-sm-10">
+                <input type="text" value="99999999" class="form-control" id="code">
+            </div>
+        </div>
+        @*<div class="row mb-3">
+            <label for="descriptioninput" class="col-sm-2 col-form-label">الوصف  </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="descriptioninput">
+            </div>
+        </div>*@
+
+        <div class="row mb-3">
+            <label for="additemsizeinput" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.llayout.size  </label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="additemsizeinput">
+            </div>
+        </div>
+        <div class="row mb-3 d-none">
+            <label for="additemsupplypriceinput" class="col-sm-2 col-form-label"> @SuppliersDashboard.Resources.pages.supplierprice   </label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="additemsupplypriceinput" value="1">
+            </div>
+        </div>
+        <div class="row mb-3 d-none">
+            <label for="additemsellprice" class="col-sm-2 col-form-label"> </label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="additemsellprice" value="1">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="type" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.pages.type  </label>
+            <select class="form-select form-control" id="type">
+                <option value="0">@SuppliersDashboard.Resources.Items.ChooseType  </option>
+                <option>GS1</option>
+                <option>EGS</option>
+            </select>
+        </div>
+        <div class="row mb-3">
+            <label for="vat" class="col-sm-2 col-form-label">@SuppliersDashboard.Resources.pages.tax   </label>
+            <select class="form-select form-control" id="vat">
+                @if (ViewBag.vat != null)
+                {
+                    <option value="0">@SuppliersDashboard.Resources.pages.Selecttax </option>
+
+                    foreach (var item in ViewBag.vat)
+                    {
+                        <option value="@item.Record_ID"> @item.Tax</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="row mb-3 ">
+            <label for="additemunittype" class="col-sm-2 col-form-label"> @SuppliersDashboard.Resources.pages.measruingunit      </label>
+            <div class="col-sm-10">
+                <select id="additemunittype" class="form-select form-control">
+
+                    @if (ViewBag.Units != null)
+                    {
+                        <option value="0">@SuppliersDashboard.Resources.pages.selectunity  </option>
+                        foreach (var item in ViewBag.Units)
+                        {
+                            <option value="@item.Id"> @item.Value </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="text-center p-3">
+            <span style="display:none" id="serveralertmsg" class="alert-success p-2">   </span>
+        </div>
+        <button type="submit" onclick="SubmitAddNewItem()" class="btn btn-primary">@SuppliersDashboard.Resources.Items.Add </button>
+
+    </div>
+</div>
+
+<script>
+    $("#additemsupplierinput").change(() => {
+        let value = $("#additemsupplierinput").val();
+     
+        additemchangeCategoriesselect(value)
+
+    });
+    function additemempty() {
+         //$("#additemsupplierinput").val('');
+     //   $("#additemcategoryinput").val('');
+        $("#additemnameinput").val('');
+         $("#additembarcodeinput").val('');
+         //$("#additemdescriptioninput").val('');
+        $("#additemsizeinput").val('');
+        $("#additemsupplypriceinput").val('');
+        $("#additemsellprice").val('');
+        $("#type").val('');
+        $("#vats").val('');
+    }
+    function additemchangeCategoriesselect(value) {
+            $.ajax({
+                type: "post",
+                url: "/Items/GetCategories",
+                data: {
+                    SupId: value
+                }, success: (res) => {
+                    let html = "<option>@SuppliersDashboard.Resources.pages.choosecategory </option>"
+                    $.each(res.data.Data, (i, e) => {
+                        html += "<option value='" + e.Id + "'>" + e.Value + "</option>"
+
+                    })
+
+                    $("#additemcategoryinput").html(html)
+                }
+            });
+
+        }
+
+
+    function validadditeminput(value) {
+        if (value == '' || value == 0) {
+
+            return false
+        }
+        return true
+    }
+    function validadditemselect (value) {
+        if (value == '' || value == 0) {
+
+            return false
+        }
+        return true;
+    }
+    function additemvalidation() {
+     
+        let suppliervalue = $("#additemsupplierinput").val();
+        if (validadditemselect(suppliervalue) == false)
+            return false
+        let categoryvalue = $("#additemcategoryinput").val();
+        if (validadditemselect(suppliervalue) == false)
+            return false;
+        let barcode = $("#additembarcodeinput").val();
+        if (validadditeminput(barcode) == false)
+            return false;
+        let size = $("#additemsizeinput").val();
+        if (validadditeminput(size) == false)
+            return false;
+        let suppprice = $("#additemsupplypriceinput").val()
+        if (validadditeminput(suppprice) == false)
+            return false;
+
+        return true; 
+    }
+    function SubmitAddNewItem() {
+        let supplier = $("#additemsupplierinput").val();
+        let category = $("#additemcategoryinput").val();
+        let name = $("#additemnameinput").val();
+        let barcode = $("#additembarcodeinput").val();
+        let sellprice = $("#additemsellprice").val();
+        let vat = $("#vat").val();
+        let type = $("#type").val();
+        let code = $("#code").val();
+        // let description = $("#additemdescriptioninput").val();
+        let size = $("#additemsizeinput").val();
+        let supplypricee = $("#additemsupplypriceinput").val();
+        if (additemvalidation()) {
+            
+
+            $.ajax({
+                type: "post",
+                url: "/Items/SubmitAddNewItem",
+                data: {
+                    supid : supplier,
+                    itemgroupid: category,
+                    name: name,
+                    barcode: barcode,
+                    supplyprice: supplypricee,
+                    size: size,
+                    sellprice: sellprice,
+                    vat: vat,
+                    code:code,
+                    type:type,
+                    unittype: $("#additemunittype").val(),
+                }, success: (res) => {
+                   
+                    if (res.data.State == 1) {
+
+                        $("#serveralertmsg").css("background","red").text(res.data.Message).fadeIn(4000, () => {
+                            $("#serveralertmsg").fadeOut(3000)
+                        })
+                        additemempty()
+                    } else {
+                        $("#additemerrormsg").text(res.data.Message).fadeIn(3000, () => {
+                            $("#additemerrormsg").fadeOut(3000)
+                        })
+                    }
+                }
+            })
+         
+        } else {
+            $("#additemerrormsg").text(" من فضلك املا جميع الحقول  ").fadeIn(3000, () => {
+                $("#additemerrormsg").fadeOut(3000)
+            })
+        }
+
+
+    }
+
+
+    function AddNewCategory(){
+        let supplieroptions = $("#additemsupplierinput").html();
+        let html = `
+        <div class='p-5'>
+        <h2 class='text-center'> اضافة فئة منتجات </h2>
+        <div class='text-center'> اختر المورد </div>
+        <div>
+        <select id="addcategorysupplierselect" class='form-control form-select'>${supplieroptions}</select>
+        </div> 
+        <div class='text-center'>  اسم الفئة  </div>
+        <div>
+        <input class='form-control' placeholder='ادخل الفئة '  id ='addcategorynameinput'/>
+        </div>
+        <div class='p-5 text-center'><button class='btn btn-outline-primary' onclick='SubmitAddNewCategory()'>اضافة </button></div>
+        </div>
+        `
+
+        ShowModal(html)
+    } 
+    function SubmitAddNewCategory() {
+        let supplier = $("#addcategorysupplierselect").val()
+        let Name = $("#addcategorynameinput").val()
+        if (supplier && Name) {
+          
+            $.ajax({
+                url: '/Items/AddnewCategory',
+                type: "post",
+                data: {
+                    supplier: supplier,
+                    name: Name
+                }, success: (res) => {
+                    
+                        ShowModal(`<h2 class='p-5 text-center'> ${res.data.Message} </h2>`)
+                    
+                }
+            })
+        } else {
+            ShowModal(`<h2 class='text-center p-5'>من فضلك ادخل بيانات صحيحة </h2>`)
+        }
+    }
+</script>
+
+
+
+
+
+
+
+

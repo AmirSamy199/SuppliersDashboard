@@ -1,0 +1,642 @@
+﻿@using SuppliersDashboard.Resources 
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+    ViewBag.Title = "Home Page" ;
+    List<string> Functions = SuppliersDashboard.Helper.Cokie.UserFunctionsGet();
+    string x = "" ;
+}
+@foreach(var item in Functions)
+{
+    <input type="hidden"  value="@item" class="funcs"/>
+}
+<style>
+    .homediv{
+        transition:0.5s ease-in-out ; 
+    }
+    .homediv > div:hover {
+        transform: translateY(-5px);
+        box-shadow: #ccc 3px 3px 9px;
+    }
+</style>
+<!-- Sale & Revenue Start -->
+
+
+
+            @if (Functions.Contains("طباعة فاتورة"))
+            {
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12 m-auto">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-header-2 col-lg-12" style="text-align:center">
+                                                <h5>@llayout.billsearch</h5>
+                                            </div>
+
+
+                                            <form class="theme-form theme-form-2 mega-form">
+                                                <div class="row d-flex justify-content-around">
+                                                    <div class="col-lg-4 text-center p-3">
+                                                        <input class="form-control" id="viewbillid" type="text" placeholder="@llayout.billNo">
+                                                    </div>
+
+                                                    <div class="col-lg-4 text-center p-3">
+                                                        <button style="margin:3px ; width:100%" class="btn btn-primary col-12 btn-lg" onclick="HomeViewBill()">   @llayout.view  </button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class=" homediv col-sm-12 col-lg-4" style="width: 100%;">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4" style="width: 100%">
+                    <div class="ms-3" style="">
+                        <p class="mb-2" style="display: flex; width: 199%"> <input id="viewbillid" style="width:60% ; margin:3px ; display:inline" type="number" class="form-control" placeholder="@llayout.billNo" /><button style="margin:3px ; width:29%" class="btn btn-primary" onclick="HomeViewBill()">   @llayout.view  </button></p>
+                        <h6 class="mb-0"></h6>
+                    </div>
+                </div>
+            </div>*@
+            }
+
+
+
+
+
+
+
+
+
+
+
+        @*<div class="d-none" id="mahmoudeldeeb">
+
+                <div class='text-center p-3'>
+                    <ul class='modal-ul'>
+                        <div>
+                            <div>
+                                <h1 class="text-center"><i class="fas fa-print"></i></h1>
+                            </div>
+                        </div>
+
+                        <li class='onlyone'> <a href="/WareHousing/StoreGard" class="dropdown-item  ">@llayout.Ware_House_Review </a>                   </li>
+                        <li class='onlyone'>        <a href="/Distributor/CustomerDeffers" class="dropdown-item">@llayout.Indebtedness</a>        </li>
+                        <li class='onlyone'>        <a href="/Distributor/CustomerLaters" class="dropdown-item">المتاخرات </a>         </li>
+                        <li class='onlyone'>        <a href="/NewReports/TotalPillsReports" class="dropdown-item">@llayout.Invoice_totals </a>         </li>
+                        <li class='onlyone'>        <a href="/NewReports/ExpensesReports" class="dropdown-item">@llayout.Expenses </a>         </li>
+                        <li>
+                            <a href="#" class="dropdown-item" onclick='ShowSecond("ul2" , this)'> @llayout.items   </a>
+                            <ul class='secondul collapse' id='ul2'>
+
+                                <li>     <a href="/Report/ItemCard" class="dropdown-item debitsreportscollapse "> @llayout.Item_Transaction    </a>                       </li>
+
+
+                                <li>    <a href="/NewReports/TotalItemsSales" class="dropdown-item debitsreportscollapse "> @llayout.Item_Total_Sale      </a>          </li>
+
+                                <li>    <a href="/NewReports/TotalCategoriesSalesReport" class="dropdown-item debitsreportscollapse ">  @llayout.Group_Total_Sale     </a>          </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-item" onclick='ShowSecond("ul3" , this)'> @llayout.Customers     </a>
+                            <ul class='secondul collapse' id='ul3'>
+                                <li>    <a href="/Branch/BranchDetails" class="dropdown-item Branchesreportscollapse ">   @llayout.Customer_Details   </a> </li>
+                                <li>      <a href="/Market/Index" class="   dropdown-item branshsettingcollapse ">@llayout.Account_statement</a>    </li>
+
+                            </ul>
+                        </li>
+                        <li>    <a href="/Branch/BranchDetails" class="dropdown-item Branchesreportscollapse ">   بيانات عميل   </a> </li>
+                        <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item Branchesreportscollapse ">   مبيعات المندوبين   </a> </li>
+
+                        <li>
+                        <a href="#" class="dropdown-item" onclick='ShowSecond("ul-15" , this)'> @llayout.distributors    </a>
+                        <ul class='secondul collapse' id='ul-15'>
+                            <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item Branchesreportscollapse ">   @llayout.Distributors_Sales   </a> </li>
+                        </ul>
+                    </li>
+                       <li>
+                        <a href="#" class="dropdown-item" onclick='ShowSecond("ul-r-1" , this)'> KPIS    </a>
+                        <ul class='secondul collapse' id='ul-r-1'>
+                            <li>    <a href="/KPIS/Distributors" class="dropdown-item  ">   @llayout.Distributors_Details   </a> </li>
+                            <li>    <a href="/KPIS/ItemsKPI" class="dropdown-item  ">   @llayout.Items_Details   </a> </li>
+                            <li>    <a href="/KPIS/BranchesKPI" class="dropdown-item  ">   @llayout.Customer_Details   </a> </li>
+                            <li>    <a href="/KPIS/PriceListKPI" class="dropdown-item  ">   @llayout.Prices_Details   </a> </li>
+                        </ul>
+                      </li>
+
+
+                    </ul>
+                </div>
+
+
+            </div>*@
+
+
+
+
+
+        <style>
+            .modal-ul {
+                /*list-style-type: none;*/
+                list-style-type: disclosure-closed;
+                font-weight: bold
+            }
+
+                .modal-ul a {
+                    /*list-style-type: none;*/
+
+                    font-weight: bold
+                }
+
+            .secondul {
+                list-style-type: none;
+            }
+
+
+            li.onlyone {
+                list-style-type: none
+            }
+        </style>
+
+
+
+        <script>
+
+
+    let input = document.getElementById('viewbillid')
+    input.addEventListener("keypress", function (event) {
+
+        if (event.key === "Enter") {
+
+    HomeViewBill()
+
+        }
+    });
+
+    let Functions = [];
+    var funcs = document.querySelectorAll(".funcs");
+    for (let i = 0; i < funcs.length; i++) {
+        Functions.push($(funcs[i]).val())
+    }
+
+    // التقارير
+
+    function showHomeReportList() {
+        //let xxx = $("#mahmoudeldeeb").html()
+        //console.log(xxx)
+        //ShowModal(xxx)
+
+       // return true;
+        let HTML = `
+        <div class='text-center p-3'> <ul class='modal-ul'>
+        <div>
+                <div >
+                <h1 class="text-center"><i class="fas fa-print" ></i></h1>
+            </div>
+        </div>
+         `
+        HTML += ` <li class='onlyone' > <a href="/CP/SalesCPReport" class="dropdown-item  ">  @llayout.Commission_project </a>                   </li >`
+
+        if (Functions.includes("صفحة جرد المخزن"))
+            HTML += ` <li class='onlyone' > <a href="/WareHousing/StoreGard" class="dropdown-item  ">@llayout.Ware_House_Review </a>                   </li >`
+        if (Functions.includes("صفحة تقرير المديونيات")) {
+            HTML += `    <li class='onlyone'>        <a href="/Distributor/CustomerDeffers" class="dropdown-item">@llayout.Indebtedness</a>        </li>`
+            HTML += `    <li class='onlyone'>        <a href="/NewReports/BillLatersReport" class="dropdown-item">@llayout.Invoicearrears</a>        </li>`
+
+        }
+        ///NewReports/itemDistributors
+        //if (Functions.includes("صفحة تقرير المتاخرات"))
+        //    HTML += `           <li class='onlyone'>        <a href="/Distributor/CustomerLaters" class="dropdown-item">المتاخرات </a>         </li>`
+        if (Functions.includes("تقرير اجماليات الفواتير"))
+            HTML += `           <li class='onlyone'>        <a href="/NewReports/TotalPillsReports" class="dropdown-item">@llayout.Invoice_totals </a>         </li>`
+        if (Functions.includes("تقرير المصاريف"))
+            HTML += `           <li class='onlyone'>        <a href="/NewReports/ExpensesReports" class="dropdown-item">@llayout.Expenses </a>         </li>`
+        if (Functions.includes("تقرير اوراق الدفع"))
+            HTML += `           <li class='onlyone'>        <a href="/NewReports/MoneyPaper" class="dropdown-item">  @llayout.Paymentpapers  </a>         </li>`
+        if (Functions.includes("تقربر جرد المخزن الفرعي"))
+            HTML += `           <li class='onlyone'>        <a href="/NewReports/Subwarehouseguard" class="dropdown-item">@llayout.sub  </a>         </li>`
+
+        if (Functions.includes("تقرير العجوزات") ){
+
+            HTML +=`      <li><a href="#" class="dropdown-item" onclick='ShowSecond("ul222" , this)'> @llayout.inability   </a>
+         <ul class='secondul collapse' id='ul222'>`
+
+            HTML += ` <li>     <a href="/NewReports/ShortFalls" class="dropdown-item  "> @llayout.Storeshortage     </a>                       </li>`
+            HTML += `  <li>    <a href="/NewReports/MoneyShortFalls" class="dropdown-item  "> @llayout.Moneyshortage       </a>          </li>`
+
+
+
+            HTML += `  </ul> </li>`
+        }
+
+        if (Functions.includes("صفحة تقرير كشف حركة صنف") || Functions.includes("صفحة تقرير مبيعات صنف") || Functions.includes("صفحة تقرير مبيعات مجموعة") || Functions.includes("صفحة تقرير مجموع مبيعات صنف") || Functions.includes("صفحة تقرير مجموع مبيعات مجموعة")){
+
+            HTML +=`      <li><a href="#" class="dropdown-item" onclick='ShowSecond("ul2" , this)'> @llayout.items   </a>
+                                    <ul class='secondul collapse' id='ul2'>`
+            if (Functions.includes("صفحة تقرير كشف حركة صنف"))
+                   HTML += ` <li>     <a href="/Report/ItemCard" class="dropdown-item debitsreportscollapse "> @llayout.Item_Transaction    </a>                       </li>`
+                    if (Functions.includes("صفحة تقرير كشف حركة صنف"))
+                   HTML += ` <li>     <a href="/Report/ItemCard" class="dropdown-item debitsreportscollapse "> @llayout.Item_Transaction    </a>                       </li>`
+                @*if (Functions.includes("صفحة تقري
+                   @*if (Functions.includes("صفحة تقرير مبيعات صنف"))
+                       HTML += ` <li>    <a href="/Report/ItemSales" class="dropdown-item debitsreportscollapse "> @llayout.Item_Sale    </a>                        </li>`
+                if (Functions.includes("صفحة تقرير مبيعات مجموعة"))
+                       HTML += ` <li>    <a href="/Report/CatogriesSalesReport" class="dropdown-item debitsreportscollapse "> @llayout.Group_Sale    </a>          </li>`*@
+            if (Functions.includes("صفحة تقرير مجموع مبيعات صنف")) {
+                HTML += `  <li>    <a href="/NewReports/itemDistributors" class="dropdown-item debitsreportscollapse ">    @llayout.s  </a>          </li>`
+                HTML += `  <li>    <a href="/NewReports/TotalItemsSales" class="dropdown-item debitsreportscollapse "> @llayout.e       </a>          </li>`
+                HTML += `  <li>    <a href="/NewREports/ItemsReport" class="dropdown-item debitsreportscollapse ">    @llayout.g   </a>          </li>`
+
+            }
+            if (Functions.includes("صفحة تقرير مجموع مبيعات مجموعة"))
+                   HTML += `  <li>    <a href="/NewReports/TotalCategoriesSalesReport" class="dropdown-item debitsreportscollapse ">  @llayout.Group_Total_Sale     </a>          </li>`
+            HTML +=`  </ul> </li>`
+        }
+
+
+        if (Functions.includes("صفحة تقرير بيانات العملاء") || Functions.includes("صفحة العملاء") /*|| Functions.includes("صفحة تقرير مبيعات المندوبين")*/) {
+
+                     HTML +=` <li>
+                                <a href="#" class="dropdown-item" onclick='ShowSecond("ul3" , this)'> @llayout.Customers     </a>
+                                <ul class='secondul collapse' id='ul3'>
+
+
+                     `
+            if (Functions.includes("صفحة تقرير بيانات العملاء"))
+                HTML += `  <li>    <a href="/Branch/BranchDetails" class="dropdown-item Branchesreportscollapse ">   @llayout.Customer_Details   </a> </li>`
+
+
+            if (Functions.includes("صفحة العملاء"))
+                HTML += `  <li>      <a href="/Market/Index" class="   dropdown-item branshsettingcollapse ">@llayout.Account_statement</a>    </li>`
+            HTML +=`</ul></li> `
+
+            //if (Functions.includes("صفحة تقرير بيانات العملاء"))
+                //HTML += `   <li>    <a href="/Branch/BranchDetails" class="dropdown-item Branchesreportscollapse ">   بيانات عميل   </a> </li>`
+            //if (Functions.includes("صفحة تقرير مبيعات المندوبين"))
+            //HTML +=`    <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item Branchesreportscollapse ">   مبيعات المندوبين   </a> </li>`
+            //HTML +=`   </ul> </li>`
+        }
+
+        if (Functions.includes("صفحة تقرير مبيعات المندوبين")) {
+
+            HTML += `   <li>
+                                <a href="#" class="dropdown-item" onclick='ShowSecond("ul-15" , this)'> @llayout.distributors    </a>
+                                <ul class='secondul collapse' id='ul-15'>
+                                 <li>   <a href="/Report/AllDistributorReportsDetails" class="dropdown-item Branchesreportscollapse ">   @llayout.Distributors_Sales   </a> </li>
+                          </ul>
+                        </li>`
+        }
+
+        if (Functions.includes("صفحات ال KPIS")) {
+
+                       HTML +=`   <li>
+                                <a href="#" class="dropdown-item" onclick='ShowSecond("ul-r-1" , this)'> KPIS    </a>
+                                <ul class='secondul collapse' id='ul-r-1'>
+                                 <li>    <a href="/KPIS/Distributors" class="dropdown-item  ">   @llayout.Distributors_Details   </a> </li>
+                                 <li>    <a href="/KPIS/ItemsKPI" class="dropdown-item  ">   @llayout.Items_Details   </a> </li>
+                                 <li>    <a href="/KPIS/BranchesKPI" class="dropdown-item  ">   @llayout.Customer_Details   </a> </li>
+                                 <li>    <a href="/KPIS/PriceListKPI" class="dropdown-item  ">   @llayout.Prices_Details   </a> </li>
+                                 <li>    <a href="/DashboardSuppliers/Index" class="dropdown-item  ">  @llayout.dawar  </a> </li>
+                          </ul>
+                        </li>`
+        }
+
+
+
+
+        HTML +=`</ul></div>`
+
+        ShowModal(HTML)
+    }
+    // الاعدادات
+    function showHomeSettingList() {
+        let HTML = `<div class='text-center p-3'> <ul class='modal-ul'>
+        <div >
+                <div>
+                <h1 class="text-center"><i class="fas fa-cog p-3"></i></h1>
+            </div>
+        </div>`
+        if (Functions.includes("صفحة تعديل الشيكات"))
+            HTML += `<li  class='onlyone'>  <a href="/Bank/index" class="dropdown-item">     @llayout.addbank   </a>  </li>`
+        if (Functions.includes("صفحة ادارة وتعديل المستخدمين")) {
+            HTML += ` <li class='onlyone' > <a href="/Employee/Index" class="dropdown-item  "> @llayout.addCustomer  </a>                   </li >`
+            HTML += ` <li class='onlyone' > <a href="/Admin/UsersManagement" class="dropdown-item  "> @llayout.Users_Management </a>                   </li >`
+        }
+        if (Functions.includes("صفحة اضافة او وقف صنف") || Functions.includes("صفحة تعديل الاسعار الخاصة") || Functions.includes("صفحة تعديل الاسعار")) {
+
+            HTML += ` <li><a href="#" class="dropdown-item" onclick='ShowSecond("set1" , this)'>  @llayout.items    </a><ul class='secondul collapse' id='set1'>`
+            if (Functions.includes("صفحة اضافة او وقف صنف"))
+            HTML += ` <li>     <a href="/Items/ItemSetting" class="   dropdown-item itemssettingcollapse "> @llayout.Add_Or_Stop_Item   </a>          </li>`
+            if (Functions.includes("صفحة تعديل الاسعار الخاصة"))
+            HTML += `  <li>        <a href="/Items/Specialprice" class="   dropdown-item itemssettingcollapse "> @llayout.Special_Prices   </a>              </li>`
+            if (Functions.includes("صفحة تعديل الاسعار"))
+            HTML += ` <li>        <a href="/Items/AddItemPrice" class="   dropdown-item itemssettingcollapse "> @llayout.Edit_Prices     </a>         </li>`
+
+            HTML += ` <li>        <a href="/Supplier/EditItemsPrices" class="   dropdown-item itemssettingcollapse "> @llayout.updateprice    </a>         </li>`
+
+            HTML += `         </ul></li>`
+        }
+
+        //HTML += `<li>
+
+        //                       <a href="#" class="dropdown-item" onclick='ShowSecond("set2" , this)'> اعدادات العملاء والمناطق    </a>
+        //                       <ul class='secondul collapse' id='set2'>
+        //
+        //                                                         </li>
+        //
+        //
+        //
+        //                       </ul>
+        //                </li>`
+        if (Functions.includes("صفحة العملاء") || Functions.includes("صفحة تعديل بيانات عميل") || Functions.includes("صفحة اضافة عميل") || Functions.includes("صفحة اضافة رصيد افتتاحي") /*|| Functions.includes("صفحة اضافة منطقة او حي")*/) {
+
+            HTML += `<li><a href="#" class="dropdown-item" onclick='ShowSecond("set2" , this)'> @llayout.Customers    </a><ul class='secondul collapse' id='set2'> `
+            if (Functions.includes("صفحة تعديل بيانات عميل"))
+                HTML += `  <li>      <a href="/Branch/EditBranchData" class="   dropdown-item branshsettingcollapse ">@llayout.Edit_Customer_Details </a></li>`
+            if (Functions.includes("صفحة اضافة عميل"))
+                HTML += `    <li>      <a href="/Branch/AddBranch" class="   dropdown-item branshsettingcollapse ">  @llayout.Add_Customer      </a>                     </li>`
+            if (Functions.includes("صفحة اضافة رصيد افتتاحي"))
+                 HTML += `  <li>      <a href="/Branch/AddOpeningBalance" class="   dropdown-item branshsettingcollapse ">  @llayout.Add_opening_balance       </a>    </li>`
+            //if (Functions.includes("صفحة اضافة منطقة او حي"))
+            //    HTML += `   <li>      <a href="/Screens/AddRange" class="   dropdown-item branshsettingcollapse ">  اضافة منطقة او حي       </a>             </li>`
+
+
+            HTML += `         </ul></li>`
+        }
+
+
+        if (Functions.includes("صفحة اضافة منطقة او حي")) {
+
+
+            HTML += `<li><a href="#" class="dropdown-item" onclick='ShowSecond("set4" , this)'> @llayout.Regions    </a><ul class='secondul collapse' id='set4'>
+                     <li>      <a href="/Screens/AddRange" class="   dropdown-item branshsettingcollapse ">  @llayout.Add_Region_Or_neighborhood    </a>             </li>
+                     </ul></li>
+                    `
+            //if (Functions.includes("صفحة العملاء"))
+            //    HTML += `  <li>      <a href="/Market/Index" class="   dropdown-item branshsettingcollapse ">العملاء</a>    </li>`
+            //if (Functions.includes("صفحة تعديل بيانات عميل"))
+            //    HTML += `  <li>      <a href="/Branch/EditBranchData" class="   dropdown-item branshsettingcollapse ">تعديل بيانات عميل </a></li>`
+            //if (Functions.includes("صفحة اضافة عميل"))
+            //    HTML += `    <li>      <a href="/Branch/AddBranch" class="   dropdown-item branshsettingcollapse ">  اضافة عميل      </a>                     </li>`
+            //if (Functions.includes("صفحة اضافة رصيد افتتاحي"))
+            //    HTML += `  <li>      <a href="/Branch/AddOpeningBalance" class="   dropdown-item branshsettingcollapse ">  اضافة رصيد افتتاحي       </a>    </li>`
+            //if (Functions.includes("صفحة اضافة منطقة او حي"))
+            //    HTML += `   <li>      <a href="/Screens/AddRange" class="   dropdown-item branshsettingcollapse ">  اضافة منطقة او حي    </a>             </li>`
+
+
+            //HTML += `         </ul></li>`
+
+        }
+
+
+        if (Functions.includes("صفحة تعديل او ايقاف مورد") || Functions.includes("صفحة اضافة مورد او مجموعة مندوبين")) {
+
+
+             HTML += `<li><a href="#" class="dropdown-item" onclick='ShowSecond("set3" , this)'> @llayout.suppliers    </a> <ul class='secondul collapse' id='set3'>`
+            if (Functions.includes("صفحة تعديل او ايقاف مورد"))
+              HTML += `     <li> <a href="/Supplier/Seting" class="   suppliersettingcollapse dropdown-item suppliersettingcollapse "> @llayout.Edit_Or_Stop_Supplier   </a> </li>`
+            if (Functions.includes("صفحة اضافة مورد او مجموعة مندوبين"))
+             HTML += `                      <li>  <a href="/Supplier/Add" class="   suppliersettingcollapse dropdown-item  "> @llayout.Add_Supplier     </a> </li>`
+
+            HTML += `</ul> </li>`
+
+        }
+
+        if (true) {//here put your condition of صفحة قنوات البيع
+
+            HTML += ` <li>
+                                <a href="#" class="dropdown-item" onclick='ShowSecond("ul5" , this)'> @llayout.Sales_channels     </a>
+                                <ul class='secondul collapse' id='ul5'>
+                                `
+
+            if (Functions.includes("اضافة وتعديل وكيل"))
+                HTML += `  <li> <a href="/Branch/AddEditAgent" class="dropdown-item Branchesreportscollapse ">   @llayout.addandeditagents   </a> </li> `
+            @*if (true)//here put your condition of تعديل قناة
+                HTML += ` <li> <a href="#" class="dropdown-item Branchesreportscollapse ">   @llayout.Edit_Channel   </a> </li> `//write your link of which you want to go to it*@
+            if (Functions.includes("صفحة اضافة مورد او مجموعة مندوبين"))
+                HTML += `                      <li>  <a href="/Supplier/AddreprsntGroup" class="   suppliersettingcollapse dropdown-item  "> @llayout.Add_Distributors_Group     </a> </li>`
+
+
+            HTML += `</ul ></li>`
+        }
+
+         HTML += ` </ul> </div> `
+
+        ShowModal(HTML)
+    }
+
+    function getdislist() {
+         let x
+
+                return x;
+    }
+    function ShowSecond(id , ele) {
+        $("#" + id).toggleClass("show")
+        if ($("#" + id).hasClass("show")) {
+            $(ele).parent().css("list-style-type","disclosure-open")
+        } else {
+            $(ele).parent().css("list-style-type","disclosure-closed")
+
+        }
+    }
+    //// العمليات
+    function showHomeOperationList() {
+        let disgroups = getdislist()
+
+        let LastHTML =``;
+
+        let HTML = `
+        <div class='text-center p-3'>
+        <ul class='modal-ul'>
+        <div >
+            <div >
+                <h1 class="text-center"> <i class="fas fa-tasks"></i> </h1>
+            </div>
+        </div>
+
+        `
+
+
+        let HTML1 =   ``
+
+        if (Functions.includes("صفحة تسليم المخزن")) {
+
+            HTML1+=   ` <li>
+                        <a href="#" class="dropdown-item" onclick='ShowSecond("ul1" , this)'> @llayout.wareHouse   </a>
+                        <ul class='secondul collapse' id='ul1'>`
+            if (Functions.includes("صفحة تسليم المخزن"))
+                HTML1+= ` <li > <a href="/Screens/DeliverStore" class=" showstore3mliatcollapse  dropdown-item">  @llayout.shift   </a> </li >  ` /*</li >*/
+            if (Functions.includes("صفحة تسليم بضاعة للمناديب"))
+                HTML1 += ` <li>   <a href="/WareHousing/PendingWareHouseRequests" class="  showstore3mliatcollapse  dropdown-item"> @llayout.Give_Products_To_Representative  </a>                     </li>`
+            if (Functions.includes("صفحة المردودات"))
+                HTML1 +=  ` <li>   <a href="/WareHousing/PendingMardodatWareHouseRequests" class="  showstore3mliatcollapse  dropdown-item"> @llayout.Receive_Products_To_Representative  </a>               </li>`
+            if (Functions.includes("صفحة جرد المخزن"))
+                HTML1 +=  `<li>   <a href="/WareHousing/StoreGard" class="  showstore3mliatcollapse  dropdown-item  ">@llayout.Inventory_of_accounts  </a>                                            </li>`
+            HTML1 += ` </ul> </li>`
+        }
+
+
+
+        if (Functions.includes("صفحة اغلاق وتسليم الخزنة")) {
+            HTML1 += `
+            <li>
+                        <a href="#" class="dropdown-item" onclick='ShowSecond("ul3" , this)'> @llayout.the_safe    </a>
+                        <ul class='secondul collapse' id='ul3'>
+                             <li>   <a href="/Accounting/CloseAcconterDay" class="   dropdown-item">  @llayout.shift   </a> </li>                                             </li>
+
+                        </ul> </li>
+            `
+        }
+        if (Functions.includes("صفحة البيع"))
+            HTML1 += `<li  class='onlyone'>   <a href="/Screens/Sale" class="dropdown-item"> @llayout.sale </a></li>`
+        if (Functions.includes("صفحة التحصيل"))
+            HTML1 += `<li  class='onlyone'>   <a href="/Screens/Collection" class="dropdown-item"> @llayout.Collection </a></li>`
+        if (Functions.includes("صفحة المشتريات"))
+            HTML1 += `<li  class='onlyone'>   <a href="/Screens/Buy" class="dropdown-item"> @llayout.Purchases </a> </li>`
+        if (Functions.includes("صفحة المصروفات"))
+             HTML1 += `<li  class='onlyone'>  <a href="/Screens/Masrofat" class="dropdown-item"> @llayout.Expenses </a>  </li>`
+        if (Functions.includes("صفحة تعديل الشيكات"))
+                    HTML1 += `<li  class='onlyone'>  <a href="/Screens/EditChecks" class="dropdown-item">  @llayout.Checks </a>  </li>`
+        if (Functions.includes("صفحة تصفية حساب اليوم"))
+            HTML1 += `<li  class='onlyone'>  <a href="/Screens/SettleAccount" class="dropdown-item"> @llayout.clear</a>  </li>`
+
+        HTML1+=`</ul> </div>
+
+
+        `
+
+        if (Functions.includes("صفحة ادارة المناديب")) {
+            LastHTML += HTML;
+          //  LastHTML += `<li class='onlyone'> <a href="/Supplier/DistributorGroups" class="dropdown-item">@pages.distributorsgroup </a> </li>`;
+            LastHTML += `<li class='onlyone'> <a href="/Distributor/GroupUsers" class="dropdown-item"> @llayout.Delegatemanagement  </a> </li>`;
+            LastHTML += HTML1;
+            ShowModal(LastHTML)
+            @*$.ajax({
+                "url": "/Home/GetDistributorGroups",
+                "type": "get",
+                "success": function (res) {
+                    let disgroups = ``
+                    if (res.State == 2) {
+                        for (let i = 0; i < res.data.length; i++) {
+
+
+                            disgroups += `<li class='onlyone'> <a href="/Distributor/GroupUsers/${res.data[i].Id}" class="dropdown-item">@String.Format(llayout.Representative_management,"${res.data[i].Name}") </a> </li>`
+                        }
+                        LastHTML += HTML;
+                        LastHTML += disgroups;
+                        LastHTML += HTML1;
+                        ShowModal(LastHTML)
+                    }
+                }
+
+            })*@
+        } else {
+            LastHTML += HTML;
+            LastHTML += HTML1;
+            ShowModal(LastHTML)
+
+        }
+
+       // ShowModal(HTML)
+    }
+    function HomeViewBill() {
+        let billno = $("#viewbillid").val()
+        console.log(billno);
+        debugger;
+        if (billno > 0) {
+            $.ajax({
+                url: "/CHIJpbnRlcg/Encrypt",
+                type: "post",
+                data: {
+                    key: String(billno)
+                }, success: (res) => {
+                    console.log(res);
+                    console.log("1111");
+                    location.href = `/chijpbnrlcg/T1UHSfl6oRmBLZg7E44aAg?QmlsbE5v=${res}`
+
+                }
+
+            })
+        }
+
+    }
+    function open1() {
+        let disgroups = getdislist()
+
+        let LastHTML =``;
+
+        let HTML = `
+        <div class='text-center p-3'>
+        <ul class='modal-ul'>
+        <div >
+            <div >
+                <h1 class="text-center"> <i class="fas fa-tasks"></i> </h1>
+            </div>
+        </div>
+
+        `
+
+
+        let HTML1 =   ``
+
+
+
+        if (Functions.includes("صفحة تعديل الشيكات"))
+            HTML1 += `<li  class='onlyone'>  <a href="/Integration/Get_All_Bill" class="dropdown-item">    @llayout.sendBill
+            </a>  </li>`
+        if (Functions.includes("صفحة تصفية حساب اليوم")) HTML1 += `<li  class='onlyone'>  <a href="/Integration/index" class="dropdown-item">  @llayout.integration</a>  </li>`
+
+        HTML1+=`</ul> </div>
+
+
+        `
+
+        if (Functions.includes("صفحة ادارة المناديب")) {
+            LastHTML += HTML;
+          //  LastHTML += `<li class='onlyone'> <a href="/Supplier/DistributorGroups" class="dropdown-item">@pages.distributorsgroup </a> </li>`;
+
+            LastHTML += HTML1;
+            ShowModal(LastHTML)
+            @*$.ajax({
+                "url": "/Home/GetDistributorGroups",
+                "type": "get",
+                "success": function (res) {
+                    let disgroups = ``
+                    if (res.State == 2) {
+                        for (let i = 0; i < res.data.length; i++) {
+
+
+                            disgroups += `<li class='onlyone'> <a href="/Distributor/GroupUsers/${res.data[i].Id}" class="dropdown-item">@String.Format(llayout.Representative_management,"${res.data[i].Name}") </a> </li>`
+                        }
+                        LastHTML += HTML;
+                        LastHTML += disgroups;
+                        LastHTML += HTML1;
+                        ShowModal(LastHTML)
+                    }
+                }
+
+            })*@
+        } else {
+            LastHTML += HTML;
+            LastHTML += HTML1;
+            ShowModal(LastHTML)
+
+        }
+
+       // ShowModal(HTML)
+    }
+
+
+
+    //$.post("/Home/TestHeader", (res) => {
+    //    console.log(res)
+    //})
+
+        </script>

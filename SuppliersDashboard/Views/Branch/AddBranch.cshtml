@@ -1,0 +1,528 @@
+﻿
+@{
+    ViewBag.Title = "AddBranch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="p-5">
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="AddNewCompany()">اضافة شركة </button>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-lg-2 text-center">
+            <button class="btn btn-primary" onclick="AddNewCompany()">اضافة شركة </button>
+
+        </div>-->
+    @*<div class="col-lg-2 text-center">
+                 <button class="btn btn-primary" onclick="AddNewCompanyType()">اضافة نوع شركة  </button>
+
+        </div>*@
+
+
+    <!--</div>-->
+    <div class="row">
+
+        <div class="col-12">
+            <h2 class="text-center">
+                اضافة فرع جديد
+            </h2>
+
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> اختر الشركة </label>
+
+
+            <input type="hidden" value="0" id="companyselect" />
+            <input list="comoptions" name="comoptions" class="form-control" placeholder="اختار شركة" id="companyselectinput" />
+            <datalist id="comoptions">
+                @foreach (var item in ViewBag.Companies)
+                {
+                    <option value="@item.Id">@item.Value </option>
+                }
+            </datalist>
+
+            <script>
+                $("#companyselectinput").change(() => {
+                    let id = $("#companyselectinput").val();
+                    $("#companyselect").val(id)
+                    let name = $('#comoptions option[value="' + id + '"]').text()
+                    $("#companyselectinput").attr("placeholder", name)
+                    $("#companyselectinput").val("")
+                })
+            </script>
+            @*<select class="form-control form-select" id="companyselect">
+                    <option value="0">اختر الشركة  </option>
+                    @if (ViewBag.Companies != null)
+                    {
+
+                        foreach (var item in ViewBag.Companies)
+                        {
+                            <option value="@item.Id">@item.Value </option>
+                        }
+                    }
+
+                </select>*@
+
+        </div>
+        <div class="col-lg-4 p-2">
+            <label>
+                النوع
+            </label>
+            <select id="CompanyType" class="form-control ">
+                <option value="0">  اختر النوع </option>
+                @if (ViewBag.CompanyTypes != null)
+                {
+
+                    foreach (var item in ViewBag.CompanyTypes)
+                    {
+                        <option value="@item.Id"> @item.Value</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="col-lg-4 p-2">
+            <label> اسم الفرع </label>
+            <input class="form-control" type="text" id="BranchName" placeholder="اسم الفرع " />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> اسم المسئول </label>
+            <input class="form-control" type="text" id="ContactName" placeholder="اسم المسئول " />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> رقم الهاتف</label>
+            <input class="form-control" type="text" id="Telephone1" placeholder="رقم الهاتف " />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label>البريد الالكتروني  </label>
+            <input class="form-control" type="text" id="Email" placeholder="البريد الالكتروني " />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> العنوان </label>
+            <input class="form-control" type="text" id="Address" placeholder="العنوان" />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label id="dislabel">
+                اختر المندوب
+            </label>
+            <input list="distributorselectoption" @*onchange='changelabel(this)'*@ name="distributorselectoption" class="form-control" placeholder=" اختر المندوب  " id="distributorselect">
+            <datalist id="distributorselectoption">
+                @if (ViewBag.Diss != null)
+                {
+
+                    foreach (var item in ViewBag.Diss)
+                    {
+                        <option value="@item.Id"> @item.Value </option>
+                    }
+                }
+            </datalist>
+
+        </div>
+        <div class="col-4 p-3 ">
+            <span>
+                المنطقة
+            </span>
+            <select id="RangeSelect" class="form-control form-select">
+                <option> اختر المنطقة </option>
+                @foreach (var item in ViewBag.Ranges)
+                {
+                    <option value="@item.Id"> @item.Value</option>
+                }
+            </select>
+        </div>
+        <div class="col-4 p-3 ">
+            <span>
+                الحي
+            </span>
+            <select id="regionselect" class="form-control form-select">
+                <option value="0"> -- </option>
+            </select>
+        </div>
+        <div class="col-4 p-3 ">
+            <span>
+                شروط الدفع
+            </span>
+            <select id="paymenttermsid" class="form-control form-select">
+                <option value="0"> -- </option>
+            </select>
+        </div>
+
+        <div class="col-4 p-3 ">
+            <div id="creditpaymentdiv" class="collapse">
+                <label>    عدد ايام التاخير او يوم الشهر  </label>
+                <input class="form-control" type="number" onclick="this.select()" value="0" id="credittermscountid" placeholder=" ايام  " />
+            </div>
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> خط طول  </label>
+            <input class="form-control" type="number" id="Longitude" placeholder="خط طول " />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> خد عرض   </label>
+            <input class="form-control" type="number" id="Latitude" placeholder="خط عرض " />
+        </div>
+
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="SubmitAddBranch()"> اضافة عميل </button>
+        </div>
+    </div>
+    @*<div class="p-5 text-center">
+        <button class="btn btn-primary" onclick="SubmitAddBranch()"> اضافة عميل </button>
+    </div>*@
+
+</div>
+<script>
+
+
+    $(document).ready(function () {
+
+        $("#RangeSelect").change(() => {
+            let RangeId = $("#RangeSelect").val()
+            $.ajax({
+                type: "post",
+                url: "/Distributor/GetRangeRegions",
+                data: { Range: RangeId },
+                success: (res) => {
+                    let html = " <option>اختر الحي </option>";
+                    $.each(res, (i, e) => {
+                        html += "<option value='" + e.Id + "'> " + e.Value + "</option>"
+                    })
+                    $("#regionselect").html(html)
+                }
+            })
+        })
+
+         $('#paymenttermsid').change(() => {
+             if ($('#paymenttermsid').val() == 1) // Cash
+             {
+                 $("#creditpaymentdiv").addClass('collapse')
+             } else {
+                 $("#creditpaymentdiv").removeClass('collapse')
+
+             }
+         })
+    })
+
+    $.get(`/Selector/GetPAymentTerms`, (res) => {
+
+            let html =`<option value='0'> اختر شروط الدفع </option>`
+        $.each(res.data.Data, (i, e) => {
+            html += `<option value='${e.Id}'>${e.Value}</option>`
+        })
+
+        $('#paymenttermsid').html(html)
+    })
+
+   
+        let AllDistributors = []
+
+        function changelabel(ele) {
+            // let e =
+            let value = AllDistributors.find(e => e.Record_ID == $(ele).val()).ItemName;
+            $("#dislabel").text(value)
+        }
+        function SubmitAddBranch() {
+            let comid = $("#companyselect").val()
+            if (comid <= 0) {
+                alert("ادخل الشركة ")
+                return
+            }
+            let name = $("#BranchName").val()
+            if (name == "") {
+                alert("ادخل اسم الفرع  ")
+                return
+            }
+            let phone = $("#Telephone1").val()
+            if (phone == "") {
+                alert("ادخل الهاتف  ")
+                return
+            }
+            let region = $("#regionselect").val()
+            if (region == "" || region <=0) {
+                alert("ادخل الحي  ")
+                return
+            }
+            let distributor = $("#distributorselect").val()
+            if (distributor == "" || distributor <= 0) {
+                alert("ادخل المندوب   ")
+                return
+            }
+            let comtype = $("#CompanyType").val()
+            if (comtype == "" || comtype <= 0) {
+                alert("ادخل نوع الشركة   ")
+                return
+            }
+
+            let payterms = $("#paymenttermsid").val()
+            let credittermscount = $("#credittermscountid").val()
+            if (payterms.toString() == 0) {
+                alert("ادخل شروط الدفع   ")
+                return
+            } else {
+                if (payterms != 1) {
+                    if (credittermscount <= 0) {
+                        alert("ادخل  المدة  لعملاء الكريديت    ")
+                        return
+                    }
+                }
+            }
+            let ContactName = $("#ContactName").val()
+            let Email = $("#Email").val()
+            let Address = $("#Address").val()
+            let Longitude = $("#Longitude").val()
+            let Latitude = $("#Latitude").val()
+
+            let model = { BranchName: name, ContactName: ContactName, Telephone1: phone, Latitude: Latitude, Longitude: Longitude, Email: Email, Address: Address, comid: comid, UserID: distributor, Region_ID: region, PaymentTermsId: payterms, DaysToBeLater: credittermscount, CompanyType :  comtype }
+
+            $.ajax({
+                url: "/Branch/SubmitAddbranch",
+                 type: "post",
+                data: {
+                    model: model
+                }, success: (res) => {
+
+                    let xhtml = `<div class='p-3'> <h5 class='text-center'> ${res.data.Message}</h5></div>`
+                    ShowModal(xhtml)
+
+                    setTimeout(() => {
+                        location.reload()
+
+                    }, 3000)
+
+                }
+
+            })
+
+        }
+       
+    function AddNewCompanyType() {
+         let html = `
+                         <div class="row p-5">
+                         <h3 class='text-center'> اضافة نوع شركة </h3>
+                    <div class="col-12 text-center">
+                        <label class="m-2">الاسم  </label>
+                        <input class="form-control" id="addcompanytypename" placeholder=" الاسم  " />
+
+
+                    </div>
+                        <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="SubmitAddCompanyType()"> اضافة عميل  </button>
+        </div>
+    </div>
+
+                    //<div class="col-12 p-3 text-center">
+                    //    <button class="btn btn-primary" onclick="SubmitAddCompanyType()"> اضافة عميل  </button>
+                    //</div>
+
+                </div>
+            `
+            ShowModal(html)
+    }
+
+        function AddNewCompany() {
+            let html = `
+                         <div class="row ">
+                    <div class="col-6 text-center">
+                        <label class="m-2">اسم الشركة </label>
+                        <input class="form-control" id="addcompanyname" placeholder="اسم الشركة " />
+
+
+                    </div>
+                      <div class="col-6 text-center">
+      <label class="m-2">التلفون  </label>
+      <input type="text" class="form-control" id="addcompanyp" placeholder="التلفون  " />
+
+
+  </div>
+  <div class="col-6 text-center">
+      <label class="m-2"> رقم التسجيل الضريبي  </label>
+      <input class="form-control"  type="number" id="addcompanyt" placeholder="رقم التسجيل الضريبي " />
+
+
+  </div>
+  <div class="col-6 text-center">
+      <label class="m-2">الدوله  </label>
+      <input class="form-control" id="addcompanyc" placeholder="الدوله  " />
+  </div>
+     <div class="col-6 text-center">
+     <label class="m-2">المحافظه  </label>
+     <input class="form-control" id="addcompanyg" placeholder="المحافظه  " />
+
+
+ </div>
+ <div class="col-6 text-center">
+     <label class="m-2">المنطقه  </label>
+     <input class="form-control" id="addcompanyr" placeholder="المنطقه  " />
+
+
+
+  </div>  <div class="col-6 text-center">
+     <label class="m-2">الشارع  </label>
+     <input class="form-control" id="addcompanys" placeholder="الشارع  " />
+
+
+ </div>
+   <div class="col-6 text-center">
+     <label class="m-2">رقم المبني  </label>
+     <input class="form-control"  type="number" id="addcompanyb" placeholder="رقم المبني  " />
+
+
+ </div>
+ <hr/>
+                     <div class="col-6 text-center">
+                <span>
+                    النوع
+                </span>
+                <select id="addcompanycompanytypeid" class="form-control ">
+                    <option value="0">  اختر النوع </option>
+                    @if(ViewBag.CompanyTypes != null)
+            {
+
+                    foreach (var item in ViewBag.CompanyTypes)
+                    {
+                        <option value="@item.Id"> @item.Value</option>
+                    }
+            }
+                </select>
+            </div>
+             <div class="col-6 text-center">
+
+               <span>
+     الضريبه النوع
+  </span>
+                <select id="addcompanycompanyv" class="form-control ">
+        <option value="0">  اختر الضريبه </option>
+        @if(ViewBag.vat != null)
+{
+
+        foreach (var item in ViewBag.vat)
+        {
+            <option value="@item.Record_ID"> @item.Tax</option>
+        }
+}
+    </select>
+
+</div>
+    <div class="col-6 text-center">
+
+               <span>
+                      قائمة الاسعار
+                  </span>
+                                <select id="addcompanypriceList" class="form-control ">
+                        <option value="0">  اختر قائمة الاسعار </option>
+                        @if(ViewBag.PricesLists != null)
+                {
+
+                        foreach (var item in ViewBag.PricesLists)
+                        {
+                            <option value="@item.Id"> @item.Value</option>
+                        }
+                }
+                    </select>
+
+              </div>
+
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="SubmitAddCompany()"> اضافة عميل  </button>
+        </div>
+    </div>
+
+            `
+            ShowModal(html)
+        }
+        function SubmitAddCompany() {
+            debugger
+            let name = $("#addcompanyname").val();
+            let type = $("#addcompanycompanytypeid").val()
+            let phone = $("#addcompanyp").val();
+            let taxno = $("#addcompanyt").val()
+            let R = $("#addcompanyr").val();
+            let g = $("#addcompanyg").val()
+            let street = $("#addcompanys").val();
+
+            let cuntry = $("#addcompanyc").val();
+            let buildnu = $("#addcompanyb").val()
+            let vat = $("#addcompanycompanyv").val();
+            let pricelistid = $("#addcompanypriceList").val()
+            if (name == "" || type == 0) {
+                alert("ادخل    بيانات الشركه كامله ")
+                return
+            }
+
+            else {
+
+
+            $.ajax({
+                url: "/Branch/SubmitAddCompany",
+                type: "post",
+                data :  {
+                    Name: name,
+                    Type: type,
+                    phone: phone,
+
+                    taxno: taxno,
+                    REGIONCITY: R,
+
+                    street: street,
+                    R_GOVERNATE1: g,
+                    cuntry: cuntry,
+                    buildnu: buildnu,
+                    TaxId: vat,
+                    pricelistid: pricelistid
+
+
+                },
+                success: (res) => {
+                    let xhtml = `<div class='p-3'> <h5 class='text-center'> ${res.data.Message}</h5></div>`
+                    ShowModal(xhtml)
+
+                    setTimeout(() => {
+                    location.reload()
+
+                    } , 3000)
+                }
+            })
+            }
+
+    }
+    function SubmitAddCompanyType() {
+        let name = $("#addcompanytypename").val();
+
+        if (name == "" ) {
+            alert("ادخل اسم    ")
+            return
+        }
+
+        else {
+
+
+            $.ajax({
+                url: "/Branch/SubmitAddCompanyType",
+                type: "post",
+                data: {
+                    Name: name
+
+
+                },
+                success: (res) => {
+                    let xhtml = `<div class='p-3'> <h5 class='text-center'> ${res.data.Message}</h5></div>`
+
+                    ShowModal(xhtml)
+                    setTimeout(() => {
+                        location.reload()
+
+                    }, 3000)
+                }
+            })
+        }
+    }
+</script>

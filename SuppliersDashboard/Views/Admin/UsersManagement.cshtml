@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "UsersManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+
+@*amir*@
+<div style="width:100%" >
+    @Html.Partial("~/Views/PartialManageAdmin/ManageUser.cshtml")
+</div>
+
+
+@*girges*@
+<div style="width:100%">
+    @Html.Partial("~/Views/PartialManageAdmin/ManageGroup.cshtml")
+</div>
+
+<select style="display:none" id="hiddenidforcompanytypes">
+    @if(ViewBag.CompanyTypes != null)
+            {
+                foreach(var item in ViewBag.CompanyTypes)
+                {
+                    <option value="@item.Id">@item.Value</option>
+                }
+            }
+</select>

@@ -1,0 +1,119 @@
+﻿@model List<SuppliersDashboard.ViewModels.salemortg3atVM>
+@{
+    int i = 1;
+    ViewBag.Title = "مردودات البائع ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <input type="hidden" id="twice" value="0"/>
+    <div id="printer">
+    <div>
+        <h2 class="h2 text-center m-3">
+            @ViewBag.UserName
+        </h2>
+    </div>
+
+        <table id="table" class="table table-striped">
+
+
+
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.llayout.ProductName 
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.pages.quantity
+                    </th>
+                    <th>
+                        @SuppliersDashboard.Resources.Items.Date
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+            {
+
+                foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <td>
+                            @(i++)
+                        </td>
+                        <td>
+                            @item.ItemName
+                        </td>
+                        <td>
+                            @item.Item_Count
+                        </td>
+                        <td>
+                            @item._Edit_date
+                        </td>
+
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+    
+
+
+
+</div>
+
+<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i>@SuppliersDashboard.Resources.llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="LayoutExcel('/Report/getMardodatExcel?UserId=@ViewBag.UserId','مردودات @ViewBag.UserName')" id="excelbtn"> @SuppliersDashboard.Resources.llayout.Execl </button>
+</div>
+<script>
+    if ($("#twice").val() == 0) {
+
+        $("#table").dataTable({
+
+        });
+    }
+
+
+    function Print() {
+        $("#twice").val(1)
+        LayoutPrint()
+    }
+    function Excel() {
+        startloader()
+        $.ajax({
+            url: "/Report/getMardodatExcel",
+            type: "post",
+            data: {
+                UserId:@ViewBag.UserId
+            },
+            success: function (res) {
+
+                ClickLink(res.url, 'مردودات ' + '@ViewBag.UserName' +'.xlsx')
+                endloader();
+
+            }
+        })
+    }
+</script>

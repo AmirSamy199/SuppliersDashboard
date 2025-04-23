@@ -1,0 +1,213 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "Masrofat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div id="printer">
+
+
+    <div class="p-4 d-flex justify-content-around">
+        <div class="col-lg-4 text-center">
+            <button class="btn btn-primary col-12 btn-lg" onclick="addnewExpenses()">  @pages.addtypeex  </button>
+        </div>
+    </div>
+    <div class="row p-2 ">
+        <div class="p-2 col-lg-2 " style="text-align:center;">
+            @pages.selectdistributor :
+        </div>
+        <div class=" p-2 col-lg-4" style="text-align:center;">
+
+
+            <input list="userslist" name="itemsselectoption" class="form-control" placeholder=" اختر الشخص  " id="userselect">
+            <datalist id="userslist">
+                @if (ViewBag.Users != null)
+                {
+
+                    <option value="0">
+                        @pages.dawarmalik
+                    </option>
+                    foreach (var item in ViewBag.Users)
+                    {
+
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                }
+            </datalist>
+        </div>
+
+        <div class="p-2 col-lg-2 " style="text-align:center;">
+            @pages.typeex :
+        </div>
+        <div class="p-2 col-lg-4 " style="text-align:center;">
+
+
+            <select id="expenseslist" class="form-control form-select ">
+                @if (ViewBag.expensesTypes != null)
+                {
+                    <option value="-1"> @pages.typeex   </option>
+
+                    foreach (var item in ViewBag.expensesTypes)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+
+    </div>
+
+    <div class="row p-2 ">
+        <div class="p-2 col-lg-2 " style="text-align:center;">
+            @pages.quantity
+        </div>
+        <div class=" p-2 col-lg-4" style="text-align:center;">
+
+
+            <input type="number" placeholder="  @pages.quantity " id="amount" class="form-control" />
+
+        </div>
+
+        <div class="p-2 col-lg-2 " style="text-align:center;">
+            @pages.comment
+        </div>
+
+
+        <div class="p-2 col-lg-4 " style="text-align:center;">
+            <input placeholder="  @pages.comment " type="text" id="comment" class="form-control" />
+        </div>
+
+
+    </div>
+
+
+
+    <!--<div class="row p-2 ">-->
+        @*<div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-4">
+                        @pages.quantity
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="number" placeholder="  @pages.quantity " id="amount" class="form-control" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-4">
+                        @pages.comment
+                    </div>
+                    <div class="col-lg-8">
+                        <input placeholder="  @pages.comment " type="text" id="comment" class="form-control" />
+                    </div>
+
+                </div>
+
+            </div>*@
+        <!--<div class="p-5 text-center">
+            <button class="btn btn-outline-primary" onclick="AddExpense()">
+                اضافة مصروف
+            </button>
+
+        </div>
+
+    </div>-->
+    <div class="p-4 d-flex justify-content-around">
+        <div class="col-lg-4 text-center">
+            <button class="btn btn-primary col-12 btn-lg" onclick="AddExpense()">
+                اضافة مصروف
+            </button>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+    function addnewExpenses() {
+        let html = `
+        <div class='p-5 text-center '>
+        <div class='row'>
+        <div class='col-12 text-center p-5'>
+       @pages.addtypeex
+        </div>
+        <div class='col-12'>
+          @pages.Nameoftheexpense
+        </div>
+        <div class='col-12'>
+        <input type = 'text' onkeyup='expentypechanged(this)' placeholder ='   @pages.Nameoftheexpense ' id='addexpenin' class='form-control'/>
+        </div>
+        <div class='col-12 text-center p-3'>
+        <button id='submitaddexptypebtn'  class='d-none btn btn-outline-primary ' onclick='submitaddnewexpens()'> اضافة </button>
+        </div>
+        </div>
+
+        </div>
+
+        `
+
+        ShowModal(html)
+    }
+    function expentypechanged(ele) {
+        let value = $(ele).val();
+        if (value) {
+            $('#submitaddexptypebtn').removeClass("d-none")
+        } else {
+
+            $('#submitaddexptypebtn').removeClass("d-none")
+        }
+    }
+    function submitaddnewexpens() {
+        let value = $('#addexpenin').val()
+        $.ajax({
+            url: "/Screens/AddnewMasrofType",
+            type: "post",
+            data: {
+                Name: value
+            }, success: () => {
+                location.reload()
+            }
+        })
+    }
+    function AddExpense() {
+        let userid = $("#userselect").val();
+        let expensid = $("#expenseslist").val();
+        let amount = $("#amount").val();
+        let comment = $("#comment").val();
+        if (userid && expensid && amount && userid >= 0) {
+            let model = { UserID: userid, ExpenseID: expensid, Amount: amount, comment: comment }
+        startloader()
+            $.ajax({
+                url: "/Screens/Addmasrof",
+                type: "post",
+                data: {
+                    model:model
+                }, success: (res) => {
+
+                    endloader()
+                    let html = `<div>
+                        <p class='text-center'> ${res.msg}</p>
+                        <p class='text-center'> واصبح اجمالي المصروفات </p>
+                        <p class='text-center'>${res.amount} </p>
+
+                    </div>`
+                    ShowModal(html)
+                    $("#amount").val("");
+                    $("#comment").val("")
+                }
+
+            })
+        } else {
+            alert("من فضلك ادخل جميع الحقول ")
+        }
+
+    }
+    </script>

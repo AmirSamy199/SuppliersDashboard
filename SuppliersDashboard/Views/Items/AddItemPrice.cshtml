@@ -1,0 +1,182 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "اضافة منتج لموزع";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-3">
+
+    <div class="row d-flex justify-content-around">
+        <div class="p-3 col-lg-3 ">
+            <div>
+                <select id="supplierselect" class="form-control form-select">
+                    <option> @Page.Chooseadistributor  </option>
+                    @foreach (var item in ViewBag.Suppliers)
+                    {
+                        <option value="@item.Record_ID"> @item.CompanyName </option>
+                    }
+
+                </select>
+            </div>
+        </div>
+        <div class="p-3 col-lg-3 ">
+            <div>
+                <select id="categoryselect" class="form-control form-select">
+                    <option>  --  </option>
+                </select>
+            </div>
+        </div>
+        <div class="p-3 col-lg-3 ">
+            <div>
+                <select id="itemselect" class="form-control form-select">
+                    <option>  --  </option>
+                </select>
+            </div>
+        </div> <div class="p-3 col-lg-3 ">
+            <div>
+                <select id="distributorselect" class="form-control form-select">
+                    <option>  --  </option>
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="text-center">
+        <p class="text-center text-danger" id="dangerMsg" style="display:none">
+
+        </p>
+
+    </div>
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6  row">
+            <div class="text-center col-lg-4 p-3" style="">
+                @SuppliersDashboard.Resources.pages.supplierprice
+            </div>
+            <div class="text-center col-lg-8" style="">
+                <input class="form-control p-3" type="number" id="supplypriceinput" />
+            </div>
+        </div>
+        <div class="col-lg-6  row">
+            <div class="text-center text-primary col-lg-4 p-3" style="">
+                @SuppliersDashboard.Resources.pages.Sellersprice
+            </div>
+            <div class="text-center  col-lg-8">
+                <input class="form-control p-3" type="number" id="sellingpriceinput" />
+            </div>
+        </div>
+
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="submitAdd()">@SuppliersDashboard.Resources.pages.add </button>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        startloader();
+        $.ajax({
+            type: "post",
+            url: "/Items/Getdistributors",
+            success: (res) => {
+                let html = "<option> @SuppliersDashboard.Resources.llayout.selectd</option>";
+                $.each(res.data.Data, (i, e) => {
+                    html += '<option value="' + e.Id + '"> ' + e.Value + ' </option>';
+
+                })
+                $("#distributorselect").html(html)
+                endloader();
+            }
+        })
+        $("#supplierselect").change(() => {
+            $.ajax({
+                type: "post",
+                url: "/Items/GetCategories",
+                data: {
+                    SupId: $("#supplierselect").val()
+                },
+                success: (res) => {
+                    let html = "<option> @SuppliersDashboard.Resources.llayout.selectp </option>";
+                    $.each(res.data.Data, (i, e) => {
+                        html += '<option value="' + e.Id + '"> ' + e.Value + ' </option>';
+
+                    })
+                    $("#categoryselect").html(html)
+
+                }
+            })
+        })
+        $("#categoryselect").change(() => {
+            $.ajax({
+                type: "post",
+                url: "/Items/GetItemSelect",
+                data: {
+                    supplier: $("#supplierselect").val(),
+                    category: $("#categoryselect").val()
+                },
+                success: (res) => {
+                    let html = "<option> @SuppliersDashboard.Resources.llayout.selectp  </option>";
+                    $.each(res.data.Data, (i, e) => {
+                        html += '<option value="' + e.Id + '"> ' + e.Value + ' </option>';
+
+                    })
+                    $("#itemselect").html(html)
+
+                }
+            })
+        })
+        function submitAdd() {
+            let itemid = $("#itemselect").val();
+            let distributorid = $("#distributorselect").val();
+            let sellingprice = $("#sellingpriceinput").val();
+            let suplyprice = $("#supplypriceinput").val();
+
+            if (validateform()) {
+
+                startloader();
+                $.ajax({
+                    type: "post",
+                    url: "/Items/SubmitAddNewItemPrice",
+                    data: {
+                        supplyprice: suplyprice,
+                        sellprice: sellingprice,
+                        itemid: itemid,
+                        distributor: distributorid
+                    }, success: (res) => {
+                        endloader();
+                        ShowModal(res.data.Message)
+                    }
+                })
+
+            } else {
+                ShowError("من فضلك ادخل بيانات صحيحة !!")
+            }
+        }
+        function validateform() {
+            let itemid = $("#itemselect").val();
+            let distributorid = $("#distributorselect").val();
+            let sellingprice = $("#sellingpriceinput").val();
+            let suplyprice = $("#sellingpriceinput").val();
+            return (validation(itemid) && validation(distributorid) && validation(sellingprice) && validation(suplyprice))
+        }
+        function validation(value) {
+            try {
+                if (parseFloat(value) > 0)
+                    return true
+                return false;
+            } catch {
+                return false
+            }
+        }
+        function ShowError(value) {
+            $("#dangerMsg").html(value)
+            $("#dangerMsg").fadeIn(3000, () => {
+                $("#dangerMsg").fadeOut(6000)
+            })
+        }
+    </script>
+}

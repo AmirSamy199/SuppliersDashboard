@@ -1,0 +1,235 @@
+﻿
+@{
+    ViewBag.Title = "AddWarehouseRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+
+        </div>
+        <div class="col-lg-4 p-4">
+            <select class="form-control form-select" id="requesttresury" onchange="requesttresurychanged(this.value)">
+                <option value="0">
+                    اختر المخزن المطلوب 
+                </option>
+                @if (ViewBag.WareHouses !=null && ViewBag.WareHouses.Count > 0)
+                {
+                    foreach(var item in ViewBag.WareHouses)
+                    {
+                    <option value="@item.Id">
+                        @item.Value
+                    </option>
+                }
+            }
+            </select>
+        </div> <div class="col-lg-4">
+
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <div class="row  d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+                <label class="form-label"> اختر الصنف</label>
+                <span class="bg-success text-white text-center" style="display:inline-block ; min-width:50px" id="itemcountbadge">  </span>
+                <input class="form-control form-select " list="itemslist" name="itemid" id="itemid" placeholder="اختر الصنف" onchange="itemchanged(this.value)" onclick="this.select()" />
+
+                <datalist id="itemslist">
+                </datalist>
+            </div>
+        <div class="col-lg-4 text-center p-3">
+            <label class="form-label"> اختر العدد</label>
+            <input class="form-control  " type="number" id="itemcount" placeholder="اختر العدد" onclick="this.select()" />
+        </div>
+        <div class="col-lg-4 text-center p-3">
+            <label style="display:block"> &nbsp; </label>
+            <button class="btn btn-primary col-12 btn-lg" style="min-width:150px" onclick="addrequest()">
+                اضافة
+            </button>
+        </div>
+        </div>
+
+    </div>
+<div class="container">
+    <div class="collapse " id="tablediv">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        الصنف
+                    </th>
+                    <th>
+                        الكمية
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+
+
+        </table>
+        <div class="text-center">
+            <button class="btn btn-primary text-center" style="min-width:150px" onclick="submitAllRequests(this)">
+                ارسال الطلب
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+
+    let requests=[]
+    let items = []
+    let lastitemselectedbalance = 0;
+    function requesttresurychanged(id) {
+        $("#requesttresury").attr("disabled", "disabled")
+        items = []
+        $.post(`/Warehousing/WarehouseBalance?WarehouseId=${id}`, (res) => {
+            items = res.Data
+            loaditems()
+           // console.log(res)
+        })
+    }
+
+
+    function itemchanged(itemid) {
+        var it = items.find(x => x.ItemId == itemid)
+        console.log(it)
+        $("#itemcountbadge").html(it.bal)
+        lastitemselectedbalance = parseFloat(it.bal)
+    }
+    function loaditems() {
+        let ht =``//`<option value='0'> اختر صنف </option>`
+        $.each(items, ( i, e) => {
+            if (e.bal > 0) {
+                ht+=`<option value='${e.ItemId}'>${e.ItemName}</option>`
+            }
+            $('#itemslist').html(ht)
+        })
+    }
+
+    function addrequest() {
+        let itemid = $("#itemid").val()
+        let itemcount = $("#itemcount").val()
+        if (itemid == '') {
+            displaymsg('اختر صنف')
+            return
+        }
+        if (itemcount == 0 || itemcount=='') {
+            displaymsg('اختر عدد')
+            return
+        }
+        if (itemcount > lastitemselectedbalance) {
+            displaymsg('الكمية غير متاحة ')
+            return
+        }
+
+
+        var requestisold = requests.find(x => x.itemid == itemid)
+
+        if (requestisold == undefined) {
+            let onerequest = {
+                itemid: itemid,
+                itemname: items.find(x => x.ItemId == itemid).ItemName,
+                itemcount: parseFloat(itemcount)
+            }
+            requests.push(onerequest)
+
+        } else {
+            requestisold.itemcount += parseFloat(itemcount)
+        }
+
+            $("#itemid").val('')
+            $("#itemcount").val('')
+        $("#itemcountbadge").text('')
+
+        var olditem = items.find(x => x.ItemId == itemid)
+        olditem.bal -= itemcount
+        drawtable()
+    }
+    function drawtable() {
+        if (requests.length > 0) {
+
+            $("#tablediv").collapse('show')
+            let html = ``
+            $.each(requests, (i, e) => {
+                html += `
+                <tr>
+                    <td> ${i + 1} </td>
+                    <td> ${e.itemname} </td>
+                    <td> ${e.itemcount}</td>
+                    <td> <button class='btn btn-danger' onclick='deletefromrequest(${e.itemid})' >حذف</button> </td>
+                </tr>
+                `
+
+            })
+            $("#tbody").html(html)
+        } else {
+            $("#tbody").html('')
+            $("#tablediv").collapse('hide')
+
+        }
+    }
+    function deletefromrequest(itemid) {
+
+        var requestcount = requests.find(x => x.itemid == itemid).itemcount;
+        var olditem = items.find(x => x.ItemId == itemid)
+        olditem.bal += requestcount
+        $("#itemid").val('')
+        $("#itemcount").val('')
+        $("#itemcountbadge").text('')
+       // var selecteditem = requests.find(x => x.itemid == itemid)
+        var index = requests.findIndex(x => x.itemid == itemid)
+        requests.splice(index, 1)
+        drawtable()
+    }
+
+
+    function submitAllRequests(ele) {
+
+        if (requests.length ==0) {
+            displaymsg(`اختر طلب واحد عالاقل `)
+            return
+        }
+        $(ele).attr('disabled', 'disabled')
+           let fromwarehouseid = $("#requesttresury").val()
+          let towarehouseid = @ViewBag.MyWarehouseId
+
+
+        var senderrequests = []
+
+        $.each(requests, (i, e) => {
+            let newrequest = {
+                Item_ID: e.itemid,
+                Item_Count: e.itemcount
+            }
+            senderrequests.push(newrequest)
+        })
+
+        $.ajax({
+            url: '/Warehousing/SubmitAddRequests',
+            type: 'post',
+            data: {
+                From: fromwarehouseid ,
+                To: towarehouseid ,
+                models: senderrequests
+            }, success: (res) => {
+                displaymsg(res.Message)
+                setTimeout(() => {
+                    location.href = "/WareHousing/TranfereItemsBetweenTwoWareHouses";
+                }, 2000)
+            }
+        })
+    }
+</script>

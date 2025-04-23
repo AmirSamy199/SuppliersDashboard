@@ -1,0 +1,254 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "ExpensesReports";
+}
+
+
+<h2 class="text-center p-3" style="margin-top:20px;font-weight:bold;">@pages.Expensereports </h2>
+
+@*<h2>TotalPillsReports</h2>*@
+<div class="text-center">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3">@pages.iin </div>
+            <div class="col-lg-8 text-center p-3" ">
+                <input class="form-control" type="date" id="DateFrom" />
+            </div>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-around">
+            <div class="col-lg-4 text-center p-3"> @pages.from </div>
+            <div class="col-lg-8 text-center p-3">
+                <input class="form-control" type="date" id="DateTo" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row d-flex justify-content-around col-lg-12 text-center p-3">
+
+    <input class="form-control col-lg-6 text-center" id="sreachPillsTable" list="representList" placeholder=" بحث......." style="width:50%;margin:auto" onkeyup="SearchInTable('sreachPillsTable','totalpillsTabletotalpillsTable')" />
+
+</div>
+
+<div  id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1.5px solid #000 !important;
+        }
+
+        th {
+            color: #000 !important;
+            font-weight: bold !important;
+            background-color: #ccc !important
+        }
+
+        table {
+            border-collapse: collapse !important
+        }
+    </style>
+
+    <div class="row d-flex justify-content-around col-lg-12 text-center p-3">
+        <h2 class="text-center p-3 text-primary" id="messageExpensesreport">
+        </h2>
+    </div>
+
+
+
+
+
+
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+
+                <table class="table table-bordered table-striped" id="ExpensesTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>@pages.ex</th>
+                            <th> @pages.Permissiondate</th>
+                            <th>@pages.String3</th>
+                            <th>@pages.distributor</th>
+                            <th>نوع المصروف</th>
+                            <th>@pages.Thecashier</th>
+                        </tr>
+                    </thead>
+                    <tbody id="totalpilltableBody">
+                        @*@if (ViewBag.Branches != null)
+                            {
+
+                                foreach (var item in ViewBag.Branches)
+                                {
+                                    <tr>
+                                    </tr>
+                                }
+                            }*@
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">@llayout.Execl </button>
+
+        </div>
+
+    </div>
+
+    <script>
+        function excel() {
+
+            let datefrom = $("#DateFrom").val()
+            let dateto = $("#DateTo").val()
+            if (datefrom == "" && dateto == "") {
+                datefrom = "-"
+                dateto = "-"
+            }
+            //let ItemID = $("#ItemIdInput").val()
+
+            //let h = $("#head").text()
+            LayoutExcel(`/NewReports/BillReportByDateExcel?FromDate=${datefrom}&ToDate=${dateto}`, $("#messagebillreport").text())
+        }
+        function Print() {
+            $("#databillsreport").css("display", "none")
+            $("#totalpillsTabletotalpillsTable_paginate").css("display", "none")
+            $("#totalpillsTabletotalpillsTable_info").css("display", "none")
+            $("#sreachPillsTable").css("display", "none")
+            LayoutPrint()
+
+
+
+        }
+        let currentdate = new Date();
+        let m = currentdate.getMonth() + 1;
+        if (m < 10) m = "0" + m
+        let d = currentdate.getDate();
+        if (d < 10) d = "0" + d
+        let dd = "" + currentdate.getFullYear() + "-" + m + "-" + d
+        $("#DateFrom").val(dd)
+        $("#DateTo").val(dd)
+        drowExpensesTable($("#DateFrom").val(), $("#DateTo").val())
+
+        $("#DateTo").change(() => {
+            drowExpensesTable($("#DateFrom").val(), $("#DateTo").val())
+
+        })
+        $("#DateFrom").change(() => {
+            drowExpensesTable($("#DateFrom").val(), $("#DateTo").val())
+
+
+        })
+        function excel() {
+
+            let datefrom = $("#DateFrom").val()
+            let dateto = $("#DateTo").val()
+
+            LayoutExcel(`/NewReports/ExpensesReportExcel?FromDate=${datefrom}&ToDate=${dateto}`, $("#messageExpensesreport").text())
+        }
+        function drowExpensesTable(dataform, datato) {
+
+            $.ajax({
+                url: "/NewReports/ExpensesReportJson",
+                type: "post",
+                data: {
+                    FromDate: dataform,
+                    ToDate: datato
+                },
+                success: function (res) {
+                    $("#messageExpensesreport").text(res.message);
+                    let ciunter = 1;
+                    if (res.state == 1) {
+                        $("#ExpensesTable").dataTable({
+                            'iDisplayLength': 10,
+                            "bDestroy": true,
+                            "bSearchable": false,
+                            "responsive": true,
+                            "language": {
+                                "searchPlaceholder": 'Search...',
+                                "sSearch": '',
+                                "lengthMenu": '_MENU_ items/page',
+                            },
+                            data: res.data,
+                            "columns": [
+                                {
+                                    "data": null, render: function (x, y, z) {
+                                        return ciunter++
+                                    }
+                                },
+                                { "data": "MasrofId", "name": "MasrofId" },
+                                { "data": "MasrofDateString", "name": "MasrofDateString" },
+                                { "data": "MasrofAmount", "name": "MasrofAmount" },
+                                { "data": "Sales", "name": "Sales" },
+                                { "data": "ExpenseType", "name": "ExpenseType" },
+                                { "data": "Manager", "name": "Manager" },
+
+
+
+                            ]
+                        })
+                        $("#ExpensesTable_filter").hide()
+
+                    }
+                    else {
+                        $("#messageExpensesreport").text("لا يوجد مصروفات لهذا التاريخ");
+                        $("#ExpensesTable_wrapper").hide();
+                    }
+
+                },
+                error: function () {
+
+                }
+
+            })
+        }
+
+        function drawTable(data) {
+
+            debugger
+            let ciunter = 1;
+
+
+            $(`#ExpensesTable`).dataTable({
+
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+                data: data,
+                "columns": [
+                    {
+                        "data": null, render: function (x, y, z) {
+                            return ciunter++
+                        }
+                    },
+                    { "data": "MasrofId", "name": "MasrofId" },
+                    { "data": "MasrofDateString", "name": "MasrofDateString" },
+                    { "data": "MasrofAmount", "name": "MasrofAmount" },
+                    { "data": "Sales", "name": "Sales" },
+                    { "data": "Manager", "name": "Manager" },
+
+
+
+                ],
+
+            })
+
+        }
+
+
+
+    </script>

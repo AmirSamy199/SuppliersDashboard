@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Show Map";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using SuppliersDashboard.Resources
+<form class="theme-form theme-form-2 mega-form" action="/Admin/ShowMapPost" method="post" onsubmit="return validateForm()">
+    <div class="row d-flex justify-content-center p-2">
+        <div class="col-lg-4 text-center p-3">
+            <input type="date" value="@ViewBag.from" class="form-control text-center" name="Date" id="dateInput" />
+            <span id="dateError" class="text-danger" style="display:none;">@llayout.Daterequired</span>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+            <input type="hidden" id="distributorId" value="0" />
+            <select id="DistributorIdInput" name="UserID" class="js-example-basic-single w-100">
+                <option value="ChooseRepresentative" selected disabled>@llayout.ChooseRepresentative</option>
+            </select>
+            <span id="RepresentativeError" class="text-danger" style="display:none;">@llayout.Representativerequired</span>
+
+        </div>
+        <div class="col-lg-4 text-center p-3 row d-flex justify-content-around p-2">
+            <input type="submit" class="btn btn-primary" value="Search">
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/Selector/Getsales_representative",
+            type: "post",
+            data: {},
+            success: function (res) {
+                let select = $("#DistributorIdInput");
+                console.log(res.data.Data.Users);
+                $.each(res.data.Data.Users, function (i, e) {
+                    select.append(`<option value='${e.RecordID}'>${e.UserName}</option>`);
+                });
+            }
+        });
+    });
+    function validateForm() {
+        var dateInput = document.getElementById('dateInput').value;
+        var isValid = true;
+
+        if (!dateInput) {
+            document.getElementById('dateError').style.display = 'block';
+            isValid = false;
+        } else {
+            document.getElementById('dateError').style.display = 'none';
+        }
+        var DistributorIdInput = document.getElementById('DistributorIdInput').value;
+        var isDistributorIdInputValid = true;
+
+        if (DistributorIdInput =="ChooseRepresentative"||DistributorIdInput ==""||DistributorIdInput ==null) {
+            document.getElementById('RepresentativeError').style.display = 'block';
+            isDistributorIdInputValid = false;
+        } else {
+            document.getElementById('RepresentativeError').style.display = 'none';
+        }
+        return isValid;
+    }</script>
+
+

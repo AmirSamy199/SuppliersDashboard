@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "Company";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using FastReport.Web
+@WebReportGlobals.Scripts()
+@WebReportGlobals.Styles()
+
+
+<div class="card">
+    <div class="card-header">
+
+        <form method="post" name="baseform" id="baseform">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="p-2">
+                        <div class="form-group text-center">
+                            <label class="form-label"> نوع الريبورت</label>
+
+                            <select class="form-control  text-center" id="ReportType" name="ReportType">
+                                @foreach (var item in ViewBag.ReportTypes)
+                                {
+                                    if (item.Id == ViewBag.reporttype)
+                                    {
+
+                                        <option value="@item.Id" selected> @item.Name</option>
+                                    }
+                                    else
+                                    {
+
+                                        <option value="@item.Id"> @item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-lg-4">
+                    <div class="p-2" id="agentselectdiv">
+                        <div class="form-group text-center">
+                            <label class="form-label text-center"> القناة </label>
+
+                            <select class="form-control  text-center" id="AgentId" name="AgentId">
+                                @foreach (var item in ViewBag.Agents)
+                                {
+                                    if (item.Id == ViewBag.AgentId)
+                                    {
+
+                                        <option value="@item.Id" selected> @item.Value</option>
+                                    }
+                                    else
+                                    {
+
+                                        <option value="@item.Id"> @item.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>*@
+
+                <div class="col-lg-4">
+                    <div class="p-2">
+                        <div class="form-group text-center">
+                            <label class="form-label"> الصنف  </label>
+                            <input class="" type="hidden" name="BaseId" id="BaseId" />
+                            <input style="cursor:default" class="form-control text-center" onchange="idChange(this)" id="baseshownId" list="basedatalist" />
+
+
+                            <datalist id="basedatalist">
+                                @foreach (var item in ViewBag.Items)
+                                {
+                                    if (item.Id == ViewBag.BaseId)
+                                    {
+                                        <option id="optid-@item.Id" value="@item.Id"> @item.Value</option>
+                                        <script>
+                                            $("#BaseId").val(@item.Id)
+                                            $("#baseshownId").val('')
+                                            $("#baseshownId").attr('Placeholder' , '@item.Value.Replace("\n", "").Replace("\r", "")')
+                                        </script>
+                                    }
+                                    else
+                                    {
+
+                                        <option id="optid-@item.Id" value="@item.Id"> @item.Value</option>
+                                    }
+
+                                }
+                            </datalist>
+                            <script>
+                                function idChange(value) {
+                                    let f = value.value;
+                                    $("#BaseId").val(value.value)
+                                    $(value).val('')
+                                    let text = $(`#optid-${f}`).text()
+
+                                    $(value).attr('placeholder', text)
+
+                                }
+                            </script>
+                            @*<select class="form-control ">
+                        @foreach (var item in ViewBag.Companies)
+                        {
+                            if (item.Id == ViewBag.BaseId)
+                            {
+                                <option value="@item.Id" selected> @item.Value</option>
+
+                            }
+                            else
+                            {
+
+                                <option value="@item.Id"> @item.Value</option>
+                            }
+                        }
+                    </select>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="p-2">
+                        <div class="form-group text-center">
+                            <label class="form-label text-center"> من </label>
+                            <input type="date" value="@ViewBag.from" class="form-control text-center" name="DateFrom" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="p-2">
+                        <div class="form-group">
+                            <label class="form-label text-center" text-center> الي </label>
+                            <input type="date" value="@ViewBag.to" class="form-control text-center" name="DateTo" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <button type="button" class="btn btn-primary col-12 btn-lg" onclick="submitform(1)">
+
+
+                        <i class="fa fa-regular fa-file"></i>
+                        بحث
+                    </button>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <button type="button" class="btn btn-danger col-12 btn-lg" onclick="submitform(2)">
+                        <i class="fa fa-regular fa-file-excel"></i>
+                        اكسيل
+
+
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        @if (ViewBag.WebReport != null)
+        {
+            @ViewBag.WebReport
+        }
+    </div>
+
+</div>
+
+<script>
+    function submitform(id) {
+        if (id == 1) {
+            $("#baseform").attr("action", "/FastReport/Items")
+        } else {
+            $("#baseform").attr("action", "/FastReport/Excel")
+
+        }
+        if ($("#ReportType").val() == 0) {
+            displaymsg("تاكد من ادخال البيانات ")
+            return
+        }
+
+        document.getElementById("baseform").submit();
+    }
+</script>

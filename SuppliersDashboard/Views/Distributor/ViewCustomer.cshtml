@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "ViewCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+</style>
+
+
+
+    <div class="row">
+        <div class="col-lg-3 p-3">
+            <button onclick="LayoutPrint()" class="btn btn-primary w-100 text-center">
+
+                <i  class="fa fa-solid fa-print"></i>
+
+                طباعة
+            </button>
+        </div>
+        <div class="col-lg-3 p-3">
+            <a href="/Distributor/CustomerExcel?UserId=@ViewBag.UserId" class="btn btn-success w-100 text-center">
+
+               
+
+                اكسيل
+            </a>
+        </div>
+
+    </div>
+    <div id="printer" >
+
+        <div class="row g-4">
+          
+                  
+                     
+                                <h2> @SuppliersDashboard.Resources.pages.distributor :  @ViewBag.UserName </h2>
+                                <br />
+
+                                <input type="hidden" id="BaseUserId" value="@ViewBag.UserId" />
+                                <input type="hidden" id="BaseUserName" value="@ViewBag.UserName" />
+
+                                <div class="">
+
+                                    <table id="CustomersTable"  class="table ">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @SuppliersDashboard.Resources.pages.customer
+                                                </th>
+                                                <th>
+                                                    @SuppliersDashboard.Resources.pages.unpaiddefferd
+                                                </th>
+                                                <th>  Longitude	 </th>
+                                                <th> Latitude </th>
+                                                <th>
+                                                    كشف حساب
+                                                </th>
+
+                                                @*<th>
+                                                        @SuppliersDashboard.Resources.pages.allaction
+                                                    </th>*@
+                                                @*<th>
+                                                        @SuppliersDashboard.Resources.pages.action
+                                                    </th>*@
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                </div>
+                          
+                 
+               
+        </div>
+    </div>
+
+<script>
+
+    $.ajax({
+        url: "/Distributor/GetUserCustomers?UserId=" + $("#BaseUserId").val(),
+        type: "get",
+        data: "",
+        success: function (res) {
+
+            DrawTable(res.data);
+
+        }
+
+    })
+    function DrawTable(data) {
+        console.log(data)
+        $("#CustomersTable").DataTable({
+            'iDisplayLength': 100 ,
+            "bDestroy": true,
+            "bSearchable": true,
+           /* "responsive": true,*/
+            "language": {
+                "searchPlaceholder": 'Search...',
+                "sSearch": '',
+                "lengthMenu": '_MENU_ items/page',
+            },
+           "data":data,
+            "columns": [
+                { "data": "item", "name": "item"  },
+                { "data": "Unpaid_deferred", "name": "Unpaid_deferred" },
+                { "data": "Longitude", "name": "Longitude"  },
+                { "data": "Latitude", "name": "Latitude"  },
+                {
+                    "data": null, render: function (data, type, dd) {
+
+                        return `<a href='/FastReport/Branch?branchId=${data.Branch_ID}&reporttype=23'`+`class='btn btn-sm btn-outline-primary'>كشف حساب  </a>`
+                        //return `<a href='/Market/AccountStatement?BranchId=${data.Branch_ID}&BranchName="${data.item}"'`+`class='btn btn-sm btn-outline-primary'>كشف حساب  </a>`
+                    }
+                }
+               // , {
+                 //   "data": null, render: function (data, type, dd) {
+                 //       return "<a href='/Distributor/ViewUserWithCustomer?UserId=" + $("#BaseUserId").val() + "&CustomerId=" + data.Branch_ID + "&CustomerName=" + data.item + "&UserName=" + $("#BaseUserName").val() + "' class='btn btn-sm btn-outline-primary'> @SuppliersDashboard.Resources.pages.allaction</a>"
+                 //   }
+               // }
+                @*, {
+                    "data": null, render: function (data, type, dd) {
+                        return "<a href='/Distributor/ViewUserCustomerBills?UserId=" + $("#BaseUserId").val() + "&CustomerId=" + data.Branch_ID + "&CustomerName=" + data.item + "&UserName=" + $("#BaseUserName").val()+ "' class='btn btn-sm btn-outline-primary'>@SuppliersDashboard.Resources.pages.viewbills  </a>"
+                    }
+                }*@
+
+            ]
+        });
+    }
+</script>

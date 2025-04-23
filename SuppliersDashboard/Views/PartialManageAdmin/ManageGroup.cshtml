@@ -1,0 +1,652 @@
+﻿<style>
+    /* Styles for the modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        overflow: scroll;
+    }
+
+    .modal-content {
+        background-color: white;
+        max-width: 800px;
+        width: 100%;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    /* Button to open the modal */
+    #openModalBtn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    th, td {
+        border: 1px solid #ccc !important;
+        text-align: center !important
+    }
+
+    table {
+        border-collapse: collapse !important
+    }
+
+    .hoveraddfun:hover {
+        transform: translateY(-3px);
+        box-shadow: #ccc 3px 3px 9px;
+
+    }
+</style>
+<div class=" row p-4">
+    <div class="container">
+
+        <div style="justify-content:center;align-content:center;display:flex;">
+            <h2> @SuppliersDashboard.Resources.pages.GroupUser</h2>
+
+        </div>
+        <div class="d-flex justify-content-center p-3">
+            <div class="spinner-border text-info" role="status" id="spinerGroups" style="margin-top:50px;width: 3rem; height: 3rem;">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <div id="GergesModal" class="modal">
+            <div class="modal-content" style="position: absolute; top: 0; margin-top:2.5%">
+                <div style="justify-content:center;align-content:center;display:flex;">
+                    <h2 id="FuncsTableTitle">@SuppliersDashboard.Resources.pages.page  </h2>
+
+                </div>
+
+                @*<div style="align-content:center;justify-content:center;display:flex; width:100%">
+                               <button onclick="showSubmodal()" class="btn btn-primary"><span style="font-size:18px;font-weight:bold;">اضف صفحة</span></button>
+                    </div>*@
+
+
+                <div style="margin-top:10px; " id="DeleteFuncStatus" class="alert collapse text-center"></div>
+
+
+                <div id="funtionofusers"></div>
+
+                <!--<div id="GergesModal2" class="modal">
+                <div class="modal-content" >
+                    <div style="justify-content:center;align-content:center;display:flex;">
+                        <h2>اضافة صفحة</h2>
+                    </div>
+
+
+                    <div id="AddStatus" class="alert collapse text-center">
+
+                    </div>
+
+
+                    <div class="form-group" style="margin:10px">-->
+                @*<input id="funcName" class="form-control" placeholder="ادخل اسم الوظيفة" />*@
+                <!--<select id="funcSelector" class="form-control">
+                                <option>اختار الصفحة</option>
+                            </select>
+                        </div>
+
+                        <div style="align-content:center;justify-content:center;display:flex; width:100%">
+                            <button style="width:120px;" onclick="supmitAdd()" class="btn btn-info">تأكيد الاضافة</button>
+                        </div>
+
+
+                        <div style=" justify-content: center; align-content: center; display: flex; margin:10px">
+
+                            <button id="closeModalBtn2" class="btn btn-outline-danger">إلغاء</button>
+                        </div>
+                    </div>
+                </div>-->
+                @*<table style="width:100%;margin:10px;" class="table table-bordered table-striped" id="FuncsTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    اسم الصفحة
+                                </th>
+                                <th>
+                                    العمليات
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="FuncsTableBody">
+                        </tbody>
+                    </table>*@
+
+
+                <div style=" justify-content: center; align-content: center; display: flex; margin:10px; ">
+
+                    <button style="width:250px" onclick="SubmitFuncsList()" class="btn btn-primary">تأكيد</button>
+                </div>
+
+                <div style=" justify-content: center; align-content: center; display: flex; margin: 10px; margin-top: 0">
+
+                    <button style=" width:250px" id="closeModalBtn" class="btn btn-outline-danger">إلغاء</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card-ERB ">
+            <div class="  table-responsive  ">
+
+                <div id="tablecollapse ">
+                    <table class="table table-bordered table-hover table-responsive" id="Grouptable">
+                        <thead>
+                            <tr>
+                                <th style="padding-left:50px; padding-right:50px">
+                                    #
+                                </th>
+                                <th style="padding-left:150px;padding-right:150px">
+                                    @SuppliersDashboard.Resources.pages.groupname
+                                </th>
+                                <th style="padding-left:-5px; padding-right:-5px;">
+                                    @SuppliersDashboard.Resources.pages.process
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="Grouptablebody">
+                        </tbody>
+                    </table>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="collapse" id="DivAddButton" style="display:flex;align-content:center;justify-content:center">
+    <button class="btn btn-primary btn-lg" onclick="addGroup()">اضافة مجموعة</button>
+</div>
+
+
+
+
+<script>
+
+    function adduserfunc(id, ele) {
+        let newElement = $(ele)
+        $(ele).removeClass("bg-danger")
+        $(ele).addClass("bg-success")
+        /*       newElement.appendTo($("#removefun"))*/
+        // change ID TO id OF Fun
+        $(newElement).attr('onclick', `removefun(${id},this)`)
+
+        for (var i = GlobalNeededFuncs.length - 1; i >= 0; i--) {
+            if (GlobalNeededFuncs[i].Id === id) {
+                GlobalGroupFuncs.push(GlobalNeededFuncs[i])
+                /*    funcuser.push(anthorfun[i])*/
+
+                GlobalNeededFuncs.splice(i, 1); // Remove the object at index i
+            }
+        }
+
+        //console.log("الفاكسن اللي النهاينة ")
+        //console.log(finalFunsUser);
+        console.log("الفاكسن اللي عندة ")
+
+        console.log(GlobalGroupFuncs);
+        console.log("الفاكسشن اللي مش عندة")
+        console.log(GlobalNeededFuncs)
+    }
+
+    function removefun(id, ele) {
+        var newElement = $(ele)
+        /*   $(ele).remove();*/
+        $(ele).removeClass("bg-success")
+        $(ele).addClass("bg-danger")
+
+
+        /*  newElement.appendTo($("#addthisFun"))*/
+        $(newElement).attr('onclick', `adduserfunc(${id},this)`)
+        for (var i = GlobalGroupFuncs.length - 1; i >= 0; i--) {
+
+            if (GlobalGroupFuncs[i].Id === id) {
+                GlobalNeededFuncs.push(GlobalGroupFuncs[i])
+
+                GlobalGroupFuncs.splice(i, 1); // Remove the object at index i
+            }
+        }
+        //finalFunsUser = finalFunsUser.filter(object => {
+
+        //    return object.Id !== id;
+        //});
+        console.log("++++++++++++++++++++++++++++++++")
+        //console.log("الفاكسن اللي النهاينة ")
+        //console.log(finalFunsUser);
+        console.log("الفاكسشن اللي مش عندة")
+        console.log(GlobalNeededFuncs)
+        console.log("الفاكسن اللي عندة ")
+
+
+        console.log(GlobalGroupFuncs);
+    }
+    loadpage()
+
+    function loadpage() {
+
+        $.ajax({
+            url: "/Admin/GetGroups",
+            type: "post",
+            data: {
+
+            },
+            success: (res) => {
+
+                $("#spinerGroups").fadeOut("slow");
+                $("#DivAddButton").collapse("show");
+
+                //console.log(res.data.Data)
+                list = ["hell", "h"]
+
+                drawTable("Grouptable", res.data.Data, null, "showFuncs", 0, 1, list)
+
+            }
+        });
+
+
+    }
+
+
+    //note your function must contain a Id parameter
+    //if you want to add a name parameter make a name = 1
+    //structure of 1 --for--> ID , second --for--> Name/Value . . . if you want to change in structure
+    function drawTable(tableName, data, deleteFunctionName = null, detailsFunctionName = null, IsDeleteFuncContainName = 0, IsDetailsFuncContainName = 0 /*,StructureData = null*/) {
+
+
+        let ciunter = 1;
+        $(`#${tableName}`).dataTable({
+
+            'iDisplayLength': 25,
+            "bDestroy": true,
+            "bSearchable": true,
+            "responsive": true,
+            "language": {
+                "searchPlaceholder": 'Search...',
+                "sSearch": '',
+                "lengthMenu": '_MENU_ items/page',
+            },
+            data: data,
+            "columns": [
+                {
+                    "data": null, render: function () {
+                        return ciunter++
+                    }
+                },
+                { "data": "Value", "name": "responsibilty", "width": "Auto" },
+                {
+                    "data": null, render: function (e) {
+
+                        let buttons = ""//`<button type="button" style="margin:2px" class="btn btn-danger" onclick="deleteFunction(${e.Id})">delete</button>`;
+                        //deleteButton == 0 ? buttons
+                        if (deleteFunctionName != null)
+                            IsDeleteFuncContainName == 0 ? buttons += `<button type="button" class="btn btn-primary col-12 btn-lg " onclick="${deleteFunctionName}(${e.Id})">مسح</button>` : buttons += `<button style="margin:2px" type="button" class="btn btn-primary col-12 btn-lg " onclick="${deleteFunctionName}(${e.Id},'${e.Value}')">تفاصيل</button>`;
+                        if (detailsFunctionName != null)
+                            IsDetailsFuncContainName == 0 ? buttons += `<button type="button" class="btn btn-primary col-12 btn-lg " onclick="${detailsFunctionName}(${e.Id})">تفاصيل</button>` : buttons += `<button style="margin:2px" type="button" class="btn btn-primary col-12 btn-lg " onclick="${detailsFunctionName}(${e.Id},'${e.Value}')">تفاصيل</button>`;
+
+
+                        return buttons
+                    }
+                },
+
+
+            ],
+
+        })
+
+
+        //
+        //if (StructureData != null) {
+
+        //    $.each(StructureData, function (index, value) {
+        //        console.log(value);
+        //        table.columnDefs.push({
+        //            targets: -1, // Add the new column as the last column
+        //            data: value,
+        //            defaultContent: 'New Column Content'
+        //        });
+        //    });
+        //    table.columns.adjust().draw();
+        //}
+
+    }
+
+
+    $.fn.dataTable.ext.buttons.reload = {
+        text: 'Reload',
+        action: function (e, dt, node, config) {
+            dt.ajax.reload();
+        }
+    };
+
+
+
+    function subtractFuncs(totalFuncs, PartFuncs) {
+        // var subtractingFuncs = totalFuncs
+        //$.each(subtractingFuncs, function (index, value) {
+        //     if (subtractingFuncs[index].Id == PartFuncs.Id) {
+        // debugger
+
+        //         subtractingFuncs.splice(index, 1);
+        //     }
+        // });
+        var subtractingFuncs = [];
+        $.each(totalFuncs, (i, e) => {
+            var isexist = PartFuncs.filter(s => {
+                return s.Id === e.Id
+            })
+            if (isexist.length == 0)
+                subtractingFuncs.push(e)
+
+
+        })
+        debugger
+        GlobalNeededFuncs = subtractingFuncs;
+        //return subtractingFuncs;
+
+
+    }
+
+    //global group Id Because I will use it when delete the functions
+    var GlobalGroupId = -1;
+    var GlobalGroupName = "null";
+    var GlobalGroupFuncs;
+    var GlobalTotalFuncs;
+    var GlobalNeededFuncs;
+    function showFuncs(groupId, groupName = "null") {
+        //console.log(groupId);
+
+        GlobalGroupId = groupId;
+        GlobalGroupName = groupName;
+        $.ajax({
+            url: "/Admin/GetFuncsByGroup",
+            type: "post",
+            data: {
+                groupId: groupId
+            },
+            success: (res) => {
+
+
+                debugger
+                GlobalGroupFuncs = res.data.Data;
+                GetFunctionsNGlob()
+
+                $("#FuncsTableTitle").text(groupName)
+                //console.log(res.data.Data)
+                //drawTable("FuncsTable", res.data.Data,"deleteFunction")
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+    }
+
+
+    function showModal() {
+        //script of modal
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modal = document.getElementById('GergesModal');
+
+        if (modal.style.display == 'flex') {
+            modal.style.display = 'none';
+        }
+
+        modal.style.display = 'flex';
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+
+
+        $("#funtionofusers").html("")
+        let funhtml = ` <div class="row " id='removefun'>`
+        $.each(GlobalGroupFuncs, function (index, ele) {
+            funhtml += ` <div class="col-lg-4 "><div  style='cursor:pointer' class='pt-2 pb-2  pl-2 pr-4 bg-success text-center text-white  m-1 hoveraddfun rounded rounded-sm ' onclick='removefun(${ele.Id},this)'>${ele.Value}</div></div>`
+            //if (ele.Value.length > 13) {
+            //}
+            //else {
+            //    funhtml += ` <div class="col-lg-2 " onclick="removefun(${ele.Id},this)"><div class='pt-2 pb-2 pr-2 pl-2 bg-success text-center text-white  m-1 hoveraddfun rounded rounded-sm'>${ele.Value}</div></div>`
+            //}
+
+
+
+        })
+        funhtml += `</div>`
+        $("#funtionofusers").append(funhtml);
+        let htmlneedfun = `<div class="row d-flex justify-content-center" id='addthisFun'>`
+        $.each(GlobalNeededFuncs, function (index, ele) {
+            htmlneedfun += ` <div class="col-lg-4 " ><div  style='cursor:pointer' class='pt-2 pb-2  pl-2 pr-4 bg-danger text-center text-white  m-1 hoveraddfun rounded rounded-sm'  onclick='adduserfunc(${ele.Id},this)'>${ele.Value}</div></div>`
+
+            //htmlneedfun+=`<div class="col-lg-2 bg-danger text-center text-white p-2 m-1 hoveraddfun rounded rounded-sm" onclick="adduserfunc(${ele.Id},this)">${ele.Value}</div>`
+        })
+
+        htmlneedfun += `</div>`
+
+        $("#funtionofusers").append(htmlneedfun);
+
+
+    }
+
+    function GetFunctionsNGlob() {
+        $.ajax({
+            url: "/Admin/GetFunctions",
+            type: "post",
+            data: {
+
+            },
+            success: (res) => {
+                debugger;
+                GlobalTotalFuncs = res.data.Data;
+
+                subtractFuncs(GlobalTotalFuncs, GlobalGroupFuncs)
+                debugger
+                showModal();
+                // console.log(NonHisFuncs);
+            }
+        });
+    }
+    //subModal to add function
+
+    //function showSubmodal() {
+
+    //    $.ajax({
+    //        url: "/Admin/GetFunctions",
+    //        type: "post",
+    //        data: {
+
+    //        },
+    //        success: (res) => {
+    //            debugger;
+    //            GlobalTotalFuncs = res.data.Data;
+
+    //            //console.log(res.data.Data)
+    //            let options = '<option>اختار الصفحة</option>';
+    //            $.each(res.data.Data, function (i, e) {
+    //                options += `<option value='${e.Id}'> ${e.Value} </option>`
+    //            });
+    //            $("#funcSelector").html(options)
+
+    //        }
+
+    //    });
+
+
+    //    //script of modal
+    //    const closeModalBtn = document.getElementById('closeModalBtn2');
+    //    const modal = document.getElementById('GergesModal2');
+
+    //    modal.style.display = 'flex';
+
+    //    closeModalBtn.addEventListener('click', () => {
+    //        modal.style.display = 'none';
+    //    });
+
+    //    window.addEventListener('click', (event) => {
+    //        if (event.target === modal) {
+    //            modal.style.display = 'none';
+    //        }
+    //    });
+
+
+
+    //}
+
+    //function supmitAdd() {
+    //    var AssignedFuncId = $("#funcSelector").val();
+
+    //    $.ajax({
+    //        url: "/Admin/AddFunctionInGroup",
+    //        type: "post",
+    //        data: {
+    //            AssignedFunctionId: AssignedFuncId,
+    //            groupId: GlobalGroupId
+    //        },
+    //        success: (res) => {
+    //            //console.log(res.data)
+    //            $("#AddStatus").text(res.message);
+    //            //status of message
+
+    //            if (res.status == 1) {
+    //                $("#AddStatus").removeClass('alert-danger')
+    //                $("#AddStatus").addClass('alert-success');
+    //            } else {
+    //                $("#AddStatus").removeClass('alert-success')
+    //                $("#AddStatus").addClass('alert-danger');
+
+    //            }
+    //            $("#AddStatus").collapse("show");
+    //            setTimeout(function () {
+    //                $("#AddStatus").collapse("hide");
+    //            }, 1500);
+
+
+    //            //drawTable("FuncsTable", res.data, 1, 0);
+
+    //            showFuncs(GlobalGroupId, GlobalGroupName)
+    //        }
+    //    });
+
+
+    //}
+
+    function SubmitFuncsList() {
+        $.ajax({
+            url: "/Admin/SubmitFuncs",
+            type: "post",
+            data: {
+                groupId: GlobalGroupId,
+                FuncVM: GlobalGroupFuncs
+            },
+            success: (res) => {
+                //console.log(res.data)
+                $("#AddStatus").text(res.message);
+                //status of message
+
+                if (res.status == 1) {
+                    $("#AddStatus").removeClass('alert-danger')
+                    $("#AddStatus").addClass('alert-success');
+                } else {
+                    $("#AddStatus").removeClass('alert-success')
+                    $("#AddStatus").addClass('alert-danger');
+
+                }
+                $("#AddStatus").collapse("show");
+                setTimeout(function () {
+                    $("#AddStatus").collapse("hide");
+                }, 1500);
+
+
+                //drawTable("FuncsTable", res.data, 1, 0);
+
+                showFuncs(GlobalGroupId, GlobalGroupName)
+            }
+        });
+    }
+
+
+    function addGroup() {
+        html = `
+
+                        <div id="AddGrouppStatus" class="alert collapse"></div>
+
+                        <div class="form-group" style="display:flex;align-content:center;justify-content:center">
+                            <input class="form-control" type="text" id="GroupNameTF" placeholder="ادخل اسم المجموعه" />
+                        </div>
+
+                        <div class="collapse" id="DivAddButton" style="display:flex;align-content:center;justify-content:center; margin-top:20px">
+                            <button class="btn btn-primary btn-lg" onclick="AddSupmitGroup()" >اضف المجموعة</button>
+                        </div>
+
+                    `
+
+        ShowModal(html)
+    }
+
+    function AddSupmitGroup() {
+        var newGroupName = $("#GroupNameTF").val();
+
+        $.ajax({
+            url: "/Admin/AddGroup",
+            type: "post",
+            data: {
+                groupName: newGroupName
+            },
+            success: (res) => {
+                $("#AddGrouppStatus").text(res.data.Message);
+                //status of message
+
+                if (res.data.State == 1) {
+                    $("#AddGrouppStatus").removeClass('alert-danger')
+                    $("#AddGrouppStatus").addClass('alert-success');
+                } else {
+                    $("#AddGrouppStatus").removeClass('alert-success')
+                    $("#AddGrouppStatus").addClass('alert-danger');
+
+                }
+                $("#AddGrouppStatus").collapse("show");
+                setTimeout(function () {
+                    $("#AddGrouppStatus").collapse("hide");
+                }, 3000);
+
+                loadpage()
+            }
+
+        });
+    }
+
+</script>
+

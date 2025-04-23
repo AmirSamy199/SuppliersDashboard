@@ -1,0 +1,617 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="btn btn-outline-primary" style="display: flow; width: 25%; margin: auto; margin-top: 25px;">
+    <h2 class="text-center" id="btn1">
+        اضافة طلب جديد
+    </h2>
+
+</div>
+<div class="p-5" id="hide1">
+
+    <div class="row">
+
+
+        <div class="row">
+            <div class="col-lg-4 "></div>
+
+            <div class="col-lg-4 "></div>
+        </div>
+
+        <div class="col-lg-5 p-2">
+            <label> اسم العميل </label>
+            <input class="form-control" type="text" id="ContactName" placeholder="اسم العميل " />
+            <label style="text-align:center;color:red" id="d2">ادخل  اسم العميل </label>
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> رقم الهاتف</label>
+            <input class="form-control" type="number" id="Telephone1" placeholder="رقم الهاتف " />
+            <label style="text-align:center;color:red" id="d1">ادخل  الهاتف</label>
+        </div>
+
+        <div class="col-lg-4 p-2">
+            <label> الحاله الطلب  </label>
+            <input class="form-control" type="text" id="Email" value="pinding" placeholder=" pinding  " readonly />
+        </div>
+        <div class="col-lg-4 p-2">
+            <label> العنوان </label>
+            <input class="form-control" type="text" id="Address" placeholder="العنوان" />
+            <label style="text-align:center;color:red" id="d">ادخل  العنوان</label>
+        </div>
+        <div class="col-lg-4 p-2">
+            <label id="dislabel">
+                اختر الخزن
+            </label>
+            <input list="distributorselectoption" @*onchange='changelabel(this)'*@ name="distributorselectoption" id="m" class="form-control" placeholder=" اختر الخزن  " id="distributorselect">
+            <datalist id="distributorselectoption">
+                @if (ViewBag.Diss != null)
+                {
+
+                    foreach (var item in ViewBag.Diss)
+                    {
+
+                        <option id="Id" style="overflow:hidden" value="@item.Id">  </option>
+                        <option id="va" value="@item.Value">  </option>
+                    }
+                }
+            </datalist>
+
+        </div>
+        <div class="col-lg-4 p-2">
+            <input list="itemsselectoption" name="itemsselectoption" class="form-control" placeholder=" اختر الصنف " id="itemsselect">
+            <datalist id="itemsselectoption">
+            </datalist>
+
+        </div>
+
+    </div>
+    <div class="p-5 text-center">
+        <button class="btn btn-primary" id="p"> اضافة طلب </button>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p class="text-center h2 "> الطلبات </p>
+
+        </div>
+        <table id="table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        الصنف
+                    </th>
+                    <th>
+                        العدد
+                    </th>
+                    <th>
+                        سعر الوحدة
+                    </th>
+                    <th>
+                        الاجمالي
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+
+            @*<tr>
+                    <td></td>
+                    <td></td>
+                    <td>اجمالي الفاتورة قبل الخصم  </td>
+                    <td id="totalpill"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        اجمالي الفاتورة بعد الخصم
+                    </td>
+                    <td id="totalpillafterdiscount"></td>
+
+                    <td></td>
+                </tr>*@
+
+
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        const cars = [];
+        $(document).ready(function () {
+            getAll();
+
+            $("#bt").click(function () {
+                window.location = "/Admin/OnlineRequestdatlis";
+            })
+            $("#btnload").click(function () {
+                getAll();
+            })
+            $('#d').hide();
+            $('#hide1').hide();
+            $('#d1').hide();
+            $('#d2').hide();
+            $("#btn1").click(function () {
+                $('#hide1').slideDown(2000);
+            });
+
+            $("#p").click(function () {
+                let phone = $("#Telephone1").val()
+                if (phone == "") {
+                    $('#d1').show();
+                    $('#d').hide();
+                    $('#d2').hide();
+                    return
+                }
+                let Address = $("#Address").val();
+                let m = $("#m").val();
+                if (Address == "") {
+                    $('#d').show();
+                    $('#d1').hide();
+                    $('#d2').hide();
+                }
+                let Email = $("#Email").val();
+                if (Email == "") {
+
+                }
+                let distributor = $("#ContactName").val()
+                if (distributor == "" || distributor <= 0) {
+                    $('#d2').show();
+                    $('#d1').hide();
+                    $('#d').hide();
+                    return
+
+                }
+
+                $('#d').hide();
+                $('#d1').hide();
+                $('#d2').hide();
+
+                var x = $('#Id').val();
+                var xx = $('#va').val();
+
+
+                let head = { CustomerName: distributor, Currency: xx, cus_phone: phone, resquest_stauta: Email, Description: m, Store_ID: x };
+
+                let body = { Header: head, Details: detaiiisls }
+                debugger
+                $.ajax({
+                    url: "/Admin/AddNewrwquest",
+                    type: "post",
+                    data: body,
+                    dataType: "json",
+
+                    success: function (result) {
+                        alert("Done");
+                        $('#hide1').hide();
+                    }
+                })
+
+
+
+
+
+            });
+        });
+
+        function add(id, cu, cp) {
+
+
+
+            $.ajax({
+                url: "/Admin/getdatils",
+                data: { id: id },
+                type: "Get",
+                contenttype: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+
+                    var html = '';
+                    var i = 1;
+
+                    $.each(result, function (key, item) {
+
+                        html += '<tr>'
+
+                        html += '<td > ' + i++ + '</td>'
+                        html += '<td >' + item.Items + '</td>'
+                        html += '<td >' + item.UnitPrice + '</td>'
+
+                        html += '</tr>'
+                    });
+
+                    let basehtml = ` <div class="p-4">
+                            <label> اسم العميل:${cu} </label>
+                             <label style="font-style: oblique;
+            margin-right: 50%;">  رقم التلفون:${cp} </label>
+                        <table class="table table-hover m-1">
+                            <thead>
+                                <tr class="table-active">
+
+                                    <th>#</th>
+                                    <th> اسم المنتج</th>
+
+                                    <th>  الكميه</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="tbody11">
+                            ${html}
+
+                            </tbody>
+                        </table>
+                    </div>
+                   `
+                    ShowModal(basehtml)
+                }
+            });
+        }
+        //get all Data Request
+        function getAll() {
+            {
+
+                $.ajax({
+                    url: "/Admin/Addrequest",
+                    type: "Get",
+                    contenttype: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+
+
+                        var html = '';
+                        var i = 1;
+
+                        $.each(result, function (key, item) {
+
+                            html += `<tr>'
+
+
+                                    <td > ${item.request_ID}</td>
+                                  <td > ${item.CustomerName} </td>
+                                 <td > ${item.Currency} </td>
+                                     <td> ${item.resquest_stautes}</td>
+                                     <td> <a href="#" onclick="add( ${item.request_No},'${item.CustomerName}',${item.cus_phone})" class="btn btn-outline-primary">التفاصيل</a
+                                     </tr>`
+
+                        });
+                        $('.tbody1').html(html);
+
+
+                    }
+                });
+            }
+        }
+
+        let currentitemdefferedwhencreatingpill = 0
+        let itemoperationid = 0;
+        let changedcurrentitemdiscountid = -1;
+        let changedcurrentitemdiscountreson = "";
+        let branches = [];
+        let currenbranch;
+        let currentitemcount = 0;
+        let oldremaining = 0;
+        let AllItems = [];
+        let BillItems = [];
+        let totalbilprice = 0;
+        let totalbilpriceafterdiscount = 0;
+        let newdefferd = 0;
+        let amoutrequired = 0;
+        let basebaeecount = 0;
+        let detaiiisls = []
+
+        let paid = 0;
+        loadItems();
+        function drawitems(itemss) {
+            let html = "";
+
+            $.each(itemss, (i, e) => {
+                html += `<option value='${e.ItemID}'>${e.ItemName} </option>`;
+
+
+
+            })
+            $("#itemsselectoption").html(html)
+
+        }
+        function Setpill() {
+            startloader()
+            let cusid = $("#branchselect").val()
+
+            if (cusid == 0 || BillItems.length == 0) {
+                endloader()
+                ShowModal(`<div class='p-3'><h2 class='text-center p-2'> من فضلك املء جميع الحقول </h2> </div>`)
+
+
+            } else {
+
+                let lastcollection = 0;
+                if (oldremaining == 0) {
+                    lastcollection = 0;
+                } else {
+                    if (paid >= oldremaining) {
+                        lastcollection = oldremaining;
+                        // totalbilprice = totalbilprice - oldremaining;
+                    } else {
+
+                        lastcollection = paid;
+                        // paid = 0;
+
+
+                    }
+                }
+
+                let details = [];
+                let itecounts = BillItems.length;
+
+                for (let i = 0; i < itecounts; i++) {
+
+                    let ittt = AllItems.find((s) => s.ItemID == BillItems[i].ItemID)
+
+                    let it = BillItems[wi];
+                    let objec = { Items: it.ItemName, SR_No: (i + 1), NumberOfUnits: it.itemCount, UnitPrice: it.UnitPrice, ItemID: it.ItemID, TotalPrice: it.TotalPrice, TransactionType: 1, Suppier_id: ittt.Supplier_Id }
+                    details.push(objec);
+                }
+
+                let head = { PillDiscount: totalbilprice - totalbilpriceafterdiscount, CusID: cusid, Editor: "", Sales_ID: 0, TotalAmountAfterDiscount: totalbilpriceafterdiscount, TotalAmountBeforDiscount: totalbilprice, Cash: paid, Deferred: newdefferd, collection: lastcollection, discount_reason: $("discountreason").val(), ReturnAmount: 0, Bill_Details: details }
+                let billjson = JSON.stringify(head);
+                $.ajax({
+                    url: "/Screens/SetPill",
+                    type: "post",
+                    data: {
+                        bill: billjson,
+
+                    }, success: (res) => {
+                        endloader()
+                        location.href = "/chijpbnrlcg/T1UHSfl6oRmBLZg7E44aAg?QmlsbE5v=" + res.hashbillno
+
+                    }
+                })
+            }
+
+
+        }
+        function calcnewdeffferd(ele) {
+            paid = $(ele).val()
+            $("#billfooterpaid").text(paid)
+            newdefferd = amoutrequired - paid;
+            $("#newdeffered").text(amoutrequired - paid)
+        }
+        function drawbill(items) {
+
+            if ($("#discount").val() > 0) {
+                $("#t1").removeClass("d-none")
+                $("#t2").removeClass("d-none")
+                $("#billfooterdiscount").text($("#discount").val())
+
+            } else {
+                $("#t1").addClass("d-none")
+                $("#t2").addClass("d-none")
+                $("#billfooterdiscount").text($("#discount").val())
+
+            }
+
+
+            if (items.length > 0) {
+                $("#setpilldiv").collapse("show")
+                let html = "";
+                totalbilprice = 0;
+                $.each(items, (i, e) => {
+                    totalbilprice += e.TotalPrice;
+                    html += `<tr>
+                                    <td> ${e.ItemName}
+                                    </td>
+                                    <td>${e.itemCount}
+                                    </td>
+                                    <td>${e.UnitPrice}
+                                    </td>
+                                    <td>${e.TotalPrice}
+                                    </td>
+                                    <td><button class='btn btn-outline-danger btn-sm' onclick='deleterow(${i})'>حذف</button>
+                                    </td>
+
+                                    </tr>`
+                })
+
+                totalbilpriceafterdiscount = totalbilprice - $("#discount").val()
+
+                $("#totalpill").html(totalbilprice);
+                $("#totalpillafterdiscount").html(totalbilpriceafterdiscount);
+                $("#tbody").html(html)
+                amoutrequired = totalbilpriceafterdiscount + oldremaining;
+                $("#amountrequired").text(amoutrequired)
+
+            } else {
+                $("#tbody").html(" ")
+            }
+
+            calcnewdeffferd($("#paid"))
+        }
+        function loadItems() {
+            $.ajax({
+                url: "/Screens/Getitems",
+                type: "post",
+                success: (res) => {
+                    AllItems = res.data;
+
+                    drawitems(AllItems)
+                    //     console.log(AllItems)
+                }
+
+            })
+        }
+        function deleterow(index) {
+            BillItems.splice(index, 1)
+
+            drawbill(BillItems)
+        }
+        function addsellitem(id) {
+
+            let val3 = $('#inpt1').html();
+            let val2 = $('#inpt2').val();
+            let val1 = $('#inpt3').val();
+
+            let model = { Items: val3, UnitPrice: val1, ItemID: val2 }
+            detaiiisls.push(model)
+            let curitem = AllItems.find((e) => e.ItemID == id)
+            let oldone = BillItems.find((e) => e.ItemName == curitem.ItemName)
+
+            debugger
+
+            if (parseFloat(curitem.availableCount) < currentitemcount) {
+                ShowModal(`<div class='p-3'><h2 class='text-center p-2'> العدد المطلوب اكثر من الموجود في المخزن </h2> </div>`)
+
+            } else {
+
+
+
+                if (oldone != undefined) {
+                    oldone.itemCount = parseFloat(oldone.itemCount) + parseFloat(currentitemcount);
+                    oldone.TotalPrice += currentitemcount * curitem.Selling_Price;
+
+                } else {
+                    let ob = { ItemID: curitem.ItemID, ItemName: curitem.ItemName, itemCount: currentitemcount, UnitPrice: curitem.Selling_Price, TotalPrice: currentitemcount * curitem.Selling_Price }
+                    BillItems.push(ob)
+                }
+                curitem.availableCount -= currentitemcount;
+                drawbill(BillItems)
+                // console.log(curitem.ItemName + curitem.availableCount)
+                $("#myModal").modal("hide")
+            }
+        }
+        function changeitemcount(ele) {
+
+
+
+            //let x = parseInt($("#baeefelmakhzan").text());
+            //let y = parseInt($(ele).val())
+            //if (x === NaN)
+            //    x = basebaeecount
+            //if ($(ele).val() === "") {
+            //    y = 0
+            //    x = basebaeecount
+            //}
+
+            //$("#baeefelmakhzan").text(x-y)
+            currentitemcount = $(ele).val()
+            try {
+                if ($(ele).val() > 0 && $(ele).val() < 15000) {
+                    $("#submitadditemtobill").removeClass("d-none")
+                } else {
+                    $("#submitadditemtobill").addClass("d-none")
+
+                }
+            } catch {
+                $("#submitadditemtobill").addClass("d-none")
+
+            }
+        }
+        $("#itemsselect").change(() => {
+            let value = $("#itemsselect").val();
+            itemoperationid = value;
+
+            let item = AllItems.find((e) => e.ItemID == value)
+
+            console.log(item)
+            basebaeecount = item.availableCount;
+            let html = `<div class='p-3'>
+                        <h3 class='text-center'id="inpt1"> ${item.ItemName}</h3>
+                        <div class='row'>
+                        <div class='col-12' > باقي في المخزن
+                        <span class='text-primary' id='baeefelmakhzan'> ${item.availableCount}</span>
+                        </div>
+                        <div class='col-12'>
+                        <label>السعر </label>
+                        <input class='form-control' type='text' onkeyup='changecurrentprice(this)' value='${item.Selling_Price}'  />
+                        <input style="display: contents;" id="inpt2" type='text' onkeyup='changecurrentprice(this)' value='${item.ItemID}'  />
+                        </div>
+                         <div class='col-12'>
+                                <label>العدد </label>
+                                <input  id="inpt3" class=' form-control' type='number' onkeyup='changeitemcount(this)' onclick='this.select()' placeholder='ادخل العدد' id='count' />
+                        </div>
+
+                        <div>
+                        <button id='submitadditemtobill' class='d-none m-3 btn btn-sm btn-outline-primary' onclick='addsellitem(${item.ItemID} , ${$("#count").val()})'> اضافة </button>
+                        </div>
+                        </div>
+                        </div>`
+            ShowModal(html)
+            $("#itemsselect").val("")
+        })
+        $("#companyselect").change(() => {
+
+            $.ajax({
+                url: "/Screens/GetBranches",
+                type: "post",
+                data: {
+                    ComID: $("#companyselect").val()
+                },
+                success: (res) => {
+                    branches = res.data;
+                    let html = "<option  value='0'>اختر الفرع</option>"
+                    $.each(branches, (i, e) => {
+                        html += `<option value='${e.Branch_ID}'>${e.branchName}</option>`
+                    })
+                    $("#branchselect").html(html)
+                }
+            })
+
+        }
+        )
+        $("#branchselect").change(() => {
+            currenbranch = branches.find((s) => s.Branch_ID == $("#branchselect").val())
+            $("#oldremaining").val(currenbranch.Unpaid_deferred)
+            $("#billfooteroldremaining").text(currenbranch.Unpaid_deferred)
+
+            oldremaining = currenbranch.Unpaid_deferred;
+            newdefferd = newdefferd;
+            drawbill(BillItems)
+        })
+        function additemdiscount(ele) {
+            $(ele).css("display", "none")
+            $("#additemdiscountdiv").collapse("show")
+        }
+        function changecurrentprice(ele) {
+            debugger
+
+            let item = AllItems.find((e) => e.ItemID == itemoperationid)
+            item.Selling_Price = $(ele).val()
+
+        }
+        function distypechanged(ele) {
+
+            let value = $(ele).val();
+            if (value == 1) {
+                $("#disreasondiv").collapse("show")
+                changedcurrentitemdiscountid = value;
+            } else {
+                $("#disreasondiv").collapse("hide")
+                changedcurrentitemdiscountid = value;
+                changedcurrentitemdiscountreson = "فرق وزن"
+
+            }
+
+
+        }
+
+        function changedefaultdisreason(ele) {
+            changedcurrentitemdiscountreson = $(ele).val()
+        }
+        function validcountnumber(ele) {
+            debugger
+            let value = $(ele).val();
+
+        }
+
+
+    </script>
+}
+

@@ -1,0 +1,65 @@
+﻿@model SuppliersDashboard.ViewModels.Response<List<SuppliersDashboard.ViewModels.Branch_Info_V>>
+@{
+    ViewBag.Title = "Show Map";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var map = L.map('map').setView([26.820553, 30.802498], 6); // Centered on Egypt with an appropriate zoom level
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    }).addTo(map);
+
+    var BrancesIcon = L.icon({
+        iconUrl: "https://admin-dawar.unoerp.app/Content/Images/store.png",
+        iconSize: [32, 32], // Size of the icon
+        iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+        popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+    });
+
+    // Assuming 'Brances' is coming from your backend
+    var Brances = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data));
+
+    Brances.forEach(function (location) {
+        var marker = L.marker([location.Longitude, location.Latitude], { icon: BrancesIcon }).addTo(map)
+            .bindPopup(`
+            <div class="popup-content" style="direction: ltr;">
+                <div><span style="color: #070606;" class="label">Branch Name :</span> ${location.BranchName}</div>
+                <div><span style="color: #070606;" class="label">Address :</span> ${location.Address}</div>
+                <div><span style="color: #070606;" class="label">Type Name :</span> ${location.TypeName}</div>
+                <div><span style="color: #070606;" class="label">Username :</span> ${location.UserName}</div>
+                <div><span style="color: #070606;" class="label">Range :</span> ${location.Range}</div>
+                <div><span style="color: #070606;" class="label">Region :</span> ${location.Region}</div>
+                <div><span style="color: #070606;" class="label">Company Name :</span> ${location.CompanyName}</div>
+                <div><button onclick="getDirections(${location.Longitude}, ${location.Latitude})">Get Directions</button></div>
+            </div>`);
+
+
+    });
+
+   
+});
+    // Function to get directions to the branch
+    function getDirections(lat, lon) {
+        // Get the current location of the user
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userLat = position.coords.latitude;
+                var userLon = position.coords.longitude;
+
+                // Construct the Google Maps Directions URL
+                var directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=${lat},${lon}&travelmode=driving`;
+
+                // Open the link in a new tab
+                window.open(directionsUrl, '_blank');
+            }, function (error) {
+                alert('Unable to retrieve your location.');
+            });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    }
+</script>

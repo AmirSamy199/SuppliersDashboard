@@ -1,0 +1,141 @@
+﻿
+
+@{
+    Layout = null;
+    int i = 1;
+    int ii = 1;
+
+}
+@using SuppliersDashboard.Controllers
+@using SuppliersDashboard.ViewModels
+@model Response<List<warehouse_Requst_V>>
+
+<style>
+    .modal-content {
+        min-width: 200%
+    }
+</style>
+
+<div class="container">
+
+    <h3 class=" h3 text-center p-3 text-info ">
+        طلبات تسليم البضاعة
+    </h3>
+    <div class=" p-3">
+        <button class="  btn btn-primary w-100" onclick="sure( 'هل انت متاكد من تسوية البضاعة' , 'تسوية' ,'settleItems()')">
+            طلب تسوية البضاعة
+        </button>
+    </div>
+
+    @if ((Model.Data != null && Model.Data.Count > 0) || ViewBag.Morttaaga.State == 1)
+    {
+        <div>
+
+            <h3 class="h3 text-center">
+                المردودات
+            </h3>
+            <table class="table table-striped  table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            الصنف
+                        </th>
+                        <th>
+                            العدد
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @try
+                    {
+
+                        foreach (var item in Model.Data)
+                        {
+                            <tr>
+                                <td>
+                                    @(i++)
+                                </td>
+                                <td>
+                                    @item.ItemName
+                                </td>
+                                <td>
+                                    @item.Item_ID
+                                </td>
+                                <td>
+                                    @item.Item_Count
+                                </td>
+                            </tr>
+                        }
+                    }
+                    catch { }
+                </tbody>
+            </table>
+        </div>
+        <div>
+
+            <h3 class="h3 text-center">
+                المرتجعات
+            </h3>
+            <table class="table table-striped  table-bordered">
+                <thead>
+                    <tr>
+                        
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            الصنف
+                        </th>
+                        <th>
+                            الوزن
+                        </th>
+                    
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @try
+                    {
+
+                        foreach (var item in ViewBag.Morttaaga.Data)
+                        {
+                            <tr>
+                                <td>
+                                    @(ii++)
+                                </td>
+                                <td>
+                                    @item.Item_Name
+                                </td>
+                                <td>
+                                    @item.Item_Count
+                                </td>
+                              
+                            </tr>
+                        }
+                    }
+                    catch { }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 p-3">
+                <button class="btn btn-primary w-100 text-center" onclick="sure('هل انت متاكد من قبول رد البضاعة ؟' , 'قبول' , 'salesmanacceptmardodatrequest()')"> قبول رد البضاعة </button>
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <p class="text-center text-muted">
+            لا يوجد
+        </p>
+    }
+</div>

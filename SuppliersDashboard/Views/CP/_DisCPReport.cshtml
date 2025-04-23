@@ -1,0 +1,161 @@
+﻿
+@model List<SuppliersDashboard.Models.CP.CPMonthModel>
+<style>
+    th {
+        color: orangered;
+        background-color: antiquewhite
+    }
+
+    .mute-1 {
+        color: #ce9079
+    }
+
+    .specialtd {
+        color: #000;
+        background-color: #fff !important;
+        font-size: 18px;
+    }
+</style>
+
+<div class="row p-4">
+    <div class=" text-center">
+        <h2 class="text-center">
+            الاعدادات الخاصة للمندوب
+            @Model[0].SalesName
+        </h2>
+    </div>
+</div>
+<div class="row p-2">
+    <div class="table-responsive table table-striped">
+        <table class="table  table-dark">
+            <thead>
+                <tr>
+                    <th>  الشهر</th>
+                    <th>  المبيعات</th>
+                    <th>  نسبة من الهدف</th>
+                    <th>  التغطية</th>
+                    <th>  نسبة من الهدف</th>
+                    <th>  المنتج</th>
+                    <th>  العدد</th>
+                    <th>  نسبة من الهدف</th>
+                    <th>  المرتجعات</th>
+                    <th>  نسبة من الهدف</th>
+                    <th> </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Items.Count > 0)
+                    {
+                        for (int i = 1; i <= item.Items.Count; i++)
+                        {
+                            if (i == 1)
+                            {
+                                <tr class="mute-@(Convert.ToInt16(item.MonthIsClosed))">
+                                    <td>  @item.Month</td>
+                                    <td>  @item.SalesAmount</td>
+                                    <td>  @item.SalesAchievePer %</td>
+                                    <td>  @item.CoverageAmount</td>
+                                    <td>  @item.CoverageAchievePer %</td>
+
+                                    <td> @item.Items[i - 1].ItemName </td>
+                                    <td> @item.Items[i - 1].ItemCountAchieved </td>
+                                    <td> @item.Items[i - 1].ItemAchievedPer %  </td>
+                                    <td>  @item.ReturnAmount</td>
+                                    <td>  @item.ReturnAchievePer %</td>
+                                    <td>
+                                        @if (!item.MonthIsClosed)
+                                        {
+                                            <button class="btn btn-primary" onclick="ClosMonth( @item.SalesManId,'@item.Month')"> اغلاق </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="mute-@(Convert.ToInt16(item.MonthIsClosed))">
+                                    <td> </td>
+                                    <td>  </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td>  </td>
+                                    <td> @item.Items[i - 1].ItemName </td>
+                                    <td> @item.Items[i - 1].ItemCountAchieved </td>
+                                    <td> @item.Items[i - 1].ItemAchievedPer %  </td>
+                                    <td></td>
+                                    <td> </td>
+                                    <td>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                        <tr class="mute-@(Convert.ToInt16(item.MonthIsClosed))">
+                            <td>  @item.Month</td>
+                            <td>  @item.SalesAmount</td>
+                            <td>  @item.SalesAchievePer %</td>
+                            <td>  @item.CoverageAmount</td>
+                            <td>  @item.CoverageAchievePer %</td>
+
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  @item.ReturnAmount</td>
+                            <td>  @item.ReturnAchievePer %</td>
+                            <td>
+                                @if (!item.MonthIsClosed)
+                                {
+                                    <button class="btn btn-success" onclick="ClosMonth( @item.SalesManId,'@item.Month')"> اغلاق </button>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="p-5">
+
+</div>
+<div class="card pd-20  card-ERB ">
+    <div class="  table-responsive  ">
+
+        <div id="tablecollapse ">
+            <table class="table  table-dark">
+                <thead>
+                    <tr>
+                        <th>  الحافز </th>
+                        <th>  المبيعات</th>
+                        <th>  التغطية</th>
+                        <th>  المنتجات</th>
+                        <th>  المرتجعات</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <td></td>
+                        <td>@Model[1].CPSalesPer %</td>
+                        <td>@Model[1].CPCoveragePer %</td>
+                        <td>@Model[1].CPItemsPer %</td>
+                        <td>@Model[1].CPReturnsPer %</td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

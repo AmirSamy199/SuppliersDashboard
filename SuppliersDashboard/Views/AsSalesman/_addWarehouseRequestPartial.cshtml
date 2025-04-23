@@ -1,0 +1,108 @@
+﻿
+
+@{
+    Layout = null;
+    int i = 1;
+
+}
+@using SuppliersDashboard.Controllers
+@using SuppliersDashboard.ViewModels
+
+
+<style>
+    .modal-content{
+        min-width : 200%
+    }
+</style>
+<div class="container">
+
+    <h3 class=" h3 text-center p-3 text-info ">
+    طلب بضاعة من المخزن
+    </h3>
+
+
+    
+        <div class="row">
+            <div class="col-lg-4 p-2">
+                <label class="form-label">
+                    الصنف
+                </label>
+                <input list="itemsselectoption" name="itemsselectoption" class="form-control" placeholder=" اختر الصنف " id="itemsselect">
+                <datalist id="itemsselectoption">
+                    <option value="0"> اختر الصنف</option>
+                    @foreach(var item in (List<main_warehouse_items_availablilty_V>)ViewBag.Items)
+            {
+                <option value="@item.ItemID" id="item-id-@item.ItemID" data-supplier="@item.Supplier_Id">
+                    @item.ItemName
+                </option>
+            }
+         
+                </datalist>
+
+            </div>
+            <div class="col-lg-4  p-2 ">
+                <label class="form-label">
+                    العدد
+                </label>
+                <input type="number"  id="item-count" class="form-control"  value="0" onclick="this.select()" />
+
+            </div>
+               <div class="col-lg-4  p-2 ">
+
+                   <label></label>
+               <button onclick="submitAddNewItemRequest()" class="btn btn-primary w-100">
+                   اضافة 
+               </button>
+
+            </div>
+
+
+        </div>
+    
+
+</div>
+<script>
+    function submitAddNewItemRequest() {
+        let itemid = $("#itemsselect").val()
+        if (itemid == 0)
+            return
+        if (itemid == "")
+            return
+        let supplierid = $("#item-id-" + itemid).attr("data-supplier");
+        let itemcount = $("#item-count").val()
+        if (itemcount == 0 || itemcount == "")
+            return
+       
+
+
+        
+        let json = 
+        {
+            Item_ID: itemid,
+            Item_Count: itemcount,
+            User_ID: baseId,
+            Supplier_ID: supplierid,
+            sales_id: baseId,   
+              type: 1
+        }
+        $.ajax({
+            url: '/AsSalesman/SubmitAddWarehouseRequest',
+            type: 'post',
+            data: {
+                Id: baseId,
+                model: json
+            },
+            success: (res) => {
+                pendingReceiveItems()
+
+            }
+        })
+
+        console.log(json)
+    }
+</script>
+
+
+
+
+

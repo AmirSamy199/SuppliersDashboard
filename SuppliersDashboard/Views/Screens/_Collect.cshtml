@@ -1,0 +1,95 @@
+﻿@using SuppliersDashboard.Resources
+<div class="p-3">
+    <h2 class="text-center " > @ViewBag.Name</h2>
+    <div class="p-2">
+        <div>
+            <label class="p-2"> @pages.totalpil</label>
+            <input type="number" class="form-control" placeholder="@pages.totalpil" disabled value="@ViewBag.Amount"/>
+        </div>
+        <div>
+            <label class="p-2">@pages.paid </label>
+            <input type="number" class="form-control" placeholder="@pages.paid" id="amount" />
+        </div>
+
+        <div>
+            <label class="p-2"> @pages.method</label>
+            <select class="form-select" id="paymentmethod" onchange="paymentchanged(this)">
+                <option value="1">@pages.totalpilcash</option>
+                <option value="2">@pages.check</option>
+            </select>
+        </div>
+        <div class=" collapse" id="checkdiv">
+            <div>
+                <label class="p-2"> @Banks.BankName</label>
+                <input type="text" class="form-control" placeholder="@Banks.BankName" id="bank" />
+            </div>
+            <div>
+                <label class="p-2"> @llayout.checknumber</label>
+                <input type="text" class="form-control" placeholder="@llayout.checknumber" id="checknumber" />
+            </div>
+        </div>
+        <div class="text-center p-4" >
+        
+            <button class="btn btn-primary" onclick="SubmitCollect(@ViewBag.BranchId)"> @pages.Collect  </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+        function paymentchanged(ele) {
+
+            let val = $(ele).val();
+            if (parseInt(val) != 1) {
+                $(`#checkdiv`).collapse(`show`)
+            } else {
+
+                $(`#checkdiv`).collapse(`hide`)
+            }
+    }
+
+
+    function SubmitCollect(Id) {
+        debugger
+        let amount = $("#amount").val();
+        if (parseFloat(amount) <= 0 || parseFloat(amount) >@ViewBag.Amount)
+            return 
+        let checknumber = $("#checknumber").val();
+        let bank = $("#bank").val();
+        let paymethod = $("#paymentmethod").val();
+        if (parseInt(paymethod) == 1) { // Cash
+            check = '';
+            bank = '';
+        }
+
+        let CollectionModel = {
+            CheckNumber: checknumber,
+            Bank: bank ,
+            Payment_Method_Id: paymethod,
+            RemainingAmount: @ViewBag.Amount - amount,
+            Cus_id: Id ,
+            Amount: amount
+        }
+        let url = `/Screens/SubmitCollection`;
+      //  StartLoader()
+
+        $("#spinner").addClass("show");
+
+         
+        setTimeout(() => { EndLoader() },4000)
+        $.post(url, CollectionModel, (res) => {
+            $("#spinner").removeClass("show");
+            if (res.data == 1) {
+                showSuccessOperation(`تم التحصيل بنجاح `)
+                setTimeout(() => {
+                    location.reload()
+                },3000)
+            } else {
+                showDangerOperation(`اعد المحاولة مرة اخري`)
+            }
+
+        })
+       
+    }
+</script>

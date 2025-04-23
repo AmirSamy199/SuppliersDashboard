@@ -1,0 +1,354 @@
+﻿@model SuppliersDashboard.Models.Employees
+<style>
+    .select2-show-search {
+        width: 100%;
+    }
+
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-search__field {
+        max-width: 100%;
+    }
+
+    span {
+        width: inherit;
+    }
+/*
+    .modal .modal-body {
+        width: 280%;
+    }*/
+
+    label {
+        text-align: center;
+        padding: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+        margin-left: 0%;
+    }
+
+    input {
+        background-color: white !important;
+    }
+
+    select {
+        background-color: white !important;
+    }
+</style>
+<div class="modal-body pd-25">
+    <div class="row d-flex justify-content-around mt-2">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-3">
+            <span class="btn btn-danger" style="display:none" id="ValidSpan">@SuppliersDashboard.Resources.Employees.ValidSpan</span>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Name <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="EmployeeName" value="@Model.EnglishName">
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.ArabicName <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="EmployeeARName" value="@Model.ArabicName">
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Nationality <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @Html.DropDownList("CountryList", (IEnumerable<SelectListItem>)ViewBag.Country, new { id = "ddlCountry", @class = "form-select select2-show-search" })
+        </div>
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.NationalID <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="number" class="form-control" id="NationalID" onkeyup="IDCheck()" value="@Model.NationalID">
+            <span style="color:red; display:none" id="CheckSpan">National ID must be 14 Digits</span>
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.ID_StartDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="ID_StartDate" value="@Model.IDStartDate">
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.ID_ExpDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="ID_ExpDate" value="@Model.IDExpDate">
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Email <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="email" class="form-control" onkeyup="Validate()" id="Email" placeholder="default@example.com" value="@Model.Email">
+            <span style="color:red; display:none" id="CheckEmail">Email must be like default@example.com</span>
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Location <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="Location" value="@Model.Address">
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.DateOfBirth <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="DateOfBirth" value="@Model._Date_of_Birth">
+
+        </div>
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Place_Of_Birth <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="Place_Of_Birth" value="@Model.Place_Of_Birth">
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Phone <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="tel" class="form-control" id="Phone" onkeyup="PhoneCheck()" value="@Model.Phone">
+            <span style="color:red; display:none" id="CheckPhone">Phone number must be 10 Digits</span>
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Department <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @if (ViewBag.DepartmentList == null)
+            {
+                @Html.DropDownList("DepartmentList", (IEnumerable<SelectListItem>)ViewBag.Department, "-- Select Department --", new { id = "ddlDepartment", @class = "form-select select2-show-search", @onchange = "DegreeJobs1()" })
+
+            }
+            else
+            {
+                @Html.DropDownList("DepartmentList", (IEnumerable<SelectListItem>)ViewBag.DepartmentList, "-- Select Department --", new { id = "ddlDepartment", @class = "form-select select2-show-search", @onchange = "DegreeJobs1()" })
+            }
+
+
+        </div>
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Company <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @Html.DropDownList("CompanyList", (IEnumerable<SelectListItem>)ViewBag.Companys, "-- Select Company --", new { id = "ddlCompany", @class = "form-select select2-show-search" })
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Shift <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            @Html.DropDownList("ShiftList", (IEnumerable<SelectListItem>)ViewBag.Shift, new { id = "Shift", @class = "form-select select2-show-search" })
+
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Manager <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <select class="form-select select2-show-search" id="JobsList1">
+            </select>
+        </div>
+
+    </div>
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.University <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @Html.DropDownList("UniversityList", (IEnumerable<SelectListItem>)ViewBag.University, "-- Select University --", new { id = "ddlUniversity", @class = "form-select select2-show-search" })
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.EducationGrade <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @Html.DropDownList("EducationGradeList", (IEnumerable<SelectListItem>)ViewBag.EducationGrade, "-- Select Education Grade --", new { id = "ddlEducationGrade", @class = "form-select select2-show-search" })
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.GraduationDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="GraduationDate" value="@Model.GraduationDate">
+
+        </div>
+
+    </div>
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Degree <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @Html.DropDownList("DegreeList", (IEnumerable<SelectListItem>)ViewBag.Degrees, "-- Select Degree --", new { id = "ddlDegree", @class = "form-select select2-show-search", @onchange = "DegreeJobs()" })
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Job <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            @Html.DropDownList("JobList", (IEnumerable<SelectListItem>)ViewBag.Jobs, new { id = "JobsList", @class = "form-select select2-show-search" })
+
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Categories <span class="tx-danger">*</span></label>
+
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            @Html.DropDownList("CategoriesList", (IEnumerable<SelectListItem>)ViewBag.Categories, new { id = "Categories", @class = "form-select select2-show-search" })
+
+
+        </div>
+
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.jobLevel <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            @Html.DropDownList("JoblevelList", (IEnumerable<SelectListItem>)ViewBag.Joblevel, new { id = "jobLevel", @class = "form-select select2-show-search" })
+
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.PositionType <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            @Html.DropDownList("PostionList", (IEnumerable<SelectListItem>)ViewBag.Postion, "-- Select Position Type --", new { id = "ddlPostions", @class = "form-select select2-show-search" })
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.EmployeeSalary <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="number" class="form-control" id="EmployeeSalary" value="@Model.EmployeeSalary">
+        </div>
+    </div>
+
+
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.DateOfHiring <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="DateOfHiring" value="@Model._Date_of_hiring">
+        </div>
+        <label for="inputState" class="col-lg-1">@SuppliersDashboard.Resources.Employees.InsuranceStatus</label>
+        <div class="form-group col-lg-3">
+
+            @Html.DropDownList("InsuranceStatus", new List<SelectListItem>
+            {
+                 new SelectListItem{ Text="Select Insurance Status", Value = "0" },
+                 new SelectListItem{ Text="insured", Value = "1" },
+                 new SelectListItem{ Text="not insured", Value = "2" },
+
+
+            }, new { @class = "form-control", id = "InsuranceStatus", @onchange = "InsuranceStatus()" })
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.NoOfInsurance <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="number" class="form-control" id="InsuranceNumber" value="@Model.EmployeeInsrance">
+        </div>
+
+    </div>
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+        @if (Model.InsuranceStatus == 1)
+        {
+            <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.SocialSecurityStartDate <span class="tx-danger">*</span></label>
+            <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+                <input type="date" class="form-control" id="SocialSecurityStartDate" value="@Model.SocialSecurityDate">
+            </div>
+        }
+        else
+        {
+            <label class="col-lg-1 form-control-label" id="comDate">@SuppliersDashboard.Resources.Employees.CompanyinsuranceDate <span class="tx-danger">*</span></label>
+            <div class="col-lg-3 mg-t-10 mg-lg-t-0" id="comDate1">
+                <input type="date" class="form-control" id="CompanyinsuranceDate" value="@Model.SocialSecurityDate">
+            </div>
+        }
+
+
+        <label for="inputState" class="col-lg-1">@SuppliersDashboard.Resources.Employees.Gender</label>
+        <div class="form-group col-lg-3">
+
+            @Html.DropDownList("Gender", new List<SelectListItem>
+            {
+                 new SelectListItem{ Text="Select Gender", Value = "0" },
+                 new SelectListItem{ Text="Male", Value = "1" },
+                 new SelectListItem{ Text="Female", Value = "2" },
+
+
+            }, new { @class = "form-control", id = "Gender", @onchange = "Gender()" })
+        </div>
+        @if (Model.Gender == 1)
+        {
+            <label class="col-lg-1 form-control-label" id="MilitaryStatus" style="display:block;">@SuppliersDashboard.Resources.Employees.Military_Status <span class="tx-danger">*</span></label>
+            <div class="col-lg-3 mg-t-10 mg-lg-t-0" style="display:block;" id="ddlMilitaryStatus">
+                @Html.DropDownList("Military_StatusList", (IEnumerable<SelectListItem>)ViewBag.Military_Status, "-- Select Military Status --", new { id = "ddlMilitary_Status", @class = "form-select select2-show-search" })
+            </div>
+            <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.MilitaryDate <span class="tx-danger">*</span></label>
+            <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+                <input type="date" class="form-control" id="MilitaryDate" value="@Model.Military_Date">
+            </div>
+        }
+        else
+        {
+            <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Religion <span class="tx-danger">*</span></label>
+            <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+                @Html.DropDownList("ReligionList", (IEnumerable<SelectListItem>)ViewBag.Religion, "-- Select Religion --", new { id = "ddlReligion", @class = "form-select select2-show-search" })
+            </div>
+        }
+        <label for="inputState" class="col-lg-1">@SuppliersDashboard.Resources.Employees.Martial_Status</label>
+        <div class="form-group col-lg-3">
+            @Html.DropDownList("Martial_Status", new List<SelectListItem>
+            {
+                 new SelectListItem{ Text="Select Martial Status", Value = "0" },
+                 new SelectListItem{ Text="Single", Value = "1" },
+                 new SelectListItem{ Text="Married", Value = "2" },
+
+
+            }, new { @class = "form-control", id = "Martial_Status" })
+
+        </div>
+        <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.MotherName <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="MotherName" value="@Model.MotherName">
+        </div>
+
+    </div>
+
+
+    <div class="row d-flex justify-content-around mt-2 mt-2">
+
+        @if (Model.Gender == 1)
+        {
+            <label class="col-lg-1 form-control-label">@SuppliersDashboard.Resources.Employees.Religion <span class="tx-danger">*</span></label>
+            <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+                @Html.DropDownList("ReligionList", (IEnumerable<SelectListItem>)ViewBag.Religion, "-- Select Religion --", new { id = "ddlReligion", @class = "form-select select2-show-search" })
+            </div>
+        }
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg"  onclick="cloesmodel()" style=" width: auto; height: 39px; margin-right: 2%;">@SuppliersDashboard.Resources.Items.Close</button>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="SubmitEmployee()" id="AddBtn" class="btn  col-lg-3" style=" height: 39px; background-color: #163e57; color: white; width: fit-content;">
+                @SuppliersDashboard.Resources.pages.add
+            </button>
+
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="SubmitEditEmployee(@Model.RecordID)" id="EditBtn" class="btn  col-lg-3" style="width: fit-content; height: 39px; background-color: #163e57; color: white;">
+                @SuppliersDashboard.Resources.pages.edit
+            </button>
+
+        </div>
+    </div>
+
+    @*<div class="row d-flex justify-content-around mt-2 " style=" display: flex; justify-content: flex-end;margin-top:2%;">
+        <button type="button" class="btn btn-danger pd-x-20" data-dismiss="modal" onclick="cloesmodel()" style=" width: auto; height: 39px; margin-right: 2%;">@SuppliersDashboard.Resources.Items.Close</button>
+        <button type="button" onclick="SubmitEmployee()" id="AddBtn" class="btn  col-lg-3" style=" height: 39px; background-color: #163e57; color: white; width: fit-content;">
+            Submit Adding
+        </button>
+        <button type="button" onclick="SubmitEditEmployee(@Model.RecordID)" id="EditBtn" class="btn  col-lg-3" style="width: fit-content; height: 39px; background-color: #163e57; color: white;">
+            Submit Edit
+        </button>
+        <input id="RecordID" type="hidden" value="@Model.RecordID">
+        <input id="OwnerID" type="hidden">
+    </div>*@
+</div>
+
+

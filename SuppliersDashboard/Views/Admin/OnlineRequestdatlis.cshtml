@@ -1,0 +1,259 @@
+﻿@using SuppliersDashboard.Resources
+
+@{
+    ViewBag.Title = "OnlineRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    td, th {
+        text-align: center !important;
+        border: 2px solid !important;
+    }
+
+    table {
+        margin: 10px;
+        border-collapse: collapse !important;
+    }
+</style>
+<div class="row">
+    <div class="p-4 d-flex justify-content-around col-12">
+        <button class="btn btn-primary m-1 col-4" id="bt">إضافه طلب  </button>
+    </div>
+</div>
+<div class="card pd-20  card-ERB ">
+    <div class="  table-responsive  ">
+
+        <div id="tablecollapse ">
+            <table class="table table-hover m-1">
+                <thead>
+                    <tr class="table-active">
+
+                        <th> رقم الفاتوره</th>
+                        <th> اسم العميل</th>
+                        <th>  اسم المخزن</th>
+                        <th>  الحاله</th>
+                        <th>التفاصيل </th>
+                        <th>تعديل الحاله </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody1">
+
+                    @*@if (ViewBag.pro1 != null)
+                        {
+
+                            foreach (var item in ViewBag.pro1)
+                            {
+                             <tr>
+
+
+                                            <td > @item.request_ID  </td>
+                                           <td >@item.CustomerName  </td>
+                                          <td >@item.resquest_stauta </td>
+                                           <td > <a href="#" onclick="add(@item.request_ID )" class="btn btn-outline-primary">التفاصيل</a></td>
+                                           </tr>
+                            }
+                        }*@
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>Z
+@*modal mpopup*@
+<div class="modal " id="myModal">
+    <div class="modal-dialog ">
+        <div class="modal-content" id="modalcontent">
+            <table class="table table-hover m-1">
+                <thead>
+                    <tr class="table-active">
+
+                        <th>#</th>
+                        <th> اسم المنتج</th>
+
+                        <th>  الكميه</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tbody11">
+
+                    @*@if (ViewBag.pro1 != null)
+                        {
+
+                            foreach (var item in ViewBag.pro1)
+                            {
+                             <tr>
+
+
+                                            <td > @item.request_ID  </td>
+                                           <td >@item.CustomerName  </td>
+                                          <td >@item.resquest_stauta </td>
+                                           <td > <a href="#" onclick="add(@item.request_ID )" class="btn btn-outline-primary">التفاصيل</a></td>
+                                           </tr>
+                            }
+                        }*@
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        const cars = [];
+        $(document).ready(function () {
+            getAll();
+            $("#bt").click(function () {
+                window.location = "/Admin/OnlineRequest";
+            })
+
+
+
+        });
+
+        function ShowModal(html) {
+            $("#modalcontent").html(html)
+            $("#myModal").modal("show")
+        }
+        function CloseModal() {
+
+            $("#myModal").modal("hide")
+        }
+        function add(id, cu, cp) {
+
+
+
+            $.ajax({
+                url: "/Admin/getdatils",
+                data: { id: id },
+                type: "Get",
+                contenttype: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+
+                    var html = '';
+                    var i = 1;
+
+                    $.each(result, function (key, item) {
+
+                        html += '<tr>'
+
+                        html += '<td > ' + i++ + '</td>'
+                        html += '<td >' + item.Items + '</td>'
+                        html += '<td >' + item.UnitPrice + '</td>'
+
+                        html += '</tr>'
+                    });
+
+                    let basehtml = ` <div class="p-4">
+                                                                                            <label> اسم العميل:${cu} </label>
+                                                                                             <label style="font-style: oblique;
+                                                                            margin-right: 50%;">  رقم التلفون:${cp} </label>
+                                                                                        <table class="table table-hover m-1">
+                                                                                            <thead>
+                                                                                                <tr class="table-active">
+
+                                                                                                    <th>#</th>
+                                                                                                    <th> اسم المنتج</th>
+
+                                                                                                    <th>  الكميه</th>
+
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody class="tbody11">
+                                                                                            ${html}
+
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                   `
+                    ShowModal(basehtml)
+                }
+            });
+        }
+        //get all Data Request
+        function getAll() {
+            {
+
+                $.ajax({
+                    url: "/Admin/Addrequest",
+                    type: "Get",
+                    contenttype: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+
+
+                        var html = '';
+                        var i = 1;
+
+                        $.each(result, function (key, item) {
+
+                            html += `<tr>'
+
+
+                                                                                                    <td > ${item.request_ID}</td>
+                                                                                                  <td > ${item.CustomerName} </td>
+                                                                                                 <td > ${item.Currency} </td>
+                                                                                                     <td> ${item.resquest_stautes}</td>
+                                                                                                     <td> <a href="#" onclick="add( ${item.request_No},'${item.CustomerName}',${item.cus_phone})" class="btn btn-outline-primary">التفاصيل</a></td>
+                                                                                                     <td> <a href="#" onclick="updata( ${item.request_No})" class="btn btn-outline-primary">تعديل الحاله</a></td>
+                                                                                                     </tr>`
+
+                        });
+                        $('.tbody1').html(html);
+
+
+                    }
+                });
+            }
+        }
+
+
+        function updata(iid) {
+            var html = '';
+            html += `<div class="p-4 m-auto">
+                                                                    <label class="form-label-title text-center col-lg-12 col-md-3 " for="name" style="font-size: 22px;"> تعديل حاله الطلب  </label>
+
+                                                                                        <select id="select1" class="form-control form-select">
+                                                                                        <option value="3"> @llayout.reqest  </option>
+                                                                                            <option value="1">اكتملت</option>
+                                                                                     <option value="">رفضت</option></select>
+                                                                                   <a href="#" onclick="updatastutas(${iid})" class="btn btn-outline-primary">تعديل الحاله</a></div>`
+            ShowModal(html)
+
+        }
+
+        function updatastutas(idd) {
+
+            const x = $('#select1').val();
+            if (x == 'رفضت') {
+                $.ajax({
+                    url: "/Admin/updatastu",
+                    data: { id: idd, parm: 2 },
+                    type: "post",
+
+                    dataType: "json",
+
+                    success: function (result) {
+                        getAll();
+                        $("#myModal").modal("hide")
+                    }
+                })
+            }
+            $.ajax({
+                url: "/Admin/updatastu",
+                data: { id: idd, parm: x },
+                type: "post",
+
+                dataType: "json",
+
+                success: function (result) {
+                    getAll();
+                    $("#myModal").modal("hide")
+                }
+            })
+        }
+
+
+    </script>
+}

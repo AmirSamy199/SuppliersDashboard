@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewBag.Title = "AllDetails";
+   
+}
+
+@model  SuppliersDashboard.ViewModels.SupplierDetailsVM
+@{
+    // ViewBag.Title = Model.Message;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" value="@ViewBag.Id" id="BaseId" />
+<div class="container">
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2" id="SupplierName">
+            @*//@Model.SupplierName*@
+        </h1>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpil
+                    @*@Html.DisplayNameFor(m => m.TotalPil)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPil">
+                @*@Model.TotalPil*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbbeforediscount
+                    @*@Html.DisplayNameFor(m => m.TotalPillBeforDiscount)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPillBeforDiscount">
+                @*@Model.TotalPillBeforDiscount*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbafterdiscount
+                    @*@Html.DisplayNameFor(m => m.TotalPilAfterDiscount)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilAfterDiscount">
+                @*@Model.TotalPilAfterDiscount*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.tbdiscount
+                    @*@Html.DisplayNameFor(m => m.TotalPilAfterDiscount)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilDiscount">
+                @*@Model.TotalPilAfterDiscount*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.titemcount
+                    @*@Html.DisplayNameFor(m => m.TotalItemsQount)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalItemsQount">
+                @*@Model.TotalItemsQount*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.titemdiscount
+                    @*@Html.DisplayNameFor(m => m.TotalItemsDiscount)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalItemsDiscount">
+                @*@Model.TotalItemsDiscount*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilcash
+                    @*@Html.DisplayNameFor(m => m.TotalPilCach)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilCach">
+                @*@Model.TotalPilCach*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilagil
+                    @*@Html.DisplayNameFor(m => m.TotalPilAgel)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilAgel">
+                @*@Model.TotalPilAgel*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.msrofat
+                    @*@Html.DisplayNameFor(m => m.Msrofat)*@
+                </h2>
+            </div>
+            <div class="text-info" id="Msrofat">
+                @*@Model.Msrofat*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.totalpilnet
+                    @*@Html.DisplayNameFor(m => m.TotalPilNet)*@
+                </h2>
+            </div>
+            <div class="text-info" id="TotalPilNet">
+                @*@Model.TotalPilNet*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.ramount
+                    @*@Html.DisplayNameFor(m => m.ReturnAmount)*@
+                </h2>
+            </div>
+            <div class="text-info" id="ReturnAmount">
+                @*@Model.ReturnAmount*@
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div>
+                <h2 class="h5">
+                    @SuppliersDashboard.Resources.pages.collection
+                    @*@Html.DisplayNameFor(m => m.Collection)*@
+                </h2>
+            </div>
+            <div class="text-info" id="Collection">
+                @*@Model.Collection*@
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2">
+            @SuppliersDashboard.Resources.llayout.distributors
+        </h1>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@SuppliersDashboard.Resources.pages.name </th>
+                    <th scope="col"> -- </th>
+                    <th scope="col"> -- </th>
+                </tr>
+            </thead>
+            <tbody id="distributerstablebody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="container">
+    <div style="text-align:center;padding:20px">
+        <h1 class="h2">
+            @SuppliersDashboard.Resources.pages.bills
+        </h1>
+    </div>
+    <table id="BillsTable" class="display">
+        <thead>
+            <tr>
+                <th>@SuppliersDashboard.Resources.pages.billno</th>
+                <th>@SuppliersDashboard.Resources.pages.adddate</th>
+                <th>@SuppliersDashboard.Resources.pages.distributor</th>
+                <th>--</th>
+            </tr>
+        </thead>
+    </table>
+
+</div>
+
+
+
+<script>
+
+    function LoadData() {
+        $('#spinner').addClass('show')
+
+        $.ajax({
+           // url: "//scopos-khattab.cloud/api/Suppliers/GetAllSuppliersData?Id=" + $("#BaseId").val(),
+            url: "/Supplier/GetAllSuppliersData?Id=" + $("#BaseId").val(),
+            async: false,
+            type: "get",
+            data: {},
+            success: function (res) {
+                $("#SupplierName").text(res.SupplierName);
+                $("#TotalPil").text(res.data.TotalPil);
+                $("#TotalPillBeforDiscount").text(res.data.TotalPillBeforDiscount);
+                $("#TotalPilDiscount").text(res.data.TotalPilDiscount);
+                $("#TotalPilAfterDiscount").text(res.data.TotalPilAfterDiscount);
+                $("#TotalItemsQount").text(res.data.TotalItemsQount);
+                $("#TotalItemsDiscount").text(res.data.TotalItemsDiscount);
+                $("#TotalPilCach").text(res.data.TotalPilCach);
+                $("#TotalPilAgel").text(res.data.TotalPilAgel);
+                $("#Msrofat").text(res.data.Msrofat);
+                $("#TotalPilNet").text(res.data.TotalPilNet);
+                $("#ReturnAmount").text(res.data.ReturnAmount);
+                $("#Collection").text(res.data.Collection);
+                $('#spinner').removeClass('show')
+
+            }
+        })
+        $.ajax({
+           // url: "//scopos-khattab.cloud/api/Suppliers/GetDistributersToSupplier?Id=" + $("#BaseId").val(),
+            url: "/Supplier/GetDistributersToSupplier?Id=" + $("#BaseId").val(),
+            async: false,
+            type: "get",
+            data: {},
+            success: function (res) {
+                let x = "";
+                $.each(res.data, function (i, e) {
+                    x += "<tr><th scope=\"row\">" + (i + 1) + "</th><td>" + e.Distributor + "</td><td> <a class=\"btn btn-sm btn-outline-primary\" href=\"/Distributor/Details/" + e.UserId + "\"> @SuppliersDashboard.Resources.pages.details </a></td><td><a class=\"btn btn-sm btn-outline-primary\" href=\"/Distributor/AllDetails/" + e.UserId + "\"> @SuppliersDashboard.Resources.pages.alldetails </a></td></tr>"
+                })
+                $("#distributerstablebody").html(x);
+            }
+
+        })
+
+        $.ajax({
+           // url: "//scopos-khattab.cloud/api/Suppliers/GetBillsToSupplierInDay?Id=" + $("#BaseId").val(),
+            url: "/Supplier/GetBillsToSupplierInDay?Id=" + $("#BaseId").val() ,
+            async: false,
+            type: "get",
+            data: {},
+            success: function (res) {
+                $('#BillsTable').DataTable({
+                        "destroy": true, // In order to reinitialize the datatable
+                        "pagination": true, // For Pagination
+                        "sorting": true, // For sorting
+                        "aaData": res.data,
+                        "columns": [{
+                            "data": "BillNo"
+                        }, {
+                            "data": "BillDateString"
+                        }, {
+                            "data": "DisName"
+                        }, {
+                            "data": null, "render": function (o) {
+                                return ' <a type="button" href="/Bills/Details/' + o.BillNo + '" class="btn btn-sm btn-outline-primary" >@SuppliersDashboard.Resources.pages.details</a>'
+                            }
+
+
+                        }]
+                    });
+
+
+            }
+        })
+
+    }
+    LoadData();
+
+
+</script>
+

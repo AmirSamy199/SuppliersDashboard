@@ -1,0 +1,338 @@
+﻿<style>
+    .modal-content {
+        min-width: 200%
+    }
+</style>
+<div class="container">
+    <h3 class="h3 text-center p-2">
+        اضافه مرتجعات للمندوب
+    </h3> 
+
+    <div class="collapse show" id="choosebilldiv">
+        @*<h3 class="h4 text-right p-2">
+            اختر الفاتورة 
+        </h3>*@
+        <div class="row">
+
+            @*@if(ViewBag.Bills != null)
+        {
+            foreach(var item in ViewBag.Bills)
+                    {
+            <div class="col-2 p-2">
+                @item.BillNo
+            </div>
+            <div class="col-4 p-2">
+                <button class="btn btn-primary w-50" onclick="viewBill(@item.BillNo)">
+                   عرض  الفاتورة
+                </button>
+                <button class="btn btn-primary w-50" onclick="makeReturn(@item.BillNo)">
+                   عمل مرتجع
+                </button>
+            </div>
+                    }
+
+        }*@
+
+            <div class="col-lg-6 p-2">
+                <label class="form-label">
+                    الشركة
+                </label>
+                <input onchange="companychanged(this.value)" list="salecompanyoptions" name="salecompanyoptions" class="form-control" placeholder=" اختر الشركة " id="saleCompanyId">
+                <datalist id="salecompanyoptions">
+                </datalist>
+
+            </div>
+
+            <div class="col-lg-6 p-2">
+                <label class="form-label">
+                    الفرع
+                </label>
+
+                <select id="branchselectId" class="form-control">
+
+                    <option value="0"> اختر الفرع </option>
+
+                </select>
+
+            </div>
+
+            <div class=" col-lg-6 p-2">
+                <label id="itemlabel">  @SuppliersDashboard.Resources.pages.Selectitem </label>
+                <input list="itemsselectoption" onchange='changelabel(this)' name="itemsselectoption" class="form-control" placeholder="@SuppliersDashboard.Resources.pages.Selectitem" id="itemsselect">
+                <datalist id="itemsselectoption">
+                </datalist>
+            </div>
+
+            <div class=" col-lg-6 p-2">
+                <label id="weightlabel">  الوزن </label>
+                <input onkeyup="changeDefaultPrice()" class="form-control " type="number" id="weightInputId" onclick="this.select()" placeholder="ادخل الوزن " />
+            </div>
+            <div class=" col-lg-6 p-2">
+                <label id="weightlabel">  المبلغ </label> <label id="defaultreturnprice" class="text-info">   </label>
+                <input class="form-control " type="number" id="amountInputId" onclick="this.select()" placeholder="ادخل المبلغ " />
+            </div>
+            <div class="col-12 p-2">
+                <button class="btn btn-primary w-50" onclick="addReturnToBill()">
+                    اضافة 
+                </button>
+            </div>
+            <div class="col-12" >
+                <div id="table" class="collapse">
+                    <table class="table table-striped table-bordered" >
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الصنف</th>
+                                <th>الوزن</th>
+                                <th>المبلغ</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="col-12 p-2">
+                <button class="btn btn-primary w-100" onclick="submitAddReturn()">
+                    اضافة مرتجع
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+
+    returndetails = []
+    loadItemsSelect()
+    function changelabel(ele) {
+        // let e =
+        changeDefaultPrice()
+        let value = Allitems.find(e => e.Record_ID == $(ele).val()).ItemName;
+        $("#itemlabel").text(value)
+    }
+
+    function changeDefaultPrice() {
+        try {
+
+            let itemId = $("#itemsselect").val()
+            let branchId = $("#branchselectId").val()
+
+            $.ajax({
+                url: "/AsSalesman/LastUnitPriceForMortaga3",
+                type: "post",
+                data: {
+                    itemId: itemId,
+                    branchId: branchId
+                },
+                success: (res) => {
+                    $("#defaultreturnprice").text(res)
+                    let value = parseFloat(res)
+                    let weight = parseFloat($("#weightInputId").val())
+
+                    $("#amountInputId").val(value*weight)
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $("#defaultreturnprice").text('')
+                }
+            })
+
+        } catch {
+            $("#defaultreturnprice").text('')
+        }
+    }
+
+
+    function loadItemsSelect() {
+
+
+    $.ajax({
+        url: "/Items/GetAllItemsFromTable",
+        type: "post",
+        data: {},
+        success: (res) => {
+
+            let html = "";
+
+
+            Allitems = res.data.Data
+            $.each(res.data.Data, (i, e) => {
+                html += `<option value='${e.Record_ID}'>${e.ItemName} </option>`;
+
+            })
+            $("#itemsselectoption").html(html)
+        }
+    })
+
+    }
+
+
+    function loadComs() {                      //  // //     // // // // //
+
+
+        $.post(`/AsSalesman/loadCompanies/${$("#distributorId").val()}`, (res) => {
+            console.log(res)
+            let html = `   `
+            $.each(res, (i, e) => {
+                html += `<option id='option-com-id-${e.Id}' value='${e.Id}' >  ${e.Value}</option>`
+            })
+
+            $("#salecompanyoptions").html(html)
+        })
+    }
+    loadComs()
+
+    function companychanged(comid) {
+        let text = $("#option-com-id-" + comid).text()
+        $("#saleCompanyId").attr('placeholder', text)
+        $("#saleCompanyId").val('')
+
+        loadbranchesselect(comid)
+
+    }
+    function loadbranchesselect(comid) {
+        //branchselectId
+        $.post(`/AsSalesman/loadBranches?Id=${$("#distributorId").val()}&comId=${comid}`, (res) => {
+            console.log(res)
+            let html = `   <option value="0"> اختر الفرع </option>   `
+            $.each(res, (i, e) => {
+                html += `<option id='option-branch-id-${e.Branch_ID}' data-deffered = '${e.Unpaid_deferred}' value='${e.Branch_ID}' >  ${e.branchName} - ${e.Region} - ${e.Range}</option>`
+            })
+            $("#branchselectId").html(html)
+        })
+    }
+
+
+    function addReturnToBill() {
+        $("#branchselectId").attr('disabled' , true)
+        $("#saleCompanyId").attr('disabled' , true)
+        let itemid = $("#itemsselect").val()
+        let itemname = Allitems.find(x => x.Record_ID == itemid).ItemName;
+         let branchid = $("#branchselectId").val()
+        let size = parseFloat( $("#weightInputId").val())
+        let amount = parseFloat($("#amountInputId").val())
+        let userid = @ViewBag.BaseId
+
+
+
+         if (itemid > 0 && branchid > 0 && size > 0) {
+
+             var oldone = returndetails.find(x => x.item_id == itemid)
+             if (oldone == undefined || oldone == null) {
+
+
+                 let json = {
+
+                     "item_id": itemid,
+                     "Branch_id": branchid,
+                     "user_id": userid,
+                     "size": size,
+                     "Amount": amount,
+                     "Date": '',
+                     "BillNo": 0,
+                     "itemname": itemname
+
+                 }
+                 returndetails.push(json)
+             } else {
+                 oldone.size += parseFloat(size);
+                 oldone.amount += parseFloat(amount);
+             }
+
+             $("#itemsselect").val('')
+             $("#weightInputId").val('')
+              $("#amountInputId").val('')
+
+         }
+        loadTable()
+
+    }
+    function loadTable() {
+        if (returndetails.length > 0) {
+            let trs = ``
+            $.each(returndetails, (i,e) => {
+                trs += `
+                <tr>
+                <td>${(i+1)}</td>
+                <td>${e.itemname}</td>
+                <td>${e.size}</td>
+                <td>${e.Amount}</td>
+                <td><button class='btn btn-danger' onclick='deleterow(${i})'>حذف </button></td>
+                </tr>
+                `
+            })
+            $("#tablebody").html(trs)
+            $("#table").collapse('show')
+
+        } else {
+            $("#table").collapse('hide')
+        }
+    }
+
+    function deleterow(index) {
+        returndetails.splice(index, 1)
+        loadTable()
+    }
+    function submitAddReturn() {
+          let userid = @ViewBag.BaseId
+
+        if (returndetails.length > 0) {
+            let url = `/AsSalesMan/SubmitReturnRequestAsList`
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: {
+                    Id: userid,
+                    Model: returndetails
+                }, success: (res) => {
+
+                    displaymsg(res.Message)
+                }
+            })
+        }
+        @*let itemid = $("#itemsselect").val()
+        let branchid = $("#branchselectId").val()
+        let size = $("#weightInputId").val()
+        let amount = $("#amountInputId").val()
+        let userid = @ViewBag.BaseId
+
+
+        if (itemid > 0 && branchid > 0 && size > 0) {
+            let json = {
+
+                "item_id": itemid,
+                "Branch_id": branchid,
+                "user_id": userid,
+                "size": size,
+                "Amount": amount,
+                "Date": '',
+                "BillNo": 0
+
+            }
+       console.log(json)
+            let url = `/AsSalesMan/SubmitReturnRequest`
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: {
+                    Id: userid,
+                    Model: json
+                }, success: (res) => {
+
+                    displaymsg(res.Message)
+                }
+            })
+        }*@
+
+
+    }
+
+</script>

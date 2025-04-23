@@ -1,0 +1,246 @@
+﻿@using SuppliersDashboard.Resources
+
+@{
+    ViewBag.Title = "GroupUsers";
+    Layout = "~/Views/Shared/_layout.cshtml";
+    var funcs = SuppliersDashboard.Helper.Cokie.UserFunctionsGet();
+}
+
+
+<div class="card-header-2" style="text-align:center">
+    <h5>@llayout.ChooseRepresentative</h5>
+</div>
+
+<form class="theme-form theme-form-2 mega-form">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+            <label class="col-12 col-form-label form-label-title" style="text-align: center;">@SuppliersDashboard.Resources.pages.distributor</label>
+        </div>
+        <div class="col-lg-8 text-center p-3">
+            @*<input type="hidden" id="distributorId" value="0" />*@
+
+            <select class="form-control" id="distributorId" onchange="distributorInputchange(this.value)" >
+
+            </select>
+            <!--<input list="DistributorIdlist" id="DistributorIdInput" class="form-control" placeholder="@llayout.ChooseRepresentative"  />
+            <datalist id="DistributorIdlist" class="js-example-basic-single w-100">-->
+                @*<option value="ChooseRepresentative" selected disabled></option>*@
+            <!--</datalist>-->
+        </div>
+    </div>
+</form>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        @if (funcs.Contains("زر رصيد بضاعة"))
+        {
+
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="carbalance()">
+                    رصيد بضاعة
+                </button>
+            </div>
+        }
+
+        @if (funcs.Contains("زر طلب بضاعة من المخزن"))
+        {
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="addWarehouseRequestPartial()">
+                    طلب بضاعة من المخزن
+                </button>
+            </div>
+        }
+        @if (funcs.Contains("زر مراجعة طلبات استلام بضاعة"))
+        {
+
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="pendingReceiveItems()">
+                    مراجعة طلبات استلام البضاعة
+                </button>
+            </div>
+        }
+        @if (funcs.Contains("زر بيع"))
+        {
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="SalePartial()">
+                    بيع
+                </button>
+            </div>
+
+        }
+        @if (funcs.Contains("زر مراجعة طلبات تسليم البضاعة"))
+        {
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="pendingMardodatItems()">
+                    مراجعة طلبات تسليم البضاعة
+                </button>
+            </div>
+        }
+        @if (funcs.Contains("زر مراجعة طلب اغلاق يومية"))
+        {
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="closeDayRevision()">
+                    مراجعة طلب اغلاق اليومية
+                </button>
+            </div>
+        }
+        @if (funcs.Contains("زر عمل مرتجع"))
+        {
+            <div class="col-lg-4 p-3">
+                <button disabled class="disabledbtn btn btn-primary w-100" onclick="returnPartial()">
+                    عمل مرتجع
+                </button>
+            </div>
+        }
+     
+
+
+
+
+
+
+            @*<div class="col-lg-3  p-3">
+                <button class="btn btn-primary w-100" onclick="sure( 'هل انت متاكد من اغلاق اليومية' , 'اغلاق' ,'closeDay()')">
+                   طلب اغلاق اليومية
+                </button>
+            </div>*@
+            <div class="col-lg-4  p-3"></div>
+
+
+
+        </div>
+
+
+</div>
+<script>
+    let returndetails = []
+
+    let Allitems = []
+    let baseId = 0;
+    //الاصناف الي مع المندوب بالاسعار
+    let saleitems = []
+    ///الاصناف الي في  الفاتورة 
+    let billItems = []
+     $(document).ready(function() {
+        $.ajax({
+            url: "/Selector/GetAllDistributorsUsers",
+            type: "post",
+            data: {},
+            success: function(res) {
+                let select = $("#distributorId");
+                select.append(`<option value='0'>اختر المندوب</option>`);
+
+                $.each(res.data.Data, function(i, e) {
+                    select.append(`<option value='${e.Id}'>${e.Value}</option>`);
+                });
+            }
+        });
+
+
+      
+        //$("#DistributorIdInput").change(function() {
+        //    let id = $(this).val();
+            
+        //    $("#distributorId").val(id);
+           
+        //   // $('#DistributorIdInput option[value="' + id + '"]').prop('selected', true);
+        //    //$("#DistributorIdInput").val(id)
+
+        //    $(this).val('');
+        //    $(this).attr('disabled', 'disabled')
+        //    $(this).attr('placeholder', nname)
+        //    $(this).css('border', 'border')
+        //    $(this).css('background', ' none !important')
+
+           
+
+        //});
+     });
+    function distributorInputchange(id) {
+        baseId = id;
+        let btns = $(".disabledbtn")
+        $.each(btns, (i, e) => {
+
+            $(e).removeAttr('disabled')
+        })
+    }
+    function settleItems() {
+        let userId = $("#distributorId").val()
+        let url = `/AsSalesman/ConfirmSettlementItems?UserId=${userId}`
+        $.post(url, (res) => {
+            console.log(res)
+
+            displaymsg( res.Message)
+        })
+
+    }
+
+
+    function carbalance() {
+        let url = `/AsSalesman/CarBalance/${baseId}`
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+
+    function pendingReceiveItems() {
+        let url = `/AsSalesman/pendingReceiveItems/${baseId}`
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+    function pendingMardodatItems() {
+        let url = `/AsSalesman/pendingMardodatItems/${baseId}`
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+
+
+    function addWarehouseRequestPartial() {
+        let url = `/AsSalesman/addWarehouseRequestPartial/${baseId}`
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+    function SalePartial() {
+        let url = `/AsSalesman/SalePartial/${baseId}`
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+  
+    function salesmanacceptgetrequest() {
+        let url = `/AsSalesman/salesmanacceptgetrequest/${baseId}`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+    function salesmanacceptclosingsettlement() {
+        let url = `/AsSalesman/salesmanacceptclosingsettlement/${baseId}`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+    function salesmanacceptmardodatrequest() {
+        let url = `/AsSalesman/salesmanacceptmardodatrequest/${baseId}`
+        $.post(url, (res) => {
+            displaymsg(res.Message)
+        })
+    }
+    function closeDayRevision() {
+        let url = `/AsSalesman/closeDayRevision/${baseId}`
+        $.post(url, (res) => {
+            ShowModal(res)
+        })
+    }
+
+    function returnPartial() {
+        let url = `/AsSalesman/AddReturnPartial?salesId=${baseId}`
+        $.get(url, (res) => {
+            ShowModal(res)
+        })
+    }
+</script>

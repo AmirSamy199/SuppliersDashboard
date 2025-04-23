@@ -1,0 +1,225 @@
+﻿
+
+@using SuppliersDashboard.Resources
+
+@model List<SuppliersDashboard.ViewModels.warehouse_main_V>
+@{
+    int i = 1;
+    ViewBag.Title = "جرد المخزن  ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div>
+
+        <div class="row d-flex justify-content-around">
+            <div class="col-lg-6 d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    @pages.iin
+                </div>
+                <div class="col-lg-8 text-center p-3">
+                    <input onchange="loadGrid()" class="form-control" type="date" id="datefrom">
+                </div>
+
+            </div>
+            <div class="col-lg-6 d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    @pages.from
+                </div>
+                <div class="col-lg-8 text-center p-3">
+                    <input onchange="loadGrid()" class="form-control" type="date" id="dateto">
+                </div>
+
+            </div>
+        </div>
+        <div id="printer">
+            <style>
+                table.dataTable thead th, table.dataTable tbody tr:last-child td {
+                    border-bottom: 1px solid #009CFF !important;
+                }
+
+                table.dataTable tbody td {
+                    border-bottom: unset;
+                }
+
+                td, th {
+                    text-align: center !important;
+                    border: 2px solid !important;
+                }
+
+                table {
+                    margin: 10px;
+                    border-collapse: collapse !important;
+                }
+            </style>
+            <label class="form-label-title text-center col-lg-12 col-md-5 " for="name" style="font-size: 24px;">  @ViewBag.msg  </label>
+            <div class="card pd-20  card-ERB ">
+                <div class="  table-responsive  ">
+
+                    <div id="tablecollapse ">
+                        <table id="table" class="table table-bordered dataTable">
+
+
+
+                            <thead>
+                                <tr>
+                                    <th> #</th>
+                                    <th>
+                                        الصنف
+                                    </th>
+                                    <th>
+                                        المتاح
+                                    </th>
+                                    <th>
+                                        داخل المخزن
+                                    </th>
+                                    <th>
+                                        خارج المخزن
+                                    </th>
+                                    <th>
+                                        اسم الشركة
+                                    </th>
+
+
+                            </thead>
+                            <tbody id="tbody">
+                                @if (Model != null)
+                                {
+
+                                    foreach (var item in Model)
+                                    {
+
+                                        <tr>
+
+                                            <td>
+                                                @(i++)
+                                            </td>
+                                            <td>
+                                                @item.ItemName
+                                            </td>
+                                            <td>
+                                                @item.bal
+                                            </td>
+                                            <td>
+                                                @item.iTEM_C
+                                            </td>
+                                            <td>
+                                                @item.iTEM_d
+                                            </td>
+                                            <td>
+                                                @item.CompanyName
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row d-flex justify-content-around">
+
+                <div class="col-lg-4 text-center p-3">
+                    <button class="btn btn-primary col-12 btn-lg" onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i>  @llayout.print </button>
+
+                </div>
+                <div class="col-lg-4 text-center p-3">
+
+                    <button class="btn btn-primary col-12 btn-lg" onclick="excel()" id="excelbtn"> @llayout.Downloadexcel </button>
+
+
+                </div>
+
+            </div>
+
+            <input type="hidden" id="twice" value="0" />
+        </div>
+    </div>
+
+    <script>
+
+        let datefrom = new Date().toISOString().substring(0, 10);
+        let dateto = new Date().toISOString().substring(0, 10);
+        $("#datefrom").val(datefrom)
+        $("#dateto").val(dateto)
+        let head = ""
+        function excel() {
+            LayoutExcel(`/Report/StoregardExcel?datefrom=${datefrom}&dateto=${dateto}`, 'جرد مخزن')
+        }
+        function LayoutExcel(url, name) {
+            startloader()
+            $.ajax({
+                url: url,
+                type: "post",
+                success: function (res) {
+                    ClickLink(res.url, name + " " + GetdateString(new Date()))
+                    endloader();
+                }
+            })
+        }
+        if ($("#twice").val() == 0) {
+
+            $("#table").dataTable({
+
+            });
+        }
+        function loadGrid() {
+            datefrom = $("#datefrom").val()
+            dateto = $("#dateto").val()
+            startloader();
+            $.ajax({
+                url: "/WareHousing/StoreGardBYTime",
+                type: "post",
+                data: {
+                    datefrom: $("#datefrom").val(),
+                    dateto: $("#dateto").val()
+                },
+                success: (res) => {
+                    head = res.msg
+                    $("#header").text(head)
+                    let html = ``;
+
+                    $.each(res.data, function (i, e) {
+                        html += `
+                                                                            <tr>
+                                                                            <td>${++i}
+                                                                            </td>
+                                                                            <td>${e.ItemName}
+                                                                            </td>
+                                                                            <td>${e.bal}
+                                                                            </td>
+                                                                            <td>${e.iTEM_C}
+                                                                            </td>
+                                                                            <td>${e.iTEM_d}
+                                                                            </td>
+                                                                            <td>${e.CompanyName}
+                                                                            </td>
+
+                                                                            </tr>
+
+                                                                            `
+
+                    })
+
+                    $("#tbody").html(html)
+
+
+
+                    endloader()
+                }
+            })
+        }
+
+        function Print() {
+            $("#twice").val(1)
+            LayoutPrint()
+        }
+
+    </script>

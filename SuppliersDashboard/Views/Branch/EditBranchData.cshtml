@@ -1,0 +1,435 @@
+﻿
+@{
+    ViewBag.Title = "EditBranchData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center p-3">تعديل عميل </h2>
+<div class="row">
+    <div class="col-lg-4 p-3">  </div>
+    <div class="col-lg-4 p-3">
+      <input type="hidden" value="0"  id="baseidinput"/>
+      <input list="brancheslist" name="brancheslist" id="branchdatalist" class="form-control" placeholder="اختر العميل " />
+        <datalist id="brancheslist">
+            <option value="0"> اختر عميل  </option>
+            @foreach(var item in ViewBag.Branches)
+            {
+                <option value="@item.Id">@item.Value </option>
+            }
+        </datalist>
+    </div>
+    <div class="col-lg-4 p-3">  </div>
+
+    <div class="collapse  p-5" id="grid" >
+        <div class="row">
+
+            <div class="col-12">
+                <h2 class="text-center p-3" id="header2">
+                    تعديل  عميل
+                </h2>
+
+            </div>
+            <div class="col-lg-4 p-2">
+                <label> اختر الشركة </label>
+                <select class="form-control form-select" id="companyselect">
+                    <option value="0">اختر الشركة</option>
+                    @if (ViewBag.Companies != null)
+                    {
+                        foreach (var item in ViewBag.Companies)
+                        {
+                            <option value="@item.Id">@item.Value </option>
+                        }
+                    } 
+
+                </select>
+                @*<input list="comoptions" name="comoptions" class="form-control" placeholder="اختار شركة" id="companyselectinput" />
+                <datalist id="comoptions">
+                    @foreach (var item in ViewBag.Companies)
+                    {
+                        <option value="@item.Id">@item.Value </option>
+                    }
+                </datalist>*@
+            </div>
+            <div class="col-lg-4 p-2">
+                <label>
+                    النوع
+                </label>
+                <select id="CompanyType" class="form-control ">
+                    @if (ViewBag.CompanyTypes != null)
+                    {
+
+                        foreach (var item in ViewBag.CompanyTypes)
+                        {
+                            <option value="@item.Id"> @item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-lg-4 p-2">
+                <label>
+                    قائمة الاسعار
+                </label>
+                <select id="PricesListId" class="form-control ">
+                    @if (ViewBag.PricesLists != null)
+                    {
+                        <option value="0"> اختر قائمة الاسعار</option>
+
+                        foreach (var item in ViewBag.PricesLists)
+                        {
+                            <option value="@item.Id"> @item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+
+
+            <div class="col-lg-4 p-2">
+                <label> اسم الفرع </label>
+                <input class="form-control" type="text" id="BranchName" placeholder="اسم الفرع " />
+            </div>
+            <div class="col-lg-4 p-2">
+                <label> اسم المسئول </label>
+                <input class="form-control" type="text" id="ContactName" placeholder="اسم المسئول " />
+            </div>
+            <div class="col-lg-4 p-2">
+                <label> رقم الهاتف</label>
+                <input class="form-control" type="text" id="Telephone1" placeholder="رقم الهاتف " />
+            </div>
+            <div class="col-lg-4 p-2">
+                <label>البريد الالكتروني  </label>
+                <input class="form-control" type="text" id="Email" placeholder="البريد الالكتروني " />
+            </div>
+            <div class="col-lg-4 p-2">
+                <label> العنوان </label>
+                <input class="form-control" type="text" id="Address" placeholder="العنوان" />
+            </div>
+            <div class="col-lg-4 p-3">
+                <label id="">
+                    اختر المندوب
+                </label>
+                @* <input list="distributorselectoption"  name="distributorselectoption" class="form-control" placeholder=" اختر المندوب  " id="distributorselect">*@
+                <select id="distributorselectoption" class="form-control form-select">
+                    @if (ViewBag.Diss != null)
+                    {
+                        foreach (var item in ViewBag.Diss)
+                        {
+                            <option value="@item.Id"> @item.Value </option>
+                        }
+                    }
+                </select>
+
+            </div>
+            <div class="col-4 p-3 ">
+                <span>
+                    المنطقة
+                </span>
+                <select id="RangeSelect" class="form-control form-select">
+                    <option> اختر المنطقة </option>
+                    @foreach (var item in ViewBag.Ranges)
+                    {
+                        <option value="@item.Id"> @item.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="col-4 p-3 ">
+                <span>
+                    الحي
+                </span>
+                <select id="regionselect" class="form-control form-select">
+                </select>
+            </div>
+
+
+            <div class="col-4 p-3 ">
+                <span>
+                    شروط الدفع
+                </span>
+                <select id="paymenttermsid" class="form-control form-select">
+                    <option value="0"> -- </option>
+                </select>
+            </div>
+            <div class="col-4 p-3 ">
+                <div id="creditpaymentdiv" class="collapse">
+                    <label>    عدد ايام التاخير او يوم الشهر  </label>
+                    <input class="form-control" type="number" onclick="this.select()" value="0" id="credittermscountid" placeholder=" ايام  " />
+                </div>
+            </div>
+
+            <div class="col-lg-4 p-2">
+                <label> خط طول  </label>
+                <input class="form-control" type="number" id="Longitude" placeholder="خط طول " />
+            </div>
+            <div class="col-lg-4 p-2">
+                <label> خد عرض   </label>
+                <input class="form-control" type="number" id="Latitude" placeholder="خط عرض " />
+            </div>
+
+            <div class="col-lg-4 p-2">
+                <label> الحد الأتماني  </label>
+                <input class="form-control" type="number" id="MaxDefferedAmount" placeholder="" />
+            </div>
+
+
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <button class="btn btn-primary " onclick="SubmitEditBranchData()"> تعديل البيانات الاساسية  </button>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="p-3 text-center">
+                    تعديل ايام الزيارات
+                </h2>
+
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control form-select" id="FirstDay">
+                    @foreach (var item in ViewBag.WeekDays)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control  form-select" id="SecondDay">
+                    @foreach (var item in ViewBag.WeekDays)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control form-select" id="ThirdDay">
+                    @foreach (var item in ViewBag.WeekDays)
+                    {
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-12">
+                <div class="text-center p-3" >
+                    <button class="btn btn-primary " onclick="EditVisits()"> تعديل الزيارات</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id ="Distributor_ID" type="hidden" />
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#paymenttermsid').change(() => {
+            if ($('#paymenttermsid').val() == 1) // Cash
+            {
+                $("#creditpaymentdiv").addClass('collapse')
+            } else {
+                $("#creditpaymentdiv").removeClass('collapse')
+
+            }
+        })
+        $("#branchdatalist").change(() => {
+
+            let baseid = $("#branchdatalist").val();
+            let basename = $(`#brancheslist option[value='${baseid}']`).text()
+            $("#baseidinput").val(baseid)
+            $("#branchdatalist").val("")
+            $("#header2").text(` تعديل عميل  ${basename} `)
+            $("#branchdatalist").attr("placeholder", basename)
+            $("#grid").collapse("hide")
+
+            LoadPage(baseid);
+        })
+
+        $("#RangeSelect").change(() => {
+            let RangeId = $("#RangeSelect").val()
+            $.ajax({
+                type: "post",
+                url: "/Distributor/GetRangeRegions",
+                data: { Range: RangeId },
+                success: (res) => {
+                    let html = " <option>اختر الحي </option>";
+                    $.each(res, (i, e) => {
+                        html += "<option value='" + e.Id + "'> " + e.Value + "</option>"
+                    })
+                    $("#regionselect").html(html)
+                }
+            })
+        })
+
+        $.get(`/Selector/GetPAymentTerms`, (res) => {
+
+            let html = `<option value='0'> اختر شروط الدفع </option>`
+            $.each(res.data.Data, (i, e) => {
+                html += `<option value='${e.Id}'>${e.Value}</option>`
+            })
+
+            $('#paymenttermsid').html(html)
+        })
+
+    })
+  
+   
+    function SubmitEditBranchData() {
+        let payterms = $("#paymenttermsid").val()
+        let pricelistId = $("#PricesListId").val()
+
+        let credittermscount = $("#credittermscountid").val()
+        let model = {
+            Record_ID: $("#baseidinput").val(), BranchName: $("#BranchName").val(), ContactName: $("#ContactName").val(),
+            Telephone1: $("#Telephone1").val(), Email: $("#Email").val(),
+            Address: $("#Address").val(),
+            Distributor_ID: $("#Distributor_ID").val(),
+            status: 1,
+            Region_ID: $("#regionselect").val(),
+            comid: $("#companyselect").val(),
+            Longitude: $("#Longitude").val(),
+            Latitude: $("#Latitude").val(),
+            DaysToBeLater: credittermscount,
+            UserId: $("#distributorselectoption").val(),
+            PaymentTermsId: payterms,
+            CompanyType: $("#CompanyType").val(),
+            MaxDefferedAmount: $("#MaxDefferedAmount").val(),
+            PricesListId: pricelistId
+        }
+        
+        $.ajax({
+            url: "/Branch/SubmitEditBranch",
+            type: "post",
+            data: {
+                model:model
+            }, success: (res) => {
+                let html = `
+               <h4 class='text-center p-4'>
+               ${res.data.Message}
+               </h4>
+                `
+                ShowModal(html)
+            }
+
+        })
+    }
+   
+    function LoadPage(baseid) {
+        $.ajax({
+            url: "/Branch/GetBranchReportDetails", 
+            type: "post",
+            data: {
+                BranchId: baseid
+            },
+            success: (res) => {
+                let result = res.data.Data; 
+                console.log(result)
+                
+                $("#Address").val(result.Address)
+                $("#companyselect").val(result.comid);
+                $('#companyselect').trigger('change')
+                $("#BranchName").val(result.BranchName)
+             //   $("#CompanyName").val(result.CompanyName)
+                $("#ContactName").val(result.ContactName)
+                $("#Telephone1").val(result.Telephone1)
+                $("#Telephone2").val(result.Telephone2)
+                $("#distributorselectoption").val(result.UserId)
+                $("#distributorselectoption").trigger('change')
+                $("#Distributor_ID").val(result.Distributor_ID)
+                $("#regionselect").html(
+                    `<option value='${result.Region_ID}'> ${result.Region} </option>`
+                )
+                $("#regionselect").val(result.Region_ID)
+                $("#regionselect").trigger('change')
+                //$("#RangeSelect").val(result.RangeId)
+                //$("#RangeSelect").trigger('change')
+               
+                $("#Type").val(result.Type)
+                $("#Type").trigger('change')
+              
+                $("#Email").val(result.Email)
+                $("#FirstDay").val(result.FirstDay)
+                $("#SecondDay").val(result.SecondDay)
+                $("#ThirdDay").val(result.SecondDay)
+                $("#Latitude").val(result.Latitude)
+                
+                $("#latersDay").val(result.DaysToBeLater)
+                $("#MaxDefferedAmount").val(result.MaxDefferedAmount)
+
+                $("#Longitude").val(result.Longitude)
+                $("#grid").collapse("show")
+
+                $("#CompanyType").val(result.Type)
+                $("#CompanyType").trigger('change')
+
+                $("#paymenttermsid").val(result.PaymentTermsId)
+                $("#paymenttermsid").trigger('change')
+
+
+                //let opts = $("#CompanyType option")
+
+                //$.each(opts, (i, e) => {
+
+                //    let optvalue = $(e).attr('value')
+                //    if (String(optvalue) == String(result.Type)) {
+                //        $(e).attr('selected', true)
+
+                //    } else {
+
+                //    $(e).attr('selected', false)
+                //    }
+                //})
+                $("#PricesListId").val(result.PriceListId)
+                $("#PricesListId").trigger('change')
+                //let pricelistopts = $("#PricesListId option")
+                //$.each(pricelistopts, (i, e) => {
+
+                //    let listvalue = $(e).attr('value')
+                //    if (String(listvalue) == String(result.PriceListId)) {
+                //        $(e).attr('selected', true)
+
+                //    } else {
+
+                //        $(e).attr('selected', false)
+                //    }
+                //})
+
+            }
+        })
+    }
+
+  
+
+    function EditVisits() {
+        
+        let id = $("#baseidinput").val()
+        let first =      $("#FirstDay").val()
+          let second =  $("#SecondDay").val()
+       let third =      $("#ThirdDay").val()
+        $.ajax({
+            url: "/Branch/SubmitEditBranchDefaultDays",
+            type: "post",
+            data: {
+                BranchId: id,
+                First: first,
+                Second: second,
+                Third: third
+            }, success: (res) => {
+                let html = `
+               <h4 class='text-center p-4'>
+               ${res.data.Message}
+               </h4>
+                `
+                ShowModal(html)
+            }
+
+        })
+    }
+</script>

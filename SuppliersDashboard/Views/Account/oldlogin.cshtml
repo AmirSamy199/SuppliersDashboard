@@ -1,0 +1,442 @@
+﻿@model  SuppliersDashboard.ViewModels.LogInVM
+<head>
+
+    <meta charset="utf-8">
+    <title>Supplier Dashboard - @ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    Favicon
+    <link href="img/favicon.ico" rel="icon">
+    Google Web Fonts
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    Icon Font Stylesheet
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    Libraries Stylesheet
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    Customized Bootstrap Stylesheet
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    Template Stylesheet
+    <link href="~/Content/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        Spinner Start
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        Spinner End
+        Sign In Start
+        <div class="container-fluid">
+
+            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+
+                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+                        {
+                            <a class="dropdown-item" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> English</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> عريى</a>
+                        }
+                        <form href="/Account/LogIn" method="post">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <a href="/" class="">
+                                    <img src="~/Content/img/UNO.png" class="rounded" style="width:110px;height:50px" />
+                                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>@SuppliersDashboard.Resources.llayout.suppliersdashboard</h3>
+                                </a>
+                                <h3>@SuppliersDashboard.Resources.llayout.signin</h3>
+                            </div>
+                            <div class="form-floating mb-3">
+                                @Html.TextBoxFor(a => a.Phone, new { @class = "form-control", @id = "floatingText", @placeholder = "01023456789" })
+                                @Html.Label(@SuppliersDashboard.Resources.llayout.loginusername)
+                                @Html.ValidationMessageFor(a => a.Phone, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-floating mb-4">
+                                @Html.TextBoxFor(a => a.Password, new { @class = "form-control", @id = "floatingPassword", @placeholder = "Enter Passoword", @type = "password" })
+                                @Html.Label(@SuppliersDashboard.Resources.llayout.password)
+                                @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                </div>
+                                <a href="">@SuppliersDashboard.Resources.llayout.forget_password</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">@SuppliersDashboard.Resources.llayout.signin</button>
+                            <p class="text-center mb-0"> <a href="/Account/SignUp">@SuppliersDashboard.Resources.llayout.signup</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        Sign In End
+    </div>
+    JavaScript Libraries
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/lib/chart/chart.min.js"></script>
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Content/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="~/Content/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/Content/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    Template Javascript
+    <script src="~/Content/js/main.js"></script>
+</body>
+
+    </html>
+@{
+    Layout = null;
+}
+<html lang="en" class="loading">
+
+<head>
+    <link href="~/abcr/app-assets/css/StyleSheet1.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Hr-system</title>
+    <link rel="apple-touch-icon" sizes="60x60" href="~/abcr/app-assets/img/ico/apple-icon-60.html">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/abcr/app-assets/img/ico/apple-icon-76.html">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/abcr/app-assets/img/ico/apple-icon-120.html">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/abcr/app-assets/img/ico/apple-icon-152.html">
+    <link rel="shortcut icon" type="image/png" href="~/abcr/app-assets/img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/fonts/feather/style.min.css">
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/fonts/simple-line-icons/style.css">
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/vendors/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/vendors/css/prism.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/vendors/css/chartist.min.css">
+    <link rel="stylesheet" type="text/css" href="~/abcr/app-assets/css/app.css">
+    <style>
+        body {
+            background: #031323;
+            overflow: hidden;
+        }
+
+        .fas {
+            width: 32px;
+        }
+
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+
+
+        .box {
+            position: relative;
+        }
+
+            .box .square {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(5px);
+                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 15px;
+                animation: square 10s linear infinite;
+                animation-delay: calc(-1s * var(--i));
+            }
+
+
+
+                .box .square:nth-child(1) {
+                    width: 100px;
+                    height: 100px;
+                    top: -15px;
+                    right: -45px;
+                }
+
+                .box .square:nth-child(2) {
+                    width: 150px;
+                    height: 150px;
+                    top: 105px;
+                    left: -125px;
+                    z-index: 2;
+                }
+
+                .box .square:nth-child(3) {
+                    width: 60px;
+                    height: 60px;
+                    bottom: 85px;
+                    right: -45px;
+                    z-index: 2;
+                }
+
+                .box .square:nth-child(4) {
+                    width: 50px;
+                    height: 50px;
+                    bottom: 35px;
+                    left: -95px;
+                }
+
+                .box .square:nth-child(5) {
+                    width: 50px;
+                    height: 50px;
+                    top: -15px;
+                    left: -25px;
+                }
+
+                .box .square:nth-child(6) {
+                    width: 85px;
+                    height: 85px;
+                    top: 165px;
+                    right: -155px;
+                    z-index: 2;
+                }
+
+        .container {
+            position: relative;
+            padding: 50px;
+            min-height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+        }
+
+            .container::after {
+                content: '';
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                bottom: 5px;
+                left: 5px;
+                border-radius: 5px;
+                pointer-events: none;
+                background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 2%);
+            }
+
+        .form {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+            .form h2 {
+                color: #fff;
+                letter-spacing: 2px;
+                margin-bottom: 30px;
+            }
+
+            .form .inputBx {
+                position: relative;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+                .form .inputBx input {
+                    width: 100%;
+                    outline: none;
+                    border: none;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    background: rgba(255, 255, 255, 0.2);
+                    padding: 8px 10px;
+                    padding-left: 40px;
+                    border-radius: 15px;
+                    color: #fff;
+                    font-size: 16px;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+                }
+
+                .form .inputBx .password-control {
+                    position: absolute;
+                    top: 11px;
+                    right: 10px;
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
+                    transition: 0.5s;
+                }
+
+                .form .inputBx .view {
+                    background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
+                    transition: 0.5s;
+                }
+
+                .form .inputBx .fas {
+                    position: absolute;
+                    top: 13px;
+                    left: 13px;
+                }
+
+                .form .inputBx input[type="submit"] {
+                    background: #fff;
+                    color: #111;
+                    max-width: 100px;
+                    padding: 8px 10px;
+                    box-shadow: none;
+                    letter-spacing: 1px;
+                    cursor: pointer;
+                    transition: 1.5s;
+                }
+
+                    .form .inputBx input[type="submit"]:hover {
+                        background: linear-gradient(115deg, rgba(0, 0, 0, 0.10), rgba(255, 255, 255, 0.25));
+                        color: #fff;
+                        transition: 0.5s;
+                    }
+
+                .form .inputBx input::placeholder {
+                    color: #fff;
+                }
+
+                .form .inputBx span {
+                    position: absolute;
+                    left: 30px;
+                    padding: 10px;
+                    display: inline-block;
+                    color: #fff;
+                    transition: 0.5s;
+                    pointer-events: none;
+                }
+
+                .form .inputBx input:focus ~ span,
+                .form .inputBx input:valid ~ span {
+                    transform: translateX(-30px) translateY(-25px);
+                    font-size: 12px;
+                }
+
+            .form p {
+                color: #fff;
+                font-size: 15px;
+                margin-top: 5px;
+            }
+
+                .form p a {
+                    color: #fff;
+                }
+
+                    .form p a:hover {
+                        background-color: #000;
+                        background-image: linear-gradient(to right, #434343 0%, black 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+
+        .remember {
+            position: relative;
+            display: inline-block;
+            color: #fff;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .form .inputBx {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        .text-center img {
+            height: 90px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+
+        <div class="box">
+
+            <div class="square" style="--i:0;"></div>
+            <div class="square" style="--i:1;"></div>
+            <div class="square" style="--i:2;"></div>
+            <div class="square" style="--i:3;"></div>
+            <div class="square" style="--i:4;"></div>
+            <div class="square" style="--i:5;"></div>
+
+            <div class="container" style="WIDTH: max-content; margin-top:2PX">
+                <div class="form">
+                    <div class="text-center">
+                        <img src="~/Content/img/UNO.png">
+                    </div>
+
+                    <form action="/Account/LogIn" method="post">
+                        <div class="inputBx">
+                            <input type="text" name="phone" id="floatingText" required="required">
+                            <span>@SuppliersDashboard.Resources.llayout.loginusername</span>
+
+                        </div>
+                        <div class="inputBx password">
+                            <input type="password" name="password" id="floatingPassword" required="required">
+                            <span>@SuppliersDashboard.Resources.llayout.password</span>
+                            <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
+
+                        </div>
+                        <label class="remember">
+                            <input type="checkbox">
+                            Remember
+                        </label>
+                        <div class="inputBx">
+                            <input type="submit" value="Log in">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <script src="~/abcr/app-assets/vendors/js/core/jquery-3.3.1.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/core/popper.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/core/bootstrap.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/prism.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/jquery.matchHeight-min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/screenfull.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/pace/pace.min.js"></script>
+    <script src="~/abcr/app-assets/vendors/js/chartist.min.js"></script>
+    <script src="~/abcr/app-assets/js/app-sidebar.js"></script>
+    <script src="~/abcr/app-assets/js/notification-sidebar.js"></script>
+    <script src="~/abcr/app-assets/js/customizer.js"></script>
+    <script src="~/abcr/app-assets/js/dashboard-ecommerce.js"></script>
+    <script>
+        function show_hide_password(target) {
+            var input = document.getElementById('floatingPassword');
+            if (input.getAttribute('type') == 'password') {
+                target.classList.add('view');
+                input.setAttribute('type', 'text');
+            } else {
+                target.classList.remove('view');
+                input.setAttribute('type', 'password');
+            }
+            return false;
+        }
+    </script>
+</body>

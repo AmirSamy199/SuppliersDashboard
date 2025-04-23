@@ -1,0 +1,133 @@
+﻿@using SuppliersDashboard.Resources
+
+@{
+    ViewBag.Title = "AddBranchException";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<p class="h2 text-primary mt-2" style="text-align: center;">
+    @ViewBag.UserName
+</p>
+<div class="text-center text-danger " style="display:none" id="validatemsg">
+
+</div>
+<div class="row">
+    <div class="col-4 ">
+        <span style=" text-align: center;" class="col-12 p-3 ">
+            @llayout.range
+        </span>
+        <select id="RangeSelect" class="form-control form-select">
+            <option> اختر المنطقة </option>
+            @foreach (var item in ViewBag.Ranges)
+            {
+                <option value="@item.Id"> @item.Value</option>
+            }
+        </select>
+    </div>
+    <div class="col-4 ">
+        <span style=" text-align: center;" class="col-12 p-3 ">
+            @llayout.region
+        </span>
+        <select id="regionselect" class="form-control form-select">
+            <option> -- </option>
+        </select>
+    </div>
+    <div class="col-4 ">
+        <span style=" text-align: center;" class="col-12 p-3 ">
+            @llayout.Branch
+        </span>
+        <select id="branchselect" class="form-control form-select">
+            <option> -- </option>
+
+        </select>
+    </div>
+    <div class="col-12 p-4  text-center d-flex justify-content-center">
+        <button onclick="SumbitAddException()" class="btn btn-primary col-lg-3"> السماح </button>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+    <script>
+        $("#RangeSelect").change(() => {
+            let RangeId = $("#RangeSelect").val()
+            $.ajax({
+                type: "post",
+                url: "/Distributor/GetRangeRegions",
+                data: { Range: RangeId},
+                success: (res) => {
+                    let html = " <option>اختر الحي </option>";
+                    $.each(res, (i, e) => {
+                        html += "<option value='"+e.Id+"'> "+ e.Value +"</option>"
+                    })
+                    $("#regionselect").html(html)
+                }
+            })
+        })
+        $("#regionselect").change(() => {
+
+            let RegionId = $("#regionselect").val()
+            $.ajax({
+                type: "post",
+                url: "/Distributor/GetRegionBranches",
+                data: { Region: RegionId},
+                success: (res) => {
+                    let html = "<option>اختر الفرع </option> ";
+                    $.each(res, (i, e) => {
+                        html += "<option value='"+e.Id+"'> "+ e.Value +"</option>"
+                    })
+                    $("#branchselect").html(html)
+                }
+            })
+        })
+
+
+        function SumbitAddException() {
+
+            let UserId = @ViewBag.UserId;
+            let BranchId = $("#branchselect").val()
+            if (validateBranch(BranchId)) {
+
+                $.ajax({
+                    type: "post",
+                    url: "/Distributor/SubmitAddExceptionBranch",
+                    data: {
+                        UserId: UserId,
+                        BranchId: BranchId
+                    }, success: (res) => {
+                        ShowModal(res)
+                        setTimeout(() => {
+                            location.reload()
+                        }, 3000)
+                    }
+                })
+            } else {
+                showError("من فضلك اختر الفرع ")
+            }
+
+        }
+
+        function showError(msg) {
+
+            $("#validatemsg").text(msg).fadeIn(3000, () => {
+                $("#validatemsg").fadeOut(4000)
+            })
+        }
+        function validateBranch(value) {
+            debugger
+            try {
+                let newvalue = parseInt(value)
+                if (newvalue > 0 )
+                    return true;
+                return false;
+            } catch {
+                return false;
+            }
+        }
+    </script>
+
+}

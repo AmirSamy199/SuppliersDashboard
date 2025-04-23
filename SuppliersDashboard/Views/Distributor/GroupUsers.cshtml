@@ -1,0 +1,375 @@
+﻿@{
+    List<SuppliersDashboard.ViewModels.DistributorUser> Model = (List<SuppliersDashboard.ViewModels.DistributorUser>)ViewBag.Users;
+    var Functions =SuppliersDashboard.Helper.Cokie.UserFunctionsGet();
+}
+
+
+@using SuppliersDashboard.Resources
+
+@{
+    ViewBag.Title = "GroupUsers";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div class="card-header-2" style="text-align:center">
+    <h5>@llayout.ChooseRepresentative</h5>
+</div>
+
+<form class="theme-form theme-form-2 mega-form">
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+            <label class="col-12 col-form-label form-label-title" style="text-align: center;">@SuppliersDashboard.Resources.pages.distributor</label>
+        </div>
+        <div class="col-lg-8 text-center p-3">
+            <input type="hidden" id="distributorId" value="0" />
+            <select id="DistributorIdInput" class="js-example-basic-single w-100">
+                <option value="ChooseRepresentative" selected disabled>@llayout.ChooseRepresentative</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<div class="container p-lg-3" id="parentdiv">
+
+</div>
+
+
+<!----<div class="container p-lg-3">
+
+    <h2>@@SuppliersDashboard.Resources.pages.groupusers</h2>
+
+    <div class="text-center row ">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <input class="form-control form-inline" placeholder="بحث" onkeyup="searchsales(this)" />
+        </div>
+        <div class="col-lg-2"></div>
+
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    @@SuppliersDashboard.Resources.pages.name
+                </th>
+                <th>
+                    العملاء
+                </th>
+                @@if (Functions.Contains("تعديل بيانات المناديب"))
+                {
+                    <th> تعديل بيانات</th>
+                }
+                @@if (Functions.Contains("امكانية زيارة مندوب لعميل غير مسجل له"))
+                {
+                    <th>زيارة عميل </th>
+                }-->
+<!--@@*@@if ((Session["Functions"] as List<string>).Contains("w-admin"))
+    {
+
+         <th></th>
+        <th></th>
+        <th> </th>
+        <th> </th>
+
+    }*@@-->
+<!--<!--@@if (Functions.Contains("كشف شهرية مندوب"))
+        {
+
+            <th>الشهرية </th>
+        }
+        @@if (Functions.Contains("كشف حساب مندوب"))
+        {
+
+            <th>الحساب </th>
+        }
+    </tr>
+</thead>
+@@if (ViewBag.foundResult == 1)
+{
+    <tbody>
+
+        @@foreach (var User in Model)
+        {
+            <tr class="tr">
+                <td>
+                    @@User.RecordID
+                </td>
+                <td>
+
+                    @@User.UserName
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="/Distributor/ViewCustomer?UserId=@@User.RecordID&UserName=@@User.UserName"> @@SuppliersDashboard.Resources.pages.customer</a>
+
+                </td>
+                @@if (Functions.Contains("تعديل بيانات المناديب"))
+                {
+                    <td> <button class="btn btn-success" onclick="editdistributor(@@User.RecordID , '@@User.UserName' )">تعديل  </button> </td>
+                }
+                @@if (Functions.Contains("امكانية زيارة مندوب لعميل غير مسجل له"))
+                {
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="/Distributor/AddBranchException?UserId=@@User.RecordID&UserName=@@User.UserName"> امكانية زيارة عميل </a>
+                    </td>
+                }-->
+<!--@@*@@if ((Session["Functions"] as List<string>).Contains("w-admin"))
+    {
+
+        <td>
+            <a class="btn btn-sm btn-outline-primary" href="/Report/SalesMardodReport?UserId=@@User.RecordID&UserName=@@User.UserName"> تقارير المردودات  </a>
+
+        </td>
+        <td>
+            <a class="btn btn-sm btn-outline-primary" href="/Report/SalesMortga3Report?UserId=@@User.RecordID&UserName=@@User.UserName">  تقارير المرتجعات   </a>
+
+        </td>
+        <td>
+            <a class="btn btn-sm btn-outline-primary" href="/Distributor/CustomerDeffers?UserId=@@User.RecordID&UserName=@@User.UserName">  مديونيات العملاء   </a>
+
+        </td>
+        <td>
+            <a class="btn btn-sm btn-outline-primary" href="/Distributor/CustomerLaters?UserId=@@User.RecordID&UserName=@@User.UserName"> متاخرات العملاء   </a>
+
+        </td>
+    }*@@-->
+<!--@@if (Functions.Contains("كشف شهرية مندوب"))
+                        {
+
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="/Distributor/DistributorMonth?UserId=@@User.RecordID"> كشف الشهرية  </a>
+
+                            </td>
+                        }
+                        @@if (Functions.Contains("كشف حساب مندوب"))
+                        {
+
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="/Distributor/Accounting?UserId=@@User.RecordID&UserName=@@User.UserName"> كشف حساب  </a>
+
+                            </td>
+                        }
+                    </tr>
+
+                }
+            </tbody>
+
+        }
+        else
+        {
+            <div class="text-center">
+
+                This Group Dont Have Users Yet .....
+            </div>
+
+        }
+    </table>
+
+</div>-->
+
+<script>
+    let nname = "";
+ $(document).ready(function() {
+        $.ajax({
+            url: "/Selector/Getsales_representative",
+            type: "post",
+            data: {},
+            success: function(res) {
+                let select = $("#DistributorIdInput");
+                console.log(res.data.Data.Users);
+                $.each(res.data.Data.Users, function(i, e) {
+                    select.append(`<option value='${e.RecordID}'>${e.UserName}</option>`);
+                });
+            }
+        });
+
+        $("#DistributorIdInput").change(function() {
+            let id = $(this).val();
+            $("#distributorId").val(id);
+             nname = $('#DistributorIdInput option:selected').text();
+            $('#DistributorIdInput option[value="' + id + '"]').prop('selected', true);
+            $("#DistributorIdInput").val(id)
+
+            $(this).val(id);
+            dischanged();
+            @if(ViewBag.DisChanged != null) {
+                @ViewBag.DisChanged
+            }
+        });
+    });
+@if (ViewBag.DisChanged != null)
+{
+    @*<script>
+                 @ViewBag.DisChanged
+
+        </script>*@
+}
+
+
+        function dischanged (){
+
+            let disid = $("#distributorId").val()
+            console.log(nname);
+            if(disid.toString()!="0"){
+
+                let html = `
+                <div class='p-3'>
+
+                 <div class="row">
+        <div class="col-lg-3 p-3"  style="width: 50%;">
+
+                                <a class="btn   btn-lg  btn-primary" href="/Distributor/ViewCustomer?UserId=${disid}&UserName=${nname}">@SuppliersDashboard.Resources.llayout.client </a>
+        </div>
+        @if (Functions.Contains("تعديل بيانات المناديب"))
+        {
+
+            <div class="col-lg-3 p-3"  style="width: 50%;">
+                        <a class="btn btn-lg  btn-primary" onclick="editdistributor(${disid}, '${nname}' )">@SuppliersDashboard.Resources.llayout.Editingdata  </a>
+            </div>
+        }
+        @if (Functions.Contains("امكانية زيارة مندوب لعميل غير مسجل له"))
+        {
+            <div class="col-lg-3 p-3"  style="width: 50%;">
+                                    <a class="btn btn-lg  btn-primary" href="/Distributor/AddBranchException?UserId=${disid}&UserName=${nname}">   @SuppliersDashboard.Resources.llayout.visitofcustomer  </a>
+            </div>
+        }
+
+        @if (Functions.Contains("كشف شهرية مندوب"))
+        {
+
+
+        }
+        @if (Functions.Contains("كشف حساب مندوب"))
+        {
+            <div class="col-lg-3 p-3"  style="width: 50%;">
+                                    <a class="btn btn-lg btn-primary" href="/Distributor/Accounting?UserId=${disid}&UserName=${nname}"> @SuppliersDashboard.Resources.llayout.accentof   </a>
+
+            </div>
+
+        }
+         
+
+    </div>
+
+                </div>
+                `
+
+                $("#parentdiv").html(html)
+            }
+        }
+        function searchsales(element) {
+
+            let filter = $(element).val().toUpperCase()
+
+            var divs = document.querySelectorAll(".tr");
+            for (let i = 0; i < divs.length; i++) {
+                let d = divs[i];
+                let txtValue = d.textContent || d.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    divs[i].style.display = "";
+                } else {
+                    divs[i].style.display = "none";
+                }
+            }
+        }
+
+    function editdistributor(id, name) {
+        console.log();
+            let url = `/Distributor/EditSalesMenPartial?UserId=${id}`
+
+        console.log('d');
+        $.get(url, (result) => {
+            console.log('c');
+
+            ShowModal(result);
+            })
+            //$.ajax({
+            //    url: "/Distributor/GetUserDistributorIdandmonthtarget",
+            //    type: "post",
+            //    data: {
+            //        UserId : id
+            //    }, success: (res) => {
+
+            //        let HTML = `
+            //<div class="p-3">
+            //<div class="row">
+            //    <div class="col-12 p-2 text-center">
+            //        <label for="name"> الاسم </label>
+            //        <input id="name" type="text" placeholder="ادخل الاسم " class="form-control" value="${name}" />
+            //    </div>
+            //<div class="col-12 p-2 text-center">
+            //    <label for="disgroupid"> المجموعة </label>
+            //    <select id='disgroupid' class="form-control form-select" value="${res.disid}">
+            //    `
+            //        $.each(res.groups, (x, y) => {
+            //            if (y.Id == res.disid) {
+            //                HTML += `
+            //            <option selected value='${y.Id}'>${y.Name}</option>
+            //            `
+            //            } else {
+
+            //            HTML += `
+            //            <option value='${y.Id}'>${y.Name}</option>
+            //            `
+            //            }
+            //        })
+
+            //    HTML += `
+            //    </select>
+            //                </div>
+            //                <div class="col-12 p-2 text-center">
+            //                    <label for="monthlytarget"> المبلغ المطلوب خلال الشهر  </label>
+            //                    <input type="number" id="monthlytarget" placeholder="ادخل المبلغ " class="form-control" value="${res.monthtarget}" />
+            //                </div>
+            //                <div class="col-12 p-2 text-center">
+            //                    <button class="btn btn-success" onclick="submitedituser(${id})"> تعديل  </button>
+            //                </div>
+
+            //            </div>
+
+            //        </div>
+            //`
+
+            //ShowModal(HTML)
+
+            //    }
+
+            //})
+
+
+
+
+        }
+
+        function submitedituser(id) {
+
+            let name = $("#name").val()
+            let dis = $("#disgroupid").val()
+            let target = $("#monthlytarget").val()
+            $.ajax({
+                url: "/Distributor/EditUserDetails",
+                type: "post",
+                data: {
+                    UserId: id,
+                    DistributorGroupId: dis,
+                    MonthlyTarget: target,
+                    Name: name
+
+                }, success: (res) => {
+
+                    ShowModal(`
+                        <div class='p-3'>
+                        ${res.data.Message}
+                        </div>
+                        `)
+                    setTimeout(() => {
+                        location.reload()
+                    }, 3000)
+                }
+            })
+
+
+        }
+</script>

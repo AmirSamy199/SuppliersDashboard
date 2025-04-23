@@ -1,0 +1,451 @@
+﻿
+
+
+@{
+    var Model = (SuppliersDashboard.ViewModels.Bill_Details_model)ViewBag.Model;
+
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    bool discountexist = false;
+    try
+    {
+        discountexist =  decimal.Parse(Model.headers.Where(a => a.subject == "خصم فاتورة").FirstOrDefault().data.Replace("|", "")) > 0;
+
+    }
+    catch
+    {
+
+    }
+
+
+}
+<style>
+    .cont{
+        text-align:center;
+        border:1px solid #0094ff;
+        border-radius:10px;
+        margin:15px;
+        
+    }
+    .cont span {
+        display: block;
+        text-align: center;
+    }
+    .autowidth{
+       
+    }
+</style>
+
+@try
+            {
+<div class="p-5">
+    <div class="row">
+        <div class="p-4 col-lg-4 col-sm-6">
+           <img width="200" src="~/Content/img/UNO.png"/>
+        </div>
+
+        <div class="p-2 text-center col-lg-8 col-sm-6" style="font-size:30px ; font-weight:bold">
+            فاتورة رقم (
+            <span id="basebillno">
+                @Model.headers.Where(a => a.subject == "رقم الفاتورة").FirstOrDefault().data.Replace("|", "")
+            </span>
+            )
+        </div>
+        <div class="row">
+            <div class="col-lg-4" style="font-size:20px ">
+                <span class="">التاريخ :  </span>
+                <span> @Model.headers.Where(a => a.subject == "التاريخ").FirstOrDefault().data.Replace("|", "") </span>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-lg-4" style="font-size:20px ">
+                <span class="">العميل  :  </span>
+                <span> @Model.CompanyName </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4" style="font-size:20px ">
+                <span class="" style="font-size:20px ">الفرع  :  </span>
+                <span> @Model.headers.Where(a => a.subject == "اسم العميل").FirstOrDefault().data.Replace("|", "") </span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <table id="table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    الصنف
+                </th>
+                <th>
+                    العدد
+                </th>
+                <th>
+                    سعر الوحدة
+                </th>
+                <th>
+                    الاجمالي
+                </th> <th>
+                    الحجم 
+                </th> <th>
+                    الخصم
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            @foreach (var item in Model.Sales)
+            {
+                <tr>
+                    <td class="fix-width">
+                        @item.Items
+                    </td>
+                    <td>
+                        @item.NumberOfUnits
+                    </td>
+                    <td>
+                        @item.UnitPrice
+                    </td>
+                    <td>
+                        @item.TotalPrice
+                    </td>
+                    <td>
+                        @item.size
+                    </td>
+                    <td>
+                        @item.Discount
+                    </td>
+
+                </tr>
+            }
+            <tr style="border-bottom:unset !important ;">
+                <td style="border:unset !important"> </td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+            </tr>
+
+
+            <tr style="border-bottom:unset !important ; border-top : unset !important">
+           
+                <td style="border:unset !important"> </td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+                <td style="border:unset !important"></td>
+            </tr>
+
+           
+            <tr style="border:unset !important">
+                <td  style="border:1px solid #ccc" class="autowidth">اجمالي الفاتورة    </td>
+                <td  style="border:1px solid #ccc"  id="totalpill">@Model.headers.Where(a => a.subject == "قيمة الفاتورةقبل الخصم").FirstOrDefault().data.Replace("|", "")</td>
+            </tr>
+            @if (discountexist)
+            {
+
+                <tr style="border:unset !important" id="t2" class="">
+                    <td style="border:1px solid #ccc" class="autowidth"> الخصم    </td>
+
+
+                    <td style="border:1px solid #ccc" id="totalpill">@Model.headers.Where(a => a.subject == "خصم فاتورة").FirstOrDefault().data.Replace("|", "")</td>
+
+                </tr>
+                <tr style="border:unset !important" id="t1" class="">
+                    <td style="border:1px solid #ccc" class="autowidth">
+                        الفاتورة بعد الخصم
+                    </td>
+                    <td style="border:1px solid #ccc" id="totalpill">@Model.headers.Where(a => a.subject == "قيمة الفاتورة").FirstOrDefault().data.Replace("|", "")</td>
+
+                </tr>
+            }
+
+            <tr style="border:unset !important">
+                <td style="border:1px solid #ccc" class="autowidth">
+                    الرصيد السابق
+                </td>
+                <td style="border:1px solid #ccc" id="totalpill">@Model.headers.Where(a => a.subject == "مديونية سابقة").FirstOrDefault().data.Replace("|", "")</td>
+
+
+            </tr>
+            <tr style="border:unset !important">
+                <td style="border:1px solid #ccc" class="autowidth">
+                    اجمالي المبلغ المطلوب
+                </td>
+                <td style="border:1px solid #ccc" id="amountrequired">@ViewBag.requiredamount</td>
+
+            </tr>
+            <tr style="border:unset !important">
+                <td style="border:1px solid #ccc" class="autowidth">
+                    المدفوع
+                </td>
+                <td style="border:1px solid #ccc" id="totalpill">@Model.headers.Where(a => a.subject == "كاش").FirstOrDefault().data.Replace("|", "")</td>
+
+
+            </tr>
+            <tr style="border:unset !important">
+                <td style="border:1px solid #ccc" class="autowidth">
+                    الاجل
+                </td>
+                <td style="border:1px solid #ccc" id="totalpill">@Model.headers.Where(a => a.subject == "أجل").FirstOrDefault().data.Replace("|", "")</td>
+
+
+            </tr>
+
+        </tbody>
+     </table>
+
+
+    <!--<div class="row">-->
+        @*<div class="col-lg-2">
+
+        </div>*@
+        <!--<div class="col-lg-4">
+            <table class="table table-bordered">
+                <tr>
+                    <td class="autowidth">اجمالي الفاتورة    </td>
+                    <td id="totalpill">@Model.headers.Where(a => a.subject == "قيمة الفاتورةقبل الخصم").FirstOrDefault().data.Replace("|", "")</td>
+                </tr>
+                @if (discountexist)
+            {
+
+                <tr id="t2" class="">
+                    <td  class="autowidth" > الخصم    </td>
+                    
+
+                    <td id="totalpill">@Model.headers.Where(a => a.subject == "خصم فاتورة").FirstOrDefault().data.Replace("|", "")</td>
+
+                </tr>
+                <tr id="t1" class="">
+                    <td  class="autowidth" >
+                        الفاتورة بعد الخصم
+                    </td>
+                    <td id="totalpill">@Model.headers.Where(a => a.subject == "قيمة الفاتورة").FirstOrDefault().data.Replace("|", "")</td>
+                  
+                </tr>
+            }
+
+                <tr>
+                    <td class="autowidth" >
+                        الرصيد السابق
+                    </td>
+                    <td id="totalpill">@Model.headers.Where(a => a.subject == "مديونية سابقة").FirstOrDefault().data.Replace("|", "")</td>
+                   
+
+                </tr>
+                <tr>
+                    <td  class="autowidth" >
+                        اجمالي المبلغ المطلوب
+                    </td>
+                    <td id="amountrequired">@ViewBag.requiredamount</td>
+
+                </tr>
+                <tr>
+                    <td  class="autowidth" >
+                        المدفوع
+                    </td>
+                    <td id="totalpill">@Model.headers.Where(a => a.subject == "كاش").FirstOrDefault().data.Replace("|", "")</td>
+                   
+
+                </tr>
+                <tr>
+                    <td  class="autowidth" >
+                        الاجل
+                    </td>
+                    <td id="totalpill">@Model.headers.Where(a => a.subject == "أجل").FirstOrDefault().data.Replace("|", "")</td>
+                  
+
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-2"></div>
+
+    </div>-->
+</div>
+
+}
+catch
+            {
+                <div class="p-4">
+                    <h1 class="text-center p-3">لا يوجد فاتورة بهذا الرقم </h1>
+                </div>
+            }
+
+
+
+<script>
+    function suring(msg, btntxt, btnclick) {
+
+
+        let html = `
+    <div class='bg-light p-4'  style='min-width:500px' >
+
+    <div class=' p-4'>
+     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+    <div class='text-center '>
+
+    <i style='font-size:150px' class="fa fa-regular fa-circle-question"></i>
+    </div>
+ 
+    </div>
+    <div class='pt-3 pb-3 text-center text-warning' style='font-size:20px;font-weight:bolder'> 
+   ${msg}
+     </div>
+    <div class='p-3 text-center '>
+   <button style='font-size: 18px;' class='btn btn-primary text-center' onclick="${btnclick}">${btntxt}</button>
+    </div>
+    </div>
+    `
+        ShowModal(html)
+    }
+    function submitdeleteInvoice(billno) {
+        let currentbillno = parseInt($("#basebillno").text())
+      //  console.log(currentbillno)
+        let url = `/Home/CancelInvoice?BillNo=${currentbillno}`
+        $.get(url, (res) => {
+            if (res.State == 1) {
+                showsuccessoperation(res.Message)
+            } else {
+                showdangeroperation(res.Message)
+                console.log(res.ErrorMessage)
+            }
+        })
+    }
+</script>
+
+@*<div>
+    
+    <div class="row">
+        @foreach (var item in Model.headers)
+        {
+            <div class="col-lg-3 col-sm-4 col-xs-4" >
+                <div class="cont">
+
+                    <span class="subject text-body">
+                        @item.subject
+                    </span>
+                    <span class="data text-primary">
+                        @item.data
+                    </span>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div style="height:20px">
+
+    </div>
+    <div class="">
+
+
+        @if(Model.Sales!=null && Model.Sales.Count != 0)
+            {
+            <h2 class="h2 text-center m-2">
+                المباع
+            </h2>
+                <table style="width:100%" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                الاسم 
+                            </th>
+<th>
+                                العدد 
+                            </th>
+<th>
+                                السعر  
+                            </th><th>
+                                السعر الكلي   
+                            </th>
+                            <th>
+                                 الحجم   
+                            </th>
+                              <th>
+                                الخصم   
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.Sales)
+                {
+                    <tr>
+                        <td>
+                            @item.Items
+                        </td>
+ <td>
+                            @item.NumberOfUnits
+                        </td>
+ <td>
+                            @item.UnitPrice
+                        </td>
+ <td>
+                            @item.TotalPrice
+                        </td>
+ <td>
+                            @item.size
+                        </td>
+ <td>
+                            @item.Discount
+                        </td>
+
+                    </tr>
+                }
+                    </tbody>
+                </table>
+            }
+    </div>
+        <div style="height:20px">
+
+    </div>
+        <div class="">
+
+
+            @if (Model.Returns != null && Model.Returns.Count != 0)
+            {
+                <h2 class="h2 text-center m-2">
+                    المردود
+                </h2>
+                <table style="width:100%" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                الاسم
+                            </th>
+                            <th>
+                                الحجم
+                            </th>
+                            <th>
+                                الكمية
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Returns)
+                        {
+                            <tr>
+                                <td>
+                                    @item.ItemName
+                                </td>
+                                <td>
+                                    @item.size
+                                </td>
+                                <td>
+                                    @item.Amount
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+
+</div>*@
+

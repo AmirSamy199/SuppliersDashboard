@@ -1,0 +1,264 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "SettleAccount";
+}
+<style>
+    .bbold{
+        font-weight:bold ; 
+        font-size:18px;
+    }
+</style>
+<h2 class="p-3 text-center"> تسليم اليومية للمندوب  </h2>
+
+@if(ViewBag.Account != null)
+            {
+    if(ViewBag.Account.State == 1)
+                {
+
+
+        <div class="p-3">
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                       @pages.amountrequired
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.required_amount
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        @pages.paid1
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.actual_amount
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        @pages.Impotence
+                    </div>
+
+                    @if (@ViewBag.Account.Item.actual_amount < @ViewBag.Account.Item.required_amount)
+                    {
+                        <div class="text-center p-2 bbold text-danger">
+                            @(
+                            ViewBag.Account.Item.required_amount
+                            -
+                            ViewBag.Account.Item.actual_amount
+                            )
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center p-2 bbold ">
+                            -
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        عدد اوراق الدفع المطلوبة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.payment_paper_count_required
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        عدد اوراق الدقع المسلمة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.Actual_MoneyReceiptPapers_count
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        @pages.Impotence
+                    </div>
+
+                    @if (@ViewBag.Account.Item.Actual_MoneyReceiptPapers_count < @ViewBag.Account.Item.payment_paper_count_required)
+                    {
+                        <div class="text-center p-2 bbold text-danger">
+                            @(
+                            ViewBag.Account.Item.payment_paper_count_required
+                            - 
+                            ViewBag.Account.Item.Actual_MoneyReceiptPapers_count 
+                            )
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center p-2 bbold ">
+                            -
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        مبلغ اوراق الدفع المطلوبة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.payment_paper_amount
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        مبلغ اوراق الدقع المسلمة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.Actual_MoneyReceiptPapers_Amount
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                @pages.Impotence
+                    </div>
+
+                    @if (@ViewBag.Account.Item.Actual_MoneyReceiptPapers_Amount < @ViewBag.Account.Item.payment_paper_amount)
+                    {
+                        <div class="text-center p-2 bbold text-danger">
+                            @(
+                            ViewBag.Account.Item.payment_paper_amount
+                            -
+                            ViewBag.Account.Item.Actual_MoneyReceiptPapers_Amount
+                            )
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center p-2 bbold">
+                            -
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        عدد اوراق الاجل المطلوبة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.colection_paper_count_required
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        عدد اوراق الاجل المسلمة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.Actual_DeferredMoneyPaper_count
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        العجز
+                    </div>
+
+                    @if (@ViewBag.Account.Item.Actual_DeferredMoneyPaper_count < @ViewBag.Account.Item.colection_paper_count_required)
+                    {
+                        <div class="text-center p-2 bbold text-danger">
+                            @(
+                            ViewBag.Account.Item.colection_paper_count_required
+                            -
+                            ViewBag.Account.Item.Actual_DeferredMoneyPaper_count 
+                            )
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center p-2 bbold ">
+                            -
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        مبلغ اوراق الاجل المطلوبة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.colection_paper_amount
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        مبلغ اوراق الاجل المسلمة
+                    </div>
+                    <div class="text-center p-2 bbold">
+                        @ViewBag.Account.Item.Actual_DeferredMoneyPaper_Amount
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center p-3">
+                    <div class="text-center text-primary p-2 bbold">
+                        العجز
+                    </div>
+
+                    @if (@ViewBag.Account.Item.Actual_DeferredMoneyPaper_Amount < @ViewBag.Account.Item.colection_paper_amount)
+                    {
+                        <div class="text-center p-2 bbold text-danger">
+                            @(
+                            ViewBag.Account.Item.colection_paper_amount
+                            - 
+                            ViewBag.Account.Item.Actual_DeferredMoneyPaper_Amount 
+                            )
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center p-2 bbold ">
+                            -
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-around p-4">
+
+                    <div class="col-lg-4 text-center p-3 bbold">
+                        تاكيد تسليم المبلغ 
+                    </div>
+                     <div class="col-lg-4 text-center p-3 bbold">
+                       <button onclick="SubmitCloseAccount()" class="btn btn-primary col-12 btn-lg" >
+                           تاكيد 
+                       </button>
+                    </div>
+
+
+
+            </div>
+
+        </div>
+
+                }
+                else
+                            {
+                                <div>
+                                    <h2 class="p-3 text-center"> @ViewBag.Account.Message  </h2>
+
+                                </div>
+                            }
+
+
+
+
+                        }
+
+
+<script>
+    function SubmitCloseAccount() {
+        let url = `/Screens/SubmitCloseAccount`
+        $.get(url, (res) => {
+            if (res.data.State == 1) {
+                showsuccessoperation(res.data.Message)
+            } else {
+                showDangerOperation(res.data.Message)
+            }
+        })
+    }
+</script>

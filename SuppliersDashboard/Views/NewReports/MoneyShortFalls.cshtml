@@ -1,0 +1,284 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "ShortFalls";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_reportHeader")
+
+
+<div class="text-center">
+
+    <input class="form-control" id="sreachPillsTable" list="representList" placeholder=" بحث......." style="width:50%;margin:auto" onkeyup="SearchInTable('sreachPillsTable','table')" />
+
+</div>
+
+<div id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1.5px solid #000 !important;
+        }
+
+        th {
+            color: #000 !important;
+            font-weight: bold !important;
+            background-color: #ccc !important
+        }
+
+        table {
+            border-collapse: collapse !important;
+            width: 100% !important
+        }
+
+        #table_filter {
+            display: none
+        }
+    </style>
+
+
+
+    <h2 class="text-center p-3 text-primary" id="messageheader">
+    </h2>
+
+    <div class="  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <div id="tablediv" class="collapse p-3">
+
+
+                    <table class="table table-bordered  table-striped" id="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>@pages.distributor</th>
+                                <th>@Items.Date</th>
+                                <th>@pages.time</th>
+
+                                <th>@llayout.shortfallpayment</th>
+                                <th> @llayout.String4 </th>
+                                <th>@llayout.String3</th>
+                                <th>@llayout.String21</th>
+                                <th>@llayout.String11 </th>
+                                <th> </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody">
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <h2 class="text-center p-3 text-muted collapse" id="notdatafound">
+                    لا يوجد معلومات حتي الان
+                </h2>
+                <h2 class="text-center p-3 text-muted collapse" id="choosedistributorh2">
+                    اختر المندوب
+                </h2>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">@llayout.Execl </button>
+
+    </div>
+
+</div>
+@*<div class="text-center p-4">
+    <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    <span style="width:20px"> </span>
+    <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">@llayout.Execl </button>
+</div>*@
+<script>
+
+    $(document).ready(function () {
+
+        $("#distributorId").change(() => { loadPage() })
+        $("#DistributorIdInput").change(() => { loadPage() })
+        $("#DateFrom").change(() => { loadPage() })
+        $("#DateTo").change(() => { loadPage() })
+    })
+   
+
+    let name = ``
+    let header = ``
+    let headerdetail = ``
+    loadPage()
+    function loadPage() {
+
+        let distributorId = $("#distributorId").val();
+
+        $(`#choosedistributorh2`).addClass("collapse")
+
+        let datefrom = $("#DateFrom").val();
+        let dateto = $("#DateTo").val();
+        let url = `/NewReports/MoneyShortFallsJson?UserId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+        $.post(url, (res) => {
+
+
+            if (res.Data.length <= 0) {
+                name = `للمندوبين  `
+                $(`#notdatafound`).removeClass("collapse")
+                $(`#tablediv`).addClass("collapse")
+
+            } else {
+                let header = `
+                                   <table class="table table-bordered  table-striped" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                <th>المندوب</th>
+                                <th>التاريخ</th>
+                                <th>الوقت</th>
+
+                                <th>عجز الفلوس</th>
+                                <th>عدد اوراق القبض </th>
+                                <th>كمية اوراق القبض</th>
+                                <th>عدد اوراق الاجل</th>
+                                <th>كمية اوراق الاجل </th>
+                                <th> </th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tablebody">
+                                        </tbody>
+                                    </table>
+                                    `
+                $("#tablediv").html(header)
+
+                let counter = 1;
+                $("#table").dataTable({
+                    "pageLength": 25,
+                    data: res.Data,
+                    columns: [
+                        { data: null, render: () => { return counter++ } },
+                        { data: "Sales" },
+                        { data: "_Date" },
+                        { data: "_Time" },
+                        { data: "MoneyFall" },
+                        { data: "MoneyPaperCountFall" },
+                        { data: "MoneyPaperAmountFall" },
+                        { data: "DefferedPaperCountFall" },
+                        { data: "DefferedPaperAmountFall" },
+                        {
+                            data: null, render: (x, y, z) => {
+
+                                return `   <div class=" btn-group ignore-in-report-span" >
+                                            <button class='btn btn-lg btn-primary' onclick='settlement(${x.RecordID})' style='margin :0px 10px'> تسوية  </button>
+                                            </div>`
+                            }
+                        },
+                    ]
+
+                });
+                $(`#notdatafound`).addClass("collapse")
+                $(`#tablediv`).removeClass("collapse")
+
+
+            }
+            header = res.Message
+            headerdetail = " في الفترة من " + datefrom + " الي " + dateto
+            $("#messageheader").text(header + " " + headerdetail)
+        })
+
+
+    }
+
+    function settlement(No) {
+
+        let msg1 = `هل انت متاكد من تسوية مبلغ العجز     ؟`
+        let msg2 = `هل انت متاكد من استرداد الشيك   ؟`
+        let msg3 = `هل انت متاكد من تسوية الشيك واخذ المبلغ من المندوب  ؟`
+        let btnfunc1 = `submitSettle(${No} ,1)`
+        let btnfunc2 = `submitSettle(${No} ,2)`
+        let btnfunc3 = `submitSettle(${No} ,3)`
+        let sur = `تاكيد`
+        let html = `
+                    <div class='p-3'>
+                    <h4 class='p-3 text-center'>  اختر نوع التسوية  </h4>
+                       <div class=" btn-group ignore-in-report-span text-center" >
+                                            <button class='btn btn-warning' style='margin :0px 10px' onclick="surring('${msg1}' , '${sur}' , '${btnfunc1}')" > تسوية المبلغ  </button>
+                                            <button class='btn btn-primary' onclick="surring('${msg2}' , '${sur}' , '${btnfunc2}')" style='margin :0px 10px'> استرجاع ورقة الدفع  </button>
+                                            <button class='btn btn-warning' onclick="surring('${msg3}' , '${sur}' , '${btnfunc3}')" style='margin :0px 10px'> تسوية ورقة الدفع  </button>
+                                            </div>
+                    </div>
+                    `
+        ShowModal(html)
+    }
+
+    function surring(msg, btntxt, btnclick) {
+
+
+        let html = `
+                <div class='bg-light p-4'  style='min-width:500px' >
+
+                <div class=' p-4'>
+                 <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+                <div class='text-center '>
+
+                <i style='font-size:150px' class="fa fa-regular fa-circle-question"></i>
+                </div>
+
+                </div>
+                <div class='pt-3 pb-3 text-center text-warning' style='font-size:20px;font-weight:bolder'>
+               ${msg}
+                 </div>
+                <div class='p-3 text-center '>
+               <button style='font-size: 18px;' class='btn btn-primary text-center' onclick="${btnclick}">${btntxt}</button>
+                </div>
+                </div>
+                `
+        ShowModal(html)
+    }
+
+    function submitSettle(No, WayNum) {
+
+
+        let Way = ``
+        if (WayNum == 1)
+            Way = 'money'
+        if (WayNum == 2)
+            Way = 'paper'
+        if (WayNum == 3)
+            Way = 'papermoney'
+
+
+        let url = `/ReportActions/SettleMoneyFall?TranId=${No}&Way=${Way}`
+        $.post(url, (res) => {
+
+            if (res.data.State == 1) {
+                showsuccessoperation(res.data.Message)
+                loadPage()
+
+            } else {
+                showdangeroperation(res.data.Message)
+            }
+
+        })
+
+    }
+    function excel() {
+        let distributorId = $("#distributorId").val();
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        let url = `/NewReports/MoneyShortFallsExcel?UserId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+
+        LayoutExcel(url, $("#messageheader").text())
+    }
+</script>
+
+

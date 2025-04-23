@@ -1,0 +1,289 @@
+﻿
+
+<style>
+    .select2-show-search {
+        width: 100%;
+    }
+
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-search__field {
+        max-width: 100%;
+    }
+
+    span {
+        width: inherit;
+    }
+
+    .modal .modal-body {
+        width: 280%;
+    }
+
+    label {
+        text-align: center;
+        padding: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+        margin-left: 0%;
+    }
+
+    .form-control {
+        background-color: #fff;
+    }
+
+    select {
+        background-color: white !important;
+    }
+
+    .custom-file-control:empty::after {
+        content: "Choose file...";
+    }
+</style>
+<div class="modal-body pd-25">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-3">
+            <span class="btn btn-danger" style="display:none" id="ValidSpan">ValidSpan</span>
+           
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label">Name <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="EmployeeName">
+        </div>
+        <label class="col-lg-1 form-control-label">ArabicName </label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="EmployeeARName">
+        </div>
+        <label class="col-lg-1 form-control-label">Nationality <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label">NationalID <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="number" class="form-control" id="NationalID" onkeyup="IDCheck()">
+            <span style="color:red; display:none" id="CheckSpan">National ID must be 14 Digits</span>
+        </div>
+        <label class="col-lg-1 form-control-label">ID_StartDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="ID_StartDate">
+        </div>
+        <label class="col-lg-1 form-control-label">ID_ExpDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="ID_ExpDate">
+        </div>
+    </div>
+
+    <div class="row mt-2">
+
+        <label class="col-lg-1 form-control-label">Email <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="email" class="form-control" onkeyup="Validate()" id="Email" placeholder="default@example.com">
+            <span style="color:red; display:none" id="CheckEmail">Email must be like default@example.com</span>
+        </div>
+        <label class="col-lg-1 form-control-label">Location <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="Location">
+        </div>
+        <label class="col-lg-1 form-control-label">Phone <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="tel" class="form-control" id="Phone" onkeyup="PhoneCheck()">
+            <span style="color:red; display:none" id="CheckPhone">Phone number must be 10 Digits</span>
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label">DateOfBirth <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="DateOfBirth">
+
+        </div>
+        <label class="col-lg-1 form-control-label">Place_Of_Birth <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="Place_Of_Birth">
+
+        </div>
+        <label class="col-lg-1 form-control-label">Department <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            <input type="text" class="form-control">
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+
+        <label class="col-lg-1 form-control-label">Company <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label">Employees.Shift <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label"> Manager <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label"> University <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label"> EducationGrade </label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label"> GraduationDate </label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="GraduationDate">
+
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label"> Degree <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+
+        </div>
+        <label class="col-lg-1 form-control-label"> Job <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+
+        </div>
+        <label class="col-lg-1 form-control-label"> Categories <span class="tx-danger">*</span></label>
+
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label"> jobLevel <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label"> PositionType <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label"> EmployeeSalary <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="number" class="form-control" id="EmployeeSalary">
+        </div>
+    </div>
+
+
+
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label"> DateOfHiring <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="DateOfHiring">
+        </div>
+        <label for="inputState" class="col-lg-1"> InsuranceStatus</label>
+        <div class="form-group col-lg-3">
+            <input type="text" class="form-control">
+
+        </div>
+        <label class="col-lg-1 form-control-label"> NoOfInsurance <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="number" class="form-control" id="InsuranceNumber">
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label" id="SocDate"> SocialSecurityStartDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0" id="SocDate1">
+            <input type="date" class="form-control" id="SocialSecurityStartDate" disabled>
+        </div>
+        <label class="col-lg-1 form-control-label" id="comDate"> CompanyinsuranceDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0" id="comDate1">
+            <input type="date" class="form-control" id="CompanyinsuranceDate" disabled>
+        </div>
+        <label for="inputState" class="col-lg-1"> Gender</label>
+        <div class="form-group col-lg-3">
+
+            @Html.DropDownList("Gender", new List<SelectListItem>
+            {
+                 new SelectListItem{ Text="Select Gender", Value = "0" },
+                 new SelectListItem{ Text="Male", Value = "1" },
+                 new SelectListItem{ Text="Female", Value = "2" },
+
+
+            }, new { @class = "form-control", id = "Gender", @onchange = "Gender()" })
+        </div>
+
+
+
+
+    </div>
+
+
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label" id="MilitaryStatus"> Military_Status <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0" id="ddlMilitaryStatus">
+            <input type="text" class="form-control">
+        </div>
+
+        <label class="col-lg-1 form-control-label"> MilitaryDate <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="date" class="form-control" id="MilitaryDate" disabled value="1900-01-01">
+        </div>
+
+        <label for="inputState" class="col-lg-1"> Martial_Status</label>
+        <div class="form-group col-lg-3">
+            <input type="text" class="form-control">
+        </div>
+
+
+
+    </div>
+    <div class="row mt-2">
+        <label class="col-lg-1 form-control-label"> Religion <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control">
+        </div>
+        <label class="col-lg-1 form-control-label"> MotherName <span class="tx-danger">*</span></label>
+        <div class="col-lg-3 mg-t-10 mg-lg-t-0">
+            <input type="text" class="form-control" id="MotherName">
+        </div>
+
+        @*<label class="col-lg-1 form-control-label"> AddExtraData <span class="tx-danger">*</span></label>
+            <input type="file" id="file" multiple accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" />
+            <div class="col-lg-2" id="FileError">
+            </div>*@
+    </div>
+
+
+    <div class="row " style=" display: flex; justify-content: flex-end;margin-top:2%;">
+        <button type="button" class="btn btn-danger pd-x-20" data-dismiss="modal" style="height: 39px; margin-right: 2%; width: unset">Close</button>
+
+        <button type="button"  onclick="SubmitEmployee()" id="AddBtn" class="btn  col-lg-3 m-auto" style=" height: 39px; background-color: #163e57; color: white; width: fit-content;">
+            Submit Adding
+        </button>
+        <button type="button" onclick="SubmitEditEmployee()"  id="EditBtn" class="btn  col-lg-3 " style="width: fit-content; height: 39px; background-color: #163e57; color: white;">
+            Submit Edit
+        </button>
+        <input id="RecordID" type="hidden">
+        <input id="OwnerID" type="hidden">
+    </div>
+</div>

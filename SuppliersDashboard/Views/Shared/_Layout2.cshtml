@@ -1,0 +1,664 @@
+﻿
+@{
+    bool IsSignIn = true;
+
+    var User = SuppliersDashboard.Helper.Cokie.UserGet();
+
+   
+    if (User.Id == 0) { User = new SuppliersDashboard.Models.User { UserName = "UserName" }; IsSignIn = false; }
+
+}
+
+@*<style>
+        table.dataTable thead th, table.dataTable tbody tr:last-child td {
+            border-bottom: 1px solid #009CFF !important;
+        }
+
+        table.dataTable tbody td {
+            border-bottom: unset;
+        }
+
+        td, th {
+            text-align: center;
+        }
+
+        .editorinput {
+            outline: unset;
+            background: unset;
+            border: unset;
+        }
+
+        .body {
+            padding: 30px;
+        }
+
+        .editorinput:focus {
+            border-bottom: 1px solid #009CFF;
+        }
+
+        button {
+            margin: 0 10px;
+        }
+    </style>*@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>الدوار لمنتجات الالبان  </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    @* meta to complete http requests on host succefully  *@
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+
+    <!-- Favicon -->
+    <link href="~/Content/img/UNO.png" rel="icon">
+
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    @*data tables cdns*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/Deebjs.js"></script>
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0" style="direction: rtl;">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3 open">
+            <nav class="navbar bg-light navbar-light">
+                <a href="/" class="navbar-brand mx-4 mb-3">
+                    <img src="~/Content/img/UNO.png" class="rounded" style="width:110px;height:50px" />
+
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="~/Content/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    @if (false)
+                    {
+
+                    }
+                    else
+                    {
+
+
+                        <div class="ms-3">
+                            <h6 class="mb-0">@User.UserName </h6>
+
+                        </div>
+                    }
+                </div>
+                <div class="navbar-nav w-100">
+                    @*
+
+                                    <a href="/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>@SuppliersDashboard.Resources.llayout.suppliersdashboard</a>
+
+                                    @if ((Session["Functions"] as List<string>).Contains("w-admin") || (Session["Functions"] as List<string>).Contains("w-store"))
+                                    {
+
+
+                                        <div class="nav-item dropdown">
+                                            <a href="#" id="amliatbtn" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i> عمليات </a>
+                                            <div class="dropdown-menu bg-transparent border-0">
+                                                <a href="/Distributor/GroupUsers/1" class="dropdown-item"> ادارة المناديب  </a>
+
+                                                <a href="/Screens/Sale" class="dropdown-item"> البيع </a>
+                                                <a href="/Screens/Buy" class="dropdown-item"> مشتريات </a>
+                                                <a href="/Screens/Masrofat" class="dropdown-item"> المصروفات </a>
+                                                <a href="/Screens/Collection" class="dropdown-item"> تحصيل </a>
+                                                <a href="/Screens/Mardodat" class="dropdown-item"> مردودات </a>
+                                                <a href="/Screens/Mortg3at" class="dropdown-item"> مرتجعات </a>
+                                                <span style="cursor:pointer; display: block; padding: 0 30px " onclick="showstore3mliat()"> - المخزن -  </span>
+                                                <a href="/Screens/DeliverStore" class=" showstore3mliatcollapse collapse dropdown-item">  فتح/اغلاق وردية   </a>
+                                                <a href="/WareHousing/PendingWareHouseRequests" class="  showstore3mliatcollapse collapse dropdown-item"> تسليم وتسلم  </a>
+                                                <a href="/WareHousing/PendingMardodatWareHouseRequests" class="  showstore3mliatcollapse collapse dropdown-item"> المردودات  </a>
+                                                <a href="/WareHousing/StoreGard" class="  showstore3mliatcollapse collapse dropdown-item  ">جرد  </a>
+                                                @*<a href="/Supplier/Seting" class="dropdown-item showstore3mliatcollapse collapse">@SuppliersDashboard.Resources.llayout.stopsupplier  </a>
+                        <a href="/Supplier/Add" class="dropdown-item showstore3mliatcollapse collapse">@SuppliersDashboard.Resources.llayout.addsupplier    </a>
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                    @if ((Session["Functions"] as List<string>).Contains("w-admin") || (Session["Functions"] as List<string>).Contains("w-store"))
+                                    {
+
+                                        <div class="nav-item dropdown">
+                                            <a href="#" id="reports" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-cog me-2"></i>التقارير  </a>
+                                            <div class="dropdown-menu bg-transparent border-0">
+                                                <a href="/WareHousing/StoreGard" class="dropdown-item  ">جرد مخزن </a>
+                                                <a href="/Distributor/CustomerDeffers" class="dropdown-item">المديونيات</a>
+                                                <a href="/Distributor/CustomerLaters" class="dropdown-item">المتاخرات </a>
+                                                @*<span style="cursor: pointer; display: block; padding: 0 20px" onclick="showItemReports()"><i class="fa fa-cog me-2"></i> الاصناف   </span>
+                                                <span style="cursor: pointer; display: block; padding: 0 20px" onclick="showDebitsReports()"><i class="fa fa-cog me-2"></i> الاصناف   </span>
+                                                <a href="/Items/Index" class="dropdown-item debitsreportscollapse collapse"> كشف حركة صنف    </a>
+                                                <a href="/Report/ItemSales" class="dropdown-item debitsreportscollapse collapse"> مبيعات صنف    </a>
+                                                <a href="/Report/CatogriesSalesReport" class="dropdown-item debitsreportscollapse collapse"> مبيعات مجموعة    </a>
+                                                <span style="cursor: pointer; display: block; padding: 0 20px" onclick="showBranchesReports()"><i class="fa fa-cog me-2"></i> العملاء والمندوبين    </span>
+                                                <a href="/Branch/BranchDetails" class="dropdown-item Branchesreportscollapse collapse">   بيانات عميل   </a>
+                                                <a href="/Report/AllDistributorReportsDetails" class="dropdown-item Branchesreportscollapse collapse">   مبيعات المندوبين   </a>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    }
+
+                                    @if ((Session["Functions"] as List<string>).Contains("w-admin") || (Session["Functions"] as List<string>).Contains("w-store") || (Session["Functions"] as List<string>).Contains("w-purchases"))
+                                    {
+
+                                        <div class="nav-item dropdown">
+                                            <a href="#" id="setting" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-cog me-2"></i>الاعدادات  </a>
+                                            <div class="dropdown-menu bg-transparent border-0">
+                                                @if ((Session["Functions"] as List<string>).Contains("w-purchases"))
+                                                {
+                                                    @*<span style="cursor: pointer; display: block; padding: 0 20px" onclick="showsalebuySetting()"> - بيع ومشتريات -   </span>
+                                                    // salebuysettingcollapse
+                                                    <span style="cursor: pointer; display: block; padding: 0 20px" onclick="showItemsSetting()">- اصناف -  </span>
+                                                    //itemssettingcollapse collapse
+                                                    <a href="/Items/ItemSetting" class="  collapse dropdown-item itemssettingcollapse collapse"> اضافة او وقف صنف   </a>
+                                                    <a href="/Items/Specialprice" class="  collapse dropdown-item itemssettingcollapse collapse"> اسعار خاصة   </a>
+                                                    <a href="/Items/AddItemPrice" class="  collapse dropdown-item itemssettingcollapse collapse"> تعديل الاسعار     </a>
+                                                    <span style="cursor: pointer; display: block; padding: 0 20px" onclick="showbranchesSetting()">- العملاء والمناطق   -  </span>
+                                                    <a href="/Market/Index" class="  collapse dropdown-item branshsettingcollapse collapse">العملاء</a>
+                                                    <a href="/Branch/AddBranch" class="  collapse dropdown-item branshsettingcollapse collapse">  اضافة عميل      </a>
+                                                    <a href="/Branch/AddOpeningBalance" class="  collapse dropdown-item branshsettingcollapse collapse">  اضافة رصيد افتتاحي       </a>
+                                                    <a href="/Screens/AddRange" class="  collapse dropdown-item branshsettingcollapse collapse">  اضافة منطقة او حي       </a>
+                                                    //branshsettingcollapse
+                                                    <span style="cursor: pointer; display: block; padding: 0 20px" onclick="showsuppliersSetting()">-
+                                        -  </span>
+                                                    // collapse suppliersettingcollapse
+                                                    <a href="/Supplier/Seting" class="  collapse suppliersettingcollapse dropdown-item suppliersettingcollapse collapse"> تعدبل او ايقاف مورد   </a>
+                                                    <a href="/Supplier/Add" class="  collapse suppliersettingcollapse dropdown-item  "> اضافة مورد او مجموعة مندوبين     </a>
+
+
+
+
+
+                                                }
+
+
+                                            </div>
+                                        </div>
+                                    }
+
+                    *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+        <!-- Content Start -->
+        <div class="content open">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="#" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                @if (false)
+                {
+                }
+                else
+                {
+                    <a href="/Home" class="sidebar-toggle flex-shrink-0">
+                        <i class="fa fa-home" aria-hidden="true" style="font-size:30px"></i>
+                    </a>
+                }
+
+                @*<a href="#" class="sidebar-toggler flex-shrink-0">
+                        <i class="fa fa-bars"></i>
+                    </a>*@
+                <div style="width:100%;text-align:center !important">
+
+                    <span class="nav-item"> @ViewBag.PageMsg </span>
+                </div>
+                <div class="navbar-nav align-items-center ms-auto">
+
+                    <div class="nav-item dropdown">
+                        @if (false)
+                        {
+
+                        }
+                        else
+                        {
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img class="rounded-circle me-lg-2" src="~/Content/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <span class="d-none d-lg-inline-flex">@User.UserName
+                            </a>
+                        }
+
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+
+
+                            @if (IsSignIn)
+                            {
+                                <a href="/Account/LogOut" class="dropdown-item">@SuppliersDashboard.Resources.llayout.logout</a>
+                            }
+                            else
+                            {
+
+                                <a href="/Account/LogIn" class="dropdown-item">@SuppliersDashboard.Resources.llayout.signin</a>
+                            }
+
+                        </div>
+
+                    </div>
+                    @*@if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+                    {
+                        <a class="dropdown-item" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> English</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> عريى</a>
+                    }*@
+                </div>
+
+            </nav>
+            <!-- Navbar End -->
+            @RenderBody()
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">@SuppliersDashboard.Resources.llayout.suppliersdashboard </a>@SuppliersDashboard.Resources.llayout.rights
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed By <a href="">Apis Team</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    @*modal mpopup*@
+    <div class="modal " id="myModal">
+        <div class="modal-dialog ">
+            <div class="modal-content" id="modalcontent">
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- JavaScript Libraries -->
+    <script src="~/Content/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        function endloader() {
+            $("#spinner").removeClass("show");
+        }
+        function ShowModal(html) {
+            $("#modalcontent").html(html)
+            $("#myModal").modal("show")
+        }
+        function CloseModal() {
+
+            $("#myModal").modal("hide")
+        }
+        function startloader() {
+            $("#spinner").addClass("show");
+        }
+
+        function showItemsSetting() {
+            $(".itemssettingcollapse").toggleClass("show")
+            if ($("#setting").hasClass("show") == true) {
+                $("#setting").toggleClass("show")
+            }
+
+        }
+        function showbranchesSetting() {
+            $(".branshsettingcollapse").toggleClass("show")
+            if ($("#setting").hasClass("show") == true) {
+                $("#setting").toggleClass("show")
+            }
+        }
+        function showsalebuySetting() {
+            $(".salebuysettingcollapse").toggleClass("show")
+            if ($("#setting").hasClass("show") == true) {
+                $("#setting").toggleClass("show")
+            }
+        }
+        function showsuppliersSetting() {
+            $(".suppliersettingcollapse").toggleClass("show")
+            if ($("#setting").hasClass("show") == true) {
+                $("#setting").toggleClass("show")
+            }
+
+        }
+        function showstore3mliat() {
+            $(".showstore3mliatcollapse").toggleClass("show")
+            if ($("#amliatbtn").hasClass("show") == true) {
+                $("#amliatbtn").toggleClass("show")
+            }
+
+        }
+
+        function showaccounting3mliat() {
+            $(".showaccounting3mliatcollapse").toggleClass("show")
+            if ($("#amliatbtn").hasClass("show") == true) {
+                $("#amliatbtn").toggleClass("show")
+            }
+
+        }
+        function showItemReports() {
+            $(".itemsreportscollapse").toggleClass("show")
+            if ($("#reports").hasClass("show") == true) {
+                $("#reports").toggleClass("show")
+            }
+
+        }
+        function showDebitsReports() {
+            $(".debitsreportscollapse").toggleClass("show")
+            if ($("#reports").hasClass("show") == true) {
+                $("#reports").toggleClass("show")
+            }
+
+        }
+        function showBranchesReports() {
+            $(".Branchesreportscollapse").toggleClass("show")
+            if ($("#reports").hasClass("show") == true) {
+                $("#reports").toggleClass("show")
+            }
+
+        }
+
+        function ClickLink(url, name) {
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link)
+        }
+        function GetdateString(dd) {
+            try {
+                let date = new Date(dd);
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let hours = date.getHours();
+                let minutes = date.getMinutes();
+
+                return year + "/" + month + "/" + day + "  " + hours + ":" + minutes;
+            } catch {
+                return dd;
+            }
+        }
+        function LayoutV2Print() {
+
+            let httt = $("#printer").html();
+            let object = {
+                Value: String(httt)
+            }
+            let x = JSON.stringify(object)
+
+            window.location.href = "/Home/Print?obj=" + x.replace('"', '*')
+        }
+        function LayoutPrint() {
+            $(".ignore-in-report").css("display", "none")
+            $("td:has(.ignore-in-report-span)").css("display", "none")
+            $("#Table_length").addClass("d-none")
+            $("#Table_paginate").addClass("d-none")
+            $("#Table_filter").addClass("d-none")
+            $("#Table_info").addClass("d-none")
+            $("#table_length").addClass("d-none")
+            $("#table_paginate").addClass("d-none")
+            $("#table_filter").addClass("d-none")
+            $("#table_info").addClass("d-none")
+            var restorepage = $('body').html();
+            var printcontent = $('#printer').clone();
+            $('body').empty().html(printcontent);
+            window.print();
+            location.reload()
+            $('body').html(restorepage);
+            $("#Table_length").removeClass("d-none")
+            $("#Table_paginate").removeClass("d-none")
+            $("#Table_filter").removeClass("d-none")
+            $("#Table_info").removeClass("d-none")
+            $("#table_length").removeClass("d-none")
+            $("#table_paginate").removeClass("d-none")
+            $("#table_filter").removeClass("d-none")
+            $("#table_info").removeClass("d-none")
+        }
+        function LayoutExcel(url, name) {
+            startloader()
+            $.ajax({
+                url: url,
+                type: "post",
+                success: function (res) {
+                    ClickLink(res.url, name + " " + GetdateString(new Date()))
+                    endloader();
+                }
+            })
+        }
+
+        function SearchInTable(inputId, tableId) {
+            // Declare variables
+
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById(inputId);
+            filter = input.value.toUpperCase();
+            table = document.getElementById(tableId);
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+
+
+                let tds = tr[i].getElementsByTagName("td");
+                for (let x = 0; x < tds.length; x++) {
+                    td = tds[x];
+
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+
+        function Search(inputId, divclass) {
+            // Declare variables
+            debugger
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById(inputId);
+            filter = input.value.toUpperCase();
+
+            tr = document.getElementsByClassName(divclass);
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                let ele = tr[i]
+                txtValue = ele.textContent || ele.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    ele.style.display = "";
+
+                } else {
+                    ele.style.display = "none";
+                }
+
+
+            }
+        }
+        function clickabletr(spanclass) {
+            let spans = document.getElementsByClassName(`${spanclass}`)
+            $.each(spans, (i, e) => {
+                let spanbilno = $(e).attr(`data`)
+                $(e).parent().parent().attr('onclick', `viewBill(${spanbilno})`)
+            })
+        }
+        function viewBill(number) {
+
+            if (number <= 0)
+                return
+            let isvalid = 0;
+            try {
+                isvalid = parseInt(number)
+
+            } catch {
+                return
+            }
+
+            $.ajax({
+                url: "/CHIJpbnRlcg/Encrypt",
+                type: "post",
+                data: {
+                    key: String(number)
+                }, success: (res) => {
+
+
+
+                    let a = document.createElement('a')
+                    a.target = "_blank"
+                    a.href = `/chijpbnrlcg/T1UHSfl6oRmBLZg7E44aAg?QmlsbE5v=${res}`
+
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a)
+
+                }
+
+            })
+        }
+    </script>
+    <!-- Template Javascript -->
+    <script src="~/Content/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+    <style>
+        .content {
+            overflow: auto;
+        }
+    </style>
+    @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+    {
+        <style>
+            @@media (min-width: 992px) {
+                .sidebar {
+                    margin-right: 0 !important;
+                    width: 250px;
+                }
+
+                    .sidebar .open {
+                        margin-right: -250px !important;
+                    }
+
+                .content {
+                    width: calc(100% - 250px);
+                }
+
+                    .content.open {
+                        width: 100%;
+                        margin-right: 0 !important;
+                    }
+            }
+
+            @@media (max-width: 991.98px) {
+                .sidebar {
+                    margin-right: 0 !important;
+                    width: 250px;
+                }
+
+                    .sidebar .open {
+                        margin-right: -250px !important;
+                    }
+
+                .content {
+                    width: calc(100% - 250px);
+                }
+
+                    .content.open {
+                        width: 100%;
+                        margin-right: 0 !important;
+                    }
+            }
+
+            body {
+                direction: rtl;
+            }
+
+            * {
+                text-align: right !important;
+            }
+
+            .sidebar {
+                right: 0 !important;
+                left: unset;
+            }
+
+            .content {
+                margin-left: 0 !important;
+                margin-right: 250px !important;
+            }
+
+            .nav-link i {
+                margin-left: 10px !important;
+            }
+
+            .sidebar.open {
+                margin-right: -250px !important;
+            }
+
+            .content.open {
+                width: 100%;
+                margin-right: 0 !important;
+            }
+        </style>
+    }
+
+
+</body>
+</html>

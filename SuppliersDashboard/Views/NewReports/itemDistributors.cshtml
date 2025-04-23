@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "Items Distributors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using SuppliersDashboard.Resources
+
+@Html.Partial("_reportHeader")
+
+
+
+<div class="text-center">
+
+    <input class="form-control" id="sreachPillsTable" list="representList" placeholder=" بحث......." style="width:50%;margin:auto" onkeyup="SearchInTable('sreachPillsTable','table')" />
+
+</div>
+<div id="printer">
+    <style>
+        td, th {
+            text-align: center !important;
+            border: 1.5px solid #000 !important;
+        }
+
+        th {
+            color: #000 !important;
+            font-weight: bold !important;
+            background-color: #ccc !important
+        }
+
+        table {
+            border-collapse: collapse !important;
+            width: 100% !important
+        }
+
+        #table_filter {
+            display: none
+        }
+    </style>
+
+
+
+    <h2 class="text-center p-3 text-primary" id="messageheader">
+    </h2>
+
+    <div class="card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <div id="tablediv" class="collapse p-3">
+
+
+                    <table class="table table-bordered  table-striped" id="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th> @llayout.ProductName</th>
+
+                                <th>@llayout.ProductCode</th>
+                                <th>@pages.untiy</th>
+                                <th> @pages.quantity</th>
+                                <th>  @pages.pricepr </th>
+                                <th>  @pages.totalprice </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody">
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center p-3 text-muted collapse" id="notdatafound">
+        لا يوجد معلومات حتي الان
+    </h2>
+    <h2 class="text-center p-3 text-muted collapse" id="choosedistributorh2">
+        اختر المندوب
+    </h2>
+
+</div>
+
+
+<div class="row d-flex justify-content-around">
+
+    <div class="col-lg-4 text-center p-3">
+        <button class="btn btn-primary col-12 btn-lg" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+    </div>
+    <div class="col-lg-4 text-center p-3">
+
+        <button class="btn btn-primary col-12 btn-lg " onclick="excel()" id="excelbtn">@llayout.Execl </button>
+
+    </div>
+
+</div>
+@*<div class="text-center p-4">
+        <button class="btn btn-outline-danger" onclick="LayoutPrint()"><i class="fa fa-solid fa-print" id="printbtn"></i> @llayout.print</button>
+        <span style="width:20px"> </span>
+        <button class="btn btn-outline-success" onclick="excel()" id="excelbtn">@llayout.Execl </button>
+    </div>*@
+<script>
+    $(document).ready(function () {
+        $("#distributorId").change(() => { loadPage() })
+        $("#DistributorIdInput").change(() => { loadPage() })
+        $("#DateFrom").change(() => { loadPage() })
+        $("#DateTo").change(() => { loadPage() })
+
+
+    })
+
+  
+    let name = ``
+    let header = ``
+    let headerdetail = ``
+    loadPage()
+    function loadPage() {
+
+        let distributorId = $("#distributorId").val();
+
+        $(`#choosedistributorh2`).addClass("collapse")
+
+        let datefrom = $("#DateFrom").val();
+        let dateto = $("#DateTo").val();
+        let url = `/NewReports/ItemsDistributorsJSON?SalesId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+        $.get(url, (res) => {
+
+
+            if (res.length <= 0) {
+
+                $(`#notdatafound`).removeClass("collapse")
+                $(`#tablediv`).addClass("collapse")
+
+            } else {
+                let header = `
+                                   <table class="table table-bordered  table-striped" id="table">
+                                        <thead>
+                                            <tr>
+                                              <tr>
+                                <th>#</th>   <th>اسم المندوب</th>
+                                <th>اسم الصنف</th>
+
+                                <th>الباركود</th>
+                                <th>الوحدة</th>
+                                <th> الكمية</th>
+                                <th>  منوسط السعر </th>
+                                <th>  اجمالي المبيعات </th>
+
+                            </tr>
+                                        </thead>
+                                        <tbody id="tablebody">
+                                        </tbody>
+                                    </table>
+                                    `
+                $("#tablediv").html(header)
+
+                let counter = 1;
+                $("#table").dataTable({
+                    "pageLength": 25,
+                    data: res.Data,
+                    columns: [
+                        { data: null, render: () => { return counter++ } },
+                        { data: "UserName" },
+                        { data: "ItemName" },
+                        { data: "ItemCode" },
+                        { data: "UnitType" },
+                        { data: "Count" },
+                        { data: "Average" },
+                        { data: "Price" }
+
+
+
+                    ]
+
+                });
+                $(`#notdatafound`).addClass("collapse")
+                $(`#tablediv`).removeClass("collapse")
+
+
+            }
+            header = res.Message
+            headerdetail = " في الفترة من " + datefrom + " الي " + dateto
+            $("#messageheader").text(header + " " + headerdetail)
+        })
+
+
+    }
+    function excel() {
+        let distributorId = $("#distributorId").val();
+        let datefrom = $("#DateFrom").val()
+        let dateto = $("#DateTo").val()
+        let url = `/NewReports/Excl?SalesId=${distributorId}&DateFrom=${datefrom}&DateTo=${dateto}`;
+
+        LayoutExcel(url, $("#messageheader").text())
+    }
+</script>

@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "ItemSetting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    table.dataTable thead th, table.dataTable tbody tr:last-child td {
+        border-bottom: 1px solid #009CFF !important;
+    }
+
+    table.dataTable tbody td {
+        border-bottom: unset;
+    }
+
+    td, th {
+        text-align: center;
+    }
+
+    .editorinput {
+        outline: unset;
+        background: unset;
+        border: unset;
+        width: 100%;
+    }
+
+        .editorinput:focus {
+            border-bottom: 1px solid #009CFF;
+        }
+
+    button {
+        margin: 0 10px;
+    }
+</style>
+<div>
+
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+
+            <select id="supplierselect" class="form-control form-select">
+                <option> @SuppliersDashboard.Resources.pages.choosesupplier </option>
+                @foreach (var item in ViewBag.Suppliers)
+                {
+                    <option value="@item.Record_ID"> @item.CompanyName </option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <select id="categoryselect" class="form-control form-select">
+                <option>--</option>
+
+            </select>
+        </div>
+    </div>
+
+
+    <div id="tablemsg" class="text-center text-body collapse">
+        <h2 class="text-muted">
+            .........@SuppliersDashboard.Resources.pages.SelectSupplier  ........
+        </h2>
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="popupAddItemPage()"> @SuppliersDashboard.Resources.pages.Additem</button>
+        </div>
+
+    </div>
+    <div class=" card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse" class="collapse">
+
+
+                <table class="   table table-striped" style="width:100%" id="Table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="">#</th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.pages.Barcode </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.pages.name </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.pages.size </th>
+                            <th scope="col" style="">@SuppliersDashboard.Resources.pages.description </th>
+                            @*<th scope="col" style="">@SuppliersDashboard.Resources.pages.supplier </th>*@
+                            @*<th scope="col" style="">@SuppliersDashboard.Resources.pages.sellprice </th>
+        <th scope="col" style="">@SuppliersDashboard.Resources.pages.supplierprice  </th>*@
+                            @*<th scope="col" style="">@SuppliersDashboard.Resources.pages.status  </th>*@
+                            <th scope="col" style='text-align:Center' style=""> @SuppliersDashboard.Resources.pages.active </th>
+                            <th scope="col" style='text-align:Center' style=""> @SuppliersDashboard.Resources.pages.action </th>
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+@section scripts{
+    <script>
+
+        function popupAddItemPage() {
+            $.ajax({
+                type: "get",
+                url: "/Items/GetAddItemPartialView",
+                success: (res) => {
+                    $("#modalcontent").html(res)
+                    $("#myModal").modal("show")
+                }
+            })
+        }
+
+        function LoadData(isfromsupselect = false) {
+            startloader();
+            let sup = $("#supplierselect").val();
+            let category = $("#categoryselect").val();
+            if (validateSupplier(sup) == false) {
+                sup = -1;
+            }
+
+            if (validatecategory(category) == false) {
+                category = -1;
+            }
+            if (isfromsupselect)
+                category = -1;
+            $.ajax({
+                type: "post",
+                url: "/Items/GetAllItemsFromTable",
+                data: {
+                    SupId: sup,
+                    CatId: category
+                },
+                success: (res) => {
+                   // console.log(res.data)
+                    drawTable(res.data.Data)
+                    $("#tablecollapse").collapse("show")
+                    $("#tablemsg").collapse("hide")
+                    endloader();
+                }
+            })
+        }
+
+        function drawTable(data) {
+            $("#Table").dataTable({
+                'iDisplayLength': 25,
+                "bDestroy": true,
+                "bSearchable": true,
+                "responsive": true,
+                "language": {
+                    "searchPlaceholder": 'Search...',
+                    "sSearch": '',
+                    "lengthMenu": '_MENU_ items/page',
+                },
+                data: data,
+                "columns": [
+                    { "data": "Record_ID", "name": "Record_ID", "width": "Auto" },
+                    //{ "data": "ItemName", "name": "ItemName", "width": "Auto" },
+                    {
+                        "data": null, render: (data, i, e) => {
+                            return "<input  onchange='inputchange(" + data.Record_ID + ")' type='text' style=' text-align:center;'  class='editorinput' id='" + getInputId('barcode', data.Record_ID) + "' value='" + data.Barcode + "'  />"
+                        }
+                    },
+                    {
+                        "data": null, render: (data, i, e) => {
+                            return "<input  onchange='inputchange(" + data.Record_ID + ")' type='text' style='width: auto; text-align:center;'  class='editorinput' id='" + getInputId('nameinput', data.Record_ID) + "' value='" + data.ItemName + "'  />"
+                        }
+                    },
+                    {
+                        "data": null, render: (data, i, e) => {
+                            return "<input  onchange='inputchange(" + data.Record_ID + ")' type='text'  style='text-align:center;'  class='editorinput' id='" + getInputId('size', data.Record_ID) + "' value='" + data.size + "'  />"
+                        }
+                    },
+
+
+                    //{ "data": "Description", "name": "Description", "width": "Auto" },
+                    {
+                        "data": null, render: (data, i, e) => {
+                            return "<input onchange='inputchange(" + data.Record_ID + ")' type='text' style='width: auto; text-align:center;' class='editorinput' id='" + getInputId('descripinput', data.Record_ID) + "' value='" + data.Description + "'  />"
+                        }
+                    },
+                    {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+                            return ' <div class="justify-content-center">  <div class="col-lg-6 text-center">' + getbutton(data.Record_ID, data.Status) + '</div></div>'
+                        }
+                    },
+                    {
+                        "width": "Auto",
+                        data: null, render: function (data, type, row) {
+                            return ' <div class="justify-content-center"><div class="col-lg-6 text-center ">' +  getEditButton(data.Record_ID)+'</div>'+'</div>'
+                        }
+                    }
+
+
+                ]
+        })
+        }
+
+        function validateSupplier(value) {
+            if (value != null && value != "" && value.trim() != "اختر المورد" && value.trim() != "choose supplier")
+                return true
+            return false
+        }
+        function validatecategory(value) {
+            if (value != null && value != "" && value.trim() != "اختر الفئة" && value.trim() != "choose category" && value.trim() != "--")
+                return true
+            return false
+        }
+      $("#supplierselect").change(() => {
+            let value = $("#supplierselect").val();
+            if (validateSupplier(value)) {
+
+                changeCategoriesselect(value)
+                LoadData(true);
+
+            }
+        });
+        $("#categoryselect").change(() => {
+            let value = $("#supplierselect").val();
+                LoadData();
+
+        });
+        function SubmitAddNewItem() {
+
+
+
+        }
+
+        function changeCategoriesselect(value) {
+            $.ajax({
+                type: "post",
+                url: "/Items/GetCategories",
+                data: {
+                    SupId: value
+                }, success: (res) => {
+
+                    let html = "<option>@SuppliersDashboard.Resources.pages.choosecategory </option>"
+                    $.each(res.data.Data, (i, e) => {
+                        html += "<option value='" + e.Id + "'>" + e.Value + "</option>"
+
+                    })
+
+                    $("#categoryselect").html(html)
+                }
+            });
+
+        }
+
+
+
+        function getbutton(id,status) {// itemId , Status
+
+            if (status == 1) {
+                return "<button data='" + id + "' class='btn btn-primary  btn-lg' onclick='ActiveORDeactiveb(" + id + ",0,this)'>@SuppliersDashboard.Resources.pages.active </button>"
+
+            }
+            if (status == 0) {
+                return "<button data='" + id + "' class='btn btn-primary  btn-lg' onclick='ActiveORDeactiveb(" + id + ",1,this)'>@SuppliersDashboard.Resources.pages.notactive </button>"
+
+            }
+            return "";
+        }
+
+        function getInputId(name, id) {// itemid , item distributor group
+            return name+"-"+id
+        }
+
+        function getEditButton(id, dis) {
+            return "<button style='' id='" + getInputId('submitchangepricebtn', id) + "' onclick='submitEditItem(" + id +",this)' class='btn btn-primary  btn-lg'> @SuppliersDashboard.Resources.pages.edit   </button>"
+        }
+
+        function inputchange(id) {
+
+            $("#" + getInputId("submitchangepricebtn", id)).css("display", "inline")
+
+        }
+
+        function submitEditItem(id , element ) {
+            let description = $("#" + getInputId("descripinput", id)).val();
+            let name = $("#" + getInputId("nameinput", id)).val();
+            let barcode = $("#" + getInputId("barcode", id)).val();
+            let size = $("#" + getInputId("size", id)).val();
+
+            $.ajax({
+                type: "post",
+                url: "/Items/SubmitEditItem",
+                data: {
+                    id:id,
+                    description: description,
+                    name: name,
+                    barcode: barcode,
+                    size: size
+                }, success: (res) => {
+                    $("#modalcontent").text(res.data.Message)
+                    $("#myModal").modal("show")
+
+                    $(element).css("display", "none")
+
+                }
+            })
+        }
+
+        function ActiveORDeactiveb(id, type, element) {
+
+            $.ajax({
+                type: "post",
+                url: "/Items/SubmitEditItemStatus",
+                data: {
+                    id: id,
+                    Status: type
+
+                },
+                success: (res) => {
+
+                    $("#modalcontent").text(res.data.Message)
+                    $("#myModal").modal("show")
+
+                    let ele = $(element);
+                    let html = getbutton(id, type);
+                    ele.parent().html(html)
+                }
+            })
+
+        }
+
+    </script>
+}

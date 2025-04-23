@@ -1,0 +1,275 @@
+﻿@using SuppliersDashboard.Models
+@model List<Special_Price_VV>
+
+@{
+    ViewBag.Title = "Specialprice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
+}
+
+<div class="p-5">
+    <div class="row">
+        <div class="alert-danger col-12 text-center collapse " id="dangeralert">
+            danger msg
+        </div>
+        <div class="col-lg-5 p-2">
+            <label>
+                @SuppliersDashboard.Resources.pages.selectCompany
+            </label>
+            <select class="form-control form-select" id="companyselect" onchange="companychangedfunction(this.value)">
+                <option value="0"> @SuppliersDashboard.Resources.pages.selectCompany  </option>
+                @if (ViewBag.Companies != null)
+                {
+
+                    foreach (var item in ViewBag.Companies)
+                    {
+                        <option value="@item.Id">@item.Value </option>
+                    }
+                }
+            </select>
+
+        </div>
+        <div class="col-lg-2">
+            <label>
+                كل الفروع 
+            </label>
+            <input type="checkbox" id="AllBranchesCheckBox" />
+        </div>
+        <div class="col-lg-5 p-2">
+            <label>  @SuppliersDashboard.Resources.pages.selectBranch </label>
+            <select class="form-control form-select" id="branchselect">
+                <option value="0">
+                    @SuppliersDashboard.Resources.pages.selectBranch
+                </option>
+            </select>
+        </div>
+        <div class=" col-lg-5 p-2">
+            <label id="itemlabel">  @SuppliersDashboard.Resources.pages.Selectitem </label>
+
+            <select class="form-control" id="itemsselect" >
+
+            </select>
+            @*<input list="itemsselectoption" onchange='changelabel(this)' name="itemsselectoption" class="form-control" placeholder="@SuppliersDashboard.Resources.pages.Selectitem" id="itemsselect">
+            <datalist id="itemsselectoption">
+            </datalist>*@
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+            <label>
+                @SuppliersDashboard.Resources.pages.specialprice
+            </label>
+            <input class="form-control" type="number" id="specialprice" placeholder="  @SuppliersDashboard.Resources.pages.specialprice " />
+        </div>
+
+        @*<div class="col-lg-2"></div>*@
+        <div class="col-lg-5">
+            <label>
+               من
+            </label>
+            <input class="form-control" type="date" id="fromDate" placeholder="  " />
+        </div> 
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+            <label>
+              الي
+            </label>
+            <input class="form-control" type="date" id="toDate" placeholder="  " />
+        </div>
+
+
+        <div class="row d-flex justify-content-around">
+
+            <div class="col-lg-4 text-center p-3">
+                <button class="btn btn-primary col-12 btn-lg" onclick="SubmitAddSpecialPrice()"> @SuppliersDashboard.Resources.pages.add  </button>
+            </div>
+        </div>
+    </div>
+    <div> 
+        
+        
+        <h3 class="text-center text-info p-3" >
+                    المجلات
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="magalattable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الصنف</th>
+                        <th>الفرع</th>
+                        <th>المبلغ</th>
+                        <th>من</th>
+                        <th>الي</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var special in Model)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>@special.ItemName</td>
+                                <td>@special.BranchName</td>
+                                <td>@special.Amount</td>
+                                <td>@special.FromDate</td>
+                                <td>@special.ToDate</td>
+                                <td>
+                                    <button class="btn btn-danger"
+                                            onclick="sure('هل انت متاكد من الالغاء ؟ ' , 'الفاء' , 'cancelSpecialPrice(@special.Id)')">
+                                        الغاء
+                                    </button>
+
+                                </td>
+                        </tr>
+                    }
+                    }
+                   
+                    
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    $(document).ready(function () {
+
+      
+            $("#magalattable").dataTable({
+
+                "pageLength": 25
+            })
+       
+      
+    })
+
+    let Allitems = []
+
+    function changelabel(ele) {
+        // let e =
+        let value = Allitems.find(e => e.Record_ID == $(ele).val()).ItemName;
+        $("#itemlabel").text(value)
+    }
+
+    function cancelSpecialPrice(Id) {
+        console.log(Id)
+        let url = `/Items/CancelSpecialPrice?Id=${Id}`
+        $.post(url, (res) => {
+            let html = `<h2 class='text-center tex-info p-4'> ${res.data}</h2>`
+            ShowModal(html)
+            setTimeout(() => { location.reload() }, 3000)
+        })
+    }
+
+    function SubmitAddSpecialPrice() {
+
+        let branch = $("#branchselect").val()
+        let item = $("#itemsselect").val()
+        let price = $("#specialprice").val()
+        debugger
+        let fromDate = $("#fromDate").val()
+        let toDate = $("#toDate").val()
+
+        if ((branch <= 0 && $('#AllBranchesCheckBox').is(':checked') ==false ) || item <= 0 || price <= 0 || fromDate == "" || toDate =="") {
+            $("#dangeralert").text("ادخل بيانات صحيحة ").collapse("show")
+            setTimeout(function () { $("#dangeralert").collapse("hide") }, 3000)
+
+        } else {
+
+            $.ajax({
+                url: "/Items/SetSpecialPrice",
+                type: "post",
+                data: {
+                    Item_Selling_Price: price,
+                    Cus_id: branch,
+                    Item_ID: item,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    comid: $("#companyselect").val() ,
+                    isAll : $('#AllBranchesCheckBox').is(':checked')
+
+                }, success: (res) => {
+                    ShowModal(`<h2 class='text-center p-5'>${res.data.Message}</h2>`)
+                }
+            })
+        }
+
+    }
+    drawitems()
+
+    function companychangedfunction(comid) {
+       
+
+   
+        $.ajax({
+            url: "/Screens/GetBranches",
+            type: "post",
+            data: {
+                ComID: comid
+            },
+            success: (res) => {
+
+                branches = res.data;
+                let html = "<option  value='0'>اختر الفرع</option>"
+                $.each(branches, (i, e) => {
+                    html += `<option value='${e.Branch_ID}'>${e.branchName}</option>`
+                })
+                $("#branchselect").html(html)
+            }
+        })
+    }
+    //$("#companyselect").change(() => {
+
+    //    let comid = $("#companyselect").val()
+
+    //    console.log(comid)
+    //    $.ajax({
+    //        url: "/Screens/GetBranches",
+    //        type: "post",
+    //        data: {
+    //            ComID: comid
+    //        },
+    //        success: (res) => {
+
+    //            branches = res.data;
+    //            let html = "<option  value='0'>اختر الفرع</option>"
+    //            $.each(branches, (i, e) => {
+    //                html += `<option value='${e.Branch_ID}'>${e.branchName}</option>`
+    //            })
+    //            $("#branchselect").html(html)
+    //        }
+    //    })
+
+    //})
+
+    function drawitems() {
+        //let itemss = [];
+
+        $.ajax({
+            url: "/Items/GetAllItemsFromTable",
+            type: "post",
+            data: {},
+            success: (res) => {
+
+                let html = "";
+
+
+                Allitems = res.data.Data
+                $.each(res.data.Data, (i, e) => {
+                    html += `<option value='${e.Record_ID}'>${e.ItemName} </option>`;
+
+                })
+                $("#itemsselect").html(html)
+            }
+        })
+
+
+
+    }
+
+
+</script>

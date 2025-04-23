@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "AddOpeningBalance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-4">
+    <h2 class="text-center ">اضافة رصيد افتتاحي </h2>
+    <div class="row">
+        <span id="comname"></span>
+        <div class="col-lg-6 p-3">
+            <input class="form-control" id="comid" list="companylist" name="companylist" placeholder="اختر الشركة " />
+            <datalist id="companylist">
+
+            @if (ViewBag.Companies != null)
+            {
+
+                foreach (var item in ViewBag.Companies)
+                {
+                    <option value="@item.Id">@item.Value </option>
+                }
+            }
+            </datalist>
+        </div>
+        <div class="col-lg-6 p-3">
+           <select id="branchid" class="form-control form-select">
+
+           </select>
+        </div>
+        <div class="col-lg-6 p-3">
+            ادخل الرصيد الافتتاحي 
+           <input type="number" class="form-control" placeholder="ادخل الرصيد " id="balance" value="0" onclick="this.select()"/> 
+        </div>
+        <div class="col-lg-6 p-3">
+            <div class="row d-flex justify-content-around">
+
+                <div class="col-lg-12 text-center p-3">
+                    <button class="btn btn-primary col-12 " onclick="Addbalance()" class="btn btn-primary"> اضافة  </button>
+                </div>
+                
+            </div>
+        </div>
+    @*<div class="text-center ">
+        <button onclick="Addbalance()" class="btn btn-primary">
+            اضافة 
+        </button>
+
+    </div>*@
+</div>
+
+
+<script>
+
+    function Addbalance() {
+        let branchname = $("#branchid option[value='" + $("#branchid").val() + "']").text()
+       let bal = $("#balance").val()
+        let html = `
+        <h2 class=' p-3 text-center'>  
+        هل انت متاكد من اضافة 
+        ${bal}
+        للفرع
+        ${branchname}
+        كرصيد سابق 
+        
+        </h2>
+         <div class="text-center ">
+        <button onclick="SubmitAddbalance()" class="btn btn-primary">
+            اضافة 
+        </button>
+
+    </div>
+        `
+        ShowModal(html)
+    }
+    $("#comid").change(() => {
+        $("#comname").text($("#companylist option[value='" + $("#comid").val() + "']").text())
+        $.ajax({
+            url: "/Screens/GetBranches",
+            type: "post",
+            data: {
+                ComID: $("#comid").val()
+            },
+            success: (res) => {
+                branches = res.data;
+                let html = ""
+                $.each(branches, (i, e) => {
+                    html += `<option value='${e.Branch_ID}'>${e.branchName}</option>`
+                })
+                $("#branchid").html(html)
+            }
+        })
+
+    }
+    )
+
+    function formempty() {
+        $("#balance").val("0")
+        $("#comid").val("")
+        $("#branchid").val("")
+    }
+    function SubmitAddbalance() {
+        let branch = $("#branchid").val();
+        let balance = $("#balance").val();
+        let html = "";
+        if (branch <= 0) {
+            html = `<h2 class='text-center p-3'>اختر الفرع اولا <h2>`
+        } else {
+            let model = { Amount: balance, Cus_id : branch}
+            $.ajax({
+                url: "/Branch/AddOpeningBalanceJson", 
+                type: "post", 
+                data: {
+                    model: model
+                }, success: (res) => {
+                    ShowModal(
+                        `
+                        <h2 class='text-center p-3'> ${res.data.Message}  </h2>
+                        `
+                    )
+                    if (res.data.State == 1) {
+                        formempty()
+                    }
+
+                }
+
+            })
+
+        }
+
+    }
+</script>
