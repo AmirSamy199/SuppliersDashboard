@@ -1,29 +1,20 @@
-﻿<!--
-=========================================================
-* Soft UI Dashboard - v1.0.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-
-* Coded by Creative Tim
-
-=========================================================
-<link href="~/NewDesgin/assets/css/nucleo-icons.css" rel="stylesheet" />
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
+﻿@using SuppliersDashboard.Resources
+@{
+    bool IsSignIn = true;
+    var User = SuppliersDashboard.Helper.Cokie.UserGet();
+    if (User.Id == 0) { User = new SuppliersDashboard.Models.User { UserName = "UserName" }; IsSignIn = true; }
+    var funcs = SuppliersDashboard.Helper.Cokie.UserFunctionsGet();
+}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="~/NewDesgin/assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="~/NewDesgin/assets/img/favicon.png">
-    <title>
-        Soft UI Dashboard by Creative Tim
-    </title>
+    <link href="~/NewDesgin/assets/img/UNO.png" rel="icon">
+        @*<link rel="icon" type="image/png" href="~/NewDesgin/assets/img/favicon.png">*@
+    <title>الدوار لمنتجات الالبان  </title>
+
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
@@ -113,9 +104,9 @@
            style="width: 300px;">
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href="/CustomeDesgin/Index" target="_blank">
-                <img src="~/NewDesgin/assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Soft UI Dashboard</span>
+            <a class="navbar-brand m-0" href="#" target="_blank">
+                <img src="~/NewDesgin/assets/img/UNO.png" class="navbar-brand-img h-100" alt="main_logo">
+                <span class="ms-1 font-weight-bold">@pages.dawarmalik</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -124,15 +115,533 @@
 
                 <!-- Dashboard -->
                 @*<li class="nav-item">
-                    <a class="nav-link active" href="../pages/dashboard.html">
-                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-primary"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
-                </li>*@
+            <a class="nav-link active" href="../pages/dashboard.html">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="ni ni-single-02 text-primary"></i>
+                </div>
+                <span class="nav-link-text ms-1">Dashboard</span>
+            </a>
+        </li>*@
 
-                <!-- Tables with Submenu -->
+                @* Operation  *@
+                @if (1 > 2
+|| funcs.Contains("صفحة ادارة المناديب") || funcs.Contains("صفحة البيع لقناة بيعية")
+|| funcs.Contains("صفحة تسليم المخزن") || funcs.Contains("صفحة تسليم بضاعة للمناديب")
+|| funcs.Contains("صفحة المردودات") || funcs.Contains("w-store")
+|| funcs.Contains("صفحة جرد المخزن") || funcs.Contains("صفحة جرد المخازن")
+|| funcs.Contains("تقربر جرد المخزن الفرعي") || funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن")
+|| funcs.Contains("صفحة تسوية المرتجعات") || funcs.Contains("صفحة اغلاق وتسليم الخزنة")
+|| funcs.Contains("صفحة البيع") || funcs.Contains("AddSale")
+|| funcs.Contains("صفحة التحصيل") || funcs.Contains("صفحة المشتريات")
+|| funcs.Contains("صفحة المصروفات") || funcs.Contains("صفحة تعديل الشيكات")
+|| funcs.Contains("صفحة تصفية حساب اليوم") || funcs.Contains("قبول طلبات الفروع")
+|| funcs.Contains("صفحات ال GPS") || funcs.Contains("صفحات ال KPIS")
+)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu" role="button" aria-expanded="false" aria-controls="billingSubmenu">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ni ni-credit-card text-white"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">@llayout.operations</span>
+                            </div>
+                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                        </a>
+                        <div class="collapse" id="billingSubmenu">
+                            <ul class="nav ms-4 flex-column">
+                                @if (funcs.Contains("صفحة ادارة المناديب"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/Distributor/GroupUsers">-  @llayout.Delegatemanagement </a></li>
+
+                                }
+                                @if (funcs.Contains("صفحة البيع لقناة بيعية"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/AsSalesman">-  @llayout.assalesman</a></li>
+
+                                }
+
+                                @if (1 > 2
+                                    || funcs.Contains("صفحة تسليم المخزن") || funcs.Contains("صفحة تسليم بضاعة للمناديب")
+                                    || funcs.Contains("صفحة المردودات") || funcs.Contains("w-store")
+                                    || funcs.Contains("صفحة جرد المخزن") || funcs.Contains("صفحة جرد المخازن")
+                                    || funcs.Contains("تقربر جرد المخزن الفرعي") || funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن")
+                                    || funcs.Contains("صفحة تسوية المرتجعات")
+
+                                    )
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.wareHouse</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة تسليم المخزن"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/DeliverStore">- @llayout.shift</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة تسليم بضاعة للمناديب"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingWareHouseRequests">- @llayout.Give_Products_To_Representative </a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة المردودات"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" ref="/WareHousing/PendingMardodatWareHouseRequests">- @llayout.Receive_Products_To_Representative </a></li>
+
+                                                }
+                                                @if (funcs.Contains("w-store"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingMotg3atWareHouseRequests">- استلام مرتجعات</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة جرد المخزن"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/StoreGard">- @llayout.Inventory_of_accounts</a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة جرد المخازن"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/AnyWarehouseBalance">- ارصدة المخاز</a></li>
+
+                                                }
+                                                @if (funcs.Contains("تقربر جرد المخزن الفرعي"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/NewReports/Subwarehouseguard">- @llayout.sub </a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/TranfereItemsBetweenTwoWareHouses">- @llayout.TranfereItemsBetweenTwoWareHouses</a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/Addwarehouserequest">- @llayout.Addwarehouserequest</a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة تسوية المرتجعات"))
+                                                {
+
+
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/SettleReturns"> - @llayout.SettleReturns</a></li>
+
+                                                }
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+                                @if (funcs.Contains("صفحة اغلاق وتسليم الخزنة"))
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub2" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.the_safe</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub2">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة اغلاق وتسليم الخزنة"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Accounting/CloseAcconterDay">- @llayout.shift</a></li>
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                }
+
+                                @if (1 > 2
+                                || funcs.Contains("صفحة البيع") || funcs.Contains("AddSale")
+                                || funcs.Contains("صفحة التحصيل") || funcs.Contains("صفحة المشتريات")
+                                || funcs.Contains("صفحة المصروفات") || funcs.Contains("صفحة تعديل الشيكات")
+                                || funcs.Contains("صفحة تصفية حساب اليوم"))
+                                {
+
+
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub3" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @pages.Accounts</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub3">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة البيع"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/Sale">- @llayout.sale</a></li>
+
+                                                }
+                                                @if (funcs.Contains("AddSale"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/SalesOFclient1/addsale">- @llayout.SalesOfClient</a></li>
+
+                                                }
+                                                @if (funcs.Contains("صفحة التحصيل"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/Collection">- @llayout.Collection</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة المشتريات"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/Buy">- @llayout.Purchases</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة المصروفات"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/Masrofat">- @llayout.Expenses</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة تعديل الشيكات"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/EditChecks">- @llayout.Checks</a></li>
+
+                                                }
+
+                                                @if (funcs.Contains("صفحة تصفية حساب اليوم"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/SettleAccount">- @llayout.clear</a></li>
+
+                                                }
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                @if (funcs.Contains("قبول طلبات الفروع"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/Admin/OnlineShopRequests">- قبول طلبات الفروع</a></li>
+                                }
+
+                            </ul>
+                        </div>
+                    </li>
+                }
+                @*Reports*@
+
+                @if (1 > 2 ||
+                    funcs.Contains("مشروع العمولة") || funcs.Contains("تقارير المندوب") || funcs.Contains("تقارير القنوات")
+                    || funcs.Contains("تقارير الشركات") || funcs.Contains("تقارير الامناء والمحاسبين") || funcs.Contains("صفحة جرد المخزن")
+                    || funcs.Contains("صفحة تقرير المديونيات") || funcs.Contains("صفحة تقرير المتاخرات") || funcs.Contains("تقرير اجماليات الفواتير")
+                    || funcs.Contains("تقرير المصاريف") || funcs.Contains("تقرير اوراق الدفع") || funcs.Contains("تقرير العجوزات")
+                    || funcs.Contains("صفحة تقرير كشف حركة صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات صنف")
+                    || funcs.Contains("صفحة تقرير مجموع مبيعات صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة")
+                    || funcs.Contains("صفحة تقرير بيانات العملاء") || funcs.Contains("صفحة العملاء") || funcs.Contains("صفحة تقرير مبيعات المندوبين"))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu2" role="button" aria-expanded="false" aria-controls="billingSubmenu">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ni ni-credit-card text-white"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">@llayout.reports</span>
+                            </div>
+                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                        </a>
+                        <div class="collapse" id="billingSubmenu2">
+                            <ul class="nav ms-4 flex-column">
+                                @if (funcs.Contains("مشروع العمولة"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/CP/SalesCPReport">- @llayout.Commission_project</a></li>
+
+                                }
+                                @if (funcs.Contains("تقارير المندوب"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/FastReport/Index">- @llayout.DelegateReports </a></li>
+
+                                }
+                                @if (funcs.Contains("تقارير القنوات"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/FastReport/Agent">- @llayout.SalesChannelReports</a></li>
+
+                                }
+                                @if (funcs.Contains("تقارير الشركات"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/FastReport/Company">- @llayout.CorporateReports</a></li>
+
+                                }
+                                @if (funcs.Contains("تقارير الشركات"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/FastReport/Branch">- @llayout.BranchReports</a></li>
+
+                                }
+                                @if (funcs.Contains("تقارير الامناء والمحاسبين"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/FastReport/Safe">- @llayout.keepers_and_Accounters_Reports</a></li>
+
+                                }
+                                @if (funcs.Contains("تقارير الاصناف"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/FastReport/Items">- تقارير الاصناف </a></li>
+
+                                }
+                                @if (funcs.Contains("صفحة جرد المخزن"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/StoreGard">- @llayout.Ware_House_Review</a></li>
+
+                                }
+                                @if (funcs.Contains("صفحة تقرير المديونيات"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/Distributor/CustomerDeffers">- @llayout.Indebtedness</a></li>
+
+                                }
+                                @if (funcs.Contains("صفحة تقرير المتاخرات"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/NewReports/BillLatersReport">- @llayout.Invoicearrears</a></li>
+
+                                }
+                                @if (funcs.Contains("تقرير اجماليات الفواتير"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/NewReports/TotalPillsReports">- @llayout.Invoice_totals</a></li>
+
+                                }
+                                @if (funcs.Contains("تقرير المصاريف"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/NewReports/ExpensesReports">- @llayout.Expenses</a></li>
+
+                                }
+                                @if (funcs.Contains("تقرير اوراق الدفع"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/NewReports/MoneyPaper">- @llayout.Paymentpapers</a></li>
+
+                                }
+
+                                @if (funcs.Contains("تقرير العجوزات"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.inability</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub">
+                                            <ul class="nav ms-4 flex-column">
+                                                <li class="nav-item"><a class="nav-link" href="/NewReports/ShortFalls">- @llayout.Storeshortage </a></li>
+                                                <li class="nav-item"><a class="nav-link" href="/NewReports/MoneyShortFalls">- @llayout.Moneyshortage</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                }
+                                @if (1 > 2
+|| funcs.Contains("صفحة تقرير كشف حركة صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات صنف")
+|| funcs.Contains("صفحة تقرير مجموع مبيعات صنف") || funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة")
+)
+                                {
+
+                                    <li>
+                                        <a href="#" class=" sidebar-link" onclick='ShowSecond("ul2222","liitems" , this)'>
+
+                                            <div class="according-menu">  <i class='ri-arrow-right-s-line' id="liitems" style='font-size:20px'></i></div>
+                                        </a>
+                                        <ul style="list-style-type: circle;" class='secondul collapse' id='ul2222'>
+                                            @if (funcs.Contains("صفحة تقرير كشف حركة صنف"))
+                                            {
+                                                <li>     <a href="/Report/ItemCard" class="dropdown-item-Chile debitsreportscollapse "> @llayout.Item_Transaction    </a>                       </li>
+                                            }
+                                            @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                            {
+                                                <li>    <a href="/NewReports/itemDistributors" class="dropdown-item-Chile debitsreportscollapse "> @llayout.s  </a>          </li>
+                                            }
+                                            @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                            {
+                                                <li>    <a href="/NewReports/TotalItemsSales" class="dropdown-item-Chile debitsreportscollapse "> @llayout.e       </a>          </li>
+                                            }
+                                            @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                            {
+                                                <li>    <a href="/NewREports/ItemsReport" class="dropdown-item-Chile debitsreportscollapse "> @llayout.g   </a>          </li>
+                                            }
+                                            @if (funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة"))
+
+                                            {
+                                                <li>    <a href="/NewReports/TotalCategoriesSalesReport" class="dropdown-item-Chile debitsreportscollapse "> @llayout.Group_Total_Sale     </a>          </li>
+                                            }
+
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub4" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.items</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub4">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة تقرير كشف حركة صنف"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Report/ItemCard">- @llayout.Item_Transaction</a></li>
+                                                }
+                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/NewReports/itemDistributors">- @llayout.s</a></li>
+                                                }
+                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/NewReports/TotalItemsSales">- @llayout.e </a></li>
+                                                }
+                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات صنف"))
+
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/NewREports/ItemsReport">- @llayout.g </a></li>
+                                                }
+                                                @if (funcs.Contains("صفحة تقرير مجموع مبيعات مجموعة"))
+
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/NewReports/TotalCategoriesSalesReport">-  @llayout.Group_Total_Sale</a></li>
+                                                }
+
+
+
+                                            </ul>
+                                        </div>
+                                    </li>
+
+
+                                }
+
+                                @if (1 > 2
+                                    || funcs.Contains("صفحة تقرير بيانات العملاء") || funcs.Contains("صفحة العملاء")
+                                    )
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub5" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.Customers</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub5">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("صفحة تقرير بيانات العملاء"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Branch/BranchDetails">-@llayout.Customer_Details</a></li>
+
+                                                }
+
+
+                                                @if (funcs.Contains("صفحة العملاء"))
+
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/Market/Index">- @llayout.Account_statement</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                }
+
+                                @if (funcs.Contains("صفحة تقرير مبيعات المندوبين"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub6" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- @llayout.distributors</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub6">
+                                            <ul class="nav ms-4 flex-column">
+                                                <li class="nav-item"><a class="nav-link" href="/Report/AllDistributorReportsDetails">- @llayout.Distributors_Sales</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+                                @if (funcs.Contains("صفحات ال KPIS"))
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub7" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- KPIS</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub7">
+                                            <ul class="nav ms-4 flex-column">
+                                                <li class="nav-item"><a class="nav-link" href="/KPIS/Distributors">- @llayout.Distributors_Details </a></li>
+                                                <li class="nav-item"><a class="nav-link" href="/KPIS/ItemsKPI">- @llayout.Items_Details</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="/KPIS/BranchesKPI">- @llayout.Customer_Details</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="/KPIS/PriceListKPI">- @llayout.Prices_Details</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="/DashboardSuppliers/Index">- @llayout.dawarSalesMen</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                }
+                                @if (funcs.Contains("صفحات ال GPS"))
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub8" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- GPS</span>
+                                            <i class="fas fa-chevron-down me-2 text-sm"></i>
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub8">
+                                            <ul class="nav ms-4 flex-column">
+                                                <li class="nav-item"><a class="nav-link" href="/Admin/ShowMap">- @llayout.Representativeperformanceanalysis </a></li>
+                                                <li class="nav-item"><a class="nav-link" href="/Admin/ShowBranchesMap">- @llayout.Branches</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+
+
+                            </ul>
+                        </div>
+                    </li>
+                }
+
+                @*Setting*@
+                @if (1 > 2
+|| funcs.Contains("صغحة البنوك") || funcs.Contains("صفحة ادارة وتعديل المستخدمين") || funcs.Contains("اعدادات المخازن")
+|| funcs.Contains("صفحة اضافة او وقف صنف") || funcs.Contains("صفحة تعديل الاسعار الخاصة") || funcs.Contains("اعدادات قوائم الاسعار")
+|| funcs.Contains("صفحة تعديل بيانات عميل") || funcs.Contains("صفحة اضافة عميل") || funcs.Contains("صفحة اضافة رصيد افتتاحي")
+|| funcs.Contains("صفحة اضافة منطقة او حي") || funcs.Contains("صفحة تعديل او ايقاف مورد") || funcs.Contains("صفحة اضافة مورد او مجموعة مندوبين")
+|| funcs.Contains("اعدادات القنوات") || funcs.Contains("اضافة مجموعة مندوبين") || funcs.Contains("قبول الاسعار")
+)
+                {
+                
+                
+                
+                }
+
+
+
+            <!-- Tables with Submenu -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#tablesSubmenu" role="button" aria-expanded="false" aria-controls="tablesSubmenu">
                         <div class="d-flex align-items-center">
@@ -145,8 +654,8 @@
                     </a>
                     <div class="collapse" id="tablesSubmenu">
                         <ul class="nav ms-4 flex-column">
-                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin">- Sub Table 1</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">- Sub Table 2</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin">-   Sub Table 1</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Sub Table 2</a></li>
                         </ul>
                     </div>
                 </li>
@@ -166,17 +675,17 @@
                         <ul class="nav ms-4 flex-column">
                             <li class="nav-item">
                                 <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
-                                    <span>- Payments</span>
+                                    <span>-   Payments</span>
                                     <i class="fas fa-chevron-down me-2 text-sm"></i>
                                 </a>
                                 <div class="collapse" id="nestedBillingSub">
                                     <ul class="nav ms-4 flex-column">
-                                        <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">- Pending</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">- Completed</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Pending</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Completed</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">- Invoices</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/CustomeDesgin/Index">-   Invoices</a></li>
                         </ul>
                     </div>
                 </li>
@@ -304,12 +813,12 @@
             </div>
         </nav>
         <!-- End Navbar -->
-      @RenderBody()
+        @RenderBody()
     </main>
     <div class="fixed-plugin">
         @*<a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-            <i class="fa fa-cog py-2"> </i>
-        </a>*@
+                <i class="fa fa-cog py-2"> </i>
+            </a>*@
         <div class="card shadow-lg ">
             <div class="card-header pb-0 pt-3 ">
                 <div class="float-start">

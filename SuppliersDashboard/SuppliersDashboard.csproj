@@ -1202,6 +1202,7 @@
     <Content Include="NewDesgin\assets\img\team-2.jpg" />
     <Content Include="NewDesgin\assets\img\team-3.jpg" />
     <Content Include="NewDesgin\assets\img\team-4.jpg" />
+    <Content Include="NewDesgin\assets\img\UNO.png" />
     <Content Include="NewDesgin\assets\img\vr-bg.jpg" />
     <Content Include="NewDesgin\assets\js\core\bootstrap.min.js" />
     <Content Include="NewDesgin\assets\js\core\popper.min.js" />
