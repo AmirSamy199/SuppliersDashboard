@@ -157,7 +157,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-chart-pie-35 text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.operations</span>
@@ -372,7 +372,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu2" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-collection text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.reports</span>
@@ -653,7 +653,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu9" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-settings-gear-65 text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.setting</span>
@@ -878,7 +878,7 @@ funcs.Contains("اعدادات القنوات")
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu002" role="button" aria-expanded="false" aria-controls="billingSubmenu002">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-circle-08 text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">HR</span>
@@ -899,7 +899,7 @@ funcs.Contains("اعدادات القنوات")
                     <li class="nav-item">
                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#billingSubmenu001" role="button" aria-expanded="false" aria-controls="billingSubmenu">
                             <div class="d-flex align-items-center">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                     <i class="ni ni-single-copy-04 text-white"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.Invoice</span>
@@ -920,7 +920,7 @@ funcs.Contains("اعدادات القنوات")
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center" href="/Account/LogOut">
                         <div class="d-flex align-items-center">
-                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-gradient-primary text-center @(lang == "ar" ? " ms-2 " : " me-2 ") d-flex align-items-center justify-content-center">
                                 <i class="ni ni-button-power text-white  opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">@SuppliersDashboard.Resources.llayout.logout</span>
@@ -948,7 +948,7 @@ funcs.Contains("اعدادات القنوات")
 
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                    <div class=" @(lang == "ar" ? "me-md-auto ps-md-3" : "ms-md-auto pe-md-3")" d-flex align-items-center">
                         <div class="input-group">
                             <p type="text" class="form-control">@User.UserName</p>
                         </div>
