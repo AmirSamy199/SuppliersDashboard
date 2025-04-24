@@ -1,6 +1,6 @@
 ﻿@using SuppliersDashboard.Resources 
 @{
-    Layout = "~/Views/Shared/_layout.cshtml";
+    Layout = "~/Views/Shared/_layoutV2.cshtml";
     ViewBag.Title = "Home Page" ;
     List<string> Functions = SuppliersDashboard.Helper.Cokie.UserFunctionsGet();
     string x = "" ;
@@ -179,6 +179,7 @@
 
         }
     });
+            debugger
 
     let Functions = [];
     var funcs = document.querySelectorAll(".funcs");
