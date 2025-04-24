@@ -28,6 +28,111 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="~/NewDesgin/assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
     <style>
+        .dataTables_info{
+            display:none !important
+        }
+        /* Change pagination button colors */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            background-color: #6DE1D2;
+            color: white !important;
+            border-radius: 5px;
+            padding: 6px 12px;
+            margin: 2px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover effect */
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #007bff; /* Darker blue */
+            border-color: #007bff;
+        }
+
+        /* Active page button */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #28a745 !important; /* Green for active page */
+            color: white !important;
+            border-color: #218838;
+        }
+
+        /* Disabled button */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+            background-color: #ddd;
+            color: #777 !important;
+            border: none;
+        }
+
+        label select {
+            padding: 6px 12px;
+            margin-right: 8px; /* Space between select and "items/page" text */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        /* Adjust label alignment */
+        label {
+            display: flex;
+            align-items: center; /* Align items horizontally */
+            gap: 8px; /* Add space between select and text */
+        }
+
+        .dataTables_length {
+            margin: 10px;
+            padding: 10px
+        }
+        /* Style for the select dropdown */
+        select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #fff;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        label {
+            margin: 10px;
+            padding-left: 10px
+        }
+        /* Hover and focus effects */
+        select:hover {
+            border-color: #007bff;
+        }
+
+        select:focus {
+            border-color: #0056b3;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Style for select inside the table */
+        table.dataTable tbody td select {
+            width: 100%;
+            padding: 6px;
+        }
+        /* Increase padding in the search input field */
+        .dataTables_filter input {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px; /* Adjust width */
+            margin: 10px;
+            border-radius: 20px
+        }
+
+
+        
+
+        /* Add some space around the entire card */
+
+
+
+     
+   
         #roleDisplay:hover {
             background-color: #f97316 !important;
             color: white;
@@ -972,22 +1077,22 @@ funcs.Contains("اعدادات القنوات")
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 @*<nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
-                        </ol>
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
+                    </ol>
 
-                    </nav>*@
+                </nav>*@
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
                         <div class="container-fluid py-1 px-3">
                             @*<nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
-                                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
-                                    </ol>
+                                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
+                                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
+                                </ol>
 
-                                </nav>*@
+                            </nav>*@
                             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 " id="navbar">
                                 <div class="d-flex align-items-center gap-4 ">
 
@@ -1033,34 +1138,34 @@ funcs.Contains("اعدادات القنوات")
 
                                     <!-- Language toggle -->
                                     @*<div class="d-flex align-items-center">
-                                            @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
-                                            {
-                                                <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
-                                                    <i class="fa fa-user me-1"></i>
-                                                    <span class="d-sm-inline d-none bg-primary text-white rounded px-2">English</span>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
-                                                    <i class="fa fa-user me-1"></i>
-                                                    <span class="d-sm-inline d-none bg-primary text-white rounded px-2">عربي</span>
-                                                </a>
-                                            }
-                                        </div>*@
+                                        @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+                                        {
+                                            <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
+                                                <i class="fa fa-user me-1"></i>
+                                                <span class="d-sm-inline d-none bg-primary text-white rounded px-2">English</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
+                                                <i class="fa fa-user me-1"></i>
+                                                <span class="d-sm-inline d-none bg-primary text-white rounded px-2">عربي</span>
+                                            </a>
+                                        }
+                                    </div>*@
 
                                 </div>
                                 <ul class="navbar-nav  justify-content-end" style="z-index:1000000;">
 
                                     @*<li class="nav-item d-xl-none @(lang == "ar" ? " pe-3 " : " ps-3 ") d-flex align-items-center">
-                                            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                                                <div class="sidenav-toggler-inner">
-                                                    <i class="sidenav-toggler-line"></i>
-                                                    <i class="sidenav-toggler-line"></i>
-                                                    <i class="sidenav-toggler-line"></i>
-                                                </div>
-                                            </a>
-                                        </li>*@
+                                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                                            <div class="sidenav-toggler-inner">
+                                                <i class="sidenav-toggler-line"></i>
+                                                <i class="sidenav-toggler-line"></i>
+                                                <i class="sidenav-toggler-line"></i>
+                                            </div>
+                                        </a>
+                                    </li>*@
                                     <li class="nav-item px-3 d-flex align-items-center">
                                         <a href="javascript:;" class="nav-link text-body p-0">
                                             <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
@@ -1240,54 +1345,65 @@ funcs.Contains("اعدادات القنوات")
 
         <!-- End Navbar -->
 
-        <div class="container-fluid py-4">
-            @RenderBody()
-            <footer class="footer pt-3  ">
-                <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                        <div class="col-lg-6 mb-lg-0 mb-4">
-                            <div class="copyright text-center text-sm text-muted text-lg-start">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script>,
-                                made with <i class="fa fa-heart"></i> by
-                                <a href="" class="font-weight-bold" target="_blank">Enkima Team</a>
-                                for a better web.
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                                <li class="nav-item">
-                                    <a href="" class="nav-link text-muted" target="_blank">Enkima</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="" class="nav-link text-muted" target="_blank">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link text-muted" target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    @*<a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted" target="_blank">En</a>*@
-                                    @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
-                                    {
-                                        <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted">En</a>
+        <div class="main-panel bg-white border-radius-2xl" style="border-bottom-color:orangered;border-bottom-style:solid">
+            <div class="main-content">
+                <div class="container">
+                    <div class="container-fluid">
 
-                                        @*<a class=" media-body" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> En</a>*@
-                                    }
-                                    else
-                                    {
-                                        <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted ">Ar</a>
 
-                                        @*<a class=" media-body" onclick="ChangeToRTL()" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> Ar</a>*@
-                                    }
-                                </li>
-                            </ul>
+                        @RenderBody()
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <footer class="footer pt-3  ">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>,
+                            made with <i class="fa fa-heart"></i> by
+                            <a href="" class="font-weight-bold" target="_blank">Enkima Team</a>
+                            for a better web.
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                            <li class="nav-item">
+                                <a href="" class="nav-link text-muted" target="_blank">Enkima</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link text-muted" target="_blank">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link text-muted" target="_blank">Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                @*<a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted" target="_blank">En</a>*@
+                                @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+                                {
+                                    <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted">En</a>
+
+                                    @*<a class=" media-body" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> En</a>*@
+                                }
+                                else
+                                {
+                                    <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted ">Ar</a>
+
+                                    @*<a class=" media-body" onclick="ChangeToRTL()" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> Ar</a>*@
+                                }
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     </main>
     <div class="fixed-plugin">
         @*<a class="fixed-plugin-button text-dark position-fixed px-3 py-2">

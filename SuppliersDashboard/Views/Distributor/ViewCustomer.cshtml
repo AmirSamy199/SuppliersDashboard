@@ -1,88 +1,115 @@
 ﻿
 @{
     ViewBag.Title = "ViewCustomer";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 <style>
-    table.dataTable thead th, table.dataTable tbody tr:last-child td {
-        border-bottom: 1px solid #009CFF !important;
+    /* 1) Center the controls row */
+    #CustomersTable_wrapper .row:first-child {
+        text-align: center; /* center inline-block children */
+        margin-bottom: 1rem; /* space below them */
     }
 
-    table.dataTable tbody td {
-        border-bottom: unset;
+    /* 2) Make length & filter inline-blocks */
+    #CustomersTable_wrapper .dataTables_length,
+    #CustomersTable_wrapper .dataTables_filter {
+        display: inline-block !important; /* override floats/blocks */
+        vertical-align: middle; /* align them */
+        margin: 0 1rem; /* gutter between select & input */
     }
 
-    td, th {
-        text-align: center;
-    }
+        /* 3) Ensure their labels and inputs/selects stay inline */
+        #CustomersTable_wrapper .dataTables_length label,
+        #CustomersTable_wrapper .dataTables_filter label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem; /* space between text and control */
+        }
+
+        /* 4) Shrink the controls to fit their content */
+        #CustomersTable_wrapper .dataTables_length select,
+        #CustomersTable_wrapper .dataTables_filter input {
+            display: inline-block;
+            width: auto; /* no full-width override */
+            padding: 6px 12px; /* match your existing style */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
 </style>
 
 
+<div class="py-4">
 
-    <div class="row">
+    <div class="row d-flex justify-content-lg-center">
         <div class="col-lg-3 p-3">
-            <button onclick="LayoutPrint()" class="btn btn-primary w-100 text-center">
+            <button onclick="LayoutPrint()" class="btn bg-gradient-primary w-100 text-center">
 
-                <i  class="fa fa-solid fa-print"></i>
+                <i class="fa fa-solid fa-print"></i>
 
                 طباعة
             </button>
         </div>
         <div class="col-lg-3 p-3">
-            <a href="/Distributor/CustomerExcel?UserId=@ViewBag.UserId" class="btn btn-success w-100 text-center">
+            <a href="/Distributor/CustomerExcel?UserId=@ViewBag.UserId" class="btn bg-gradient-secondary w-100 text-center">
 
-               
+
 
                 اكسيل
             </a>
         </div>
 
     </div>
-    <div id="printer" >
+    <div id="printer">
 
-        <div class="row g-4">
-          
-                  
-                     
-                                <h2> @SuppliersDashboard.Resources.pages.distributor :  @ViewBag.UserName </h2>
-                                <br />
+        <div class="row ">
+            <div class="alert  " role="alert">
+                <h3 class="text-center " style="color: #808080cc">  @SuppliersDashboard.Resources.pages.distributor :  @ViewBag.UserName</h3>
+            </div>
 
-                                <input type="hidden" id="BaseUserId" value="@ViewBag.UserId" />
-                                <input type="hidden" id="BaseUserName" value="@ViewBag.UserName" />
 
-                                <div class="">
+            
 
-                                    <table id="CustomersTable"  class="table ">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    @SuppliersDashboard.Resources.pages.customer
-                                                </th>
-                                                <th>
-                                                    @SuppliersDashboard.Resources.pages.unpaiddefferd
-                                                </th>
-                                                <th>  Longitude	 </th>
-                                                <th> Latitude </th>
-                                                <th>
-                                                    كشف حساب
-                                                </th>
+            <input type="hidden" id="BaseUserId" value="@ViewBag.UserId" />
+            <input type="hidden" id="BaseUserName" value="@ViewBag.UserName" />
 
-                                                @*<th>
-                                                        @SuppliersDashboard.Resources.pages.allaction
-                                                    </th>*@
-                                                @*<th>
-                                                        @SuppliersDashboard.Resources.pages.action
-                                                    </th>*@
-                                            </tr>
-                                        </thead>
-                                    </table>
+            <div class="">
 
-                                </div>
-                          
-                 
-               
+                <table id="CustomersTable" class="table table-striped table-bordered table-hover table-responsive p-3">
+                    <thead>
+                        <tr>
+                            <th>
+                                @SuppliersDashboard.Resources.pages.customer
+                            </th>
+                            <th>
+                                @SuppliersDashboard.Resources.pages.unpaiddefferd
+                            </th>
+                            <th>  Longitude	 </th>
+                            <th> Latitude </th>
+                            <th>
+                                كشف حساب
+                            </th>
+
+                            @*<th>
+                            @SuppliersDashboard.Resources.pages.allaction
+                        </th>*@
+                            @*<th>
+                            @SuppliersDashboard.Resources.pages.action
+                        </th>*@
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+
+
+
         </div>
     </div>
+</div>
+
+
+
 
 <script>
 

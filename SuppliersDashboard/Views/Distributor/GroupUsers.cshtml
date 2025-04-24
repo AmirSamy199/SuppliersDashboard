@@ -22,7 +22,7 @@
         </div>
         <div class="col-lg-8 text-center p-3">
             <input type="hidden" id="distributorId" value="0" />
-            <select id="DistributorIdInput" class="js-example-basic-single w-100">
+            <select id="DistributorIdInput" class="js-example-basic-single w-100 form-control">
                 <option value="ChooseRepresentative" selected disabled>@llayout.ChooseRepresentative</option>
             </select>
         </div>
@@ -207,8 +207,65 @@
         </script>*@
 }
 
+function dischanged() {
+  let disid = $("#distributorId").val();
+  console.log(nname);
+  if (disid.toString() !== "0") {
+    let html = `
+      <div class="p-3 d-flex justify-content-center">
+        <!--
+          max-w-4xl centers the grid and limits its total width,
+          grid-cols-1 → 1 column on xs
+          sm:grid-cols-2 → 2 cols ≥640px
+          lg:grid-cols-4 → 4 cols ≥1024px
+          gap-4 → uniform gutter
+        -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
 
-        function dischanged (){
+          <!-- always rendered -->
+          <a
+            class="btn btn-lg btn-primary w-full text-center"
+            href="/Distributor/ViewCustomer?UserId=${disid}&UserName=${nname}"
+          >
+            @SuppliersDashboard.Resources.llayout.client
+          </a>
+
+          @if (Functions.Contains("تعديل بيانات المناديب")) {
+            <a
+              class="btn btn-lg btn-primary w-full text-center"
+              onclick="editdistributor(${disid}, '${nname}')"
+            >
+              @SuppliersDashboard.Resources.llayout.Editingdata
+            </a>
+          }
+
+          @if (Functions.Contains("امكانية زيارة مندوب لعميل غير مسجل له")) {
+            <a
+              class="btn btn-lg btn-primary w-full text-center"
+              href="/Distributor/AddBranchException?UserId=${disid}&UserName=${nname}"
+            >
+              @SuppliersDashboard.Resources.llayout.visitofcustomer
+            </a>
+          }
+
+          @if (Functions.Contains("كشف حساب مندوب")) {
+            <a
+              class="btn btn-lg btn-primary w-full text-center"
+              href="/Distributor/Accounting?UserId=${disid}&UserName=${nname}"
+            >
+              @SuppliersDashboard.Resources.llayout.accentof
+            </a>
+          }
+
+        </div>
+      </div>
+    `;
+    $("#parentdiv").html(html);
+  }
+}
+
+
+        @*function dischanged (){
 
             let disid = $("#distributorId").val()
             console.log(nname);
@@ -218,7 +275,7 @@
                 <div class='p-3'>
 
                  <div class="row">
-        <div class="col-lg-3 p-3"  style="width: 50%;">
+        <div class="col-lg-3 "  style="width: 50%;">
 
                                 <a class="btn   btn-lg  btn-primary" href="/Distributor/ViewCustomer?UserId=${disid}&UserName=${nname}">@SuppliersDashboard.Resources.llayout.client </a>
         </div>
@@ -249,7 +306,7 @@
             </div>
 
         }
-         
+
 
     </div>
 
@@ -258,7 +315,9 @@
 
                 $("#parentdiv").html(html)
             }
-        }
+    }*@
+
+
         function searchsales(element) {
 
             let filter = $(element).val().toUpperCase()
