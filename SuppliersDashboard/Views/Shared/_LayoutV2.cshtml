@@ -28,6 +28,9 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="~/NewDesgin/assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
     <style>
+        .modal-content {
+            min-width: 100% !important
+        }
         .dataTables_info{
             display:none !important
         }
@@ -180,7 +183,7 @@
             content: "▼"; /* Simple Unicode down arrow */
             font-size: 0.75rem;
             display: inline-block;
-            margin-left: auto;
+            margin-left: inherit;
             color: transparent; /* Make text color transparent */
             background-color: #f97316; /* Gradient background */
             -webkit-background-clip: text; /* Apply gradient to text */
@@ -1364,25 +1367,22 @@ funcs.Contains("اعدادات القنوات")
                 <div class="row align-items-center justify-content-lg-between">
                     <div class="col-lg-6 mb-lg-0 mb-4">
                         <div class="copyright text-center text-sm text-muted text-lg-start">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>,
+                            ©2025
                             made with <i class="fa fa-heart"></i> by
-                            <a href="" class="font-weight-bold" target="_blank">Enkima Team</a>
-                            for a better web.
+                            <a href="https://enkima-eg.com/" class="font-weight-bold" target="_blank">Enkima Team</a>
+
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                             <li class="nav-item">
-                                <a href="" class="nav-link text-muted" target="_blank">Enkima</a>
+                                <a href="https://enkima-eg.com/" class="nav-link text-muted" target="_blank">Enkima</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link text-muted" target="_blank">About Us</a>
+                                <a href="https://enkima-eg.com/Home/About" class="nav-link text-muted" target="_blank">About Us</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link text-muted" target="_blank">Blog</a>
+                                <a href="https://enkima-eg.com/Home/Service" class="nav-link text-muted" target="_blank">Service</a>
                             </li>
                             <li class="nav-item">
                                 @*<a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()" class="nav-link pe-0 text-muted" target="_blank">En</a>*@
@@ -1489,20 +1489,16 @@ funcs.Contains("اعدادات القنوات")
     </div>
 
     <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow:scroll" style="overflow:scroll">
+         aria-labelledby="staticBackdropLabel" aria-hidden="true" @*style="overflow:scroll" style="overflow:scroll"*@>
         <div class="modal-dialog  modal-dialog-centered ">
             <div class="modal-content" id="modalContainer">
 
             </div>
         </div>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="overflow:scroll" >
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" @*style="overflow:scroll"*@ >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body" id="modalcontent">
                     ...
                 </div>

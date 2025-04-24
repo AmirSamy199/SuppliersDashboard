@@ -5,8 +5,8 @@
 @{
     Layout = null;
     var title = "LOGIN";
-   // var lang = Context.Request.Cookies["UserLang"] ?? "en";
-    var lang = Context.Request.Cookies["UserLang"].Value ?? "en";
+    // var lang = Context.Request.Cookies["UserLang"] ?? "en";
+    var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name?? "en";
 
     var dir = lang == "ar" ? "rtl" : "ltr";
     ViewData["Title"] = title;
