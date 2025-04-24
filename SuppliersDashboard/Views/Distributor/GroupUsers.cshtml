@@ -11,26 +11,28 @@
     Layout = "~/Views/Shared/_layoutV2.cshtml";
 }
 
-<div class="card-header-2" style="text-align:center">
-    <h5>@llayout.ChooseRepresentative</h5>
-</div>
-
-<form class="theme-form theme-form-2 mega-form">
-    <div class="row d-flex justify-content-around">
-        <div class="col-lg-4 text-center p-3">
-            <label class="col-12 col-form-label form-label-title" style="text-align: center;">@SuppliersDashboard.Resources.pages.distributor</label>
-        </div>
-        <div class="col-lg-8 text-center p-3">
-            <input type="hidden" id="distributorId" value="0" />
-            <select id="DistributorIdInput" class="js-example-basic-single w-100 form-control">
-                <option value="ChooseRepresentative" selected disabled>@llayout.ChooseRepresentative</option>
-            </select>
-        </div>
+<div class="row p-2" style="width:100%">
+    <div class="card-header-2" style="text-align:center">
+        <h5>@llayout.ChooseRepresentative</h5>
     </div>
-</form>
 
-<div class="container p-lg-3" id="parentdiv">
+    <form class="theme-form theme-form-2 mega-form">
+        <div class="row d-flex justify-content-around">
+            <div class="col-lg-4 text-center ">
+                <label class="col-12 col-form-label form-label-title" style="text-align: center;">@SuppliersDashboard.Resources.pages.distributor</label>
+            </div>
+            <div class="col-lg-8 text-center p-3">
+                <input type="hidden" id="distributorId" value="0" />
+                <select id="DistributorIdInput" class="js-example-basic-single w-100 form-control">
+                    <option value="ChooseRepresentative" selected disabled>@llayout.ChooseRepresentative</option>
+                </select>
+            </div>
+        </div>
+    </form>
 
+    <div class="container p-lg-3" id="parentdiv">
+
+    </div>
 </div>
 
 

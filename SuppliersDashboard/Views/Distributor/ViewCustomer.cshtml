@@ -4,42 +4,33 @@
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 <style>
-    /* 1) Center the controls row */
-    #CustomersTable_wrapper .row:first-child {
-        text-align: center; /* center inline-block children */
-        margin-bottom: 1rem; /* space below them */
+    /* float the length selector left */
+    #CustomersTable_wrapper .dataTables_length {
+        float: left !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-    /* 2) Make length & filter inline-blocks */
-    #CustomersTable_wrapper .dataTables_length,
+    /* float the search filter right */
     #CustomersTable_wrapper .dataTables_filter {
-        display: inline-block !important; /* override floats/blocks */
-        vertical-align: middle; /* align them */
-        margin: 0 1rem; /* gutter between select & input */
+        float: right !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-        /* 3) Ensure their labels and inputs/selects stay inline */
-        #CustomersTable_wrapper .dataTables_length label,
-        #CustomersTable_wrapper .dataTables_filter label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem; /* space between text and control */
-        }
+    /* ensure the wrapper row clears floats */
+    #CustomersTable_wrapper .row:first-child::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
 
-        /* 4) Shrink the controls to fit their content */
-        #CustomersTable_wrapper .dataTables_length select,
-        #CustomersTable_wrapper .dataTables_filter input {
-            display: inline-block;
-            width: auto; /* no full-width override */
-            padding: 6px 12px; /* match your existing style */
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
+  
 </style>
 
 
-<div class="py-4">
+
+
 
     <div class="row d-flex justify-content-lg-center">
         <div class="col-lg-3 p-3">
@@ -62,56 +53,54 @@
     </div>
     <div id="printer">
 
-        <div class="row ">
+        <div class="row p-2">
             <div class="alert  " role="alert">
                 <h3 class="text-center " style="color: #808080cc">  @SuppliersDashboard.Resources.pages.distributor :  @ViewBag.UserName</h3>
             </div>
 
 
-            
+
 
             <input type="hidden" id="BaseUserId" value="@ViewBag.UserId" />
             <input type="hidden" id="BaseUserName" value="@ViewBag.UserName" />
-
-            <div class="">
-
-                <table id="CustomersTable" class="table table-striped table-bordered table-hover table-responsive p-3">
+            <div id="table-scroll-container" style="max-width: 100%;">
+                <table id="CustomersTable" class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
                     <thead>
                         <tr>
-                            <th>
-                                @SuppliersDashboard.Resources.pages.customer
-                            </th>
-                            <th>
-                                @SuppliersDashboard.Resources.pages.unpaiddefferd
-                            </th>
-                            <th>  Longitude	 </th>
-                            <th> Latitude </th>
-                            <th>
-                                كشف حساب
-                            </th>
-
-                            @*<th>
-                            @SuppliersDashboard.Resources.pages.allaction
-                        </th>*@
-                            @*<th>
-                            @SuppliersDashboard.Resources.pages.action
-                        </th>*@
+                            <th>Customer</th>
+                            <th>Unpaid Deferred</th>
+                            <th>Longitude</th>
+                            <th>Latitude</th>
+                            <th>كشف حساب</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @* your rows here *@
+                    </tbody>
                 </table>
-
             </div>
 
-
-
         </div>
+
     </div>
-</div>
+
+
+
+
+    
+
 
 
 
 
 <script>
+    document.getElementById('table-scroll-container').addEventListener('wheel', function (e) {
+        if (e.deltaY > 0) {
+            // User is scrolling down
+            e.preventDefault(); // Stop the scroll
+        }
+        // If scrolling up (e.deltaY < 0), do nothing — allow normal scroll
+    }, { passive: false });
 
     $.ajax({
         url: "/Distributor/GetUserCustomers?UserId=" + $("#BaseUserId").val(),
@@ -127,14 +116,15 @@
     function DrawTable(data) {
         console.log(data)
         $("#CustomersTable").DataTable({
-            'iDisplayLength': 100 ,
+            'iDisplayLength': 100,
             "bDestroy": true,
             "bSearchable": true,
+          
            /* "responsive": true,*/
             "language": {
                 "searchPlaceholder": 'Search...',
                 "sSearch": '',
-                "lengthMenu": '_MENU_ items/page',
+                "lengthMenu": '_MENU_ ',
             },
            "data":data,
             "columns": [
