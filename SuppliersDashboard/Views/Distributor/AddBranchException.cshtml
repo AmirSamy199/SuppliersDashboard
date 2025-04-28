@@ -5,47 +5,50 @@
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 
+<dvi class="row p-2" style="width:100%">
 
-<p class="h2 text-primary mt-2" style="text-align: center;">
-    @ViewBag.UserName
-</p>
-<div class="text-center text-danger " style="display:none" id="validatemsg">
+    <p class="h2 text-primary mt-2" style="text-align: center;">
+        @ViewBag.UserName
+    </p>
+    <div class="text-center text-danger " style="display:none" id="validatemsg">
 
-</div>
-<div class="row">
-    <div class="col-4 ">
-        <span style=" text-align: center;" class="col-12 p-3 ">
-            @llayout.range
-        </span>
-        <select id="RangeSelect" class="form-control form-select">
-            <option> اختر المنطقة </option>
-            @foreach (var item in ViewBag.Ranges)
-            {
-                <option value="@item.Id"> @item.Value</option>
-            }
-        </select>
     </div>
-    <div class="col-4 ">
-        <span style=" text-align: center;" class="col-12 p-3 ">
-            @llayout.region
-        </span>
-        <select id="regionselect" class="form-control form-select">
-            <option> -- </option>
-        </select>
-    </div>
-    <div class="col-4 ">
-        <span style=" text-align: center;" class="col-12 p-3 ">
-            @llayout.Branch
-        </span>
-        <select id="branchselect" class="form-control form-select">
-            <option> -- </option>
+    <div class="row">
+        <div class="col-4 ">
+            <span style=" text-align: center;" class="col-12 p-3 ">
+                @llayout.range
+            </span>
+            <select id="RangeSelect" class="form-control form-select">
+                <option> اختر المنطقة </option>
+                @foreach (var item in ViewBag.Ranges)
+                {
+                    <option value="@item.Id"> @item.Value</option>
+                }
+            </select>
+        </div>
+        <div class="col-4 ">
+            <span style=" text-align: center;" class="col-12 p-3 ">
+                @llayout.region
+            </span>
+            <select id="regionselect" class="form-control form-select">
+                <option> -- </option>
+            </select>
+        </div>
+        <div class="col-4 ">
+            <span style=" text-align: center;" class="col-12 p-3 ">
+                @llayout.Branch
+            </span>
+            <select id="branchselect" class="form-control form-select">
+                <option> -- </option>
 
-        </select>
+            </select>
+        </div>
+        <div class="col-12 p-4  text-center d-flex justify-content-center">
+            <button onclick="SumbitAddException()" class="btn btn-primary col-lg-3"> السماح </button>
+        </div>
     </div>
-    <div class="col-12 p-4  text-center d-flex justify-content-center">
-        <button onclick="SumbitAddException()" class="btn btn-primary col-lg-3"> السماح </button>
-    </div>
-</div>
+  
+</dvi>
 
 
 
@@ -99,6 +102,7 @@
                         UserId: UserId,
                         BranchId: BranchId
                     }, success: (res) => {
+                        console.log(res)
                         ShowModal(res)
                         setTimeout(() => {
                             location.reload()

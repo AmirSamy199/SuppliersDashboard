@@ -57,8 +57,8 @@ namespace SuppliersDashboard.Controllers
         public JsonResult ConfirmDeliverandReceiveStore(string type)
         {
             var US = Cokie.UserGet();
-            string response = http.Get($"/api/Procedures/ConfirmCloseStoreWardia?Storekeeper={US.Id}&Type={type}");
-
+            //   string response = http.Get($"/api/Procedures/ConfirmCloseStoreWardia?Storekeeper={US.Id}&Type={type}");
+            string response = new Response<string> { data = "res", State = 1 ,Message="hoooooo"}.ToString();
             return Json(new { data = JsonConvert.DeserializeObject<Response<string>>(response) });
         }
         [HttpPost]

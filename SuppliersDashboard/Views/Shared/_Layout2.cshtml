@@ -284,13 +284,13 @@
 
                     </div>
                     @*@if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
-                    {
-                        <a class="dropdown-item" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> English</a>
-                    }
-                    else
-                    {
-                        <a class="dropdown-item" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> عريى</a>
-                    }*@
+                        {
+                            <a class="dropdown-item" href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> English</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl.ToString()"><i class="icon ion-android-globe"></i> عريى</a>
+                        }*@
                 </div>
 
             </nav>
@@ -321,7 +321,7 @@
     @*modal mpopup*@
     <div class="modal " id="myModal">
         <div class="modal-dialog ">
-            <div class="modal-content" id="modalcontent">
+            <div class="modal-content d-flex justify-content-center" id="modalcontent">
 
             </div>
         </div>
@@ -329,6 +329,7 @@
 
     </div>
     <!-- JavaScript Libraries -->
+
     <script src="~/Content/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
@@ -574,9 +575,68 @@
 
             })
         }
+        // deeb
+        function showsuccessoperation(txt) {
+            let html = `
+    <div class=' p-4'  style='min-width:500px' >
+
+    <div class=' p-4'>
+    <div class='text-center text-success'>
+    <i style='font-size:150px' class="fa fa-solid fa-check"></i>
+    </div>
+    </div>
+    <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+    </div>
+    `
+            ShowModal(html)
+        }
+        function showSuccessOperation(txt) {
+            let html = `
+    <div class=' p-4'  style='min-width:500px' >
+
+    <div class=' p-4'>
+     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+    <div class='text-center text-success'>
+    <i style='font-size:150px' class="fa fa-solid fa-check"></i>
+    </div>
+    </div>
+    <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+    </div>
+    `
+            ShowModal(html)
+        }
+        function showdangeroperation(txt) {
+            let html = `
+    <div class=' p-4' style='min-width:500px' >
+    <div class=' p-4'>
+     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+    <div class='text-center text-danger'>
+    <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+    </div>
+    </div>
+    <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+    </div>
+    `
+            ShowModal(html)
+        }
+        function showDangerOperation(txt) {
+            let html = `
+    <div class=' p-4' style='min-width:500px' >
+    <div class=' p-4'>
+     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+    <div class='text-center text-danger'>
+    <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+    </div>
+    </div>
+    <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+    </div>
+    `
+            ShowModal(html)
+        }
     </script>
     <!-- Template Javascript -->
     <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/Deebjs.js"></script>
     @RenderSection("scripts", required: false)
     <style>
         .content {

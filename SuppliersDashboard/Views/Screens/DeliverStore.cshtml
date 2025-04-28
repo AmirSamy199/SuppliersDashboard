@@ -5,7 +5,7 @@
     int counter = 0;
 }
 
-<div id="printer" class="">
+<div id="printer" class="p-3">
     <style>
         .editor {
             background: unset;
@@ -23,12 +23,14 @@
             text-align: center !important;
         }
     </style>
-    <label class="form-label-title text-center col-lg-12 " for="name" style="font-size: 24px;">
-        @ViewBag.Message
-    </label>
+ 
 
 
-
+    <div class="h2 text-center   mb-3 d-flex justify-content-center">
+        <div class="input-group text-center col-lg-12 col-md-3 mb-0 text-center " for="name" style="color: #FF9800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); width: auto ">
+            @ViewBag.Message
+        </div>
+    </div>
 
 
 

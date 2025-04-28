@@ -1,4 +1,5 @@
 ﻿using Aspose.Cells;
+using FastReport.Utils;
 using Newtonsoft.Json;
 using SuppliersDashboard.Constants;
 using SuppliersDashboard.Filters;
@@ -380,6 +381,7 @@ namespace SuppliersDashboard.Controllers
                 try
                 {
                     return Json(JsonConvert.DeserializeObject<Response<string>>(response).Message);
+
                 }
                 catch
                 {
@@ -397,6 +399,9 @@ namespace SuppliersDashboard.Controllers
                 paramaters += $"&requiredcollectionpaperCount={requiredcollectionpaperCount}&requiredcollectionpaperamount={requiredcollectionpaperamount}&requiredpaymentpaperCount={requiredpaymentpaperCount}&requiredpaymentpaperamount={requiredpaymentpaperamount}";
                 string response = client.GetAsync(Setting.Host + $"/api/ClosingDay/OpenAccount" + paramaters).Result.Content.ReadAsStringAsync().Result;
                 Response<string> res = JsonConvert.DeserializeObject<Response<string>>(response);
+
+
+
                 return Json(new { data = res }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -408,6 +413,9 @@ namespace SuppliersDashboard.Controllers
             {
                 string response = client.GetAsync(Setting.Host + $"/api/ClosingDay/ConfirmCompleteAccount?sales={sales}&type=1").Result.Content.ReadAsStringAsync().Result;
                 Response<string> res = JsonConvert.DeserializeObject<Response<string>>(response);
+
+
+
                 return Json(new { data = res }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -419,6 +427,7 @@ namespace SuppliersDashboard.Controllers
             {
                 string response = client.GetAsync(Setting.Host + $"/api/ClosingDay/CloseSalesDay?sales={sales}").Result.Content.ReadAsStringAsync().Result;
                 Response<string> res = JsonConvert.DeserializeObject<Response<string>>(response);
+
                 return Json(new { data = res }, JsonRequestBehavior.AllowGet);
             }
         }

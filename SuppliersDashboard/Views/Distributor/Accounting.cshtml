@@ -8,20 +8,25 @@
     .con {
         padding: 20px;
         border-radius: 10px;
-        border: 1px solid #0094ff;
+        border: 1px solid #f97316;
         text-align: center;
+       
     }
+        .con:hover {
+            color: white;
+            background-color: #f97316
+        }
 </style>
-<div class="p-3">
-    <button class="btn btn-outline-danger" onclick="Print()"> طباعة</button>
+<div class="p-3 text-center">
+    <button class="btn bg-gradient-secondary " onclick="Print()" style="padding-left:30px;padding-right:30px"> طباعة</button>
 </div>
 
 <div class="p-2">
     <div id="printer">
-        <div class="h2 text-center   mb-3">
-            <label class="form-label-title text-center col-lg-12 col-md-3 mb-0" for="name">
+        <div class="h2 text-center   mb-3 d-flex justify-content-center">
+            <div class="input-group text-center col-lg-12 col-md-3 mb-0 text-center " for="name" style="color: #FF9800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); width: auto ">
                 @ViewBag.User
-            </label>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-3  col-sm-4   p-4">
@@ -286,7 +291,63 @@
 
     @section scripts{
         <script>
+            function showsuccessoperation(txt) {
+                let html = `
+<div class='p-1'  style='min-width:200px' >
 
+<div class=' p-1'>
+<div class='text-center text-success'>
+<i style='font-size:150px' class="fa fa-solid fa-check"></i>
+</div>
+</div>
+<div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+</div>
+`
+                ShowModal(html)
+            }
+            function showSuccessOperation(txt) {
+                let html = `
+<div class=' p-1'  style='min-width:500px' >
+
+<div class=' p-1'>
+ <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+<div class='text-center text-success'>
+<i style='font-size:150px' class="fa fa-solid fa-check"></i>
+</div>
+</div>
+<div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+</div>
+`
+                ShowModal(html)
+            }
+            function showdangeroperation(txt) {
+                let html = `
+<div class=' p-1' style='min-width:200px' >
+<div class=' p-1'>
+ <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+<div class='text-center text-danger'>
+<i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+</div>
+</div>
+<div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+</div>
+`
+                ShowModal(html)
+            }
+            function showDangerOperation(txt) {
+                let html = `
+<div class=' p-1' style='min-width:200px' >
+<div class=' p-1'>
+ <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+<div class='text-center text-danger'>
+<i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+</div>
+</div>
+<div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+</div>
+`
+                ShowModal(html)
+            }
             function showbillsreportpopup(salesId) {
                 let Url = `/Distributor/showbillsreportpopup?SalesId=${salesId}`
 
@@ -478,7 +539,7 @@
 
                     },
                  success: function (res) {
-
+                     console.log(res.data)
                      if (res.data.State == 1) {
                          showsuccessoperation(res.data.Message)
                         // ShowModal(res.data.Message)
