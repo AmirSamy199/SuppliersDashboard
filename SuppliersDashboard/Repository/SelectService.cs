@@ -1,10 +1,14 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using Aspose.Cells;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using SuppliersDashboard.Constants;
 using SuppliersDashboard.Helper;
 using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Web;
 
 namespace SuppliersDashboard.Repository
@@ -34,12 +38,26 @@ namespace SuppliersDashboard.Repository
             string response = htp.Get(endpoint);
             return JsonConvert.DeserializeObject<Response<List<Select>>>(response).Data; 
         }
+        //public string DeleteAgent(int Id)
+        //{
+        //    string endpoint =$"/api/DisableAgent?AgentId={Id}";
+          
+        //    string response = htp.Get(endpoint);
+        //    return JsonConvert.DeserializeObject<Response<string>>(response).Data; 
+        //}
+
         public string DeleteAgent(int Id)
         {
-            string endpoint =$"/api/DisableAgent?AgentId={Id}";
-          
-            string response = htp.Get(endpoint);
-            return JsonConvert.DeserializeObject<Response<string>>(response).Data; 
+            
+
+            var model = new { Id = Id, Value = "" };
+            StringContent body = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            string endpoint = Setting.Host + "/api/DisableAgent";
+            using (HttpClient htp = new HttpClient())
+            {
+                string response =  htp.PostAsync(endpoint, body).Result.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<Response<string>>(response).Data;
+            }
         }
     }
 }

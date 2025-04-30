@@ -7,25 +7,32 @@
 
 
 
+<div class="" @*style="padding-right:46px;padding-top:40px;*@>
+    <div class="row d-flex justify-content-around">
+        @*amir*@
+        <div class="col-12">
+            @Html.Partial("~/Views/PartialManageAdmin/ManageUser.cshtml")
+        </div>
 
 
-@*amir*@
-<div style="width:100%" >
-    @Html.Partial("~/Views/PartialManageAdmin/ManageUser.cshtml")
-</div>
+        @*girges*@
+        <div class="col-12">
+            @Html.Partial("~/Views/PartialManageAdmin/ManageGroup.cshtml")
+        </div>
 
 
-@*girges*@
-<div style="width:100%">
-    @Html.Partial("~/Views/PartialManageAdmin/ManageGroup.cshtml")
-</div>
 
-<select style="display:none" id="hiddenidforcompanytypes">
-    @if(ViewBag.CompanyTypes != null)
-            {
-                foreach(var item in ViewBag.CompanyTypes)
+
+        <div class="col-12">
+            <select style="display:none" id="hiddenidforcompanytypes">
+                @if (ViewBag.CompanyTypes != null)
                 {
-                    <option value="@item.Id">@item.Value</option>
+                    foreach (var item in ViewBag.CompanyTypes)
+                    {
+                        <option value="@item.Id">@item.Value</option>
+                    }
                 }
-            }
-</select>
+            </select>
+        </div>
+    </div>
+</div>

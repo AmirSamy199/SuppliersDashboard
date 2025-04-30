@@ -41,9 +41,13 @@ namespace SuppliersDashboard.Controllers
            
             string name = CUser.UserName;
             var ComID =1;
+            //replace date of server by cureent data
+            
+           string CurrentDate = DateTimeOffset.Now.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 
+            //DateTimeOffset.Now.ToString("yyyy-MM-dd"); //ScoposERB.Helper.TbiServer.Time(DateTime.Now).ToString("yyyy-MM-dd")
             string sql = "insert into dbo.BankInfo_tbl(bankName,bankAddress,bankAccountNo,bankAccountIBAN,swiftCode,terms,Editor,Date,status,ComID) values("
-                + "N'" + Bankname.Replace("'", "''") + "',N'" + address.Replace("'", "''") + "',N'" + accountNo + "',N'" + IBANCode + "',N'" + swiftCode + "',N'" + terms.Replace("'", "''") + "',N'" + name.Replace("'", "''") + "','" + ScoposERB.Helper.TbiServer.Time(DateTime.Now).ToString("yyyy-MM-dd") + "',1," + ComID + ")";
+                + "N'" + Bankname.Replace("'", "''") + "',N'" + address.Replace("'", "''") + "',N'" + accountNo + "',N'" + IBANCode + "',N'" + swiftCode + "',N'" + terms.Replace("'", "''") + "',N'" + name.Replace("'", "''") + "','" + CurrentDate + "',1," + ComID + ")";
             fun.fireSQL(sql);
 
             return Json(new { data = true });

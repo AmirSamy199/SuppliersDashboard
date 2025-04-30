@@ -8,54 +8,50 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-4">
+    <div class="row p-4">
 
-        </div>
-        <div class="col-lg-4 p-4">
+        <div class="col-4">
+            <label class="form-label"> اختر المخزن المطلوب</label>
             <select class="form-control form-select" id="requesttresury" onchange="requesttresurychanged(this.value)">
                 <option value="0">
-                    اختر المخزن المطلوب 
+                    اختر المخزن المطلوب
                 </option>
-                @if (ViewBag.WareHouses !=null && ViewBag.WareHouses.Count > 0)
+                @if (ViewBag.WareHouses != null && ViewBag.WareHouses.Count > 0)
                 {
-                    foreach(var item in ViewBag.WareHouses)
+                    foreach (var item in ViewBag.WareHouses)
                     {
-                    <option value="@item.Id">
-                        @item.Value
-                    </option>
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
                 }
-            }
             </select>
-        </div> <div class="col-lg-4">
+        </div>
 
+        <div class="col-4">
+            <label class="form-label"> اختر الصنف</label>
+            @*<span class="bg-success text-white text-center" style="display:inline-block ; min-width:50px" id="itemcountbadge">  </span>*@
+            <input class="form-control form-select " list="itemslist" name="itemid" id="itemid" placeholder="اختر الصنف" onchange="itemchanged(this.value)" onclick="this.select()" />
+
+            <datalist id="itemslist">
+            </datalist>
+        </div>
+
+        <div class="col-4">
+            <label class="form-label"> اختر العدد</label>
+            <input class="form-control  " type="number" id="itemcount" placeholder="اختر العدد" onclick="this.select()" />
+        </div>
+
+        <div class="col-12 d-flex justify-content-center">
+            <label style="display:block"> &nbsp; </label>
+            <button class="btn btn-primary btn-lg mt-2 " style="min-width:150px;padding-left:5px;padding-right:5px" onclick="addrequest()">
+                اضافة
+            </button>
         </div>
     </div>
 
 </div>
-<div class="container">
-    <div class="row  d-flex justify-content-around">
-        <div class="col-lg-4 text-center p-3">
-                <label class="form-label"> اختر الصنف</label>
-                <span class="bg-success text-white text-center" style="display:inline-block ; min-width:50px" id="itemcountbadge">  </span>
-                <input class="form-control form-select " list="itemslist" name="itemid" id="itemid" placeholder="اختر الصنف" onchange="itemchanged(this.value)" onclick="this.select()" />
 
-                <datalist id="itemslist">
-                </datalist>
-            </div>
-        <div class="col-lg-4 text-center p-3">
-            <label class="form-label"> اختر العدد</label>
-            <input class="form-control  " type="number" id="itemcount" placeholder="اختر العدد" onclick="this.select()" />
-        </div>
-        <div class="col-lg-4 text-center p-3">
-            <label style="display:block"> &nbsp; </label>
-            <button class="btn btn-primary col-12 btn-lg" style="min-width:150px" onclick="addrequest()">
-                اضافة
-            </button>
-        </div>
-        </div>
-
-    </div>
 <div class="container">
     <div class="collapse " id="tablediv">
         <table class="table table-striped table-bordered">

@@ -27,36 +27,52 @@
             td, th {
                 border: 1px solid #ddd !important;
             }
+            /* float the length selector left */
+            #table_wrapper .dataTables_length {
+                float: left !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* float the search filter right */
+            #table_wrapper .dataTables_filter {
+                float: right !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* ensure the wrapper row clears floats */
+            #table_wrapper .row:first-child::after {
+                content: "";
+                display: block;
+                clear: both;
+            }
         </style>
         <h2 class="p-3 text-center " id="head"> </h2>
-        <div class="  card-ERB ">
-            <div class="  table-responsive  ">
+        <div id="table-scroll-container" style="max-width: 100%;">
+            <table id="table" class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
+                <thead>
+                    <tr>
+                        <th> #   </th>
+                        <th> الموزع   </th>
+                        <th> عدد الفواتير    </th>
+                        <th>  الفواتير    </th>
+                        <th>الخصم    </th>
+                        <th>اجل     </th>
+                        <th>مصروفات     </th>
+                        <th>تحصيل     </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
 
-                <div id="tablediv" class="collapse">
-                    <table style="width:100%" id="table" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th> #   </th>
-                                <th> الموزع   </th>
-                                <th> عدد الفواتير    </th>
-                                <th>  الفواتير    </th>
-                                <th>الخصم    </th>
-                                <th>اجل     </th>
-                                <th>مصروفات     </th>
-                                <th>تحصيل     </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
+        </div>
+    </div>
         </div>
 
 
-    </div>
-</div>
+   
 <div class="row d-flex justify-content-around">
 
     <div class="col-lg-4 text-center p-3">

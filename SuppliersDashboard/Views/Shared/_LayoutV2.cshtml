@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="~/NewDesgin/assets/img/UNO.png" rel="icon">
     @*<link rel="icon" type="image/png" href="~/NewDesgin/assets/img/favicon.png">*@
-    <title>الدوار لمنتجات الالبان  </title>
+    <title>كاجو لمنتجات الالبان  </title>
 
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -27,12 +27,15 @@
     <link href="~/NewDesgin/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="~/NewDesgin/assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <style>
         .modal-content {
             min-width: 100% !important
         }
-        .dataTables_info{
-            display:none !important
+
+        .dataTables_info {
+            display: none !important
         }
         /* Change pagination button colors */
         .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -45,25 +48,25 @@
             transition: all 0.3s ease;
         }
 
-        /* Hover effect */
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background-color: #007bff; /* Darker blue */
-            border-color: #007bff;
-        }
+            /* Hover effect */
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                background-color: #007bff; /* Darker blue */
+                border-color: #007bff;
+            }
 
-        /* Active page button */
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background-color: #28a745 !important; /* Green for active page */
-            color: white !important;
-            border-color: #218838;
-        }
+            /* Active page button */
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+                background-color: #28a745 !important; /* Green for active page */
+                color: white !important;
+                border-color: #218838;
+            }
 
-        /* Disabled button */
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-            background-color: #ddd;
-            color: #777 !important;
-            border: none;
-        }
+            /* Disabled button */
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+                background-color: #ddd;
+                color: #777 !important;
+                border: none;
+            }
 
         label select {
             padding: 6px 12px;
@@ -128,14 +131,14 @@
         }
 
 
-        
+
 
         /* Add some space around the entire card */
 
 
 
-     
-   
+
+
         #roleDisplay:hover {
             background-color: #f97316 !important;
             color: white;
@@ -301,7 +304,7 @@
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.operations</span>
                             </div>
-                             
+
                         </a>
                         <div class="collapse" id="billingSubmenu">
                             <ul class="nav ms-4 flex-column">
@@ -330,7 +333,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.wareHouse</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub">
                                             <ul class="nav ms-4 flex-column">
@@ -350,7 +353,7 @@
                                                 @if (funcs.Contains("صفحة المردودات"))
                                                 {
 
-                                                    <li class="nav-item"><a class="nav-link" ref="/WareHousing/PendingMardodatWareHouseRequests">- @llayout.Receive_Products_To_Representative </a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingMardodatWareHouseRequests">- @llayout.Receive_Products_To_Representative </a></li>
 
                                                 }
                                                 @if (funcs.Contains("w-store"))
@@ -409,7 +412,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub2" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.the_safe</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub2">
                                             <ul class="nav ms-4 flex-column">
@@ -436,7 +439,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub3" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @pages.Accounts</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub3">
                                             <ul class="nav ms-4 flex-column">
@@ -447,7 +450,7 @@
                                                 }
                                                 @if (funcs.Contains("AddSale"))
                                                 {
-                                                    @*<li class="nav-item"><a class="nav-link" href="/SalesOFclient1/addsale">- @llayout.SalesOfClient</a></li>*@
+                                                    <li class="nav-item"><a class="nav-link" href="/SalesOFclient1/addsale">- @llayout.SalesOfClient</a></li>
 
                                                 }
                                                 @if (funcs.Contains("صفحة التحصيل"))
@@ -489,7 +492,7 @@
                                 @if (funcs.Contains("قبول طلبات الفروع"))
                                 {
 
-                                    @*<li class="nav-item"><a class="nav-link" href="/Admin/OnlineShopRequests">- قبول طلبات الفروع</a></li>*@
+                                    <li class="nav-item"><a class="nav-link" href="/Admin/OnlineShopRequests">- قبول طلبات الفروع</a></li>
                                 }
 
                             </ul>
@@ -516,7 +519,7 @@
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.reports</span>
                             </div>
-                             
+
                         </a>
                         <div class="collapse" id="billingSubmenu2">
                             <ul class="nav ms-4 flex-column">
@@ -596,7 +599,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.inability</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub">
                                             <ul class="nav ms-4 flex-column">
@@ -650,7 +653,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub4" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.items</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub4">
                                             <ul class="nav ms-4 flex-column">
@@ -697,7 +700,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub5" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.Customers</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub5">
                                             <ul class="nav ms-4 flex-column">
@@ -725,7 +728,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub6" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.distributors</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub6">
                                             <ul class="nav ms-4 flex-column">
@@ -742,7 +745,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub7" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- KPIS</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub7">
                                             <ul class="nav ms-4 flex-column">
@@ -762,7 +765,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub8" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- GPS</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub8">
                                             <ul class="nav ms-4 flex-column">
@@ -797,7 +800,7 @@
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.setting</span>
                             </div>
-                             
+
                         </a>
                         <div class="collapse" id="billingSubmenu9">
                             <ul class="nav ms-4 flex-column">
@@ -828,7 +831,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub01" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>-  @llayout.items</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub01">
                                             <ul class="nav ms-4 flex-column">
@@ -849,7 +852,7 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub02" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                                             <span>-  @llayout.price</span>
-                                                             
+
                                                         </a>
                                                         <div class="collapse" id="nestedBillingSub02">
                                                             <ul class="nav ms-4 flex-column">
@@ -867,7 +870,7 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub03" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                                             <span>- @llayout.Lists</span>
-                                                             
+
                                                         </a>
                                                         <div class="collapse" id="nestedBillingSub03">
                                                             <ul class="nav ms-4 flex-column">
@@ -897,7 +900,7 @@ funcs.Contains("صفحة اضافة رصيد افتتاحي"))
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub04" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.Customers</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub04">
                                             <ul class="nav ms-4 flex-column">
@@ -934,7 +937,7 @@ funcs.Contains("صفحة اضافة رصيد افتتاحي"))
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>-  @llayout.Regions</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub">
                                             <ul class="nav ms-4 flex-column">
@@ -951,7 +954,7 @@ funcs.Contains("صفحة اضافة رصيد افتتاحي"))
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub07" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.suppliers</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub07">
                                             <ul class="nav ms-4 flex-column">
@@ -980,7 +983,7 @@ funcs.Contains("اعدادات القنوات")
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub08" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.Sales_channels</span>
-                                             
+
                                         </a>
                                         <div class="collapse" id="nestedBillingSub08">
                                             <ul class="nav ms-4 flex-column">
@@ -1043,7 +1046,7 @@ funcs.Contains("اعدادات القنوات")
                                 </div>
                                 <span class="nav-link-text ms-1">@llayout.Invoice</span>
                             </div>
-                             
+
                         </a>
                         <div class="collapse" id="billingSubmenu001">
                             <ul class="nav ms-4 flex-column">
@@ -1080,22 +1083,22 @@ funcs.Contains("اعدادات القنوات")
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 @*<nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
-                    </ol>
+                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
+                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
+                        </ol>
 
-                </nav>*@
+                    </nav>*@
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
                         <div class="container-fluid py-1 px-3">
                             @*<nav aria-label="breadcrumb">
-                                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
-                                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
-                                </ol>
+                                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 @(lang == "ar" ? " " : " me-sm-6 me-5")">
+                                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@ViewBag.Title </li>
+                                    </ol>
 
-                            </nav>*@
+                                </nav>*@
                             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 " id="navbar">
                                 <div class="d-flex align-items-center gap-4 ">
 
@@ -1141,26 +1144,25 @@ funcs.Contains("اعدادات القنوات")
 
                                     <!-- Language toggle -->
                                     @*<div class="d-flex align-items-center">
-                                        @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
-                                        {
-                                            <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
-                                                <i class="fa fa-user me-1"></i>
-                                                <span class="d-sm-inline d-none bg-primary text-white rounded px-2">English</span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
-                                                <i class="fa fa-user me-1"></i>
-                                                <span class="d-sm-inline d-none bg-primary text-white rounded px-2">عربي</span>
-                                            </a>
-                                        }
-                                    </div>*@
+                                            @if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar")
+                                            {
+                                                <a href="/Home/ChangeLanguage?lang=en&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
+                                                    <i class="fa fa-user me-1"></i>
+                                                    <span class="d-sm-inline d-none bg-primary text-white rounded px-2">English</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Home/ChangeLanguage?lang=ar&BackUrl=@Request.RawUrl" class="nav-link text-body font-weight-bold px-2 py-1 d-flex align-items-center">
+                                                    <i class="fa fa-user me-1"></i>
+                                                    <span class="d-sm-inline d-none bg-primary text-white rounded px-2">عربي</span>
+                                                </a>
+                                            }
+                                        </div>*@
 
                                 </div>
                                 <!--<ul class="navbar-nav  justify-content-end" style="z-index:1000000;">-->
-
-                                    @*<li class="nav-item d-xl-none @(lang == "ar" ? " pe-3 " : " ps-3 ") d-flex align-items-center">
+                                @*<li class="nav-item d-xl-none @(lang == "ar" ? " pe-3 " : " ps-3 ") d-flex align-items-center">
                                         <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                                             <div class="sidenav-toggler-inner">
                                                 <i class="sidenav-toggler-line"></i>
@@ -1169,7 +1171,7 @@ funcs.Contains("اعدادات القنوات")
                                             </div>
                                         </a>
                                     </li>*@
-                                    <!--<li class="nav-item px-3 d-flex align-items-center">
+                                <!--<li class="nav-item px-3 d-flex align-items-center">
                                         <a href="javascript:;" class="nav-link text-body p-0">
                                             <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                                         </a>
@@ -1263,83 +1265,83 @@ funcs.Contains("اعدادات القنوات")
                             </a>
                         </li>
                         @*<li class="nav-item px-3 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body p-0">
-                                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                            </a>
-                        </li>*@
+                                <a href="javascript:;" class="nav-link text-body p-0">
+                                    <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                                </a>
+                            </li>*@
                         @*<li class="nav-item dropdown pe-2 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bell cursor-pointer"></i>
-                            </a>
-                            <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="my-auto">
-                                                <img src="~/NewDesgin/assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-bell cursor-pointer"></i>
+                                </a>
+                                <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                                    <li class="mb-2">
+                                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                                            <div class="d-flex py-1">
+                                                <div class="my-auto">
+                                                    <img src="~/NewDesgin/assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="text-sm font-weight-normal mb-1">
+                                                        <span class="font-weight-bold">New message</span> from Laur
+                                                    </h6>
+                                                    <p class="text-xs text-secondary mb-0">
+                                                        <i class="fa fa-clock me-1"></i>
+                                                        13 minutes ago
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    <span class="font-weight-bold">New message</span> from Laur
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    13 minutes ago
-                                                </p>
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                                            <div class="d-flex py-1">
+                                                <div class="my-auto">
+                                                    <img src="~/NewDesgin/assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="text-sm font-weight-normal mb-1">
+                                                        <span class="font-weight-bold">New album</span> by Travis Scott
+                                                    </h6>
+                                                    <p class="text-xs text-secondary mb-0">
+                                                        <i class="fa fa-clock me-1"></i>
+                                                        1 day
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="my-auto">
-                                                <img src="~/NewDesgin/assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    <span class="font-weight-bold">New album</span> by Travis Scott
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    1 day
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                                                <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <title>credit-card</title>
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                                                            <g transform="translate(1716.000000, 291.000000)">
-                                                                <g transform="translate(453.000000, 454.000000)">
-                                                                    <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                                                    <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                                            <div class="d-flex py-1">
+                                                <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                                                    <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                        <title>credit-card</title>
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                                                <g transform="translate(1716.000000, 291.000000)">
+                                                                    <g transform="translate(453.000000, 454.000000)">
+                                                                        <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
+                                                                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                                                    </g>
                                                                 </g>
                                                             </g>
                                                         </g>
-                                                    </g>
-                                                </svg>
+                                                    </svg>
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="text-sm font-weight-normal mb-1">
+                                                        Payment successfully completed
+                                                    </h6>
+                                                    <p class="text-xs text-secondary mb-0">
+                                                        <i class="fa fa-clock me-1"></i>
+                                                        2 days
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    Payment successfully completed
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    2 days
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>*@
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>*@
                     </ul>
                 </div>
             </div>
@@ -1348,15 +1350,15 @@ funcs.Contains("اعدادات القنوات")
 
         <!-- End Navbar -->
 
-        
-                    <div class="container-fluid" style="width: 100%; margin: 0; padding: 0; background-color: white; border-radius: 34px; padding-bottom: 40px; border-bottom-color: orangered; /* border-style: solid; */ border-bottom-style: solid; overflow: auto; ">
+
+        <div class="container-fluid" style="width: 100%; margin: 0; padding: 0; background-color: white; border-radius: 34px; padding-bottom: 40px; border-bottom-color: orangered; /* border-style: solid; */ border-bottom-style: solid; overflow: auto; ">
 
 
-                        @RenderBody()
+            @RenderBody()
 
-                    </div>
+        </div>
 
-            
+
         <footer class="footer pt-3  ">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-lg-between">
@@ -1486,20 +1488,39 @@ funcs.Contains("اعدادات القنوات")
     </div>
 
     <div class="modal fade" id="modal" data-bs-backdrop="modal" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true" @*style="overflow:scroll" style="overflow:scroll"*@>
+         aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow:scroll" style="overflow:scroll">
         <div class="modal-dialog  modal-dialog-centered ">
-             <div class="modal-header">
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
+         
 
             <div class="modal-content" id="modalContainer">
 
             </div>
         </div>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" @*style="overflow:scroll"*@ >
+
+
+    <!--<div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow: scroll;" >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" >-->
+
+                <!-- Modal Header with Close Button -->
+                <!--<div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>-->
+
+                <!-- Modal Body (you can add content here) -->
+                <!--<div class="modal-body" id="modalContainer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" @*style="overflow:scroll"*@>
         <div class="modal-dialog">
-           
+
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -1704,7 +1725,7 @@ funcs.Contains("اعدادات القنوات")
             });
         </script>*@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-   
+
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -1742,20 +1763,20 @@ funcs.Contains("اعدادات القنوات")
         });
     </script>
     @*<script>
-        $("#fr").on('click', function () {
-            $('#fr').modal('hide');
-        });
-        $("#myModal").on('click', function () {
-            $('#myModal').modal('hide');
-        });
-        $("#modal").on('click', function () {
-            $('#modal').modal('hide');
-        });
-        $("#staticBackdrop").on('click', function () {
-            $('#staticBackdrop').modal('hide');
-        });
-       
-    </script>*@
+            $("#fr").on('click', function () {
+                $('#fr').modal('hide');
+            });
+            $("#myModal").on('click', function () {
+                $('#myModal').modal('hide');
+            });
+            $("#modal").on('click', function () {
+                $('#modal').modal('hide');
+            });
+            $("#staticBackdrop").on('click', function () {
+                $('#staticBackdrop').modal('hide');
+            });
+
+        </script>*@
     <script>
 
         //document.querySelector('.modal').addEventListener('click', function () {
@@ -1845,27 +1866,27 @@ funcs.Contains("اعدادات القنوات")
             var restorepage = $('body').html();
 
             $('#printer').append(`
-                            <style>
-                      td, th {
-                          text-align: center !important;
-                          border: 2px solid !important;
-                          max-width: 50px !important;
-                          overflow:hidden;
-                      }
+                                <style>
+                          td, th {
+                              text-align: center !important;
+                              border: 2px solid !important;
+                              max-width: 50px !important;
+                              overflow:hidden;
+                          }
 
 
-                      table {
-                          max-width: 100% !important;
-                          border-collapse: collapse !important;
-                      }
-                      /*
-                      .table td {
-                          white-space: pre-wrap !important
-                      }
-                      */
+                          table {
+                              max-width: 100% !important;
+                              border-collapse: collapse !important;
+                          }
+                          /*
+                          .table td {
+                              white-space: pre-wrap !important
+                          }
+                          */
 
-                  </style>
-                            `)
+                      </style>
+                                `)
             var printcontent = $('#printer').clone();
             $('body').empty().html(printcontent);
             window.print();
@@ -2015,8 +2036,12 @@ funcs.Contains("اعدادات القنوات")
     </script>
     <!-- Template Javascript -->
     <script src="~/Content/js/main.js"></script>
-    
+
     <script>
+        const HeaderModal = `<div class="modal-header d-flex justify-content-between align-items-center">
+   <h5 class="modal-title mb-0 text-primary" id="staticBackdropLabel"></h5>
+   <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" >&times;</button>
+    </div>`;
         // ########## css classes ##########
         // detail
         // detail-child
@@ -2063,59 +2088,62 @@ funcs.Contains("اعدادات القنوات")
 
         function showsuccessoperation(txt) {
             let html = `
-    <div class=' p-4'  style='min-width:500px' >
+            
+        <div class=' p-4'  style='min-width:500px' >
 
-    <div class=' p-4'>
-    <div class='text-center text-success'>
-    <i style='font-size:150px' class="fa fa-solid fa-check"></i>
-    </div>
-    </div>
-    <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
-    </div>
-    `
+        <div class=' p-4'>
+        <div class='text-center text-success'>
+        <i style='font-size:150px' class="fa fa-solid fa-check"></i>
+        </div>
+        </div>
+        <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+        </div>
+        `
             ShowModal(html)
         }
         function showSuccessOperation(txt) {
             let html = `
-    <div class=' p-4'  style='min-width:500px' >
+             
+        <div class=' p-4'  style='min-width:500px' >
 
-    <div class=' p-4'>
-     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
-    <div class='text-center text-success'>
-    <i style='font-size:150px' class="fa fa-solid fa-check"></i>
-    </div>
-    </div>
-    <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
-    </div>
-    `
+        <div class=' p-4'>
+         <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+        <div class='text-center text-success'>
+        <i style='font-size:150px' class="fa fa-solid fa-check"></i>
+        </div>
+        </div>
+        <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+        </div>
+        `
             ShowModal(html)
         }
         function showdangeroperation(txt) {
             let html = `
-    <div class=' p-4' style='min-width:500px' >
-    <div class=' p-4'>
-     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
-    <div class='text-center text-danger'>
-    <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
-    </div>
-    </div>
-    <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
-    </div>
-    `
+            
+        <div class=' p-4' style='min-width:500px' >
+        <div class=' p-4'>
+         <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+        <div class='text-center text-danger'>
+        <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+        </div>
+        </div>
+        <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+        </div>
+        `
             ShowModal(html)
         }
         function showDangerOperation(txt) {
-            let html = `
-    <div class=' p-4' style='min-width:500px' >
-    <div class=' p-4'>
-     <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
-    <div class='text-center text-danger'>
-    <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
-    </div>
-    </div>
-    <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
-    </div>
-    `
+            let html = `   
+        <div class=' p-4' style='min-width:500px' >
+        <div class=' p-4'>
+         <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+        <div class='text-center text-danger'>
+        <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+        </div>
+        </div>
+        <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+        </div>
+        `
             ShowModal(html)
         }
         function log(x) { console.log(x) }
@@ -2137,46 +2165,46 @@ funcs.Contains("اعدادات القنوات")
         function sure(msg, btntxt, btnclick) {
             debugger
 
-            let html = `
-    <div  style='min-width:500px' >
+            let html = `    ${HeaderModal}
+        <div  style='min-width:500px' class=" d-flex justify-content-center" >
 
 
-    <i style='font-size:150px' class="fa fa-regular fa-circle-question"></i>
-    </div>
- 
-    </div>
-    <div class='pt-3 pb-3 text-center text-warning' style='font-size:22px;font-weight:bolder'> 
-   ${msg}
-     </div>
-    <div class="row  d-flex justify-content-around">
-    <div class="col-lg-4 text-center p-3">
-   <button style='font-size: 18px;' class='btn btn-primary col-12 btn-lg ' onclick="${btnclick}">${btntxt}</button>
-    </div>
-    </div>
-    </div>
-    `
+        <i style='font-size:150px' class="fa fa-regular fa-circle-question"></i>
+        </div>
+
+        </div>
+        <div class='pt-3 pb-3 text-center text-warning' style='font-size:22px;font-weight:bolder'>
+       ${msg}
+         </div>
+        <div class="row  d-flex justify-content-around">
+        <div class="col-lg-4 text-center p-3">
+       <button style='font-size: 18px;' class='btn btn-primary col-12 btn-lg ' onclick="${btnclick}">${btntxt}</button>
+        </div>
+        </div>
+        </div>
+        `
             ShowModal(html)
         }
         function displaymsg(msg) {
-            let ht = `
-        <div class='p-3 '>
-        <h3 class='text-center h3  '>
-        ${msg}
-        <h3>
-        </div>
-        `
+            let ht = `   ${HeaderModal}
+            <div class='p-3 '>
+            <h3 class='text-center h3  '>
+            ${msg}
+            <h3>
+            </div>
+            `
             ShowModal(ht)
         }
 
         let displaynonestyle = `
- <style>
-        .detail{
-            display:none
-        }
-        td:has(.detail-child){
-            display:none
-        }
-    </style>     
+     <style>
+            .detail{
+                display:none
+            }
+            td:has(.detail-child){
+                display:none
+            }
+        </style>
 `
         let displayornot = 0;
         function showDetails(ele) {
@@ -2223,7 +2251,7 @@ funcs.Contains("اعدادات القنوات")
 
         function Search(inputId, divclass) {
             // Declare variables
-
+            debugger
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById(inputId);
             filter = input.value.toUpperCase();

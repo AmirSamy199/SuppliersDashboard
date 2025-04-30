@@ -79,6 +79,24 @@ namespace SuppliersDashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer statement page.
+        /// </summary>
+        public static string AccountCutomer {
+            get {
+                return ResourceManager.GetString("AccountCutomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distributor&apos;s statement.
+        /// </summary>
+        public static string AccountDis {
+            get {
+                return ResourceManager.GetString("AccountDis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accountss.
         /// </summary>
         public static string Accounts {
@@ -574,6 +592,15 @@ namespace SuppliersDashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Distributor Customer Page.
+        /// </summary>
+        public static string Customerpage {
+            get {
+                return ResourceManager.GetString("Customerpage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customers.
         /// </summary>
         public static string Customers {
@@ -696,6 +723,15 @@ namespace SuppliersDashboard.Resources {
         public static string dets {
             get {
                 return ResourceManager.GetString("dets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distributor Management Page.
+        /// </summary>
+        public static string Distributorpage {
+            get {
+                return ResourceManager.GetString("Distributorpage", resourceCulture);
             }
         }
         
@@ -903,6 +939,15 @@ namespace SuppliersDashboard.Resources {
         public static string Groups {
             get {
                 return ResourceManager.GetString("Groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to print.
+        /// </summary>
+        public static string HeaderAcount {
+            get {
+                return ResourceManager.GetString("HeaderAcount", resourceCulture);
             }
         }
         
@@ -1479,6 +1524,15 @@ namespace SuppliersDashboard.Resources {
         public static string sale {
             get {
                 return ResourceManager.GetString("sale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sell ​​to a sales channel.
+        /// </summary>
+        public static string saleChannHead {
+            get {
+                return ResourceManager.GetString("saleChannHead", resourceCulture);
             }
         }
         

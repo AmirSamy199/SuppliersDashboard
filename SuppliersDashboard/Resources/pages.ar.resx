@@ -186,14 +186,8 @@
   <data name="alldetails" xml:space="preserve">
     <value>كل التفاصيل</value>
   </data>
-  <data name="AllGroups" xml:space="preserve">
-    <value>كل المجموعات</value>
-  </data>
   <data name="amountrequired" xml:space="preserve">
     <value>المبلغ المطلوب </value>
-  </data>
-  <data name="amunot" xml:space="preserve">
-    <value>مبلغ المصروف</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>اسم المنطقة</value>
@@ -265,7 +259,7 @@
     <value>العملاء</value>
   </data>
   <data name="dawarmalik" xml:space="preserve">
-    <value>الدوار لمتجات الالبان</value>
+    <value>كاجو لمتجات الالبان</value>
   </data>
   <data name="days" xml:space="preserve">
     <value>ايام التوقف عن التحصيل</value>
@@ -414,9 +408,6 @@
   <data name="oldrem" xml:space="preserve">
     <value>المديونية السابقة</value>
   </data>
-  <data name="pages" xml:space="preserve">
-    <value>الصفحات جدول</value>
-  </data>
   <data name="pagges" xml:space="preserve">
     <value>الصفحات</value>
   </data>
@@ -466,7 +457,7 @@
     <value>فاتورة مشتريات</value>
   </data>
   <data name="quantity" xml:space="preserve">
-    <value>كميه</value>
+    <value>المبلغ</value>
   </data>
   <data name="ramount" xml:space="preserve">
     <value>المبلغ المرتجع</value>
@@ -518,9 +509,6 @@
   </data>
   <data name="Selectitem" xml:space="preserve">
     <value>اختر صنف</value>
-  </data>
-  <data name="selectitem1" xml:space="preserve">
-    <value>اختر الصنف</value>
   </data>
   <data name="SelectSupplier" xml:space="preserve">
     <value>اختر المورد </value>
@@ -685,9 +673,6 @@
   <data name="UsersRegistrationRequests" xml:space="preserve">
     <value>طلبات تسجيل البائعين</value>
   </data>
-  <data name="v" xml:space="preserve">
-    <value>مبلغ التحصيل</value>
-  </data>
   <data name="vat" xml:space="preserve">
     <value>ضريبة القميمة المضافة</value>
   </data>
@@ -699,5 +684,20 @@
   </data>
   <data name="warehousepagemsg" xml:space="preserve">
     <value>هذه الصفحة لاضافة او سحب كميات من المنتجات من المخزن الرئيسي </value>
+  </data>
+  <data name="AllGroups" xml:space="preserve">
+    <value>كل المجموعات</value>
+  </data>
+  <data name="amunot" xml:space="preserve">
+    <value>مبلغ المصروف</value>
+  </data>
+  <data name="pages" xml:space="preserve">
+    <value>الصفحات جدول</value>
+  </data>
+  <data name="selectitem1" xml:space="preserve">
+    <value>اختر الصنف</value>
+  </data>
+  <data name="v" xml:space="preserve">
+    <value>مبلغ التحصيل</value>
   </data>
 </root>

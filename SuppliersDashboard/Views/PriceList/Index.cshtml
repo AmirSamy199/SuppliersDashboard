@@ -53,7 +53,7 @@
                                             <button class="btn btn-primary col-12 btn-lg" onclick="edit(@m.Id , '@m.Value')"> تعديل </button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger col-12 btn-lg" onclick="sure( 'هل انت متاكد من حذف القائمة' , ' حذف ' , 'deletepricelist (@m.Id)')"> حذف </button>
+                                            <button class=" btn btn-danger col-12 btn-lg" onclick="sure( 'هل انت متاكد من حذف القائمة' , ' حذف ' , 'deletepricelist (@m.Id)')"> حذف </button>
 
                                         </td>
                                     </tr>
@@ -73,6 +73,7 @@
 
         function add() {
             let html = `
+             ${HeaderModal}
                         <div class="p-3">
 
                     <div class="row p-2">
@@ -108,7 +109,7 @@
 
         function edit(id, name) {
 
-            let ht = `
+            let ht = ` ${HeaderModal}
                                 <div class="p-3">
 
                     <div class="row p-2">

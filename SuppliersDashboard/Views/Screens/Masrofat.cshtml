@@ -133,7 +133,7 @@
 
     <script>
     function addnewExpenses() {
-        let html = `
+        let html = `${ HeaderModal }
         <div class='p-5 text-center '>
         <div class='row'>
         <div class='col-12 text-center p-5'>
@@ -193,7 +193,7 @@
                 }, success: (res) => {
 
                     endloader()
-                    let html = `<div>
+                    let html = `${HeaderModal }<div>
                         <p class='text-center'> ${res.msg}</p>
                         <p class='text-center'> واصبح اجمالي المصروفات </p>
                         <p class='text-center'>${res.amount} </p>

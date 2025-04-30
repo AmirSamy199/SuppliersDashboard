@@ -103,7 +103,10 @@
                         BranchId: BranchId
                     }, success: (res) => {
                         console.log(res)
-                        ShowModal(res)
+                        let html =`<div class="alert alert-primary" role="alert">
+                                    <h3 class='text-white'>${res}</h3>
+                                   </div>`
+                        ShowModal(html)
                         setTimeout(() => {
                             location.reload()
                         }, 3000)

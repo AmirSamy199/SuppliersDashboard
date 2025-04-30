@@ -3,32 +3,53 @@
     ViewBag.Title = "SettleReturns";
 }
 
+<style>
+    /* float the length selector left */
+    #Table_wrapper .dataTables_length {
+        float: left !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* float the search filter right */
+    #Table_wrapper .dataTables_filter {
+        float: right !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* ensure the wrapper row clears floats */
+    #Table_wrapper .row:first-child::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+</style>
 <h2 class="text-center p-2 ">@pages.SettleReturns</h2>
 
-<div class="container">
-    <table id="Table" class="table table-bordered">
-<thead>
-    <tr>
-        <th>
-            #
-        </th>
-        <th>
-            @pages.ItemName
-        </th>
-        <th>
-            @pages.size
-        </th> 
-        <th>
-            @pages.Warehouse
-        </th>
-        <th>
-            --
-        </th>
+<div id="table-scroll-container" style="max-width: 100%;">
+    <table id="Table" class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    @pages.ItemName
+                </th>
+                <th>
+                    @pages.size
+                </th>
+                <th>
+                    @pages.Warehouse
+                </th>
+                <th>
+                    --
+                </th>
 
-    </tr>
-</thead>
+            </tr>
+        </thead>
         <tbody id="tbody">
-            
         </tbody>
     </table>
 
@@ -43,12 +64,12 @@
 
         $.post(url, (res) => {
             console.log(res)
-            
+
 
 
 
             if (res.State == 2) {
-                let counter = 1; 
+                let counter = 1;
                 $("#Table").dataTable({
                     'iDisplayLength': 25,
                     "bDestroy": true,
@@ -74,12 +95,12 @@
                             //"data": "Typett", "name": "Typett", "width": "Auto"
                             data: null,
                             render: function (e, y, x) {
-                               
+
                                 return `<button class='btn btn-primary btn-lg' onclick="Settle(${e.CItemId} , ${e.WeightBalance} , ${e.CwId} )" > @pages.Settle </button>`
                             }
 
                         },
-                  
+
 
 
 
@@ -98,7 +119,7 @@
     function Settle(ItemId, Size, debitWarehouseId) {
         let url = `/Warehousing/SettlePartial?ItemId=${ItemId}&Size=${Size}&debitWarehouseId=${debitWarehouseId}`;
         $.post(url, (res) => {
-            ShowModal(res)
+            ShowModal(HeaderModal +res)
         })
     }
 </script>

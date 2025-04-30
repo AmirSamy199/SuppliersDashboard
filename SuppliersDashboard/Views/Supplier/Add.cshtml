@@ -12,7 +12,7 @@
     <div class="col-lg-12 col-xl-12">
 
         <div class=" rounded h-100 ">
-            <h2 class="p-3 text-center">@SuppliersDashboard.Resources.llayout.addsupplier </h2>
+            <h2 class="p-3 text-center text-primary">@SuppliersDashboard.Resources.llayout.addsupplier </h2>
             <div class="text-center" style="display:none" id="validationmsg"> <span class="text-danger">@SuppliersDashboard.Resources.llayout.plzfillallfields </span></div>
             <div class="mb-3">
                 <label for="name" class="form-label">@SuppliersDashboard.Resources.pages.name </label>
@@ -20,7 +20,7 @@
 
             </div>
             <div class="mb-3">
-                <label for="responsableperson" class="form-label">@SuppliersDashboard.Resources.llayout.responsobileperson </label>
+                <label for="responsableperson" class=" form-label">@SuppliersDashboard.Resources.llayout.responsobileperson </label>
                 <input type="text" class="form-control" id="responsableperson">
             </div>
             <div class="mb-3">
@@ -63,7 +63,7 @@
                     },
                     success: (res) => {
                            //$("#modalcontent").text(res.data.Message)
-                            let html = `<h1 class='text-center p-5'> ${res.data.Message}</h1>`
+                        let html = `${HeaderModal}<h1 class='text-center p-5'> ${res.data.Message}</h1>`
                             $("#modalcontent").html(html)
                             $("#myModal").modal("show")
 

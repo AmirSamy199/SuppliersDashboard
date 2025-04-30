@@ -34,6 +34,7 @@ namespace SuppliersDashboard.Controllers
 
         public ActionResult DeliverStore()
         {
+            
             var Us = Cokie.UserGet();
             Response<List<CloseStoreDay>> model = JsonConvert.DeserializeObject<Response<List<CloseStoreDay>>>(http.Get($"/api/Procedures/CheckStoreStateToBeDeliveredAndCloseDay?StoreKeeperId={Us.Id}"));
             ViewBag.State = model.State;

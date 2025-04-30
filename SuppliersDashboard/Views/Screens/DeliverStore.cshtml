@@ -146,14 +146,14 @@
                                                                         <h2 class='p-3 text-center'> هل انت متاكد من   استلام البضاعة من المخزن  </h2>
                                                                          <button class="btn btn-primary" onclick="ConfirmDeliverandReceiveStore('R')"> تاكيد استلام البضاعة </button>
                                                                         </div>`
-            ShowModal(html)
+            ShowModal(HeaderModal +html)
         } if (id == 'D') {
 
             let html = `<div class='text-center' >
                                                                         <h2 class='p-3 text-center'> هل انت متاكد من تسليم البضاعة والانصراف </h2>
                                                                          <button class="btn btn-primary" onclick="ConfirmDeliverandReceiveStore('D')"> تاكيد تسليم البضاعة </button>
                                                                         </div>`
-            ShowModal(html)
+            ShowModal(HeaderModal+html)
         }
     }
     function ConfirmCloseStoreKeeperDay() {
@@ -162,7 +162,7 @@
                                                                          <button class="btn btn-primary" onclick="CloseStoreKeeperDay()">اغلاق وردية وانصراف    </button>
 
                                                                         </div>`
-        ShowModal(html)
+        ShowModal(HeaderModal +html)
     }
     function ConfirmDeliverandReceiveStore(type) {
         $.ajax({
@@ -171,7 +171,13 @@
             data: {
                 type: type
             }, success: (res) => {
-                ShowModal(`<h2 class='text-center p-4'>${res.data.Message}</h2>`)
+                let html = `<div class="alert alert-primary" role="alert">
+  <h2 class='text-white'>${res.data.Message}</h2>
+</div>`
+                ShowModal(html)
+                setTimeout(() => {
+                    location.reload()
+                }, 200)
 
             }
         })
@@ -189,7 +195,7 @@
 
                                                                         </div>
                                                                         `
-        ShowModal(html)
+        ShowModal(HeaderModal +html)
     }
     function SubmitChangeActualQuantity(ID) {
         let value = $("#newactualvalue").val()
@@ -204,12 +210,15 @@
                     ID: ID,
                     Value: value
                 }, success: (res) => {
-                    ShowModal(`<h2 class='text-center p-4'>${res.data.Message}</h2>`)
+                    let html = `<div class="alert alert-primary" role="alert">
+  <h2 class='text-white'>${res.data.Message}</h2>
+</div>`
+                    ShowModal(html)
                     if (res.data.State == 1) {
 
                         setTimeout(() => {
                             location.reload()
-                        }, 3000)
+                        }, 2000)
                     }
                 }
             })
@@ -225,10 +234,16 @@
             success: (res) => {
 
                 if (res.data.State == 5) {
-                    ShowModal(`<h2 class='p-5 text-center'>${res.data.Data}</h2>`)
+                    let html = `<div class="alert alert-primary" role="alert">
+  <h2 class='text-white'>${res.data.Data}</h2>
+</div>`
+                    ShowModal(html)
                 } else {
                     location.reload()
                 }
+                setTimeout(() => {
+                    location.reload()
+                }, 2000)
             }
         })
     }

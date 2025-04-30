@@ -519,6 +519,9 @@
   <data name="print" xml:space="preserve">
     <value>print</value>
   </data>
+  <data name="HeaderAcount" xml:space="preserve">
+    <value>print</value>
+  </data>
   <data name="pro" xml:space="preserve">
     <value>Productcode</value>
   </data>
@@ -773,5 +776,20 @@
   </data>
   <data name="weight" xml:space="preserve">
     <value>Weight</value>
+  </data>
+  <data name="Distributorpage" xml:space="preserve">
+    <value>Distributor Management Page</value>
+  </data>
+  <data name="Customerpage" xml:space="preserve">
+    <value>Distributor Customer Page</value>
+  </data>
+  <data name="AccountCutomer" xml:space="preserve">
+    <value>Customer statement page</value>
+  </data>
+  <data name="AccountDis" xml:space="preserve">
+    <value>Distributor's statement</value>
+  </data>
+  <data name="saleChannHead" xml:space="preserve">
+    <value>Sell ​​to a sales channel</value>
   </data>
 </root>

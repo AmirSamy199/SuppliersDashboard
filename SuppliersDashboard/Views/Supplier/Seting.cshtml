@@ -19,55 +19,50 @@
         @*<div>
                 <a style="width:100px" class="btn btn-sm btn-outline-primary" href="/Supplier/Add">@SuppliersDashboard.Resources.pages.add</a>
             </div>*@
-        <div class="card-ERB ">
-            <div class="  table-responsive  ">
+    <div id="table-scroll-container" style="max-width: 100%;">
+        <table   class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@SuppliersDashboard.Resources.pages.name </th>
+                    <th scope="col">@SuppliersDashboard.Resources.pages.responperson</th>
 
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">@SuppliersDashboard.Resources.pages.name </th>
-                                    <th scope="col">@SuppliersDashboard.Resources.pages.responperson</th>
+                    <th scope="col">@SuppliersDashboard.Resources.pages.phone </th>
+                    <th scope="col"> @SuppliersDashboard.Resources.pages.details </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
 
-                                    <th scope="col">@SuppliersDashboard.Resources.pages.phone </th>
-                                    <th scope="col"> @SuppliersDashboard.Resources.pages.details </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                    <tr id="sup-@item.Record_ID">
 
-                                    <tr id="sup-@item.Record_ID">
+                        <th scope="row">@(Model.IndexOf(item)+1)</th>
+                        <td>@item.CompanyName</td>
+                        <td>@item.Responsible_Person</td>
+                        <td>@item.Telephone1</td>
+                        @if (item.Status == 1)
+                        {
 
-                                        <th scope="row">@(Model.IndexOf(item)+1)</th>
-                                        <td>@item.CompanyName</td>
-                                        <td>@item.Responsible_Person</td>
-                                        <td>@item.Telephone1</td>
-                                        @if (item.Status == 1)
-                                        {
+                            <td><a class="btn   btn-primary" onclick="disableSupplier(@item.Record_ID , 0,this)" href="#">@SuppliersDashboard.Resources.pages.active </a></td>
+                        }
+                        else
+                        {
+                            <td><a class="btn btn-danger " onclick="disableSupplier(@item.Record_ID , 1,this)" href="#">@SuppliersDashboard.Resources.pages.notactive </a></td>
 
-                                            <td><a class="btn btn-sm btn-primary" onclick="disableSupplier(@item.Record_ID , 0,this)" href="#">@SuppliersDashboard.Resources.pages.active </a></td>
-                                        }
-                                        else
-                                        {
-                                            <td><a class="btn btn-primary col-12 btn-lg" onclick="disableSupplier(@item.Record_ID , 1,this)" href="#">@SuppliersDashboard.Resources.pages.notactive </a></td>
-
-                                        }
+                        }
 
 
-                                    </tr>
-                                }
+                    </tr>
+                }
 
 
-                            </tbody>
-                        </table>
-                    </div>
+            </tbody>
+        </table>
+    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
+   
 
     @section scripts{
 
@@ -76,11 +71,11 @@
           if (state == 1)
         {
 
-              return '<a class="btn btn-primary col-12 btn-lg" onclick="disableSupplier(' + id + ' , 0,this)" href="#">@SuppliersDashboard.Resources.pages.active </a>'
+              return '<a class="btn   btn-primary" onclick="disableSupplier(' + id + ' , 0,this)" href="#">@SuppliersDashboard.Resources.pages.active </a>'
         }
         else
           {
-              return ' <a class="btn btn-primary col-12 btn-lg" onclick="disableSupplier(' + id + ' , 1,this)" href="#">@SuppliersDashboard.Resources.pages.notactive </a>'
+              return ' <a class="btn btn-danger" onclick="disableSupplier(' + id + ' , 1,this)" href="#">@SuppliersDashboard.Resources.pages.notactive </a>'
 
         }
         }

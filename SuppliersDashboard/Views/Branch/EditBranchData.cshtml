@@ -148,8 +148,8 @@
                     <option value="0"> -- </option>
                 </select>
             </div>
-            <div class="col-4 p-3 ">
-                <div id="creditpaymentdiv" class="collapse">
+            <div class="col-4 p-3 collapse "  id="creditpaymentdiv">
+                <div  >
                     <label>    عدد ايام التاخير او يوم الشهر  </label>
                     <input class="form-control" type="number" onclick="this.select()" value="0" id="credittermscountid" placeholder=" ايام  " />
                 </div>
@@ -310,7 +310,7 @@
             data: {
                 model:model
             }, success: (res) => {
-                let html = `
+                let html = `${HeaderModal}
                <h4 class='text-center p-4'>
                ${res.data.Message}
                </h4>
@@ -422,7 +422,7 @@
                 Second: second,
                 Third: third
             }, success: (res) => {
-                let html = `
+                let html = `${HeaderModal}
                <h4 class='text-center p-4'>
                ${res.data.Message}
                </h4>

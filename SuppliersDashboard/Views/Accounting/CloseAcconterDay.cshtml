@@ -246,7 +246,7 @@
 
       function popConfirmCloseDay() {
         ShowModal(
-            `
+            `${HeaderModal}
                 <div class='p-4'>
                 <h2 class='text-center'>متاكد من اغلاق وتصفيه الخزنة ؟ </h2>
                 </div>
@@ -274,7 +274,9 @@
                     location.reload();
 
                 } else {
-                    ShowModal(res.data.Message)
+                    let html = `${HeaderModal}<div><h2 class='text-center opacity-75'>${res.data.Message}</h2></div>`
+
+                    ShowModal(html)
                 }
 
             }
@@ -307,6 +309,7 @@
     }
     function validatecloseday() {
         ShowModal(`
+        ${ HeaderModal }
                 <div class='p-4'>
                 <h2 class='text-center'>متاكد من اغلاق اليومية ؟ </h2>
                 </div>
@@ -325,8 +328,9 @@
             type: "post",
             data: {},
             success: (res) => {
+                let html = `${HeaderModal}<div><h2 class='text-center opacity-75'>${res.data.Message}</h2></div>`
 
-                ShowModal(res.data.Message)
+                ShowModal(html)
                 setTimeout(() => { location.reload() }, 3000)
             }
         })

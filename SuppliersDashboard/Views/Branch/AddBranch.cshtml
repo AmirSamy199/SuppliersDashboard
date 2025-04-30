@@ -327,8 +327,8 @@
     }
 
         function AddNewCompany() {
-            let html = `
-                         <div class="row ">
+            let html = ` ${HeaderModal}
+                         <div class="row p-2">
                     <div class="col-6 text-center">
                         <label class="m-2">اسم الشركة </label>
                         <input class="form-control" id="addcompanyname" placeholder="اسم الشركة " />
@@ -377,9 +377,9 @@
  </div>
  <hr/>
                      <div class="col-6 text-center">
-                <span>
+                <label class="m-2">
                     النوع
-                </span>
+                </label>
                 <select id="addcompanycompanytypeid" class="form-control ">
                     <option value="0">  اختر النوع </option>
                     @if(ViewBag.CompanyTypes != null)
@@ -394,9 +394,9 @@
             </div>
              <div class="col-6 text-center">
 
-               <span>
+               <label class="m-2">
      الضريبه النوع
-  </span>
+  </label>
                 <select id="addcompanycompanyv" class="form-control ">
         <option value="0">  اختر الضريبه </option>
         @if(ViewBag.vat != null)
@@ -412,9 +412,9 @@
 </div>
     <div class="col-6 text-center">
 
-               <span>
+                <label class="m-2">
                       قائمة الاسعار
-                  </span>
+                  </label>
                                 <select id="addcompanypriceList" class="form-control ">
                         <option value="0">  اختر قائمة الاسعار </option>
                         @if(ViewBag.PricesLists != null)
@@ -431,8 +431,8 @@
 
     <div class="row d-flex justify-content-around">
 
-        <div class="col-lg-4 text-center p-3">
-            <button class="btn btn-primary col-12 btn-lg" onclick="SubmitAddCompany()"> اضافة عميل  </button>
+        <div class="text-center p-3">
+            <button class="btn btn-primary  btn-lg" onclick="SubmitAddCompany()"> اضافة عميل  </button>
         </div>
     </div>
 

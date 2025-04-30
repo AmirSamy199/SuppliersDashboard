@@ -6,6 +6,29 @@
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
     int i = 1;
 }
+<style>
+    /* float the length selector left */
+    #magalattable_wrapper .dataTables_length {
+        float: left !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* float the search filter right */
+    #magalattable_wrapper .dataTables_filter {
+        float: right !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* ensure the wrapper row clears floats */
+    #magalattable_wrapper .row:first-child::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+</style>
 
 <div class="p-5">
     <div class="row">
@@ -84,14 +107,14 @@
             </div>
         </div>
     </div>
-    <div> 
-        
-        
-        <h3 class="text-center text-info p-3" >
-                    المجلات
+    <div>
+
+
+        <h3 class="text-center text-info p-3">
+            المجلات
         </h3>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered" id="magalattable">
+        <div id="table-scroll-container" style="max-width: 100%;">
+            <table id="magalattable" class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -117,17 +140,17 @@
                                 <td>@special.ToDate</td>
                                 <td>
                                     <button class="btn btn-danger"
-                                            onclick="sure('هل انت متاكد من الالغاء ؟ ' , 'الفاء' , 'cancelSpecialPrice(@special.Id)')">
+                                            onclick="sure('هل انت متاكد من الالغاء ؟ ' , 'الغاء' , 'cancelSpecialPrice(@special.Id)')">
                                         الغاء
                                     </button>
 
                                 </td>
-                        </tr>
+                            </tr>
+                        }
                     }
-                    }
-                   
-                    
-                    </tbody>
+
+
+                </tbody>
             </table>
         </div>
     </div>
@@ -193,7 +216,7 @@
                     isAll : $('#AllBranchesCheckBox').is(':checked')
 
                 }, success: (res) => {
-                    ShowModal(`<h2 class='text-center p-5'>${res.data.Message}</h2>`)
+                    ShowModal(`${HeaderModal}<h2 class='text-center p-5'>${res.data.Message}</h2>`)
                 }
             })
         }

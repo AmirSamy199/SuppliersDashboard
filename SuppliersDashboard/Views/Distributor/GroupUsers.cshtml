@@ -10,6 +10,7 @@
     ViewBag.Title = "GroupUsers";
     Layout = "~/Views/Shared/_layoutV2.cshtml";
 }
+<h2 class="card-header d-flex justify-content-center text-primary mt-2 mb-1" style="opacity:0.6">@SuppliersDashboard.Resources.llayout.Distributorpage</h2>
 
 <div class="row p-2" style="width:100%">
     <div class="card-header-2" style="text-align:center">
@@ -344,7 +345,7 @@ function dischanged() {
         $.get(url, (result) => {
             console.log('c');
 
-            ShowModal(result);
+            ShowModal(HeaderModal +result);
             })
             //$.ajax({
             //    url: "/Distributor/GetUserDistributorIdandmonthtarget",

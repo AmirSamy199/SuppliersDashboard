@@ -35,6 +35,28 @@
     button {
         margin: 0 10px;
     }
+    /* float the length selector left */
+    #Table_wrapper .dataTables_length {
+        float: left !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* float the search filter right */
+    #Table_wrapper .dataTables_filter {
+        float: right !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* ensure the wrapper row clears floats */
+    #Table_wrapper .row:first-child::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+
 </style>
 
 <input type="hidden" id="salesid" value="0" />
@@ -378,6 +400,7 @@
                     if (res.data.State == 1) {
                         showSuccessOperation(res.data.Message)
                         LoadPage(baseid, basename)
+                        setTimeout(() => { window.location.reload() }, 2000)
 
                     } else {
 

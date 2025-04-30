@@ -38,13 +38,13 @@
         </div>
         <div class="col-lg-6 text-center p-3">
             <div class="row d-flex justify-content-around">
-                <div class="col-lg-8 text-center " style="text-align:center;">
+                <div class="col-lg-4 text-center " style="text-align:center;">
 
                     <label style="font-size:20px; text-align:center;">
                         @SuppliersDashboard.Resources.pages.oldrem :
                     </label>
                 </div>
-                <div class="col-lg-4 text-center ">
+                <div class="col-lg-7 text-center ">
 
                     <input disabled id="oldremaining" type="number" class="disabled form-control " />
                 </div>
@@ -279,7 +279,7 @@
                                                                                               </div>
                                                                                               </div>
                                                                                               </div>`
-            ShowModal(html)
+            ShowModal(HeaderModal +html)
             $("#itemsselect").val("")
         })
         $("#companyselect").change(() => {

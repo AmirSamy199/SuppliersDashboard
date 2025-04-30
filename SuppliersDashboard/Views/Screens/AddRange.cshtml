@@ -91,7 +91,9 @@
                     RangeId : range
                 },type:"post"
                 , success: (res) => {
-                    ShowModal(res.data.Message)
+                    ShowModal(`<div class="alert alert-primary text-white p-1" role="alert">
+  ${res.data.Message}
+</div>`)
                     if (res.data.State == 1) {
                         setTimeout(function () { location.reload() }, 3000)
                     }
@@ -113,9 +115,12 @@
                     Name: name
                 }, type: "post",
                 success: (res) => {
-                    ShowModal(res.data.Message)
+                    ShowModal(`<div class="alert alert-primary text-white p-1" role="alert">
+  ${res.data.Message}
+</div>`)
                     if (res.data.State == 1) {
-                        setTimeout(function () { location.reload() }, 3000)
+       
+                        setTimeout(function () { location.reload() }, 2000)
 
                     }
 
