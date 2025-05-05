@@ -332,6 +332,19 @@ namespace SuppliersDashboard.Controllers
                 return Json(new { data = res });
             }
         }
+
+        [HttpPost]
+        public JsonResult DeleteRequestMaterials(int ID)
+        {
+            using (HttpClient http = new HttpClient())
+            {
+
+                var response = http.SetHeader().GetAsync(Setting.Host + $"/api/Warehousing/DeleteRequestMaterials?ID={ID}").Result;
+                Response<string> res = JsonConvert.DeserializeObject<Response<string>>(response.Content.ReadAsStringAsync().Result);
+                // res.Data = res.Data.Select(r => r._Edit_date = r.Edit_date?.ToString("yyyy-MM-dd hh:mm tt "); return ;
+                return Json(new { data = res });
+            }
+        }
         [HttpPost]
         public JsonResult ConfirmMoshtrayat()
         {

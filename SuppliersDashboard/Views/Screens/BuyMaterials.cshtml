@@ -162,7 +162,7 @@
 
          });
 
-
+         LoadGrid()
 
      })
 
@@ -197,7 +197,7 @@
 
  function LoadGrid() {
      $.ajax({
-         url: "/Screens/GetMoshtrayat",
+         url: "/Screens/GetAllMaterialsbyConfirm_0",
          type: "post",
          success: (res) => {
 
@@ -206,18 +206,19 @@
                  let html = "";
                  let AllPBillPrice = 0;
                  $.each(res, (i, e) => {
-                     let itemid = e.Item_ID;
+                     let itemid = e.ItemId;
                      let itttem = AllItems.find((s) => s.Item_ID == itemid)
                      let supplyprice = itttem.Supply_Price;
-                     let itemtotalprice = itttem.Supply_Price * e.Item_Count
+                     let itemtotalprice=0
+                     itemtotalprice = itemtotalprice +e.TotalPrices
                      html += `<tr>
                      <td>${count++} </td>
                      <td> ${e.ItemName}</td>
-                     <td>${e.Item_Count} </td>
-                     <td> ${e._Edit_date}</td>
-                     <td> ${supplyprice}</td>
-                     <td> ${itemtotalprice}</td>
-                     <td> <button id='deletebtn-${e.RecordID}' class='btn btn-primary col-12 btn-lg ' onclick='deleteRequest(${e.RecordID},this)'>حذف </button></td>
+                     <td>${e.ItemCount} </td>
+                     <td> ${new Date(parseInt(e.DataTransaction.match(/\d+/)[0], 10)).toLocaleString()} </td>
+                     <td> ${e.PriceItem}</td>
+                     <td> ${e.TotalPrices}</td>
+                     <td> <button id='deletebtn-${e.Id}' class='btn btn-primary col-12 btn-lg ' onclick='deleteRequest(${e.Id},this)'>حذف </button></td>
 
                      </tr>`
                      AllPBillPrice += itemtotalprice ;
@@ -240,8 +241,10 @@
 
      $.ajax({
          type: "post",
-         url: "/WareHousing/DeleteRequest?ID=" + id,
-         data: {},
+         url: "/WareHousing/DeleteRequestMaterials",
+         data: {
+             ID:id
+         },
          success: (res) => {
              if (res.data.State == 1) {
 
@@ -260,14 +263,15 @@
 
      let item = AllItems.find((e) => e.Item_ID == id);
      $.ajax({
-         url: "/Company/AddItemCount",
+         url: "/Company/AddItemMat",
          type: "post",
          data: {
              itemId: item.Item_ID,
              count: itemcount,
              type: "C",
              user: @ViewBag.UserId,
-             supplier: item.Supplier_ID
+             supplier: item.Supplier_ID,
+             Supply_Price: item.item
          },
          success: (res) => {
                  LoadGrid()

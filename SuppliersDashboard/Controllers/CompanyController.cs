@@ -82,5 +82,23 @@ namespace SuppliersDashboard.Controllers
             }
            
         }
+
+
+        [HttpPost]
+        //اضافة في مخزن المشريات
+        public JsonResult AddItemMaterials(int itemId, decimal count, string type, int user, int supplier,decimal Supply_Price)
+        {
+            var Cuser = Cokie.UserGet();
+            using (HttpClient c = new HttpClient())
+            {
+                var response = c.SetHeader().GetAsync(Setting.Host + $"/api/Items/AddItemMaterials?UserID={Cuser.Id}&itemId={itemId}&count={count}&type={type}&user={user}&supplier={supplier}&Supply_Price={Supply_Price}").Result;
+                var content = response.Content.ReadAsStringAsync().Result;
+                var deContent = JsonConvert.DeserializeObject<Response<string>>(content);
+
+                return Json(new { data = deContent });
+
+            }
+
+        }
     }
 }

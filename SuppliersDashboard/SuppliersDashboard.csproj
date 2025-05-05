@@ -614,6 +614,7 @@
     <Compile Include="Models\Joblevels.cs" />
     <Compile Include="Models\LanguageMang.cs" />
     <Compile Include="Models\MainWarehouseReturnBalance_V.cs" />
+    <Compile Include="Models\MaterialsItems.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Model2.cs" />
     <Compile Include="Models\Model3.cs" />

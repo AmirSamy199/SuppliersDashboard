@@ -177,6 +177,18 @@ namespace SuppliersDashboard.Controllers
 
             return Json(res.Data);
         }
+        // بيجب كل المواد الخام اللي كونفرم ب ==0
+        [HttpPost]
+        public JsonResult GetAllMaterialsbyConfirm_0()
+        {
+
+            string response = http.Get("/api/WareHousing/GetAllMaterialsbyConfirm_0");
+
+            Response<List<MaterialsItems>> res = JsonConvert.DeserializeObject<Response<List<MaterialsItems>>>(response);
+
+            return Json(res.Data);
+        }
+
         [HttpPost]
         public JsonResult GetAllItems(int SupId = -1, int CatId = -1)
         {
