@@ -218,14 +218,15 @@ namespace SuppliersDashboard.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddSupplier(string name, string responsableperson, string telephone, string address)
+        public ActionResult AddSupplier(string name, string responsableperson, string telephone, string address,int TypeSupplier)
         {
             Supplier_Tbl sup = new Supplier_Tbl()
             {
                 CompanyName = name,
                 Responsible_Person = responsableperson,
                 Telephone1 = telephone,
-                Address = address
+                Address = address,
+                TypeSupplier= TypeSupplier
             };
             using (HttpClient c = new HttpClient())
             {

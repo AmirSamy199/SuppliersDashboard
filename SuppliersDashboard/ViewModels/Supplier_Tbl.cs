@@ -29,5 +29,6 @@ namespace SuppliersDashboard.ViewModels
         public byte? Status { get; set; }
 
         public int? UserID { get; set; }
+        public int TypeSupplier { set; get; }
     }
 }

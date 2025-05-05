@@ -1782,6 +1782,7 @@
     <Content Include="Views\ChartOfAccount\AllAccountsCharts.cshtml" />
     <Content Include="Views\ChartOfAccount\_addAccount.cshtml" />
     <Content Include="Views\ChartOfAccount\AccountsSuppliers.cshtml" />
+    <Content Include="Views\Screens\BuyMaterials.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

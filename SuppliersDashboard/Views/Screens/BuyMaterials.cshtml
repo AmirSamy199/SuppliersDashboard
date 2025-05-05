@@ -1,0 +1,374 @@
+﻿
+@{
+    ViewBag.Title = "BuyMaterials";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+<div id="printer">
+    <style>
+        th, td {
+            text-align: center !important
+        }
+
+        table {
+            margin: 20px auto !important;
+            border: 1px solid #000 !important;
+            border-collapse: collapse !important;
+        }
+    </style>
+
+    <div class="row d-flex justify-content-around p-4">
+        <div class="col-lg-4 text-center p-3">
+
+            <select id="supplierselect" class="form-control form-select">
+                <option> @SuppliersDashboard.Resources.pages.choosesupplier </option>
+                @foreach (var item in ViewBag.Suppliers)
+                {
+                    <option value="@item.Record_ID"> @item.CompanyName </option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <select id="categoryselect" class="form-control form-select">
+                <option>  @SuppliersDashboard.Resources.Items.Categories </option>
+
+            </select>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            @*<select id="itemsselect" class="form-control form-select choices-single">
+                    <option>اختر الصنف   </option>
+
+                </select>*@
+            <input list="itemsselectoption" name="itemsselectoption" class="form-control" placeholder="   @SuppliersDashboard.Resources.pages.Selectitem " id="itemsselect">
+            <datalist id="itemsselectoption">
+            </datalist>
+        </div>
+        @*<div class="p-2 col-3">
+
+                <input class="form-control glyphicon-search" onkeyup="searchitems(this)" />
+
+            </div>*@
+    </div>
+    <div id="tablemsg" class="text-center text-body collapse">
+        <h2 class="text-muted">
+            @SuppliersDashboard.Resources.pages.Selectitem
+        </h2>
+    </div>
+
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <table id="dtBasicExample" class="table display responsive nowrap table-responsive" width="100%">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">@SuppliersDashboard.Resources.llayout.ProductName  </th>
+                            <th scope="col">@SuppliersDashboard.Resources.pages.count </th>
+                            <th scope="col">@SuppliersDashboard.Resources.Items.Date </th>
+                            <th scope="col"> @SuppliersDashboard.Resources.pages.price </th>
+                            <th scope="col"> @SuppliersDashboard.Resources.pages.totalprice </th>
+                            <th scope="col"> @SuppliersDashboard.Resources.pages.action </th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5"> </td>
+                            <td id="tfoottotalbill"> </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="ConfirmRequest()"> @SuppliersDashboard.Resources.pages.accept  </button>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> طباعة</button>
+
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+
+
+     $(document).ready(function () {
+
+         $("#itemsselect").change(() => {
+
+             debugger
+             let value = $("#itemsselect").val();
+             //let item = AllItems.find(obj => {
+             //    return obj.Item_ID === value
+             //})
+             let item = AllItems.find((e) => e.Item_ID == value)
+             let html = `${HeaderModal}<div class='p-3'>
+                         <h3 class='text-center'> ${item.ItemName}</h3>
+                         <div class='row'>
+
+                         <div class='col-12'>
+                         <label>السعر </label>
+                         <input class='form-control' type='text' readonly value='${item.Supply_Price}'  />
+                         </div>
+                          <div class='col-12'>
+                         <label>العدد </label>
+                         <input class='form-control' type='number' onkeyup='changeitemcount(this)' placeholder='ادخل العدد'  />
+                         </div>
+                         <div>
+                         <button class=' btn btn-primary col-12  mt-2' onclick='addsellitem(${item.Item_ID})'> اضافة </button>
+                         </div>
+                         </div>
+                         </div>`
+             ShowModal(html)
+             $("#itemsselect").val("")
+         });
+
+         //=======================================================
+
+         $("#supplierselect").change(() => {
+
+             let value = $("#supplierselect").val();
+             let filter = "supplier" + value
+             if (validateSupplier(value)) {
+
+
+
+                 changeCategoriesselect(value)
+
+             }
+         });
+         //=======================================================
+
+         $("#categoryselect").change(() => {
+             let value = $("#supplierselect").val();
+             LoadData();
+
+         });
+
+
+
+     })
+
+ let AllItems = [];
+ let itemcount = 0;
+ LoadData();
+     LoadGrid();
+     function Print() {
+         $(".btn").css("display","none")
+         LayoutPrint();
+         $(".btn").css("display","inline-block")
+ }
+ function ConfirmRequest() {
+     $.ajax({
+         url: "/WareHousing/ConfirmMoshtrayat",
+         type: "post",
+         success: (res) => {
+             debugger
+             if (res.data.State == 1) {
+                 let x = res.data.Data
+                 location.href= "/screens/PrintBuyBill?RequestId=" + res.data.Data
+             } else {
+
+             ShowModal(res.data.Message);
+             }
+
+             setTimeout(() => { location.reload() }, 3000)
+         }
+
+     })
+ }
+
+ function LoadGrid() {
+     $.ajax({
+         url: "/Screens/GetMoshtrayat",
+         type: "post",
+         success: (res) => {
+
+             if (res.length > 0) {
+                 let count = 1;
+                 let html = "";
+                 let AllPBillPrice = 0;
+                 $.each(res, (i, e) => {
+                     let itemid = e.Item_ID;
+                     let itttem = AllItems.find((s) => s.Item_ID == itemid)
+                     let supplyprice = itttem.Supply_Price;
+                     let itemtotalprice = itttem.Supply_Price * e.Item_Count
+                     html += `<tr>
+                     <td>${count++} </td>
+                     <td> ${e.ItemName}</td>
+                     <td>${e.Item_Count} </td>
+                     <td> ${e._Edit_date}</td>
+                     <td> ${supplyprice}</td>
+                     <td> ${itemtotalprice}</td>
+                     <td> <button id='deletebtn-${e.RecordID}' class='btn btn-primary col-12 btn-lg ' onclick='deleteRequest(${e.RecordID},this)'>حذف </button></td>
+
+                     </tr>`
+                     AllPBillPrice += itemtotalprice ;
+                 })
+                 $("#TableBody").html(html)
+                 $("#Table").dataTable()
+                 $("#tfoottotalbill").text(AllPBillPrice)
+             }
+
+         }
+     })
+ }
+ function changeitemcount(ele) {
+
+     let value = $(ele).val();
+     itemcount = value
+ }
+ function confirmDeleteRequest(id) {
+
+
+     $.ajax({
+         type: "post",
+         url: "/WareHousing/DeleteRequest?ID=" + id,
+         data: {},
+         success: (res) => {
+             if (res.data.State == 1) {
+
+                 $("#myModal").modal("hide")
+                 $("#deletebtn-" + id).parent().parent().hide(2000);
+             }
+
+
+         }
+     })
+
+
+ }
+        function addsellitem(id) {
+            debugger
+
+     let item = AllItems.find((e) => e.Item_ID == id);
+     $.ajax({
+         url: "/Company/AddItemCount",
+         type: "post",
+         data: {
+             itemId: item.Item_ID,
+             count: itemcount,
+             type: "C",
+             user: @ViewBag.UserId,
+             supplier: item.Supplier_ID
+         },
+         success: (res) => {
+                 LoadGrid()
+             $("#modal").modal("hide");
+         }
+     })
+
+
+ }
+ function validateSupplier(value) {
+     if (value != null && value != "" && value.trim() != "اختر المورد" && value.trim() != "choose supplier")
+         return true
+     return false
+ }
+ function validatecategory(value) {
+     if (value != null && value != "" && value.trim() != "اختر الفئة" && value.trim() != "choose category" && value.trim() != "--")
+         return true
+     return false
+ }
+
+    function changeCategoriesselect(value) {
+         $.ajax({
+             type: "post",
+             url: "/Items/GetCategories",
+             data: {
+                 SupId: value
+             }, success: (res) => {
+
+                 let html = "<option>@SuppliersDashboard.Resources.pages.choosecategory </option>"
+                 $.each(res.data.Data, (i, e) => {
+                     html += "<option value='" + e.Id + "'>" + e.Value + "</option>"
+
+                 })
+
+                 $("#categoryselect").html(html)
+             }
+         });
+
+     }
+
+ function LoadData() {
+
+     let sup = $("#supplierselect").val();
+     let category = $("#categoryselect").val();
+     if (validateSupplier(sup) == false) {
+         sup = -1;
+     }
+
+     if (validatecategory(category) == false) {
+         category = -1;
+     }
+
+     $.ajax({
+         type: "post",
+         url: "/Items/GetAllItems",
+         data: {
+             SupId: sup,
+             CatId: category,
+             ToBuyPage :"YES"
+         },
+         success: (res) => {
+
+
+
+             AllItems = res.data.Data;
+             let html = "<option>اختر الصنف </option>";
+
+
+             $.each(res.data.Data, (i, e) => {
+                 html += `<option class='itemselectoption' supplier='supplier${e.Supplier_ID}' category='category${e.ItemGroup_ID}' value='${e.Item_ID}'> <span >${e.Item_ID} </span> ${e.ItemName} <span style="display:none" >  </span></option>`
+
+             })
+             $("#itemsselectoption").html(html)
+
+             $("#tablecollapse").collapse("show")
+
+
+         }
+     })
+ }
+
+ function searchitems(element) {
+
+     let filter = $(element).val().toUpperCase()
+
+     var divs = document.querySelectorAll(".itemselectoption");
+     for (let i = 0; i < divs.length; i++) {
+         let d = divs[i];
+         let txtValue = d.textContent || d.innerText || d.innerHTML;
+         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+             divs[i].style.display = "";
+         } else {
+             divs[i].style.display = "none";
+         }
+     }
+ }
+ function deleteRequest(id) {
+     let html = `<div class='p-4'> <p>  هل انت متاكد من الحذف ؟ </p> <div clss='text-center '></div>  <button style='margin :0 7px ' class='btn btn-sm btn-outline-danger ' onclick="confirmDeleteRequest(${id})"> حذف</button></div> `
+     $("#modalcontent").html(html)
+     $("#myModal").modal("show")
+ }
+    </script>
+
+

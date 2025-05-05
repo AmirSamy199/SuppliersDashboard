@@ -32,6 +32,13 @@
                 <label for="address" class="form-label">@SuppliersDashboard.Resources.llayout.address </label>
                 <input type="text" class="form-control" id="address">
             </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">نوع المورد </label>
+                <select class="form-select" id="TypeSupplier">
+                    <option value="0">مورد بضاعة</option>
+                    <option value="1">مورد مود خام</option>
+                </select>
+            </div>
 
             <button onclick="SubmitForm()" class="btn btn-primary">@SuppliersDashboard.Resources.llayout.addsupplier </button>
 
@@ -59,7 +66,8 @@
                         name: name,
                         responsableperson: responsableperson,
                         telephone: telephone,
-                        address: address
+                        address: address,
+                        TypeSupplier: $("#TypeSupplier").val()
                     },
                     success: (res) => {
                            //$("#modalcontent").text(res.data.Message)

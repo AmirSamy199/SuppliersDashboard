@@ -326,9 +326,16 @@
                                     <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AllAccountsCharts">-  الحسابات </a></li>
 
                                 }
+                                @*حساب المورد*@
                                 @if (funcs.Contains("صفحة ادارة المناديب"))
                                 {
                                     <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AccountsSuppliers">- حساب المورد </a></li>
+
+                                }
+                                @*مشتريات المواد الخام *@
+                                @if (funcs.Contains("صفحة ادارة المناديب"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/Screens/BuyMaterials">-  مشتريات المواد الخام </a></li>
 
                                 }
 

@@ -123,10 +123,27 @@ namespace SuppliersDashboard.Controllers
             ViewBag.PageMsg = "شاشة الشراء    ";
 
             string suppliersselect = http.Get("/api/Suppliers/GetSuppliers");
-            dynamic supplierlist = JsonConvert.DeserializeObject<object>(suppliersselect);
-            ViewBag.Suppliers = supplierlist.data;
+            var supplierlist = JsonConvert.DeserializeObject<Response<List<Supplier_Tbl>>>(suppliersselect);
+
+            // TypeSupplier=0 for موردين البضاعة 
+            ViewBag.Suppliers = supplierlist.data.Where(s=>s.TypeSupplier==0);
             return View();
         }
+
+        public ActionResult BuyMaterials()
+        {
+            ViewBag.UserId = Cokie.UserGet().Id;
+
+            ViewBag.PageMsg = "شاشة المواد الخام    ";
+
+            string suppliersselect = http.Get("/api/Suppliers/GetSuppliers");
+            var supplierlist = JsonConvert.DeserializeObject<Response<List<Supplier_Tbl>>>(suppliersselect);
+
+            // TypeSupplier=0 for موردين البضاعة 
+            ViewBag.Suppliers = supplierlist.data.Where(s => s.TypeSupplier == 1);
+            return View();
+        }
+        // 
         public ActionResult PrintBuyBill(int RequestId)
         {
 
