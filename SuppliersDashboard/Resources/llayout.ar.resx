@@ -768,6 +768,15 @@
   <data name="Customerpage" xml:space="preserve">
     <value>صفحة عملاء المندوب</value>
   </data>
+  <data name="AccountCutomer" xml:space="preserve">
+    <value>صفحة كشف حساب العميل</value>
+  </data>
+  <data name="AccountDis" xml:space="preserve">
+    <value>كشف حساب المندوب</value>
+  </data>
+  <data name="saleChannHead" xml:space="preserve">
+    <value>البيع لقناة بيعية</value>
+  </data>
   <data name="c" xml:space="preserve">
     <value />
   </data>
@@ -783,13 +792,7 @@
   <data name="sss" xml:space="preserve">
     <value>s</value>
   </data>
-  <data name="AccountCutomer" xml:space="preserve">
-    <value>صفحة كشف حساب العميل</value>
-  </data>
-  <data name="AccountDis" xml:space="preserve">
-    <value>كشف حساب المندوب</value>
-  </data>
-  <data name="saleChannHead" xml:space="preserve">
-    <value>البيع لقناة بيعية</value>
+  <data name="covenant" xml:space="preserve">
+    <value>العهدة</value>
   </data>
 </root>

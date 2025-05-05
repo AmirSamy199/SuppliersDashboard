@@ -219,6 +219,10 @@
     function SalePartial() {
         let url = `/AsSalesman/SalePartial/${baseId}`
         $.post(url, (res) => {
+            $('#myModal').css({
+                'display': 'block',
+                'min-width': '800px'
+            });
             ShowModal(HeaderModal+res)
         })
     }

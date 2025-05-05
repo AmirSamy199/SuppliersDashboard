@@ -313,6 +313,25 @@
                                     <li class="nav-item"><a class="nav-link" href="/Distributor/GroupUsers">-  @llayout.Delegatemanagement </a></li>
 
                                 }
+                                @*حركة الخزنة والعهدة*@
+
+                                @if (funcs.Contains("صفحة ادارة المناديب"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/Index">-  @llayout.covenant </a></li>
+
+                                }
+                                @*الحسابات*@
+                                @if (funcs.Contains("صفحة ادارة المناديب"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AllAccountsCharts">-  الحسابات </a></li>
+
+                                }
+                                @if (funcs.Contains("صفحة ادارة المناديب"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AccountsSuppliers">- حساب المورد </a></li>
+
+                                }
+
                                 @if (funcs.Contains("صفحة البيع لقناة بيعية"))
                                 {
 

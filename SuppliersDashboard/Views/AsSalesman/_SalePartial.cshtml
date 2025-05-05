@@ -8,7 +8,7 @@
         min-width: 200%
     }
 </style>
-<div class="container">
+<div class="container" style="overflow:scroll"> 
     <div class="row">
         <div class="col-lg-4 p-2">
             <label class="form-label">
@@ -83,7 +83,7 @@
         <p class="text-danger text-center" id="danger-div-id"></p>
     </div>
     <div id="billdetailsdiv" class="collapse">
-        <div class="table">
+        <div class="table" style="overflow:scroll" >
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -504,7 +504,7 @@
                     </div>
                     `
 
-                    ShowModal(ht)
+                    ShowModal(HeaderModal +ht)
                 } else {
 
                 displaymsg(mes)

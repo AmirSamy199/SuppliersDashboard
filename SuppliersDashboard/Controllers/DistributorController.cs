@@ -400,8 +400,6 @@ namespace SuppliersDashboard.Controllers
                 string response = client.GetAsync(Setting.Host + $"/api/ClosingDay/OpenAccount" + paramaters).Result.Content.ReadAsStringAsync().Result;
                 Response<string> res = JsonConvert.DeserializeObject<Response<string>>(response);
 
-
-
                 return Json(new { data = res }, JsonRequestBehavior.AllowGet);
             }
         }

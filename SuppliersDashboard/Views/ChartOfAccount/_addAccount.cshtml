@@ -1,0 +1,78 @@
+﻿
+
+<style>
+    select#Accounttype {
+        padding-right: 2rem; /* Add space between text and dropdown arrow */
+    }
+</style>
+
+<div class="col-12">
+
+    <div class="row">
+        <div class="col-8">
+
+        </div>
+
+    </div>
+    <div class=" rounded h-100 p-4">
+        <h2 class="card-header d-flex justify-content-center text-primary mt-2 mb-1" style="opacity:0.6"> اضافة حساب جديد</h2>
+
+     
+        <div class="row mb-3">
+            <label for="AccountName" class="col-4 col-form-label">اسم الحساب </label>
+            <div class="col-7">
+                <input type="text" class="form-control col-7" id="AccountName">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="additembarcodeinput" class="col-4 col-form-label">نوع الحساب</label>
+            <div class="col-7">
+                <select class="form-select form-control" id="Accounttype">
+                    <option value="T">حساب خزنة</option>
+                    <option value="D">حساب مدين (D)</option>
+                    <option value="C"> حساب دائن (C)</option>
+                </select>
+            </div>
+        </div>
+     
+     
+        <button type="submit" onclick="SubmitAddAccount()" class="btn btn-success">حفظ </button>
+
+    </div>
+</div>
+<script>
+    function SubmitAddAccount() {
+        $.ajax({
+            url: "/ChartOfAccount/SubmitAddAccount",
+            type: "Post",
+            data: {
+                Value: $("#AccountName").val(),
+                AccountType: $("#Accounttype").val()
+            },
+            success: function (res) {
+                $("#myModal").modal("hide")
+                showSuccessOperation("تم العملية بنجاح")
+                setTimeout(() => {
+                    location.reload()
+                }, 2000)
+
+            }, error: function (res) {
+                $("#myModal").modal("hide")
+                showDangerOperation(`اعد المحاولة مرة اخري`)
+            }
+
+
+        })
+    }
+</script>
+
+
+
+
+
+
+
+
+
+

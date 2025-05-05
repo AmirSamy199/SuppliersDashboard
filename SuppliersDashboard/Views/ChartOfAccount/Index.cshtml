@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+<style>
+    select#Accounts, #Treasure {
+        padding-right: 2rem; /* Add space between text and dropdown arrow */
+    }
+</style>
+<h2 class="card-header d-flex justify-content-center text-primary mt-2 mb-1" style="opacity:0.6">@SuppliersDashboard.Resources.llayout.covenant</h2>
+
+<div class="row p-3 d-flex justify-content-center">
+
+    <div class="col-2 "><button class="btn btn-primary" id="inTreasure" onclick="TreasureAction('C')">داخل الخزنة</button></div>
+    <div class="col-2 "> <button class="btn btn-primary" id="outTreasure" onclick="TreasureAction('D')"> خارج الخزنة</button></div>
+    <div class="col-12"></div>
+    <div class="col-12 text-center">
+        <h3 class="card-header d-flex justify-content-center text-secondary mt-2 mb-1" style="opacity:0.6" id="HeaderText">فلوس داخلة الي الخزنة </h3>
+    </div>
+    @*Accounts*@
+    <div class="col-12"></div>
+    <div class="col-4">
+        <label for="city" class="form-label">الحسابات</label>
+        <select class="form-select" aria-label="اختار الحساب" id="Accounts">
+        </select>
+    </div>
+    <div class="col-4">
+        <label for="city" class="form-label">الخزنة</label>
+        <select class="form-select" aria-label="اختار الخزنة" id="Treasure">
+            @if (ViewBag.Treasury != null)
+            {
+
+
+                foreach (var item in ViewBag.Treasury)
+                {
+
+                    <option value="@item.Id">
+                        @item.Value
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-12"></div>
+    <div class="col-4">
+        <label for="Amount" class="form-label">المبلغ</label>
+        <input type="number" class="form-control" placeholder="ادخل المبلغ" aria-label="Amount" id="Amount" aria-describedby="basic-addon1">
+        <span id="AmoountErro" class="text-danger"></span>
+
+    </div>
+    <div class="col-4">
+        <label for="User" class="form-label">اختار شخص</label>
+        <input class="form-control" list="UsersList" id="User" name="User" placeholder="اختار شخص" />
+
+        <datalist id="UsersList">
+            @if (ViewBag.Users != null)
+            {
+                foreach (var item in ViewBag.Users)
+                {
+                    <option value="@item.Value" data-id="@item.Id"></option>
+                }
+            }
+        </datalist>
+    </div>
+    <div class="col-12"></div>
+    
+
+
+
+    <div class="col-6 mt-3">
+        <input type="text" class="form-control" placeholder="ادخل المرجع" aria-label="Ref" id="Ref" aria-describedby="basic-addon1">
+    </div>
+    <div class="co1 mt-2 d-flex justify-content-center"><button class="btn btn-success" onclick="SumbitTransaction()"> حفظ العملية</button></div>
+</div>
+
+<script>
+    TreasureAction('C')
+    function GetAcounts(AccountType) {
+        $.ajax({
+            url: '/ChartOfAccount/GetAllAcount',
+            type: 'GET',
+            data: {
+                AccountType: AccountType
+            },
+            success: function (data) {
+                console.log(data.data.data);
+                let options = '';
+                data.data.data.forEach(function (account) {
+
+                    options += `<option value="${account.Id}">${account.Value}</option>`;
+                });
+                $('#Accounts').html(options);
+            },
+            error: function () {
+                console.error('Error loading accounts.');
+            }
+        });
+    }
+    function TreasureAction(AccountType) {
+        if (AccountType == 'C') {
+            
+         /*   داخل الخزنه*/
+            
+           
+           
+            $("#HeaderText").html("فلوس  داخله الي الخزنة")
+
+          
+
+            $('#inTreasure')
+                .prop('disabled', true)   // Disable click
+                .css('opacity', '0.7');
+            $('#outTreasure')
+                .prop('disabled', false)   // Disable click
+                .css('opacity', '1');
+        }
+        else {
+
+            $('#outTreasure')
+                .prop('disabled', true)   // Disable click
+                .css('opacity', '0.7');
+            $('#inTreasure')
+                .prop('disabled', false)   // Disable click
+                .css('opacity', '1');
+            $("#HeaderText").html("فلوس  خارجه من الخزنة")
+           
+        }
+        GetAcounts(AccountType)
+    }
+    function SumbitTransaction() {
+        debugger
+        let amount = $("#Amount").val();
+        if (Amount == "") {
+            $('#AmoountErro').fadeIn(300);
+            $("#AmoountErro").html("ادخل المبلغ من فضلك ")
+            $('#AmoountErro').fadeOut(3000);
+        }
+        else {
+            $.ajax({
+                url: "/ChartOfAccount/SubmitTransactionTreasury",
+                type: "POST",
+                data: {
+                    Amount: amount,
+                    UserId: GetUserId($("#User").val()),
+                    AcountType: $("#Accounts").val(),
+                    Treasury: $("#Treasure").val(),
+                    Ref: $("#Ref").val()
+                },
+                success: function (data) {
+                    if (data.State == 1) {
+                        showSuccessOperation(data.msg)
+                        setTimeout(() => {
+                            location.reload()
+                        }, 2000)
+                    }
+                    else {
+                        showDangerOperation(`اعد المحاولة مرة اخري`)
+                    }
+                },
+                error: function (data) {
+                    showDangerOperation(`اعد المحاولة مرة اخري`)
+                }
+            })
+        }
+        
+    }
+    function GetUserId(inputVal) {
+        
+        let matchedOption = $('#UsersList option').filter(function () {
+            return $(this).val() === inputVal;
+        });
+
+        let selectedId = matchedOption.data('id');
+        return selectedId
+    }
+
+   
+</script>
+

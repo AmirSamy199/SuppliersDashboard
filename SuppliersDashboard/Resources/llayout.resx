@@ -792,4 +792,7 @@
   <data name="saleChannHead" xml:space="preserve">
     <value>Sell ​​to a sales channel</value>
   </data>
+  <data name="covenant" xml:space="preserve">
+    <value>Covenants</value>
+  </data>
 </root>

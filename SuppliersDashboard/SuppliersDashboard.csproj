@@ -439,6 +439,7 @@
     <Compile Include="Constants\Setting.cs" />
     <Compile Include="Controllers\AsSalesmanController.cs" />
     <Compile Include="Controllers\BankController.cs" />
+    <Compile Include="Controllers\ChartOfAccountController.cs" />
     <Compile Include="Controllers\CustomeDesginController.cs" />
     <Compile Include="Controllers\FastReportController.cs" />
     <Compile Include="Controllers\PriceListController.cs" />
@@ -447,11 +448,14 @@
     <Compile Include="Controllers\SelectorController.cs" />
     <Compile Include="Filters\FunctionFilter.cs" />
     <Compile Include="Helper\Cokie.cs" />
+    <Compile Include="Models\AccountSuppliers.cs" />
+    <Compile Include="Models\AccountTransaction.cs" />
     <Compile Include="Models\BankInfo_tbl.cs" />
     <Compile Include="Models\Bill_Detiles_Tbl.cs" />
     <Compile Include="Models\Bill_Report_V.cs" />
     <Compile Include="Models\Bill_Tbl.cs" />
     <Compile Include="Models\Branch_tbl.cs" />
+    <Compile Include="Models\ChartAccounts.cs" />
     <Compile Include="Models\ETA_Bill_Detiles_Tbl.cs" />
     <Compile Include="Models\ETA_Bill_Tax_Tbl.cs" />
     <Compile Include="Models\ETA_Bill_Tbl.cs" />
@@ -1774,6 +1778,10 @@
     <Content Include="Views\FastReport\Items.cshtml" />
     <Content Include="Views\Shared\_LayoutV2.cshtml" />
     <Content Include="Views\CustomeDesgin\Index.cshtml" />
+    <Content Include="Views\ChartOfAccount\Index.cshtml" />
+    <Content Include="Views\ChartOfAccount\AllAccountsCharts.cshtml" />
+    <Content Include="Views\ChartOfAccount\_addAccount.cshtml" />
+    <Content Include="Views\ChartOfAccount\AccountsSuppliers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

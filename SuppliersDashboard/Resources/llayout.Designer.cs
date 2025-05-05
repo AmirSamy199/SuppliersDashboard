@@ -538,6 +538,15 @@ namespace SuppliersDashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Covenants.
+        /// </summary>
+        public static string covenant {
+            get {
+                return ResourceManager.GetString("covenant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Percentage.
         /// </summary>
         public static string CurrentPercentage {
