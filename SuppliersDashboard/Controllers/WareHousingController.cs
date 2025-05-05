@@ -334,7 +334,7 @@ namespace SuppliersDashboard.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteRequestMaterials(int ID)
+        public ActionResult DeleteRequestMaterials(int ID)
         {
             using (HttpClient http = new HttpClient())
             {
