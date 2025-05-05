@@ -212,6 +212,7 @@ namespace SuppliersDashboard.ViewModels
         public string comment { get; set; }
         public int? Editor { get; set; }
         public string ExpenseID { get; set; }
+        public int AccountType { set; get; }
 
     }
     public class SalesAndReturns 

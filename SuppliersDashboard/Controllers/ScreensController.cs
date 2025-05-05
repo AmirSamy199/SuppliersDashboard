@@ -177,9 +177,10 @@ namespace SuppliersDashboard.Controllers
         {
             string usersresponse = http.Get("/api/Selector/GetUsers");
             string expensestyperesponse = http.Get("/api/Selector/GetExpensesTypes");
+            string Accounts = http.Get("/api/ChartOfAccount/GetAllAcounts?AccountType=T");
             ViewBag.Users = JsonConvert.DeserializeObject<Response<List<Select>>>(usersresponse).Data;
             ViewBag.expensesTypes = JsonConvert.DeserializeObject<Response<List<Select>>>(expensestyperesponse).Data;
-
+            ViewBag.Accounts = JsonConvert.DeserializeObject<Response<List<ChartAccounts>>>(Accounts).data;
             return View();
         }
         [HttpPost]

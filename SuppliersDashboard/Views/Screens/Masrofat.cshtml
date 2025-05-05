@@ -15,9 +15,35 @@
             <button class="btn btn-primary col-12 btn-lg" onclick="addnewExpenses()">  @pages.addtypeex  </button>
         </div>
     </div>
+
+
     <div class="row p-2 ">
         <div class="p-2 col-lg-2 " style="text-align:center;">
-            @pages.selectdistributor :
+            اختار الحساب
+        </div>
+        <div class=" p-2 col-lg-4" style="text-align:center;">
+
+
+            <input list="Accounts" name="itemsselectoption" class="form-control" placeholder=" اختر الحساب  " id="AccountsSelect">
+            <datalist id="Accounts">
+                @if (ViewBag.Accounts != null)
+                {
+
+                    <option value="0">
+                        الختار الحساب
+                    </option>
+                    foreach (var item in ViewBag.Accounts)
+                    {
+
+                        <option value="@item.Id">
+                            @item.Value
+                        </option>
+                    }
+                }
+            </datalist>
+        </div>
+        <div class="p-2 col-lg-2 " style="text-align:center;">
+            اختار الشخص
         </div>
         <div class=" p-2 col-lg-4" style="text-align:center;">
 
@@ -41,6 +67,11 @@
             </datalist>
         </div>
 
+
+    </div>
+    <div class="row p-2 ">
+
+
         <div class="p-2 col-lg-2 " style="text-align:center;">
             @pages.typeex :
         </div>
@@ -62,9 +93,6 @@
             </select>
         </div>
 
-    </div>
-
-    <div class="row p-2 ">
         <div class="p-2 col-lg-2 " style="text-align:center;">
             @pages.quantity
         </div>
@@ -74,6 +102,11 @@
             <input type="number" placeholder="  @pages.quantity " id="amount" class="form-control" />
 
         </div>
+
+    </div>
+
+    <div class="row p-2 d-flex justify-content-center ">
+    
 
         <div class="p-2 col-lg-2 " style="text-align:center;">
             @pages.comment
@@ -87,33 +120,35 @@
 
     </div>
 
+    <div class="row"></div>
+
 
 
     <!--<div class="row p-2 ">-->
-        @*<div class="col-lg-6">
-                <div class="row">
-                    <div class="col-lg-4">
-                        @pages.quantity
-                    </div>
-                    <div class="col-lg-8">
-                        <input type="number" placeholder="  @pages.quantity " id="amount" class="form-control" />
-                    </div>
-
+    @*<div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-4">
+                    @pages.quantity
                 </div>
+                <div class="col-lg-8">
+                    <input type="number" placeholder="  @pages.quantity " id="amount" class="form-control" />
+                </div>
+
             </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-lg-4">
-                        @pages.comment
-                    </div>
-                    <div class="col-lg-8">
-                        <input placeholder="  @pages.comment " type="text" id="comment" class="form-control" />
-                    </div>
-
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-4">
+                    @pages.comment
+                </div>
+                <div class="col-lg-8">
+                    <input placeholder="  @pages.comment " type="text" id="comment" class="form-control" />
                 </div>
 
-            </div>*@
-        <!--<div class="p-5 text-center">
+            </div>
+
+        </div>*@
+    <!--<div class="p-5 text-center">
             <button class="btn btn-outline-primary" onclick="AddExpense()">
                 اضافة مصروف
             </button>
@@ -182,8 +217,9 @@
         let expensid = $("#expenseslist").val();
         let amount = $("#amount").val();
         let comment = $("#comment").val();
+        let account = $("#AccountsSelect").val()
         if (userid && expensid && amount && userid >= 0) {
-            let model = { UserID: userid, ExpenseID: expensid, Amount: amount, comment: comment }
+            let model = { UserID: userid, ExpenseID: expensid, Amount: amount, comment: comment, AccountType: account }
         startloader()
             $.ajax({
                 url: "/Screens/Addmasrof",
