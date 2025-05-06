@@ -356,6 +356,19 @@ namespace SuppliersDashboard.Controllers
                 return Json(new { data = res });
             }
         }
+
+
+        [HttpPost]
+        public JsonResult ConfirmBuyMaterials()
+        {
+            using (HttpClient http = new HttpClient())
+            {
+
+                var response = http.SetHeader().GetAsync(Setting.Host + "/api/Warehousing/ConfirmBuyMaterials").Result;
+                Response<string> res = JsonConvert.DeserializeObject<Response<string>>(response.Content.ReadAsStringAsync().Result);
+                return Json(new { data = res });
+            }
+        }
         [HttpPost]
         public JsonResult ConfirmMardodReq(int ID)
         {

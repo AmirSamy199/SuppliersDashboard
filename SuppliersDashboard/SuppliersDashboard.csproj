@@ -455,6 +455,7 @@
     <Compile Include="Models\Bill_Report_V.cs" />
     <Compile Include="Models\Bill_Tbl.cs" />
     <Compile Include="Models\Branch_tbl.cs" />
+    <Compile Include="Models\CashTreasury.cs" />
     <Compile Include="Models\ChartAccounts.cs" />
     <Compile Include="Models\ETA_Bill_Detiles_Tbl.cs" />
     <Compile Include="Models\ETA_Bill_Tax_Tbl.cs" />
@@ -1784,6 +1785,8 @@
     <Content Include="Views\ChartOfAccount\_addAccount.cshtml" />
     <Content Include="Views\ChartOfAccount\AccountsSuppliers.cshtml" />
     <Content Include="Views\Screens\BuyMaterials.cshtml" />
+    <Content Include="Views\Screens\PrintBuyMaterialsBill.cshtml" />
+    <Content Include="Views\ChartOfAccount\CashTreasury.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -150,5 +150,7 @@ namespace SuppliersDashboard.Models
         public string SalesName { get; set; }
         public string Add_dateString { get; set; }
         public DateTime? dailyClosing { get; set; }
+        public string AccountName { set; get; }
+        public int AccountId { set; get; }
     }
 }

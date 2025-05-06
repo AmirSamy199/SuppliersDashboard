@@ -177,13 +177,14 @@
  }
  function ConfirmRequest() {
      $.ajax({
-         url: "/WareHousing/ConfirmMoshtrayat",
+         url: "/WareHousing/ConfirmBuyMaterials",
          type: "post",
          success: (res) => {
              debugger
+             console.log(res.Data)
              if (res.data.State == 1) {
                  let x = res.data.Data
-                 location.href= "/screens/PrintBuyBill?RequestId=" + res.data.Data
+                 location.href = "/screens/PrintBuyMaterialsBill?Ref=" + res.data.Data
              } else {
 
              ShowModal(res.data.Message);
@@ -263,7 +264,7 @@
 
      let item = AllItems.find((e) => e.Item_ID == id);
      $.ajax({
-         url: "/Company/AddItemMat",
+         url: "/Company/AddItemMaterials",
          type: "post",
          data: {
              itemId: item.Item_ID,
@@ -271,7 +272,7 @@
              type: "C",
              user: @ViewBag.UserId,
              supplier: item.Supplier_ID,
-             Supply_Price: item.item
+             Supply_Price: item.Supply_Price
          },
          success: (res) => {
                  LoadGrid()

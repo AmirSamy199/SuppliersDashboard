@@ -195,7 +195,7 @@
     </div>
 
     <div class="collapse" id="DivAddButton" style="display:flex;align-content:center;justify-content:center">
-        <button class="btn btn-primary btn-lg" onclick="addGroup()">اضافة مجموعة</button>
+        <button class="btn btn-primary btn-lg" onclick="addGroups()">اضافة مجموعة</button>
     </div>
 </div>
   
@@ -430,7 +430,7 @@
     }
 
 
-    function showModalGroup() {
+    function showModalGroups() {
         debugger
         //script of modal
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -496,7 +496,7 @@
 
                 subtractFuncs(GlobalTotalFuncs, GlobalGroupFuncs)
                 debugger
-                showModalGroup();
+                showModalGroups();
                 // console.log(NonHisFuncs);
             }
         });
@@ -620,7 +620,7 @@
     }
 
 
-    function addGroup() {
+    function addGroups() {
         html = `
 
                         <div id="AddGrouppStatus" class="alert collapse"></div>
@@ -635,7 +635,7 @@
 
                     `
 
-        showModalGroup(html)
+        ShowModal(html)
     }
 
     function AddSupmitGroup() {

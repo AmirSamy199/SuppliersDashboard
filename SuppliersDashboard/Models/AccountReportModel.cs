@@ -63,6 +63,7 @@ namespace SuppliersDashboard.Models
             public decimal Actual_MoneyReceiptPapers_Amount { get; set; }
               public decimal Masrofat { get; set; }
 
+
         }
 
         public class MasrofReport
@@ -75,7 +76,9 @@ namespace SuppliersDashboard.Models
             public string Sales { get; set; }
             public string Manager { get; set; }
             public string ExpenseType { get; set; }
-        }
+        public string AccountName { set; get; }
+        public int AccountId { set; get; }
+    }
     public class SelectAllcustomersOpeningBalance_Pro
     {
         public Nullable<decimal> Debts { get; set; }

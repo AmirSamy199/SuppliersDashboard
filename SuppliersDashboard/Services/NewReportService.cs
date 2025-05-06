@@ -67,7 +67,10 @@ namespace SuppliersDashboard.Services
                     MasrofDateString = x.Add_dateString,
                     MasrofId =Convert.ToInt32( x.ExpenseID) ,
                     Sales = x.SalesName,
-                    ExpenseType = x.ExpenseType
+                    ExpenseType = x.ExpenseType,
+                    AccountId=x.AccountId,
+                    AccountName = x.AccountName,
+
 
                 }).ToList();
             }

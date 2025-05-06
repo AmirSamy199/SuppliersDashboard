@@ -315,31 +315,25 @@
                                 }
                                 @*حركة الخزنة والعهدة*@
 
-                                @if (funcs.Contains("صفحة ادارة المناديب"))
-                                {
-                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/Index">-  @llayout.covenant </a></li>
 
-                                }
                                 @*الحسابات*@
-                                @if (funcs.Contains("صفحة ادارة المناديب"))
-                                {
-                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AllAccountsCharts">-  الحسابات </a></li>
 
-                                }
-                                @*حساب المورد*@
-                                @if (funcs.Contains("صفحة ادارة المناديب"))
-                                {
-                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AccountsSuppliers">- حساب المورد </a></li>
-
-                                }
                                 @*مشتريات المواد الخام *@
-                                @if (funcs.Contains("صفحة ادارة المناديب"))
+                                @if (1 > 2 || funcs.Contains("صفحة المواد الخام"))
                                 {
                                     <li class="nav-item"><a class="nav-link" href="/Screens/BuyMaterials">-  مشتريات المواد الخام </a></li>
 
                                 }
+                                @*مشتريات  بضاعة *@
+                                @if (funcs.Contains("صفحة المشتريات"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/Screens/Buy">- @llayout.Purchases</a></li>
 
-                                @if (funcs.Contains("صفحة البيع لقناة بيعية"))
+                                }
+
+                                @*  حركة الكاش *@
+
+                                @if (1 > 2 || funcs.Contains("صفحة البيع لقناة بيعية"))
                                 {
 
                                     <li class="nav-item"><a class="nav-link" href="/AsSalesman">-  @llayout.assalesman</a></li>
@@ -447,6 +441,16 @@
                                                     <li class="nav-item"><a class="nav-link" href="/Accounting/CloseAcconterDay">- @llayout.shift</a></li>
 
                                                 }
+                                                @if (1 > 2 || funcs.Contains("صفحة الكاش"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/CashTreasury">- حركة الكاش</a></li>
+
+                                                }
+                                                @if (1 > 2 || funcs.Contains("صفحة  حركة الخزنة"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/Index">-  @llayout.covenant </a></li>
+
+                                                }
                                             </ul>
                                         </div>
                                     </li>
@@ -485,11 +489,7 @@
 
                                                 }
 
-                                                @if (funcs.Contains("صفحة المشتريات"))
-                                                {
-                                                    <li class="nav-item"><a class="nav-link" href="/Screens/Buy">- @llayout.Purchases</a></li>
 
-                                                }
 
                                                 @if (funcs.Contains("صفحة المصروفات"))
                                                 {
@@ -510,6 +510,17 @@
                                                     <li class="nav-item"><a class="nav-link" href="/Screens/SettleAccount">- @llayout.clear</a></li>
 
                                                 }
+                                                @if (1 > 2 || funcs.Contains("صفحة ادارة الحسابات"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AllAccountsCharts">-  الحسابات </a></li>
+
+                                                }
+                                                @*حساب المورد*@
+                                                @if (1 > 2 || funcs.Contains("صفحة حساب المورد"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AccountsSuppliers">- حساب المورد </a></li>
+
+                                                }
 
                                             </ul>
                                         </div>
@@ -518,7 +529,7 @@
                                 @if (funcs.Contains("قبول طلبات الفروع"))
                                 {
 
-                                    <li class="nav-item"><a class="nav-link" href="/Admin/OnlineShopRequests">- قبول طلبات الفروع</a></li>
+                                    @*<li class="nav-item"><a class="nav-link" href="/Admin/OnlineShopRequests">- قبول طلبات الفروع</a></li>*@
                                 }
 
                             </ul>

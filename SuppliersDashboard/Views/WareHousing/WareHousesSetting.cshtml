@@ -60,7 +60,7 @@
                                      حذف
                                 </button>
                             </td>
-                            <td>
+                            <td >
                                 <button class="btn btn-primary col-12 btn-lg" onclick=" showKeepers(@item.Id)"> الامناء  </button>
                             </td>
                         </tr>
@@ -148,7 +148,7 @@
 
             let x = `${HeaderModal}`
             $.each(res.Data, (i, e) => {
-                x += `<div class='col-12 p-3'>
+                x += `<div class='col-12 p-3 d-flex justify-content-between'>
                 ${e.Value}  <span style='display:inline-block ; min-width : 40px'  > </span> <button class='btn btn-danger' onclick='deletekeeperfromkeep(${e.Id} , ${id})' > حذف </button>
                 </div>`
             })
@@ -158,7 +158,7 @@
 
                 ${x}
 
-                <div class='col-12 p-3 text-center'> <button class='btn btn-primary' onclick='addKeeper(${id})' > اضافة امين لهذا المخزن  </button> </div>
+                <div class='col-12 p-3 text-center '> <button class='btn btn-primary' onclick='addKeeper(${id})' > اضافة امين لهذا المخزن  </button> </div>
                 </div>
             </div>`
             ShowModal(ht)

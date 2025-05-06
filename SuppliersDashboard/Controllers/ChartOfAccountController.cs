@@ -106,8 +106,20 @@ namespace SuppliersDashboard.Controllers
             return View(res.data);
         }
 
-     
-  
+
+
+        public ActionResult CashTreasury()
+        {
+            string url = $"/api/ChartOfAccount/CashTreasury";
+            var res = HTTP.Get<Response<List<CashTreasury>>>(url);
+            List<CashTreasury> Cash = res.data;
+            ViewBag.Income = Cash.Where(x => x.DebitAmount == 0);
+            ViewBag.OutCome = Cash.Where(x => x.CreditAmount == 0);
+            ViewBag.Cash = Cash.Sum(x => x.CreditAmount);
+            ViewBag.OutCash=Cash.Sum(x =>x.DebitAmount);
+
+            return View();
+        }
 
 
 

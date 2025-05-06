@@ -156,6 +156,19 @@ namespace SuppliersDashboard.Controllers
             ViewBag.Total = result.Data.Sum(s => s.TotalPrice);
             return View();
         }
+
+        public ActionResult PrintBuyMaterialsBill(string Ref)
+        {
+
+            string response = http.Get($"/api/Company/GetBuyBillMaterialsDataByRequestNo?RequestId={Ref}");
+            Response<List<MaterialsItems>> result = JsonConvert.DeserializeObject<Response<List<MaterialsItems>>>(response);
+            ViewBag.RequestId = Ref;
+            ViewBag.Items = result.Data;
+            ViewBag.Supplier = result.Data.FirstOrDefault().CompanyName;
+            ViewBag.History = result.Data.LastOrDefault().DataTransaction;
+            ViewBag.Total = result.Data.Sum(s => s.TotalPrices);
+            return View();
+        }
         [HttpPost]
         public JsonResult GetCategories(int SupId)
         {
