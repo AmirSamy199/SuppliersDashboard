@@ -30,7 +30,9 @@ namespace SuppliersDashboard.Controllers
             // Treasure
             string Treasury= HTTP.Get("/api/ChartOfAccount/GetTreasurys");
             ViewBag.Treasury= JsonConvert.DeserializeObject<Response<List<Select>>>(Treasury).data;
-            // 
+            // cash in treasury
+            string cash = HTTP.Get("/api/ChartOfAccount/GetAvaialbelCasInTreasury");
+            ViewBag.cash = JsonConvert.DeserializeObject<Response<decimal>>(cash).data;
 
             return View();
         }
@@ -113,10 +115,11 @@ namespace SuppliersDashboard.Controllers
             string url = $"/api/ChartOfAccount/CashTreasury";
             var res = HTTP.Get<Response<List<CashTreasury>>>(url);
             List<CashTreasury> Cash = res.data;
-            ViewBag.Income = Cash.Where(x => x.DebitAmount == 0);
-            ViewBag.OutCome = Cash.Where(x => x.CreditAmount == 0);
-            ViewBag.Cash = Cash.Sum(x => x.CreditAmount);
-            ViewBag.OutCash=Cash.Sum(x =>x.DebitAmount);
+            ViewBag.Income = Cash.Where(x => x.CreditAmount == 0&&x.AccountId==6);
+            ViewBag.OutCome = Cash.Where(x => x.CreditAmount == 0 && x.AccountId != 6);
+            ViewBag.Cash = Cash.Where(x => x.CreditAmount == 0 && x.AccountId == 6).Sum(x => x.DebitAmount);
+            ViewBag.OutCash=Cash.Where(x => x.CreditAmount == 0 && x.AccountId != 6).Sum(x =>x.DebitAmount);
+
 
             return View();
         }

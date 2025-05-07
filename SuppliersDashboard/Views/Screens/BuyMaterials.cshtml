@@ -125,7 +125,7 @@
 
                          <div class='col-12'>
                          <label>السعر </label>
-                         <input class='form-control' type='text' readonly value='${item.Supply_Price}'  />
+                         <input class='form-control' type='text' id='Supply_Price' value='${item.Supply_Price}'  />
                          </div>
                           <div class='col-12'>
                          <label>العدد </label>
@@ -272,7 +272,7 @@
              type: "C",
              user: @ViewBag.UserId,
              supplier: item.Supplier_ID,
-             Supply_Price: item.Supply_Price
+             Supply_Price: $("#Supply_Price").val()
          },
          success: (res) => {
                  LoadGrid()

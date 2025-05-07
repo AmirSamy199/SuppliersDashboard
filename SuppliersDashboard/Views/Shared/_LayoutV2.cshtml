@@ -313,23 +313,36 @@
                                     <li class="nav-item"><a class="nav-link" href="/Distributor/GroupUsers">-  @llayout.Delegatemanagement </a></li>
 
                                 }
-                                @*حركة الخزنة والعهدة*@
 
 
-                                @*الحسابات*@
+                                @*حركة الخزنة والعهدة*@@*الحسابات*@
+                                @if (1 > 2|| funcs.Contains("صفحة المواد الخام")|| funcs.Contains("صفحة المشتريات"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex justify-content-between align-items-center collapsed active" data-bs-toggle="collapse" href="#nestedBillingSub200" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                            <span>- المشتريات</span>
 
+                                        </a>
+                                        <div class="collapse" id="nestedBillingSub200" style="">
+                                            <ul class="nav ms-4 flex-column">
+                                                @if (1 > 2 || funcs.Contains("صفحة المواد الخام"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/BuyMaterials">-  مشتريات المواد الخام </a></li>
+
+                                                }
+                                                @*مشتريات  بضاعة *@
+                                                @if (funcs.Contains("صفحة المشتريات"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/Screens/Buy">- مشتريات الاصناف</a></li>
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
                                 @*مشتريات المواد الخام *@
-                                @if (1 > 2 || funcs.Contains("صفحة المواد الخام"))
-                                {
-                                    <li class="nav-item"><a class="nav-link" href="/Screens/BuyMaterials">-  مشتريات المواد الخام </a></li>
 
-                                }
-                                @*مشتريات  بضاعة *@
-                                @if (funcs.Contains("صفحة المشتريات"))
-                                {
-                                    <li class="nav-item"><a class="nav-link" href="/Screens/Buy">- @llayout.Purchases</a></li>
 
-                                }
 
                                 @*  حركة الكاش *@
 
@@ -441,11 +454,7 @@
                                                     <li class="nav-item"><a class="nav-link" href="/Accounting/CloseAcconterDay">- @llayout.shift</a></li>
 
                                                 }
-                                                @if (1 > 2 || funcs.Contains("صفحة الكاش"))
-                                                {
-                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/CashTreasury">- حركة الكاش</a></li>
-
-                                                }
+                                              
                                                 @if (1 > 2 || funcs.Contains("صفحة  حركة الخزنة"))
                                                 {
                                                     <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/Index">-  @llayout.covenant </a></li>
@@ -510,17 +519,7 @@
                                                     <li class="nav-item"><a class="nav-link" href="/Screens/SettleAccount">- @llayout.clear</a></li>
 
                                                 }
-                                                @if (1 > 2 || funcs.Contains("صفحة ادارة الحسابات"))
-                                                {
-                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AllAccountsCharts">-  الحسابات </a></li>
-
-                                                }
-                                                @*حساب المورد*@
-                                                @if (1 > 2 || funcs.Contains("صفحة حساب المورد"))
-                                                {
-                                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AccountsSuppliers">- حساب المورد </a></li>
-
-                                                }
+                                              
 
                                             </ul>
                                         </div>
@@ -560,6 +559,22 @@
                         </a>
                         <div class="collapse" id="billingSubmenu2">
                             <ul class="nav ms-4 flex-column">
+                                @if (1 > 2 || funcs.Contains("صفحة الكاش"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/CashTreasury">- تقرير الخزنة </a></li>
+
+                                }
+                                @if (1 > 2 || funcs.Contains("صفحة ادارة الحسابات"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AllAccountsCharts">-  الحسابات </a></li>
+
+                                }
+                                @*حساب المورد*@
+                                @if (1 > 2 || funcs.Contains("صفحة حساب المورد"))
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/AccountsSuppliers">-  المورد </a></li>
+
+                                }
                                 @if (funcs.Contains("مشروع العمولة"))
                                 {
                                     <li class="nav-item"><a class="nav-link" href="/CP/SalesCPReport">- @llayout.Commission_project</a></li>

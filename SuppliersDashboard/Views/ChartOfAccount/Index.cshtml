@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 <style>
-    select#Accounts, #Treasure {
+    select#Accounts, #Treasure, #TransMove {
         padding-right: 2rem; /* Add space between text and dropdown arrow */
     }
 </style>
@@ -12,11 +12,23 @@
 
 <div class="row p-3 d-flex justify-content-center">
 
-    <div class="col-2 "><button class="btn btn-primary" id="inTreasure" onclick="TreasureAction('C')">داخل الخزنة</button></div>
-    <div class="col-2 "> <button class="btn btn-primary" id="outTreasure" onclick="TreasureAction('D')"> خارج الخزنة</button></div>
-    <div class="col-12"></div>
-    <div class="col-12 text-center">
-        <h3 class="card-header d-flex justify-content-center text-secondary mt-2 mb-1" style="opacity:0.6" id="HeaderText">فلوس داخلة الي الخزنة </h3>
+    @*<div class="col-2 "><button class="btn btn-primary" id="inTreasure" onclick="TreasureAction('C')">داخل الخزنة</button></div>
+    <div class="col-2 "> <button class="btn btn-primary" id="outTreasure" onclick="TreasureAction('D')"> خارج الخزنة</button></div>*@
+    
+    <div class="col-6">
+        <label for="city" class="form-label">اختار نوع الحركة</label>
+        <select class="form-select" aria-label="اختار نوع الحركة" id="TransMove" onchange="TreasureAction(this)">
+            <option value="C">وارد الي الخزنة </option>
+            <option value="D">  صادر من الخزنة </option>
+        </select>
+    </div>
+    <div class="col-4">
+        <label for="city" class="form-label">رصيد الخزنة </label>
+        <input type="text" class="form-control" readonly value="@ViewBag.cash" aria-describedby="basic-addon1">
+
+    </div>
+    <div class="col-8 text-center">
+        <h3 class="card-header d-flex justify-content-center text-secondary mt-2 mb-1" style="opacity:0.6" id="HeaderText">وارد الي الخزنة  </h3>
     </div>
     @*Accounts*@
     <div class="col-12"></div>
@@ -76,7 +88,7 @@
 </div>
 
 <script>
-    TreasureAction('C')
+    TreasureAction($("#TransMove"))
     function GetAcounts(AccountType) {
         $.ajax({
             url: '/ChartOfAccount/GetAllAcount',
@@ -98,14 +110,16 @@
             }
         });
     }
-    function TreasureAction(AccountType) {
+    function TreasureAction(elemnt) {
+        let AccountType = $(elemnt).val()
+        debugger
         if (AccountType == 'C') {
             
          /*   داخل الخزنه*/
             
            
            
-            $("#HeaderText").html("فلوس  داخله الي الخزنة")
+            $("#HeaderText").html("وارد الي الخزنة ")
 
           
 
@@ -124,7 +138,7 @@
             $('#inTreasure')
                 .prop('disabled', false)   // Disable click
                 .css('opacity', '1');
-            $("#HeaderText").html("فلوس  خارجه من الخزنة")
+            $("#HeaderText").html("صادر من الخزنة")
            
         }
         GetAcounts(AccountType)
@@ -135,6 +149,11 @@
         if (Amount == "") {
             $('#AmoountErro').fadeIn(300);
             $("#AmoountErro").html("ادخل المبلغ من فضلك ")
+            $('#AmoountErro').fadeOut(3000);
+        }
+        if ($("#TransMove").val() == "D" && amount >@(ViewBag.cash)) {
+            $('#AmoountErro').fadeIn(300);
+            $("#AmoountErro").html("  رصيد الخزنة لايسمح  ")
             $('#AmoountErro').fadeOut(3000);
         }
         else {
@@ -153,7 +172,7 @@
                         showSuccessOperation(data.msg)
                         setTimeout(() => {
                             location.reload()
-                        }, 2000)
+                        }, 1000)
                     }
                     else {
                         showDangerOperation(`اعد المحاولة مرة اخري`)
