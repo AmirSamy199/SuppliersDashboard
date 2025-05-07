@@ -181,6 +181,7 @@
             data: {},
             success: function(res) {
                 let select = $("#DistributorIdInput");
+                console.log(res)
                 console.log(res.data.Data.Users);
                 $.each(res.data.Data.Users, function(i, e) {
                     select.append(`<option value='${e.RecordID}'>${e.UserName}</option>`);

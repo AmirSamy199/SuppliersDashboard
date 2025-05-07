@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/14/2024 10:03:59" ReportInfo.CreatorVersion="2022.3.8.0">
+<Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="05/08/2025 00:51:08" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8bVBKKJ+vf7ptCI3B+TQpK4=">
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5w5Tz/4dCNpOvBKISj6vx6e">
       <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="exec branch_no_show_pro @to,@agentId , @id">
         <Column Name="BillNo" DataType="System.Int32"/>
         <Column Name="BranchName" DataType="System.String"/>
@@ -38,7 +38,7 @@
         <CommandParameter Name="agentId" DataType="22" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+Pz2lSaO4lxZiNDFnWuZ3MmQ=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5wYoTtaXwrh9O6UhF0DDHMS">
       <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="if(@id=0)&#13;&#10;begin &#13;&#10;select N'كل الفروع ' as UserName&#13;&#10;end &#13;&#10;else &#13;&#10;begin&#13;&#10;Select top 1  BranchName UserName from branch_tbl  where Record_Id = @id&#13;&#10;end">
         <Column Name="UserName" DataType="System.String"/>
         <CommandParameter Name="id" DataType="8" Expression="[BaseId]" DefaultValue="0"/>
@@ -51,9 +51,9 @@
     <Parameter Name="BaseId" DataType="System.Int32" Expression="0"/>
     <Parameter Name="DateFrom" DataType="System.String" Expression="&quot;2024-07-01&quot;"/>
     <Parameter Name="DateTo" DataType="System.String" Expression="&quot;2024-12-31&quot;"/>
-    <Parameter Name="AgentId" DataType="System.Int32"/>
+    <Parameter Name="AgentId" DataType="System.Int32" AsString=""/>
   </Dictionary>
-  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="250" FirstPageSource="15" OtherPagesSource="15" LastPageSource="15" Guides="718.2,425.25,425.25,425.25,718.2,642.6" Watermark.Font="Arial, 60pt">
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="250" Guides="718.2,425.25,425.25,425.25,718.2,642.6" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15" OtherPageSource="15">
     <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="141.75" Fill.Color="White">
       <TextObject Name="Text4" Left="538.65" Top="56.7" Width="292.95" Height="37.8" Fill.Color="White" CanShrink="true" Text="/  تقرير كشف حساب للفرع" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
       <TextObject Name="Text5" Left="718.2" Top="103.95" Width="113.4" Height="28.35" Text=": من " HorzAlign="Center" Font="Arial, 16pt, style=Bold" TextFill.Color="Transparent"/>

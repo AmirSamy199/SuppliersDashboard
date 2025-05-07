@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 14:32:59" ReportInfo.CreatorVersion="2022.3.8.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="05/08/2025 00:47:16" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8Zf9/+9fgH2ZMfw40ViLO1E=">
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5wlLGSXui4CZybT6dj5maeW">
       <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="select * from [Bill_Details_Report_V] &#13;&#10;where DisSpecialPrice = 1&#13;&#10;and ( Branch_Id = @id or @id=0 )&#13;&#10;and BillDate between cast(concat(@from , ' 00:00:00') as datetime) and cast( concat(@to , ' 23:59:59') as datetime)&#13;&#10;and ComAgentId = @agentId">
         <Column Name="BillNo" DataType="System.Int32"/>
         <Column Name="Branch_id" DataType="System.Int32"/>
@@ -73,7 +73,7 @@
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P1LjFpBQLeUWD7ggp8jq+is=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5yoYGfaqZmjLPv+TEioUn5Y">
       <TableDataSource Name="Table1" Alias="HeadName" DataType="System.Int32" Enabled="true" SelectCommand="if(@id=0)&#13;&#10;select N'كل الفروع' Name&#13;&#10;else&#13;&#10;select top 1 BranchName Name from branch_tbl where record_id = @id">
         <Column Name="Name" DataType="System.String"/>
         <CommandParameter Name="id" DataType="8" Expression="[BaseId]" DefaultValue="0"/>
@@ -86,7 +86,7 @@
     <Parameter Name="BaseId" DataType="System.Int32" Expression="0"/>
     <Parameter Name="DateFrom" DataType="System.String" Expression="&quot;2023-01-01&quot;"/>
     <Parameter Name="DateTo" DataType="System.String" Expression="&quot;2024-12-31&quot;"/>
-    <Parameter Name="AgentId" DataType="System.Int32"/>
+    <Parameter Name="AgentId" DataType="System.Int32" AsString=""/>
   </Dictionary>
   <ReportPage Name="Page1" Guides="718.2" Watermark.Font="Arial, 60pt">
     <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="122.85" Fill.Color="White">

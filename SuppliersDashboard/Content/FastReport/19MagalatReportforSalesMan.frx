@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 12:44:37" ReportInfo.CreatorVersion="2022.3.8.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="05/08/2025 00:46:13" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8dT9A2h8Xl10Gc272s1CVTY=">
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5ymhKVTZgz+jRpC5B8XUKWF">
       <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="select * from [Bill_Details_Report_V] &#13;&#10;where DisSpecialPrice = 1&#13;&#10;and ( Sales_ID = @id or @id=0 )&#13;&#10;and BillDate between cast(concat(@from , ' 00:00:00') as datetime) and cast( concat(@to , ' 23:59:59') as datetime)&#13;&#10;and ( Sales_ID in (select RecordId from tblUSers &#13;&#10;where Distributor_Group_ID in (select Record_Id from Distributor_Group_Tbl where agentId in (&#13;&#10;select recordId from agents_v where Baseroot = @agentId&#13;&#10;) ) ) or @agentId = 0 )">
         <Column Name="BillNo" DataType="System.Int32"/>
         <Column Name="Branch_id" DataType="System.Int32"/>
@@ -73,7 +73,7 @@
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+Pxk90hwDDaNMThW6WpuL8dI=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5ycMdHD6umOsalzDgcTQx67">
       <TableDataSource Name="Table1" Alias="HeadName" DataType="System.Int32" Enabled="true" SelectCommand="if(@id=2)&#13;&#10;select N'كل المندوبين' Name&#13;&#10;else&#13;&#10;select top 1 UserName Name from tblUsers where recordId = @id">
         <Column Name="Name" DataType="System.String"/>
         <CommandParameter Name="id" DataType="8" Expression="[BaseId]" DefaultValue="0"/>
@@ -86,7 +86,7 @@
     <Parameter Name="BaseId" DataType="System.Int32" Expression="0"/>
     <Parameter Name="DateFrom" DataType="System.String" Expression="&quot;2023-01-01&quot;"/>
     <Parameter Name="DateTo" DataType="System.String" Expression="&quot;2024-12-31&quot;"/>
-    <Parameter Name="AgentId" DataType="System.Int32"/>
+    <Parameter Name="AgentId" DataType="System.Int32" AsString=""/>
   </Dictionary>
   <ReportPage Name="Page1" Guides="718.2" Watermark.Font="Arial, 60pt">
     <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="122.85" Fill.Color="White">

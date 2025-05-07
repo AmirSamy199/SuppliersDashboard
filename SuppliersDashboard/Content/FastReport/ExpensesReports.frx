@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 11:23:30" ReportInfo.CreatorVersion="2022.3.8.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="05/08/2025 00:53:53" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Expenses" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+PxI5Z2kDQ9puYm04A6vpvx4=">
+    <MsSqlDataConnection Name="Expenses" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5wZGy9omx2E6iMxY4kZEwZW">
       <TableDataSource Name="Table2" Alias="Data" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;select * from [dbo].[Expenses_V] Where (User_ID = @SalesId or @SalesId = 0 ) and Add_date between  @DateFrom and Concat(@DateTo , ' 23:59:59')&#13;&#10;&#13;&#10;and ( User_ID in (select RecordId from tblUSers &#13;&#10;where Distributor_Group_ID in (select Record_Id from Distributor_Group_Tbl where agentId in (&#13;&#10;select recordId from agents_v where Baseroot = @agentId&#13;&#10;) ) ) or @agentId = 0 )">
         <Column Name="ExpenseID" DataType="System.Int32"/>
         <Column Name="ExpenseType" DataType="System.String"/>
@@ -20,7 +20,7 @@
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P9lFSI+l/0wgyv+ciF8sZxM=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5yRImTUR9dS6UxtotmRGvJh">
       <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="if(@SalesId = 0)&#13;&#10;begin &#13;&#10;select N'كل المناديب' UserName &#13;&#10;end &#13;&#10;else &#13;&#10;begin&#13;&#10;Select top 1 UserName UserName from tblUsers where RecordId = @SalesId&#13;&#10;end&#13;&#10;">
         <Column Name="UserName" DataType="System.String"/>
         <CommandParameter Name="SalesId" DataType="8" Expression="[SalesId]" DefaultValue="0"/>
@@ -33,7 +33,7 @@
     <Parameter Name="SalesId" DataType="System.Int32" Expression="0"/>
     <Parameter Name="DateFrom" DataType="System.String" Expression="&quot;2023-01-01&quot;"/>
     <Parameter Name="DateTo" DataType="System.String" Expression="&quot;2024-12-31&quot;"/>
-    <Parameter Name="AgentId" DataType="System.Int32"/>
+    <Parameter Name="AgentId" DataType="System.Int32" AsString=""/>
   </Dictionary>
   <ReportPage Name="Page1" Guides="718.2" Watermark.Font="Arial, 60pt">
     <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="179.55" Fill.Color="White">

@@ -1,7 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 11:09:59" ReportInfo.CreatorVersion="2022.3.8.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="05/08/2025 00:43:59" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <MsSqlDataConnection Name="BilllNumbers" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P1y5IJlAtII6SPYm9sDVieY=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5zIUHCvYctPnhODsmr2wCas">
+      <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand=" Select case when @SalesId = 0 then N'كل المناديب' else( select  top 1 UserName from tblUsers where RecordId =@SalesId )End as UserName">
+        <Column Name="UserName" DataType="System.String"/>
+        <CommandParameter Name="SalesId" DataType="8" Expression="[SalesId]" DefaultValue="0"/>
+      </TableDataSource>
+      <TableDataSource Name="Table3" Alias="AgentName" DataType="System.Int32" Enabled="true" SelectCommand="select top 1 name from AgentsLevels_tbl where recordId = @id">
+        <Column Name="name" DataType="System.String"/>
+        <CommandParameter Name="id" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5wYdhY+V8iP9rSF7zT/fCGp">
+      <TableDataSource Name="Table2" Alias="details" DataType="System.Int32" Enabled="true" SelectCommand="select * from bill_detiles_tbl where billno = @billno">
+        <Column Name="Record_ID" DataType="System.Int32"/>
+        <Column Name="SR_No" DataType="System.Int32"/>
+        <Column Name="Items" DataType="System.String"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="NumberOfUnits" DataType="System.Decimal"/>
+        <Column Name="UnitPrice" DataType="System.Decimal"/>
+        <Column Name="TotalPrice" DataType="System.Decimal"/>
+        <Column Name="Suppier_id" DataType="System.Int32"/>
+        <Column Name="BillNo" DataType="System.Int32"/>
+        <Column Name="size" DataType="System.Decimal"/>
+        <Column Name="Discount" DataType="System.Decimal"/>
+        <Column Name="Supply_Price" DataType="System.Decimal"/>
+        <Column Name="ItemID" DataType="System.Int32"/>
+        <Column Name="documentType" DataType="System.String"/>
+        <Column Name="discount_reason" DataType="System.String"/>
+        <Column Name="discountType" DataType="System.String"/>
+        <Column Name="discountItemSize" DataType="System.Decimal"/>
+        <CommandParameter Name="billno" DataType="8" Expression="[BillNumbers.BiLLNO]" DefaultValue="0"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <MsSqlDataConnection Name="BilllNumbers" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5yWTPYe7IRgz+tGHtWiNuos">
       <TableDataSource Name="Table" Alias="BillNumbers" DataType="System.Int32" Enabled="true" SelectCommand="exec XXReport1SaleManBillsWithDetails @SalesId ,@DateFrom,@DateTo , @Search , @agentId">
         <Column Name="BiLLNO" DataType="System.Int32"/>
         <Column Name="Branch_id" DataType="System.Int32"/>
@@ -45,38 +77,6 @@
         <CommandParameter Name="DateTo" DataType="22" Size="20" Expression="[DateTo] " DefaultValue="2024-12-12"/>
         <CommandParameter Name="Search" DataType="22" Expression="[Search]" DefaultValue="فاكيوم"/>
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
-      </TableDataSource>
-    </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8UTJoWjsZVHiKUvNXmX3Nz0=">
-      <TableDataSource Name="Table2" Alias="details" DataType="System.Int32" Enabled="true" SelectCommand="select * from bill_detiles_tbl where billno = @billno">
-        <Column Name="Record_ID" DataType="System.Int32"/>
-        <Column Name="SR_No" DataType="System.Int32"/>
-        <Column Name="Items" DataType="System.String"/>
-        <Column Name="Description" DataType="System.String"/>
-        <Column Name="NumberOfUnits" DataType="System.Decimal"/>
-        <Column Name="UnitPrice" DataType="System.Decimal"/>
-        <Column Name="TotalPrice" DataType="System.Decimal"/>
-        <Column Name="Suppier_id" DataType="System.Int32"/>
-        <Column Name="BillNo" DataType="System.Int32"/>
-        <Column Name="size" DataType="System.Decimal"/>
-        <Column Name="Discount" DataType="System.Decimal"/>
-        <Column Name="Supply_Price" DataType="System.Decimal"/>
-        <Column Name="ItemID" DataType="System.Int32"/>
-        <Column Name="documentType" DataType="System.String"/>
-        <Column Name="discount_reason" DataType="System.String"/>
-        <Column Name="discountType" DataType="System.String"/>
-        <Column Name="discountItemSize" DataType="System.Decimal"/>
-        <CommandParameter Name="billno" DataType="8" Expression="[BillNumbers.BiLLNO]" DefaultValue="0"/>
-      </TableDataSource>
-    </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P5wsy0ifIa0nV70MSndlc78=">
-      <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand=" Select case when @SalesId = 0 then N'كل المناديب' else( select  top 1 UserName from tblUsers where RecordId =@SalesId )End as UserName">
-        <Column Name="UserName" DataType="System.String"/>
-        <CommandParameter Name="SalesId" DataType="8" Expression="[SalesId]" DefaultValue="0"/>
-      </TableDataSource>
-      <TableDataSource Name="Table3" Alias="AgentName" DataType="System.Int32" Enabled="true" SelectCommand="select top 1 name from AgentsLevels_tbl where recordId = @id">
-        <Column Name="name" DataType="System.String"/>
-        <CommandParameter Name="id" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
     <Parameter Name="SalesId" DataType="System.Int32" Expression="0"/>

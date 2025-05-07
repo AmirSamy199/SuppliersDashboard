@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="04/16/2024 17:22:21" ReportInfo.CreatorVersion="2022.3.8.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="05/08/2025 00:53:16" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
-    <MsSqlDataConnection Name="BilllNumbers" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P1rGCE8qO46JtdOhEFah9+Y=">
+    <MsSqlDataConnection Name="BilllNumbers" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5zTzTjvPRN8S2bTLtXHWTFE">
       <TableDataSource Name="Table" Alias="BillNumbers" DataType="System.Int32" Enabled="true" SelectCommand="exec XXReport1SaleManBillsWithDetails @SalesId ,@DateFrom,@DateTo , @Search">
         <Column Name="BiLLNO" DataType="System.Int32"/>
         <Column Name="Branch_id" DataType="System.Int32"/>
@@ -42,7 +42,7 @@
         <CommandParameter Name="Search" DataType="22" Expression="[Search]" DefaultValue="فاكيوم"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P9MQqHeuYnyXw6eAC84c6K8=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5z5GgF7q/hBH1HLDVrjs0vc">
       <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand=" Select case when @SalesId = 0 then N'كل المناديب' else( select  top 1 UserName from tblUsers where RecordId =@SalesId )End as UserName">
         <Column Name="UserName" DataType="System.String"/>
         <CommandParameter Name="SalesId" DataType="8" Expression="[SalesId]" DefaultValue="0"/>
