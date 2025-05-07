@@ -106,9 +106,13 @@
 
 
 
+
     <script>
 
-
+        let AllItems = [];
+        let itemcount = 0;
+        LoadData();
+        LoadGrid();
      $(document).ready(function () {
 
          $("#itemsselect").change(() => {
@@ -166,10 +170,7 @@
 
      })
 
- let AllItems = [];
- let itemcount = 0;
- LoadData();
-     LoadGrid();
+
      function Print() {
          $(".btn").css("display","none")
          LayoutPrint();
@@ -275,7 +276,7 @@
          }
      })
 
-     
+
  }
  function validateSupplier(value) {
      if (value != null && value != "" && value.trim() != "اختر المورد" && value.trim() != "choose supplier")
