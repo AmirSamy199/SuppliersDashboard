@@ -315,8 +315,14 @@
                                 }
 
 
+                                @if (1 > 2 || funcs.Contains("صفحة البيع لقناة بيعية"))
+                                {
+
+                                    <li class="nav-item"><a class="nav-link" href="/AsSalesman">-  @llayout.assalesman</a></li>
+
+                                }
                                 @*حركة الخزنة والعهدة*@@*الحسابات*@
-                                @if (1 > 2|| funcs.Contains("صفحة المواد الخام")|| funcs.Contains("صفحة المشتريات"))
+                                @if (1 > 2 || funcs.Contains("صفحة المواد الخام") || funcs.Contains("صفحة المشتريات"))
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link d-flex justify-content-between align-items-center collapsed active" data-bs-toggle="collapse" href="#nestedBillingSub200" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
@@ -346,12 +352,6 @@
 
                                 @*  حركة الكاش *@
 
-                                @if (1 > 2 || funcs.Contains("صفحة البيع لقناة بيعية"))
-                                {
-
-                                    <li class="nav-item"><a class="nav-link" href="/AsSalesman">-  @llayout.assalesman</a></li>
-
-                                }
 
                                 @if (1 > 2
                                     || funcs.Contains("صفحة تسليم المخزن") || funcs.Contains("صفحة تسليم بضاعة للمناديب")
@@ -454,7 +454,7 @@
                                                     <li class="nav-item"><a class="nav-link" href="/Accounting/CloseAcconterDay">- @llayout.shift</a></li>
 
                                                 }
-                                              
+
                                                 @if (1 > 2 || funcs.Contains("صفحة  حركة الخزنة"))
                                                 {
                                                     <li class="nav-item"><a class="nav-link" href="/ChartOfAccount/Index">-  @llayout.covenant </a></li>
@@ -519,7 +519,7 @@
                                                     <li class="nav-item"><a class="nav-link" href="/Screens/SettleAccount">- @llayout.clear</a></li>
 
                                                 }
-                                              
+
 
                                             </ul>
                                         </div>

@@ -148,7 +148,8 @@ namespace SuppliersDashboard.Controllers
             loadViewBags("salesman");
             try
             {
-
+                //Data Source=108.181.168.89,1497;AttachDbFilename=;Initial Catalog=SCOPOS_Caigo_DB;Integrated Security=False;Persist Security Info=True;User ID=ENKIMA;Password=T81@1NV#2o2IT02oo2
+                //data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;
                 string path = "";
                 WebReport report = new WebReport();
                 switch (Paramters.ReportType)
