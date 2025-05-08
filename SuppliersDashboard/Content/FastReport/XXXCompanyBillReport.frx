@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 13:57:49" ReportInfo.CreatorVersion="2022.3.8.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8TK0VvTQcBEe4X6DVcvRy7U=">
-      <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="select * from Bill_Report_V where BillNo &lt;&gt;0 and&#13;&#10;( ComId=@id or @id = 0)  and billdate between Concat(@from , ' 00:00:00') and   Concat(@to , ' 23:59:59')&#13;&#10; and ComAgentId = @agentId&#13;&#10;">
+	  <MsSqlDataConnection Name="Connection1"  ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="select * from Bill_Report_V where BillNo &lt;&gt;0 and&#13;&#10;( ComId=@id or @id = 0)  and billdate between Concat(@from , ' 00:00:00') and   Concat(@to , ' 23:59:59')&#13;&#10; and ComAgentId = @agentId&#13;&#10;">
         <Column Name="BillNo" DataType="System.Int32"/>
         <Column Name="Branch_id" DataType="System.Int32"/>
         <Column Name="Currency" DataType="System.String"/>

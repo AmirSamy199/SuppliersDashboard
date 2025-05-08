@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="09/21/2024 12:46:30" ReportInfo.CreatorVersion="2023.1.8.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P/B7nIf9xdR8399vi2g9jyw=">
-      <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="if(@id=0)&#13;&#10;begin &#13;&#10;select N'كل الاصناف' as ItemName&#13;&#10;end &#13;&#10;else &#13;&#10;begin&#13;&#10;Select top 1  ItemName ItemName from Items_tbl where Record_Id = @id&#13;&#10;end">
+	  <MsSqlDataConnection Name="Connection1"  ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="if(@id=0)&#13;&#10;begin &#13;&#10;select N'كل الاصناف' as ItemName&#13;&#10;end &#13;&#10;else &#13;&#10;begin&#13;&#10;Select top 1  ItemName ItemName from Items_tbl where Record_Id = @id&#13;&#10;end">
         <Column Name="ItemName" DataType="System.String"/>
         <CommandParameter Name="id" DataType="8" Expression="[BaseId]" DefaultValue="0"/>
       </TableDataSource>

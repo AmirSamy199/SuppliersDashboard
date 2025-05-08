@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 12:14:44" ReportInfo.CreatorVersion="2022.3.8.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8YGshPZOXSA+1/Hc75p6Siw=">
-      <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="select * from ReturnReportForSalesman_V where ( SalesID=@sales or @sales = 0 ) &#13;&#10;and Date between Concat(@from , ' 00:00:00') and   Concat(@to , ' 23:59:59') &#13;&#10;and ( SalesId in (select RecordId from tblUSers &#13;&#10;where Distributor_Group_ID in (select Record_Id from Distributor_Group_Tbl where agentId in (&#13;&#10;select recordId from agents_v where Baseroot = @agentId&#13;&#10;) ) ) or @agentId = 0 )">
+	  <MsSqlDataConnection Name="Connection1"  ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="select * from ReturnReportForSalesman_V where ( SalesID=@sales or @sales = 0 ) &#13;&#10;and Date between Concat(@from , ' 00:00:00') and   Concat(@to , ' 23:59:59') &#13;&#10;and ( SalesId in (select RecordId from tblUSers &#13;&#10;where Distributor_Group_ID in (select Record_Id from Distributor_Group_Tbl where agentId in (&#13;&#10;select recordId from agents_v where Baseroot = @agentId&#13;&#10;) ) ) or @agentId = 0 )">
         <Column Name="RecordId" DataType="System.Int32"/>
         <Column Name="ItemId" DataType="System.Int32"/>
         <Column Name="ItemName" DataType="System.String"/>

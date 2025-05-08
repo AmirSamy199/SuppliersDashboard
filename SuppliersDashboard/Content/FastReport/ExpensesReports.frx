@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report ScriptLanguage="CSharp" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="08/10/2024 11:23:30" ReportInfo.CreatorVersion="2022.3.8.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Expenses" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+PxI5Z2kDQ9puYm04A6vpvx4=">
-      <TableDataSource Name="Table2" Alias="Data" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;select * from [dbo].[Expenses_V] Where (User_ID = @SalesId or @SalesId = 0 ) and Add_date between  @DateFrom and Concat(@DateTo , ' 23:59:59')&#13;&#10;&#13;&#10;and ( User_ID in (select RecordId from tblUSers &#13;&#10;where Distributor_Group_ID in (select Record_Id from Distributor_Group_Tbl where agentId in (&#13;&#10;select recordId from agents_v where Baseroot = @agentId&#13;&#10;) ) ) or @agentId = 0 )">
+	  <MsSqlDataConnection Name="Connection1"  ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table2" Alias="Data" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;select * from [dbo].[Expenses_V] Where (User_ID = @SalesId or @SalesId = 0 ) and Add_date between  @DateFrom and Concat(@DateTo , ' 23:59:59')&#13;&#10;&#13;&#10;and ( User_ID in (select RecordId from tblUSers &#13;&#10;where Distributor_Group_ID in (select Record_Id from Distributor_Group_Tbl where agentId in (&#13;&#10;select recordId from agents_v where Baseroot = @agentId&#13;&#10;) ) ) or @agentId = 0 )">
         <Column Name="ExpenseID" DataType="System.Int32"/>
         <Column Name="ExpenseType" DataType="System.String"/>
         <Column Name="Amount" DataType="System.Decimal"/>

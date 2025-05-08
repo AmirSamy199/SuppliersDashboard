@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Created="02/28/2024 17:40:32" ReportInfo.Modified="10/23/2024 18:42:42" ReportInfo.CreatorVersion="2023.1.8.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+UdRQNUscYSGPh0lX2ARcszBEdtqPvPnfs1Jdb7i5T+JLYjUgIF7qKEU333btNOBr9KKXEC7w/Pb22Fw0le1Yj+hAt+dih6Zx2C4r7vcXyq+sIm9R9bHgvIAExZHZYNbLsJ6+ToUWedmS0wAlsjiP8bhC7pS7FZmJFnXdKjQij5E=">
-      <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;exec CalcThePocketTOSalesMan_pro  @sales , @from,  @to">
+	  <MsSqlDataConnection Name="Connection1"  ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table" Alias="data" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;exec CalcThePocketTOSalesMan_pro  @sales , @from,  @to">
         <Column Name="BillNo" DataType="System.Int32"/>
         <Column Name="dailyClosing" DataType="System.DateTime"/>
         <Column Name="UserId" DataType="System.Int32"/>
