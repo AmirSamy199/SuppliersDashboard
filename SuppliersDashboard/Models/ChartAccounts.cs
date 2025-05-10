@@ -24,8 +24,8 @@ namespace SuppliersDashboard.Models
         {
             switch (AccountType)
             {
-                case "D": return"حساب مدين"; 
-                case "C":return "حساب دائن";
+                case "D": return" صادر الخزنة"; 
+                case "C":return "وارد الخزنة";
                 default:return "حساب الخزنة";
 
 
