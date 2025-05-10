@@ -1583,6 +1583,11 @@
     <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_utilities-extend.scss" />
     <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_utilities.scss" />
     <Content Include="NewDesgin\assets\scss\soft-ui-dashboard\_variables.scss" />
+    <Content Include="Content\FastReport\23BranchCollection.frx" />
+    <Content Include="Content\FastReport\24SalesDefferedsReport.frx" />
+    <Content Include="Content\FastReport\25BranchLastInvoice.frx" />
+    <Content Include="Content\FastReport\26netprofitbyitem.frx" />
+    <Content Include="Content\FastReport\27SalesManAccountStateMent.frx" />
     <None Include="Properties\PublishProfiles\backup.E-Card.ltd - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\DAWAR.amergroup.online - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\DAWAR.amergroup.online - Web Deploy1.pubxml" />
