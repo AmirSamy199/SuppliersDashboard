@@ -167,10 +167,17 @@
 
 
     <script>
+        function AddAlter(massege) {
+            return `< div class="alert alert-success collapse" role = "alert" id='alterMasge' >${massege}</div > `;
+        }
+       
     function addnewExpenses() {
         let html = `${ HeaderModal }
         <div class='p-5 text-center '>
         <div class='row'>
+        <div class='col-12'>
+        ${AddAlter(`حدث خطا حاول مره اخري`)}
+        </div>
         <div class='col-12 text-center p-5'>
        @pages.addtypeex
         </div>
@@ -200,7 +207,8 @@
             $('#submitaddexptypebtn').removeClass("d-none")
         }
     }
-    function submitaddnewexpens() {
+        function submitaddnewexpens() {
+            $('#submitaddexptypebtn').addClass("collapse")
         let value = $('#addexpenin').val()
         $.ajax({
             url: "/Screens/AddnewMasrofType",
@@ -208,8 +216,16 @@
             data: {
                 Name: value
             }, success: () => {
+
                 location.reload()
+            },
+            erorr: function () {
+                $('#alterMasge').fadeOut('slow'); 
+                $('#submitaddexptypebtn').removeClass("collapse")
             }
+           
+            
+
         })
     }
     function AddExpense() {

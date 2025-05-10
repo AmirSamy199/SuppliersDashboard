@@ -493,7 +493,7 @@ namespace SuppliersDashboard.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Al-CagioDairy Products.
+        ///   Looks up a localized string similar to Queijo Products.
         /// </summary>
         public static string dawarmalik {
             get {
