@@ -14,8 +14,8 @@
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P80y3c7cOToSPGsuHDRwMTo=">
-      <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="Select top 1 BranchName from branch_tbl where Record_Id = @id">
+	  <MsSqlDataConnection Name="Connection" ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="Select top 1 BranchName from branch_tbl where Record_Id = @id">
         <Column Name="BranchName" DataType="System.String"/>
         <CommandParameter Name="id" DataType="8" Expression="[BaseId]" DefaultValue="0"/>
       </TableDataSource>

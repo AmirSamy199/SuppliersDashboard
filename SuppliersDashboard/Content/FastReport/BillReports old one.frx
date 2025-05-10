@@ -42,8 +42,8 @@
         <CommandParameter Name="Search" DataType="22" Expression="[Search]" DefaultValue="فاكيوم"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqfgfR7eoHh2JH5mqUtMtpH+3aUZoJhvi83HwhzynNEP6Onphtv87sks1zn1j/rm/UJLonsSAGOcW7P3+4KF7BpEX/YXRQUCtWYebaq9htva5CjnQ5071ai4cLabZSUv4+Sr7kyT7i1XVs8WTTvLmUYf0LFGYpw6LIHMC8tYoCiCSFvM73lEiePWpY7vYlN3LadE6u9YZmI9SdmC+jZ2yLmN++GIlNJ0nr8OYU1wtwTMC0rZI75J/MUtC3dzwm7MCx4UWp35XLO9+P1mNTVUI+P9MQqHeuYnyXw6eAC84c6K8=">
-      <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand=" Select case when @SalesId = 0 then N'كل المناديب' else( select  top 1 UserName from tblUsers where RecordId =@SalesId )End as UserName">
+	  <MsSqlDataConnection Name="Connection" ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand=" Select case when @SalesId = 0 then N'كل المناديب' else( select  top 1 UserName from tblUsers where RecordId =@SalesId )End as UserName">
         <Column Name="UserName" DataType="System.String"/>
         <CommandParameter Name="SalesId" DataType="8" Expression="[SalesId]" DefaultValue="0"/>
       </TableDataSource>

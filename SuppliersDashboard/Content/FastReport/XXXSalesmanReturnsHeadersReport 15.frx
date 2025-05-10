@@ -14,8 +14,8 @@
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFDRcvbeq34vlxR5uiVQvoBI40kVv2jjnLFvxDP085X3FgRrPDWA698aeLrZHg+RlN12+V9Q5MKonUFqmGEtDoDijFs/V3lNojyZaXSqofHhJn0dfYNIZIW+SjHl7m9fks+8NFbrpXV0CWOO8seOpFkY/9S7Yj4nGLMFr5Qg1jL0GSIf9ic/H2cSxLDxLKJ7xq+N+LiM91SGiqNZLzHxCLUHWTQmBZl3AjCaYs56UC5zALU4iF6oNj5ePd7XUfg/Q">
-      <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="Select top 1  UserName from tblUsers where RecordId = @sales">
+	  <MsSqlDataConnection Name="Connection" ConnectionString="data source=108.181.168.89,1497;initial catalog=SCOPOS_Caigo_DB;user id=ENKIMA;password=T81@1NV#2o2IT02oo2;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework">
+		  <TableDataSource Name="Table1" Alias="SalesName" DataType="System.Int32" Enabled="true" SelectCommand="Select top 1  UserName from tblUsers where RecordId = @sales">
         <Column Name="UserName" DataType="System.String"/>
         <CommandParameter Name="sales" DataType="8" Expression="[SalesId]" DefaultValue="0"/>
       </TableDataSource>
