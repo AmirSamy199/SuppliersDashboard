@@ -93,7 +93,7 @@
     <div class="row d-flex justify-content-around">
 
         <div class="col-lg-4 text-center p-3">
-            <button class="btn btn-primary col-12 btn-lg" onclick="ConfirmRequest()"> @SuppliersDashboard.Resources.pages.accept  </button>
+            <button class="btn btn-primary col-12 btn-lg" onclick="ConfirmOperation()"> @SuppliersDashboard.Resources.pages.accept  </button>
         </div>
         <div class="col-lg-4 text-center p-3">
 
@@ -107,7 +107,27 @@
 
 
     <script>
+    function ConfirmOperation() {
 
+
+
+            massege = "<h4>هل انت متاكد من عملية الشراء؟</h4>";
+
+
+        let html = `${HeaderModal}<div class="row p-2 d-flex justify-content-center">
+      <div class="col-12 mt-1 mb-1 text-center">
+          ${massege}
+      </div>
+      <div class="col-12 text-center">
+          
+      </div>
+      <div class="col-12 text-center">
+          <button class="btn btn-success" id="ConfirmOperation" onclick='ConfirmRequest()'> تاكيد </button>
+      </div>
+  </div>`;
+        showModal(html)
+
+    }
 
      $(document).ready(function () {
 
@@ -187,7 +207,16 @@
                  location.href = "/screens/PrintBuyMaterialsBill?Ref=" + res.data.Data
              } else {
 
-             ShowModal(res.data.Message);
+                 let html = `${HeaderModal}<div class="row p-2 d-flex justify-content-center">
+    <div class="col-12 mt-1 mb-1 text-center te">
+      <h4>  ${res.data.Message}</h4>
+    </div>
+    <div class="col-12 text-center">
+        
+    </div>
+   
+</div>`
+                 ShowModal(html);
              }
 
              setTimeout(() => { location.reload() }, 3000)

@@ -354,7 +354,9 @@
                 let Url = `/Distributor/showbillsreportpopup?SalesId=${salesId}`
 
                 $.post(Url, (res) => {
-                    ShowModal(res)
+                    $(".modal-dialog").css("min-width", "800px")
+                    ShowModal(HeaderModal + res)
+                
 
                     //         console.log(res)
                 })
@@ -365,7 +367,8 @@
                 $.post(Url, (res) => {
 
 
-                    ShowModal(res)
+                    $(".modal-dialog").css("min-width", "800px")
+                    ShowModal(HeaderModal + res)
                     //                console.log(res)
                 })
             }
@@ -375,7 +378,8 @@
                 $.post(Url, (res) => {
 
 
-                    ShowModal(res)
+                    $(".modal-dialog").css("min-width", "800px")
+                    ShowModal(HeaderModal + res)
                     //                console.log(res)
                 })
             }
@@ -468,7 +472,7 @@
             function openAccount(element) {
             let val = $("#actualmoney").val()
             if (val = 0 || val == "") {
-                ShowModal("<span class='text-danger'> من فضلك ادخل المبلغ صحيح  </span> ");
+                ShowModal(HeaderModal +"<span class='text-danger'> من فضلك ادخل المبلغ صحيح  </span> ");
             } else {
                 $.ajax({
                     type:"get",

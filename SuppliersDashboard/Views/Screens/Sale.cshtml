@@ -19,15 +19,27 @@
     </style>
     <div class="row d-flex justify-content-around p-2">
         <div class="col-lg-3 text-center p-3">
-            <select class="form-control form-select " id="companyselect">
-                <option value="0"> @SuppliersDashboard.Resources.pages.selectCompany  </option>
+            @*<select class="form-control form-select " id="companyselect">
+            <option value="0"> @SuppliersDashboard.Resources.pages.selectCompany  </option>
+            @foreach (var item in ViewBag.Companies)
+            {
+                <option value="@item.Id">
+                    @item.Value
+                </option>
+            }
+        </select>*@
+            <input class="form-control" list="companylist" id="companyselect" placeholder="@SuppliersDashboard.Resources.pages.selectCompany" />
+            <input type="hidden" id="companyId" name="CompanyId" />
+
+
+            <!-- Datalist options -->
+            <datalist id="companylist">
                 @foreach (var item in ViewBag.Companies)
                 {
-                    <option value="@item.Id">
-                        @item.Value
-                    </option>
+                    <option value="@item.Id">@item.Value </option>
+
                 }
-            </select>
+            </datalist>
         </div>
         <div class="col-lg-3 text-center p-3">
             <select class="form-control form-select" id="branchselect">
@@ -249,6 +261,30 @@
 
 
 <script>
+    //function GetIdInDatalist(inputId, datalistId, hiddenInputId = null) {
+    //    $('#' + inputId).on('input', function () {
+    //        var inputValue = $(this).val();
+    //        var selectedOption = $('#' + datalistId + ' option').filter(function () {
+    //            return $(this).val() === inputValue;
+    //        }).first();
+
+    //        var selectedId = selectedOption.data('id') || '';
+
+    //        console.log("Selected ID:", selectedId);
+
+    //        // Optionally update a hidden input
+    //        if (hiddenInputId) {
+    //            $('#' + hiddenInputId).val(selectedId);
+    //        }
+    //        console.log(" ID:", $("#" + hiddenInputId).val());
+    //        return selectedId;
+          
+    //        // You can't return selectedId directly from here
+    //        // Use a callback or hidden input instead if needed outside
+    //    });
+    //}
+
+
 
     $(document).ready(function () {
         $("#itemsselect").change(() => {
@@ -283,7 +319,8 @@
             $("#itemsselect").val("")
         })
         $("#companyselect").change(() => {
-
+            debugger
+     
             $.ajax({
                 url: "/Screens/GetBranches",
                 type: "post",
@@ -496,6 +533,8 @@
             drawbill(BillItems)
             // console.log(curitem.ItemName + curitem.availableCount)
             $("#myModal").modal("hide")
+            $("#staticBackdrop").modal("hide")
+
         }
     }
     function changeitemcount(ele) {

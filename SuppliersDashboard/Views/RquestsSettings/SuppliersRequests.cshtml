@@ -1,0 +1,83 @@
+﻿@model List<SuppliersDashboard.ViewModels.Supplier_Tbl>
+@{
+    ViewBag.Title = "SuppliersRequests";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+
+<div class="col-12">
+    <div class="rounded h-100 p-4">
+        <div class="row d-flex justify-content-around">
+
+            <div class="col-lg-4 text-center p-3">
+               
+            </div>
+
+        </div>
+        @*<div>
+                <a style="width:100px" class="btn btn-sm btn-outline-primary" href="/Supplier/Add">@SuppliersDashboard.Resources.pages.add</a>
+            </div>*@
+        <div id="table-scroll-container" style="max-width: 100%;">
+            <table class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">اسم المورد</th>
+                        <th scope="col">اسم المسؤل </th>
+                        <th scope="col">نوع المورد</th>
+                        <th scope="col">تاريخ </th>
+                        <th scope="col">قبول </th>
+                        <th scope="col">رفض </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr id="sup-@item.Record_ID">
+
+                            <th scope="row">@(Model.IndexOf(item)+1)</th>
+                            <td>@item.CompanyName</td>
+                            <td>@item.Responsible_Person</td>
+                            <td>@item.Date</td>
+                            <td>@(item.TypeSupplier==0? "مورد اصناف": "مورد مواد خام")</td>
+                            <td>
+                                <button class="btn btn-success" onclick='ConfirmRequest(@item.Record_ID,1)'>قبول</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick='ConfirmRequest(@item.Record_ID,3)'>رفض</button>
+                            </td>
+
+
+
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function ConfirmRequest(id, status) {
+        // status=1 accpeted
+        // status=2 rjected
+        $.ajax({
+            url: "",
+            type: "Post",
+            data: {
+                Requestid: id,
+                ConfirmStatus: status
+            },
+            success: function (res) {
+                $("sup-" + id).fadeOut(500);
+                    
+    
+            }
+        })
+
+    }
+</script>

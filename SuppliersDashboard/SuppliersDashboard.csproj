@@ -444,6 +444,7 @@
     <Compile Include="Controllers\FastReportController.cs" />
     <Compile Include="Controllers\PriceListController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\RquestsSettingsController.cs" />
     <Compile Include="Controllers\SalesOFclient1Controller.cs" />
     <Compile Include="Controllers\SelectorController.cs" />
     <Compile Include="Filters\FunctionFilter.cs" />
@@ -1792,6 +1793,7 @@
     <Content Include="Views\Screens\BuyMaterials.cshtml" />
     <Content Include="Views\Screens\PrintBuyMaterialsBill.cshtml" />
     <Content Include="Views\ChartOfAccount\CashTreasury.cshtml" />
+    <Content Include="Views\RquestsSettings\SuppliersRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
