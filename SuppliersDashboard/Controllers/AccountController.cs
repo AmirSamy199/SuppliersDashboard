@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Connibrary;
+using Newtonsoft.Json;
 using ScoposERB.Helper;
 using SuppliersDashboard.Constants;
 using SuppliersDashboard.Filters;
@@ -79,6 +80,7 @@ namespace SuppliersDashboard.Controllers
                     }
                     List<string> functions = deContent.functions;
                     Cokie.UserFunctionsSet(functions);
+              
 
                     return RedirectToAction("Index","Home");
                 }

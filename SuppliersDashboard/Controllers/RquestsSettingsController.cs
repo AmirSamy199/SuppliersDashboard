@@ -1,5 +1,6 @@
 ﻿using Aspose.Cells;
 using Newtonsoft.Json;
+using SuppliersDashboard.Models;
 using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,25 @@ namespace SuppliersDashboard.Controllers
         public ActionResult ConfirmRequestSuppliers(int Requestid,int ConfirmStatus)
         {
             string res = HTTP.Get($"/api/RquestsSettings/ConfirmRequestSuppliers?Requestid={Requestid}&ConfirmStatus={ConfirmStatus}");
-            Response<List<Supplier_Tbl>> suppliers = JsonConvert.DeserializeObject<Response<List<Supplier_Tbl>>>(res);
-            return View(suppliers.data);
+            var re = JsonConvert.DeserializeObject<Response<string>>(res);
+            return Json(new { data = res  });
         }
+
+
+        public ActionResult ItemsRequests()
+        {
+            string res = HTTP.Get($"/api/RquestsSettings/RquestsItems");
+            Response<List<ItemsRequests>> Items = JsonConvert.DeserializeObject<Response<List<ItemsRequests>>>(res);
+            return View(Items.data);
+        }
+        [HttpPost]
+        public ActionResult ConfirmRequestItems(int Requestid, int ConfirmStatus)
+        {
+            string res = HTTP.Get($"/api/RquestsSettings/ConfirmRequestItems?Requestid={Requestid}&ConfirmStatus={ConfirmStatus}");
+            var re = JsonConvert.DeserializeObject<Response<string>>(res);
+            return Json(new { data = res });
+        }
+
 
     }
 }

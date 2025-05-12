@@ -888,9 +888,17 @@
                                         </a>
                                         <div class="collapse" id="nestedBillingSub01">
                                             <ul class="nav ms-4 flex-column">
+
                                                 @if (funcs.Contains("صفحة اضافة او وقف صنف"))
                                                 {
                                                     <li class="nav-item"><a class="nav-link" href="/Items/ItemSetting">- @llayout.Add_Or_Stop_Item </a></li>
+
+
+                                                }
+                                                @if (funcs.Contains("قبول الطلبات"))
+                                                {
+                                                    <li class="nav-item"><a class="nav-link" href="/RquestsSettingsController/RquestsSettings">- قبول المنتجات </a></li>
+
 
                                                 }
                                                 @if (funcs.Contains("قبول الاسعار"))
@@ -1023,7 +1031,12 @@ funcs.Contains("صفحة اضافة رصيد افتتاحي"))
                                                     <li class="nav-item"><a class="nav-link" href="/Supplier/Add">- @llayout.Add_Supplier</a></li>
 
                                                 }
-                                                <li class="nav-item"><a class="nav-link" href="/ RquestsSettings/SuppliersRequests">- قبول الموردين</a></li>
+                                                @if (funcs.Contains("قبول الطلبات"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/RquestsSettings/SuppliersRequests">- قبول الموردين</a></li>
+
+                                                }
                                             </ul>
                                         </div>
                                     </li>

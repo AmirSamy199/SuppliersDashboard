@@ -1,11 +1,14 @@
 ﻿
 
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
+
 using Newtonsoft.Json;
 using ScoposERB.Helper;
+//using ScoposERB.Models;
 using SuppliersDashboard.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using System.Web;
 
 namespace SuppliersDashboard.Helper
@@ -49,18 +52,54 @@ namespace SuppliersDashboard.Helper
         public static void SetCookie<T>(string key, T model)
         {
             HttpCookie cookie = new HttpCookie(key);
-            cookie.Expires = TbiServer.Time(DateTime.Now).AddDays(DaysCount);
+            //var gregorianCulture = new CultureInfo("ar-SA");
+            //gregorianCulture.DateTimeFormat.Calendar = new GregorianCalendar();
+            //// 🟢 Force Gregorian calendar
+
+            //Thread.CurrentThread.CurrentCulture = gregorianCulture;
+            //Thread.CurrentThread.CurrentUICulture = gregorianCulture;
+           
+            //var date = DateTime.Now.AddDays(DaysCount);
+
+
+            //// Format the date as a Gregorian string
+            //string DateExpire = date.ToString("yyyy-MM-dd HH:mm:ss", gregorianCulture);
+
+            //// Parse it back to a DateTime to assign to cookie.Expires
+            //var CC = DateTime.ParseExact(DateExpire, "yyyy-MM-dd HH:mm:ss", gregorianCulture);
+            cookie.Expires = TbiServer.Time(DateTime.Now.AddDays(DaysCount));
+
+            // Set cookie value
             cookie.Value = db.TryEncrypt(JsonConvert.SerializeObject(model));
             HttpContext.Current.Response.Cookies.Remove(key);
             HttpContext.Current.Response.Cookies.Set(cookie);
+
+
         }
         public static T GetCookie<T>(string key)
         {
             try
             {
+
+                var cookieKeys = new List<object>();
+
+                foreach (var keys in HttpContext.Current.Request.Cookies.Keys)
+                {
+                    cookieKeys.Add(keys);
+                }
+
                 var c = HttpContext.Current.Request.Cookies.Get(key);
+                //    var c = HttpContext.Current.Request.Cookies.Get("");
+                var Swap= HttpContext.Current.Request.Cookies.Get("culture");
                 if (c == null)
-                    return Activator.CreateInstance<T>();
+                {
+                    c = Swap;
+                    if (c == null)
+                    {
+                        return Activator.CreateInstance<T>();
+                    }
+                }
+                  
 
 
                 string json = c.Value;

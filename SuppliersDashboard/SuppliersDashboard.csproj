@@ -611,6 +611,7 @@
     <Compile Include="Models\GetUser.cs" />
     <Compile Include="Models\HandHeldSalesDailyTrackerHead.cs" />
     <Compile Include="Models\HR_Religion_Tbl.cs" />
+    <Compile Include="Models\ItemsRequests.cs" />
     <Compile Include="Models\Items_Tbl.cs" />
     <Compile Include="Models\Items_tbl1.cs" />
     <Compile Include="Models\Joblevels.cs" />
@@ -1794,6 +1795,7 @@
     <Content Include="Views\Screens\PrintBuyMaterialsBill.cshtml" />
     <Content Include="Views\ChartOfAccount\CashTreasury.cshtml" />
     <Content Include="Views\RquestsSettings\SuppliersRequests.cshtml" />
+    <Content Include="Views\RquestsSettings\ItemsRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
