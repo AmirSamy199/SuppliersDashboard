@@ -3,7 +3,11 @@
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Newtonsoft.Json;
 using ScoposERB.Helper;
+
+
+//using ScoposERB.Models;
 using SuppliersDashboard.Models;
+using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -35,16 +39,17 @@ namespace SuppliersDashboard.Helper
         }
         public static void LogOut()
         {
+
             HttpContext.Current.Response.Cookies["DawarUser"].Expires = DateTime.Now.AddDays(-1);
             HttpContext.Current.Response.Cookies["DawarUserFunctions"].Expires = DateTime.Now.AddDays(-1);
+
+
 
         }
         public static void Delete()
         {
             HttpContext.Current.Response.Cookies["mycookie"].Expires = DateTime.Now.AddDays(-1);
         }
-
-
 
         public static void SetCookie<T>(string key, T model)
         {
@@ -60,6 +65,8 @@ namespace SuppliersDashboard.Helper
             try
             {
                 var c = HttpContext.Current.Request.Cookies.Get(key);
+
+
                 if (c == null)
                     return Activator.CreateInstance<T>();
 

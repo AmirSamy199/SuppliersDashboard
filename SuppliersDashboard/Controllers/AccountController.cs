@@ -8,6 +8,7 @@ using SuppliersDashboard.Models;
 using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,6 +22,8 @@ namespace SuppliersDashboard.Controllers
     public class AccountController : BaseController
     {
         private HttpClientHelper _http = new HttpClientHelper();
+        private static DeepHelper db = new DeepHelper();
+
         public ActionResult test()
         {
             return View();
@@ -63,6 +66,7 @@ namespace SuppliersDashboard.Controllers
         {
 
 
+
             using (HttpClient c = new HttpClient())
             {
                 
@@ -73,23 +77,31 @@ namespace SuppliersDashboard.Controllers
                 string message = deContent.Message;
                 if (deContent.State == 200)
                 {
+                    List<string> functions = deContent.functions;
+                    Cokie.UserFunctionsSet(functions);
                     User User = deContent.User;
                     if(User != null)
                     {
                         Cokie.UserSet(User);
 
                     }
-                    List<string> functions = deContent.functions;
-                    Cokie.UserFunctionsSet(functions);
-                    var t = System.Web.HttpContext.Current.Request.Cookies;
-                    foreach (string key in t.AllKeys)
+                    List<string> ff = new List<string>();
+                    foreach (var cookie in System.Web.HttpContext.Current.Request.Cookies.AllKeys)
                     {
-                        var cookie = t[key];
-                        DateTime expires = cookie.Expires;
-                        string value = cookie.Value;
+                        var cv = System.Web.HttpContext.Current.Request.Cookies.Get(cookie);
+                        ff.Add(cv.Value);
 
-                        // Do something with key, value, and expires
                     }
+
+                    //var t = System.Web.HttpContext.Current.Request.Cookies;
+                    //foreach (string key in t.AllKeys)
+                    //{
+                    //    var cookie = t[key];
+                    //    DateTime expires = cookie.Expires;
+                    //    object value = cookie.Value;
+
+                    //    // Do something with key, value, and expires
+                    //}
 
 
 
