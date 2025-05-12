@@ -9,6 +9,7 @@ using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,7 +81,17 @@ namespace SuppliersDashboard.Controllers
                     }
                     List<string> functions = deContent.functions;
                     Cokie.UserFunctionsSet(functions);
-              
+                    var t = System.Web.HttpContext.Current.Request.Cookies;
+                    foreach (string key in t.AllKeys)
+                    {
+                        var cookie = t[key];
+                        DateTime expires = cookie.Expires;
+                        string value = cookie.Value;
+
+                        // Do something with key, value, and expires
+                    }
+
+
 
                     return RedirectToAction("Index","Home");
                 }
