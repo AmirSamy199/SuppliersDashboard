@@ -1,0 +1,149 @@
+﻿@model List<SuppliersDashboard.ViewModels.SimpleClass>
+@{
+    ViewBag.Title = "RequestMaterials";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+<div id="printer">
+    <style>
+        th, td {
+            text-align: center !important
+        }
+
+        table {
+            margin: 20px auto !important;
+            border: 1px solid #000 !important;
+            border-collapse: collapse !important;
+        }
+    </style>
+
+    <div class="row d-flex justify-content-around p-4">
+ 
+        <div class="col-lg-4 text-center p-3">
+
+            <select id="categoryselect" class="form-control form-select">
+                <option value="0">اختار الفئة</option>
+                @foreach (var Cat in Model)
+                {
+                    <option value="@Cat.Id">@Cat.Value</option>
+                }
+
+            </select>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            @*<select id="itemsselect" class="form-control form-select choices-single">
+                    <option>اختر الصنف   </option>
+
+                </select>*@
+            <input list="itemsselectoption" name="itemsselectoption" class="form-control" placeholder="   @SuppliersDashboard.Resources.pages.Selectitem " id="itemsselect">
+            <datalist id="itemsselectoption">
+            </datalist>
+        </div>
+        @*<div class="p-2 col-3">
+
+                <input class="form-control glyphicon-search" onkeyup="searchitems(this)" />
+
+            </div>*@
+    </div>
+    <div id="tablemsg" class="text-center text-body collapse">
+        <h2 class="text-muted">
+            @SuppliersDashboard.Resources.pages.Selectitem
+        </h2>
+    </div>
+
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+
+            <div id="tablecollapse ">
+                <table id="dtBasicExample" class="table display responsive nowrap table-responsive" width="100%">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">@SuppliersDashboard.Resources.llayout.ProductName  </th>
+                            <th scope="col">@SuppliersDashboard.Resources.pages.count </th>
+                            <th scope="col">@SuppliersDashboard.Resources.Items.Date </th>
+                            <th scope="col"> @SuppliersDashboard.Resources.pages.price </th>
+                            <th scope="col"> @SuppliersDashboard.Resources.pages.totalprice </th>
+                            <th scope="col"> @SuppliersDashboard.Resources.pages.action </th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="TableBody">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5"> </td>
+                            <td id="tfoottotalbill"> </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-lg-4 text-center p-3">
+            <button class="btn btn-primary col-12 btn-lg" onclick="ConfirmOperation()"> @SuppliersDashboard.Resources.pages.accept  </button>
+        </div>
+        <div class="col-lg-4 text-center p-3">
+
+            <button class="btn btn-primary col-12 btn-lg " onclick="Print()"><i class="fa fa-solid fa-print" id="printbtn"></i> طباعة</button>
+
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        $("#categoryselect").change(() => {
+          
+            LoadData();
+
+        });
+
+        function LoadData() {
+            debugger
+            let sup = 0
+            let category = $("#categoryselect").val();
+          
+           
+            $.ajax({
+                type: "post",
+                url: "/Items/GetAllItems",
+                data: {
+                    SupId: -1,
+                    CatId: category,
+                    ToBuyPage: "YES"
+                },
+                success: (res) => {
+
+
+
+                    AllItems = res.data.Data;
+                    let html = "<option>اختر الصنف </option>";
+
+
+                    $.each(res.data.Data, (i, e) => {
+                        html += `<option class='itemselectoption' supplier='supplier${e.Supplier_ID}' category='category${e.ItemGroup_ID}' value='${e.Item_ID}'> <span >${e.Item_ID} </span> ${e.ItemName} <span style="display:none" >  </span></option>`
+
+                    })
+                    $("#itemsselectoption").html(html)
+
+                    $("#tablecollapse").collapse("show")
+
+
+                }
+            })
+        }
+
+    </script>
+
+
+

@@ -1,4 +1,5 @@
 ﻿
+using FastReport.Utils;
 using Newtonsoft.Json;
 using SuppliersDashboard.BL;
 using SuppliersDashboard.Constants;
@@ -11,7 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Net.Http;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -530,7 +533,8 @@ namespace SuppliersDashboard.Controllers
         [HttpPost]
         public JsonResult SubmitAddRequests(int From, int To, List<warehouse_Requst_Tbl> models)
         {
-            var url = $"/api/WareHouseTransfereAddRequest?FromWareHouseId={From}&ToWareHouseId={To}";
+            User User = Cokie.UserGet();
+            var url = $"/api/WareHouseTransfereAddRequest?FromWareHouseId={From}&ToWareHouseId={To}&Userid={User.Id}";
             var result = httphelp.Post<Response<string>, List<warehouse_Requst_Tbl>>(url, models);
             return Json(result);
         }
@@ -560,9 +564,63 @@ namespace SuppliersDashboard.Controllers
             return Json(httphelp.Get<Response<string>>(url));
         }
 
+        // @*مخزن المواد الخام*@
+        //  @*طلب بضاعه من مخزن المواد الخام*@ 
+
+        //public ActionResult RequestMaterials()
+        //{
+        //    Response<List<SimpleClass>> res;
+        //    using (HttpClient http = new HttpClient())
+        //    {
+        //        var response = http.GetAsync(Setting.Host + $"/api/Company/GetCategoriesItemsToSupplier?SupId={0}&TypeSuppliers=1").Result;
+        //         res = JsonConvert.DeserializeObject<Response<List<SimpleClass>>>(response.Content.ReadAsStringAsync().Result);
+              
+        //    }
+        //    return View(res.Data);
+        //}
+        //  @* مراجعة الطلبات المواد الخام*@
+        public ActionResult PenddingRequestsMaterials()
+        {
+            Response<List<RequestMaterials>> res;
+            User User = Cokie.UserGet();
+            using (HttpClient http = new HttpClient())
+            {
+              ///  keepers? Id = { 25 } id =مخزن المواد الخام
+                var response = http.GetAsync(Setting.Host + $"/api/Warehouse/GetAllPenddingMaterialsRequests").Result;
+                res = JsonConvert.DeserializeObject<Response<List<RequestMaterials>>>(response.Content.ReadAsStringAsync().Result);
+                var Keepers = httphelp.Get<Response<List<Select>>>($"/api/Warehouse/keepers?Id={25}");
+                if (!Keepers.Data.Any(x => x.Id == User.Id))
+                {
+                    res.Data = new List<RequestMaterials>();
+                }
+                
+            }
+
+            return View(res.Data);
+        }
+
+        
+             [HttpPost]
+        public ActionResult ConfirmRequestMaterials(int Requestid, int ConfirmStatus)
+        {
+            User user = Cokie.UserGet();
+            string res = httphelp.Get($"/api/Warehouse/ConfirmRequestMaterials?Requestid={Requestid}&ConfirmStatus={ConfirmStatus}&KeeperId={user.Id}");
+            var re = JsonConvert.DeserializeObject<Response<string>>(res);
+            return Json(new { data = res });
+        }
 
 
-
+        
+        
+        //    @*  رصيد المواد الخام*@
+        public ActionResult MaterialsStore()
+        {
+           
+            var res = httphelp.Get($"/api/Warehouse/GetAllAvaialbleMaterials");
+            var re = JsonConvert.DeserializeObject<Response<List<StoreMaterialsDto>>>(res);
+          
+            return View(re.Data);
+        }
 
     }
 }

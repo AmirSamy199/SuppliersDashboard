@@ -22,13 +22,15 @@ namespace SuppliersDashboard.Controllers
 
         public ActionResult Index()
         {
+
+            var funcs = SuppliersDashboard.Helper.Cokie.UserFunctionsGet();
+
+            // تحقق من الكوكي في الطلب الجديد
+            if (funcs == null)
+            {
+                funcs = new List<string>();  // قيمة افتراضية إذا لم توجد كوكيز
+            }
             HttpClientHelper htp = new HttpClientHelper();
-
-
-
-
-
-
 
             ViewBag.ProductCount = 0;
             ViewBag.BillsCountThisMonth = 0; 

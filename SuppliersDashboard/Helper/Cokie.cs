@@ -10,6 +10,7 @@ using SuppliersDashboard.Models;
 using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Web;
 
 namespace SuppliersDashboard.Helper
@@ -53,13 +54,29 @@ namespace SuppliersDashboard.Helper
 
         public static void SetCookie<T>(string key, T model)
         {
-            HttpCookie cookie = new HttpCookie(key);
-            cookie.Expires = TbiServer.Time(DateTime.Now).AddDays(DaysCount);
-            cookie.Value = db.TryEncrypt(JsonConvert.SerializeObject(model));
-            HttpContext.Current.Response.Cookies.Remove(key);
-            HttpContext.Current.Response.Cookies.Set(cookie);
 
+
+            string data = db.TryEncrypt(JsonConvert.SerializeObject(model));
+            HttpCookie cookie = new HttpCookie(key, data);
+            cookie.Expires = TbiServer.Time(DateTime.Now).AddDays(DaysCount);
+            cookie.Path = "/";
+            //  cookie.HttpOnly = true;
+            HttpContext.Current.Response.Cookies.Add(cookie);
+
+            //HttpCookie cookie = new HttpCookie(key);
+            //cookie.Value = db.TryEncrypt(JsonConvert.SerializeObject(model));
+            //cookie.Expires = TbiServer.Time(DateTime.Now).AddDays(DaysCount); // مهم جداً
+            //cookie.Path = "/";
+            //cookie.HttpOnly = false; // مهم لو هتقرأه في JavaScript (أو خليها true لو بس .NET يستخدمها)
+            //cookie.Secure = false; // خليها false مؤقتًا طالما شغال HTTP أو على localhost
+            //cookie.SameSite = SameSiteMode.Lax;
+
+            //HttpContext.Current.Response.Cookies.Add(cookie);
+            //var value = HttpContext.Current.Request.Cookies[key]?.Value;
         }
+
+
+       
         public static T GetCookie<T>(string key)
         {
             try

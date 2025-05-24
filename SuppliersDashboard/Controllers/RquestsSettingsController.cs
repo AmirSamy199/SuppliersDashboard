@@ -47,6 +47,20 @@ namespace SuppliersDashboard.Controllers
             return Json(new { data = res });
         }
 
+        public ActionResult BranchesRequests()
+        {
+            string res = HTTP.Get($"/api/RquestsSettings/RquestsBranches");
+            Response<List<RequestBranches>> Items = JsonConvert.DeserializeObject<Response<List<RequestBranches>>>(res);
+            return View(Items.data);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmRequestBranches(int Requestid, int ConfirmStatus)
+        {
+            string res = HTTP.Get($"/api/RquestsSettings/ConfirmRequestBranches?Requestid={Requestid}&ConfirmStatus={ConfirmStatus}");
+            var re = JsonConvert.DeserializeObject<Response<string>>(res);
+            return Json(new { data = res });
+        }
 
     }
 }

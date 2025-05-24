@@ -223,7 +223,12 @@
             }, success: (res) => {
                 displaymsg(res.Message)
                 setTimeout(() => {
-                    location.href = "/WareHousing/TranfereItemsBetweenTwoWareHouses";
+                    if ($("#requesttresury").val()==25) {
+                        location.href = "/WareHousing/PenddingRequestsMaterials";
+                    }
+                   else {
+                        location.href = "/WareHousing/TranfereItemsBetweenTwoWareHouses";
+                   }
                 }, 2000)
             }
         })

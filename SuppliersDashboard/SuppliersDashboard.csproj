@@ -626,8 +626,12 @@
     <Compile Include="Models\PositionType_Tbl.cs" />
     <Compile Include="Models\RegisterOnlineShopRequest_tbl.cs" />
     <Compile Include="Models\ReportModels\ItemSalesREportVM.cs" />
+    <Compile Include="Models\RequestBranches.cs" />
+    <Compile Include="Models\RequestMaterials.cs" />
     <Compile Include="Models\SalesTrackerModel.cs" />
     <Compile Include="Models\Special_Price_V.cs" />
+    <Compile Include="Models\StoreMaterialsDto.cs" />
+    <Compile Include="Models\StoreMaterialsView.cs" />
     <Compile Include="Models\SubWarehouseReturnBalance_V.cs" />
     <Compile Include="Models\UploadFiles.cs" />
     <Compile Include="Models\User.cs" />
@@ -1796,6 +1800,10 @@
     <Content Include="Views\ChartOfAccount\CashTreasury.cshtml" />
     <Content Include="Views\RquestsSettings\SuppliersRequests.cshtml" />
     <Content Include="Views\RquestsSettings\ItemsRequests.cshtml" />
+    <Content Include="Views\RquestsSettings\BranchesRequests.cshtml" />
+    <Content Include="Views\WareHousing\RequestMaterials.cshtml" />
+    <Content Include="Views\WareHousing\PenddingRequestsMaterials.cshtml" />
+    <Content Include="Views\WareHousing\MaterialsStore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

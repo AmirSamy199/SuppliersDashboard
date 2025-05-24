@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SuppliersDashboard.Models.StoreMaterialsDto>
+
+@{
+    ViewBag.Title = "MaterialsStore";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+
+<div class="col-12">
+    <div class="rounded h-100 p-4">
+        <h3 class="text-center text-primary mt-2 pb-2">جرد مخزن المواد الخام</h3>
+        <div id="table-scroll-container" style="max-width: 100%;">
+            <table class="table table-striped table-bordered table-hover " style="width:100%; text-align:center;">
+                <thead>
+                    <tr>
+
+                        <th>
+                            المنتج
+                        </th>
+                        <th>
+                            الصادر
+                        </th>
+                        <th>
+                            المنصرف
+                        </th>
+                        <th>
+                            المتاح
+                        </th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InCome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OutCome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Available)
+                            </td>
+                         
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

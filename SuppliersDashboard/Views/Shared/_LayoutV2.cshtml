@@ -364,77 +364,89 @@
                                 {
 
                                     <li class="nav-item">
-                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSubhh" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.wareHouse</span>
 
                                         </a>
-                                        <div class="collapse" id="nestedBillingSub">
+                                        <div class="collapse" id="nestedBillingSubhh">
                                             <ul class="nav ms-4 flex-column">
+
+                                                @*مخزن المواد الخام*@
+                                                @*طلب بضاعه من مخزن المواد الخام*@
+
+                                                @* مراجعة الطلبات المواد الخام*@
                                                 @if (funcs.Contains("صفحة تسليم المخزن"))
                                                 {
 
-                                                    <li class="nav-item"><a class="nav-link" href="/Screens/DeliverStore">- @llayout.shift</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PenddingRequestsMaterials">- مراجعة الطلبات المواد الخام</a></li>
+                                                    @*  رصيد المواد الخام*@
+                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/MaterialsStore">-جرد مخزن المواد الخام</a></li>
+                                                 }
+                                                    @if (funcs.Contains("صفحة تسليم المخزن"))
+                                                    {
 
-                                                }
+                                                        <li class="nav-item"><a class="nav-link" href="/Screens/DeliverStore">- @llayout.shift</a></li>
 
-                                                @if (funcs.Contains("صفحة تسليم بضاعة للمناديب"))
-                                                {
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingWareHouseRequests">- @llayout.Give_Products_To_Representative </a></li>
+                                                    }
 
-                                                }
+                                                    @if (funcs.Contains("صفحة تسليم بضاعة للمناديب"))
+                                                    {
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingWareHouseRequests">- @llayout.Give_Products_To_Representative </a></li>
 
-                                                @if (funcs.Contains("صفحة المردودات"))
-                                                {
+                                                    }
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingMardodatWareHouseRequests">- @llayout.Receive_Products_To_Representative </a></li>
+                                                    @if (funcs.Contains("صفحة المردودات"))
+                                                    {
 
-                                                }
-                                                @if (funcs.Contains("w-store"))
-                                                {
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingMardodatWareHouseRequests">- @llayout.Receive_Products_To_Representative </a></li>
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingMotg3atWareHouseRequests">- استلام مرتجعات</a></li>
+                                                    }
+                                                    @if (funcs.Contains("w-store"))
+                                                    {
 
-                                                }
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/PendingMotg3atWareHouseRequests">- استلام مرتجعات</a></li>
 
-                                                @if (funcs.Contains("صفحة جرد المخزن"))
-                                                {
+                                                    }
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/StoreGard">- @llayout.Inventory_of_accounts</a></li>
+                                                    @if (funcs.Contains("صفحة جرد المخزن"))
+                                                    {
 
-                                                }
-                                                @if (funcs.Contains("صفحة جرد المخازن"))
-                                                {
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/StoreGard">- @llayout.Inventory_of_accounts</a></li>
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/AnyWarehouseBalance">- ارصدة المخاز</a></li>
+                                                    }
+                                                    @if (funcs.Contains("صفحة جرد المخازن"))
+                                                    {
 
-                                                }
-                                                @if (funcs.Contains("تقربر جرد المخزن الفرعي"))
-                                                {
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/AnyWarehouseBalance">- ارصدة المخازن</a></li>
 
-                                                    <li class="nav-item"><a class="nav-link" href="/NewReports/Subwarehouseguard">- @llayout.sub </a></li>
+                                                    }
+                                                    @if (funcs.Contains("تقربر جرد المخزن الفرعي"))
+                                                    {
 
-                                                }
-                                                @if (funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن"))
-                                                {
+                                                        <li class="nav-item"><a class="nav-link" href="/NewReports/Subwarehouseguard">- @llayout.sub </a></li>
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/TranfereItemsBetweenTwoWareHouses">- @llayout.TranfereItemsBetweenTwoWareHouses</a></li>
+                                                    }
+                                                    @if (funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن"))
+                                                    {
 
-                                                }
-                                                @if (funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن"))
-                                                {
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/TranfereItemsBetweenTwoWareHouses">- @llayout.TranfereItemsBetweenTwoWareHouses</a></li>
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/Addwarehouserequest">- @llayout.Addwarehouserequest</a></li>
+                                                    }
+                                                    @if (funcs.Contains("صفحة تحويل بضاعة من مخزن لمخزن"))
+                                                    {
 
-                                                }
-                                                @if (funcs.Contains("صفحة تسوية المرتجعات"))
-                                                {
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/Addwarehouserequest">- @llayout.Addwarehouserequest</a></li>
+
+                                                    }
+                                                    @if (funcs.Contains("صفحة تسوية المرتجعات"))
+                                                    {
 
 
-                                                    <li class="nav-item"><a class="nav-link" href="/WareHousing/SettleReturns"> - @llayout.SettleReturns</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="/WareHousing/SettleReturns"> - @llayout.SettleReturns</a></li>
 
-                                                }
+                                                    }
 
-                                            </ul>
+                                                </ul>
                                         </div>
                                     </li>
                                 }
@@ -650,11 +662,11 @@
                                 @if (funcs.Contains("تقرير العجوزات"))
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSub" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
+                                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#nestedBillingSublll" role="button" aria-expanded="false" aria-controls="nestedBillingSub">
                                             <span>- @llayout.inability</span>
 
                                         </a>
-                                        <div class="collapse" id="nestedBillingSub">
+                                        <div class="collapse" id="nestedBillingSublll">
                                             <ul class="nav ms-4 flex-column">
                                                 <li class="nav-item"><a class="nav-link" href="/NewReports/ShortFalls">- @llayout.Storeshortage </a></li>
                                                 <li class="nav-item"><a class="nav-link" href="/NewReports/MoneyShortFalls">- @llayout.Moneyshortage</a></li>
@@ -895,9 +907,9 @@
 
 
                                                 }
-                                                @if (funcs.Contains("قبول الطلبات"))
+                                                @if (funcs.Contains("w-admin"))
                                                 {
-                                                    <li class="nav-item"><a class="nav-link" href="/RquestsSettingsController/RquestsSettings">- قبول المنتجات </a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="/RquestsSettings/ItemsRequests">- قبول المنتجات </a></li>
 
 
                                                 }
@@ -965,6 +977,12 @@ funcs.Contains("صفحة اضافة رصيد افتتاحي"))
                                         </a>
                                         <div class="collapse" id="nestedBillingSub04">
                                             <ul class="nav ms-4 flex-column">
+                                                @if (funcs.Contains("w-admin"))
+                                                {
+
+                                                    <li class="nav-item"><a class="nav-link" href="/RquestsSettings/BranchesRequests">- قبول العملاء</a></li>
+
+                                                }
                                                 @if (funcs.Contains("صفحة تعديل بيانات عميل"))
                                                 {
 
@@ -1031,7 +1049,7 @@ funcs.Contains("صفحة اضافة رصيد افتتاحي"))
                                                     <li class="nav-item"><a class="nav-link" href="/Supplier/Add">- @llayout.Add_Supplier</a></li>
 
                                                 }
-                                                @if (funcs.Contains("قبول الطلبات"))
+                                                @if (funcs.Contains("w-admin"))
                                                 {
 
                                                     <li class="nav-item"><a class="nav-link" href="/RquestsSettings/SuppliersRequests">- قبول الموردين</a></li>

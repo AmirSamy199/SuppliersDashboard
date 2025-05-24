@@ -9,10 +9,12 @@ using SuppliersDashboard.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -64,9 +66,7 @@ namespace SuppliersDashboard.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LogInVM model)
         {
-
-
-
+       
             using (HttpClient c = new HttpClient())
             {
                 
@@ -77,33 +77,26 @@ namespace SuppliersDashboard.Controllers
                 string message = deContent.Message;
                 if (deContent.State == 200)
                 {
-                    List<string> functions = deContent.functions;
-                    Cokie.UserFunctionsSet(functions);
                     User User = deContent.User;
                     if(User != null)
                     {
                         Cokie.UserSet(User);
 
                     }
-                    List<string> ff = new List<string>();
-                    foreach (var cookie in System.Web.HttpContext.Current.Request.Cookies.AllKeys)
+                    List<string> functions = deContent.functions;
+                    if (functions.Count > 0)
                     {
-                        var cv = System.Web.HttpContext.Current.Request.Cookies.Get(cookie);
-                        ff.Add(cv.Value);
-
+                        Cokie.UserFunctionsSet(functions);
                     }
 
-                    //var t = System.Web.HttpContext.Current.Request.Cookies;
-                    //foreach (string key in t.AllKeys)
-                    //{
-                    //    var cookie = t[key];
-                    //    DateTime expires = cookie.Expires;
-                    //    object value = cookie.Value;
+                    // تأكيد إضافة الكوكي:
+                    var cookie = Response.Cookies["DawarUserFunctions"];
+                    if (cookie != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Cookie Value: " + cookie.Value);
+                    }
 
-                    //    // Do something with key, value, and expires
-                    //}
-
-
+              
 
                     return RedirectToAction("Index","Home");
                 }

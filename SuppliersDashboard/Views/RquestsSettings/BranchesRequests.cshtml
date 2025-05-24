@@ -1,8 +1,12 @@
-﻿@model List<SuppliersDashboard.Models.ItemsRequests>
+﻿@model List<SuppliersDashboard.Models.RequestBranches>
 @{
-    ViewBag.Title = "ItemsRequests";
+    ViewBag.Title = "BranchesRequests";
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
+
+
+
+
 <div class="col-12">
     <div class="rounded h-100 p-4">
         <div class="row d-flex justify-content-around">
@@ -20,12 +24,13 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col"> المنتج</th>
-                        <th scope="col"> الحجم</th>
-                        <th scope="col"> الباركود</th>
-                        <th scope="col"> الفئة</th>
-                        <th scope="col"> المورد</th>
-                        <th scope="col">تاريخ</th>
+                        <th scope="col">الشركة</th>
+                        <th scope="col"> الفرع</th>
+                        <th scope="col"> المسؤل</th>
+                        <th scope="col"> الموبايل</th>
+                        <th scope="col"> تاريخ</th>
+                        <th scope="col">المنطقة</th>
+                        <th scope="col">الحي </th>
                         <th scope="col">قبول </th>
                         <th scope="col">رفض </th>
                     </tr>
@@ -37,12 +42,13 @@
                         <tr id="sup-@item.Record_ID">
 
                             <th scope="row">@(Model.IndexOf(item)+1)</th>
-                            <td>@item.ItemName</td>
-                            <td>@item.size</td>
-                            <td>@item.Barcode</td>
-                            <td>@item.CategoryName</td>
                             <td>@item.CompanyName</td>
-                            <td>@item.CompanyName</td>
+                            <td>@item.BranchName</td>
+                            <td>@item.ContactName</td>
+                            <td>@item.Telephone1</td>
+                            <td>@item.Date</td>
+                            <td>@item.Range</td>
+                            <td>@item.Region</td>
                             <td>
                                 <button class="btn btn-success" onclick='ConfirmRequest(@item.Record_ID,1)'>قبول</button>
                             </td>
@@ -67,7 +73,7 @@
         // status=1 accpeted
         // status=2 rjected
         $.ajax({
-            url: "/RquestsSettings/ConfirmRequestItems",
+            url: "/RquestsSettings/ConfirmRequestBranches",
             type: "Post",
             data: {
                 Requestid: id,
