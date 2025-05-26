@@ -211,7 +211,7 @@ namespace SuppliersDashboard.Controllers
             };
             ViewBag.StoreTypes = StoreTypes;
             var warehousesList = httphelp.Get<Response<List<Select>>>("/api/Selector/GetWareHouses").Data;
-            ViewBag.WarehousesList = warehousesList;
+            ViewBag.WarehousesList = warehousesList.Where(x=>x.Id!=25); // 25 id for مخزن المواد الخام عشان  مش عاوزه يظهر عشان لية صفحة خاصة بيه
 
             var usersList = httphelp.Get<Response<List<Select>>>("/api/Selector/AllGetDistributorUsers").Data;
             ViewBag.DistributorMan = usersList;

@@ -1804,6 +1804,7 @@
     <Content Include="Views\WareHousing\RequestMaterials.cshtml" />
     <Content Include="Views\WareHousing\PenddingRequestsMaterials.cshtml" />
     <Content Include="Views\WareHousing\MaterialsStore.cshtml" />
+    <Content Include="Views\Distributor\OpenDiscountDistrubtor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

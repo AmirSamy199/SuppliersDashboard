@@ -440,5 +440,27 @@ namespace SuppliersDashboard.Controllers
         {
             return Json(httphelp.Get<Response<string>>($"/api/Procedures/DeleteCollection?Id={Id}"));
         }
+
+        public ActionResult OpenDiscountDistrubtor()
+        {
+            return View();
+        }
+        [HttpPost]
+        public JsonResult CheckIfAllowDiscount(int userid)
+        {
+            var res = httphelp.Get<Response<string>>($"/api/CheckIfAllowDiscount?UserId={userid}");
+            return Json(res);
+        }
+        [HttpPost]
+        public JsonResult OpenOrCloseDiscount(int userid, int status)
+        {
+            var res = httphelp.Get<Response<string>>($"/api/Sale/OpenDiscountForDistrubutor?userid={userid}&status={status}");
+          
+            return Json(res);
+        }
+
     }
+
+
+
 }

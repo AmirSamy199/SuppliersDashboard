@@ -1,0 +1,107 @@
+﻿@using SuppliersDashboard.Resources
+@{
+    ViewBag.Title = "OpenDiscountDistrubtor";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+<div class="row p-2 d-flex justify-content-center" style="width:100%">
+    <div class="card-header-2" style="text-align:center">
+        <h2 class="card-header d-flex justify-content-center text-primary mt-2 mb-1" style="opacity:0.6">صلاحيات الخصم</h2>
+
+    </div>
+
+    <form class="theme-form theme-form-2 mega-form">
+        <div class="row d-flex justify-content-around">
+            <div class="col-lg-4 text-center ">
+                <label class="col-12 col-form-label form-label-title" style="text-align: center;">@SuppliersDashboard.Resources.pages.distributor</label>
+            </div>
+            <div class="col-lg-8 text-center p-3">
+                <input type="hidden" id="distributorId" value="0" />
+                <select id="DistributorIdInput" class="js-example-basic-single w-100 form-control" onchange="CheckAllowDiscount()">
+                    <option value="ChooseRepresentative" selected disabled>@llayout.ChooseRepresentative</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    
+   
+        <div class="col-2 "><h5 id="status" class=" text-primary collapse"></h5></div>
+        <div class="col-3 "><button id="btnallow" class="btn btn-primary collapse"></button></div>
+    
+
+</div>
+
+<script>
+     $(document).ready(function() {
+        $.ajax({
+            url: "/Selector/Getsales_representative",
+            type: "post",
+            data: {},
+            success: function(res) {
+                let select = $("#DistributorIdInput");
+                console.log(res)
+                console.log(res.data.Data.Users);
+                $.each(res.data.Data.Users, function(i, e) {
+                    select.append(`<option value='${e.RecordID}'>${e.UserName}</option>`);
+                });
+            }
+        });
+
+    
+     });
+    function CheckAllowDiscount() {
+        debugger
+        let id = $("#DistributorIdInput").val()
+        $.ajax({
+            url: "/Distributor/CheckIfAllowDiscount",
+            type: "Post",
+            data: {
+                userid: id
+            },
+            success: function (res) {
+                console.log("dddddddddddddd");
+                console.log(res.State)
+                debugger
+                if (res.State == 1) {
+                    // الخصم مفتوح\
+                    $('#btnallow').attr('onclick', `OpenOrCloseDiscount('${id}',0)`);
+                    $("#status").html('الخصم مفتوح');
+                    $("#btnallow").html('اغلاق الخصم');
+                    $("#status").removeClass('collapse')
+                    $("#btnallow").removeClass('collapse')
+
+                }
+                else {
+                    $('#btnallow').attr('onclick', `OpenOrCloseDiscount('${id}',1)`);
+                    $("#status").html('الخصم مغلق');
+                    $("#btnallow").html('فتح الخصم');
+                    $("#status").removeClass('collapse')
+                    $("#btnallow").removeClass('collapse')
+                }
+            }
+        })
+    }
+    function OpenOrCloseDiscount(userid, status) {
+        debugger
+        $.ajax({
+            url: "/Distributor/OpenOrCloseDiscount",
+            type: "Post",
+            data: {
+                userid: userid,
+                status: status
+            },
+            success: function (res) {
+                showSuccessOperation(res.Message);
+                setTimeout(() => { window.location.reload() }, 2000);
+            },
+            error: function (res) {
+                alert(res.Message);
+            }
+
+        })
+    }
+
+</script>
+
+
