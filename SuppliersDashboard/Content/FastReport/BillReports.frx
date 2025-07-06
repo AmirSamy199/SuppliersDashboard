@@ -75,14 +75,14 @@
         <CommandParameter Name="SalesId" DataType="8" Size="1" Expression="[SalesId]" DefaultValue="1"/>
         <CommandParameter Name="DateFrom" DataType="22" Size="20" Expression="[DateFrom] " DefaultValue="2023-01-01"/>
         <CommandParameter Name="DateTo" DataType="22" Size="20" Expression="[DateTo] " DefaultValue="2024-12-12"/>
-        <CommandParameter Name="Search" DataType="22" Expression="[Search]" DefaultValue="فاكيوم"/>
+        <CommandParameter Name="Search" DataType="22" Expression="[Search]" DefaultValue=""/>
         <CommandParameter Name="agentId" DataType="8" Expression="[AgentId]" DefaultValue="0"/>
       </TableDataSource>
     </MsSqlDataConnection>
     <Parameter Name="SalesId" DataType="System.Int32" Expression="0"/>
     <Parameter Name="DateFrom" DataType="System.String" Expression="&quot;2024/04/30&quot;"/>
     <Parameter Name="DateTo" DataType="System.String" Expression="&quot;2024/04/30&quot;"/>
-    <Parameter Name="Search" DataType="System.String" Expression="&quot;&quot;"/>
+    <Parameter Name="Search" DataType="System.String" Expression=""/>
     <Parameter Name="AgentId" DataType="System.Int32" Expression="1" Description="0"/>
   </Dictionary>
   <ReportPage Name="Page1" Guides="708.75,708.75" Watermark.Font="Arial, 60pt">

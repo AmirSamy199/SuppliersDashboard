@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "TestSend";
+    Layout = "~/Views/Shared/_LayoutV2.cshtml";
+}
+
+
+<input type="text" id="name" placeholder="اسمك" />
+<input type="text" id="message" placeholder="رسالتك" />
+<button id="sendBtn">إرسال</button>
+
+<ul id="messages"></ul>
+
+
+
+
+<script>
+
+  
+    $(function () {
+        var connection = $.connection.notificationHub;
+        console.log("Connection ")
+        console.log(connection)
+        // استقبال الرسالة
+        connection.client.sendMessage = function (user, message) {
+            $("#messages").append(`<li><strong>${user}:</strong> ${message}</li>`);
+        };
+
+        // تشغيل الاتصال
+        $.connection.hub.url = "http://localhost:50861/signalr";
+        $.connection.hub.start()
+            .done(function () {
+                console.log("✅ الاتصال شغال!");
+
+                // إرسال الرسالة بعد الاتصال
+                $("#sendBtn").click(function () {
+                    var name = $("#name").val();
+                    var message = $("#message").val();
+
+                    $.ajax({
+                        url: `http://localhost:50861/api/notifications/send?name=${name}&message=${message}`,
+                        method: "POST",
+                        success: function (res) {
+                            console.log("تم إرسال الرسالة:", res);
+                        },
+                        error: function (err) {
+                            console.error("خطأ في الإرسال", err);
+                        }
+                    });
+                });
+            })
+            .fail(function (err) {
+                console.error("❌ فشل الاتصال", err);
+            });
+    });
+</script>
+
+
+
+

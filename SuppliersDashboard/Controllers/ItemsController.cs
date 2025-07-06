@@ -23,6 +23,14 @@ namespace SuppliersDashboard.Controllers
     public class ItemsController : BaseController
     {
         Helper.HttpClientHelper HTTP = new Helper.HttpClientHelper();
+        // For Test Signlr
+        public ActionResult TestSend()
+        {
+            return View();
+        }
+        
+        
+        
         // GET: Items
         public ActionResult Index()
         {

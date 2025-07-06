@@ -669,6 +669,8 @@ namespace SuppliersDashboard.Controllers
                     ViewBag.Name = user?.Item;
                 }
                 ViewBag.Date = show.Date;
+                ViewBag.UserId = show.UserID;
+
                 return View(model);
             }
             catch (Exception)

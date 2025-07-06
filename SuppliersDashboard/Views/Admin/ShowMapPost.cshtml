@@ -4,17 +4,79 @@
     Layout = "~/Views/Shared/_LayoutV2.cshtml";
 }
 <div class="printer ">
-        <div class="card pd-20  card-ERB ">
-            <div class="  table-responsive  ">
-                <div id="map" dir="rtl" style="height: 500px; width: 100%;"></div>
-            </div>
+    <div class="card pd-20  card-ERB ">
+        <div class="  table-responsive  ">
+            <div id="map" dir="rtl" style="height: 500px; width: 100%;"></div>
         </div>
     </div>
 </div>
 
+
 <script>
+
+    var map = L.map('map').setView([26.820553, 30.802498], 6); // Centered on Egypt with an appropriate zoom level
+
+
+    $(function () {
+        debugger
+        var connection = $.connection.notificationHub;
+        console.log("Connection ")
+        console.log(connection)
+        // For Add Location For Distrobuter
+
+        connection.client.addLocationS = function (UserID, latitude, longitude, date, message, minutes) {
+
+
+    if ('@ViewBag.UserId' === String(UserID) && areDatesEqual('@ViewBag.Date', date)) {
+        AddPointLocation(latitude, longitude, date, message, minutes, map);
+    }
+        };
+        // For Add Bill For Distrobuter
+        connection.client.addNewBill = function (BillNo, BranchName, deebTotalAmountAfterDiscount, Sales_ID, dateTime, Longitude, Latitude) {
+            debugger
+            if ('@ViewBag.UserId' === String(Sales_ID) && areDatesEqual('@ViewBag.Date', dateTime)) {
+                AddPointForNewBill(BillNo, BranchName, deebTotalAmountAfterDiscount, Longitude, Latitude, map);
+        }
+    };
+        // For Add Visit Branche For Distrobuter
+        connection.client.addVisitBranch = function (BranchName, UserID, Longitude, Latitude, date, Address) {
+
+
+            if ('@ViewBag.UserId' === String(UserID) && areDatesEqual('@ViewBag.Date', date)) {
+                AddVisitBranche(Latitude, Longitude, BranchName, Address, map);
+}
+    };
+function areDatesEqual(d1, d2) {
+    let a = new Date(d1);
+    let b = new Date(d2);
+    return a.getFullYear() === b.getFullYear()
+        && a.getMonth() === b.getMonth()
+        && a.getDate() === b.getDate();
+}
+        // ✅ Must start the SignalR connection
+        // تشغيل الاتصال
+        $.connection.hub.url = "https://caigoapi.enkima-eg.com/signalr";
+        $.connection.hub.start()
+            .done(function () {
+                console.log("✅ الاتصال شغال!");
+
+
+            })
+            .fail(function (err) {
+                console.error("❌ فشل الاتصال", err);
+            });
+
+        // For Add Vist Branch
+
+
+        // For Add Bill
+
+
+    });
     document.addEventListener('DOMContentLoaded', function () {
-        var map = L.map('map').setView([26.820553, 30.802498], 6); // Centered on Egypt with an appropriate zoom level
+
+    //   AddPointForNewBill(10, 'amir', 102, 30.39581147000000, 31.48919109000000, map)
+
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: ' @ViewBag.Name | @ViewBag.Date'
@@ -83,5 +145,78 @@
                 </div>`);
         });
 
+      //  AddTestPoint(31.48919991000000, 30.39585294000000, BillIcon, "Test",11, 101.2, map)
+
     });
+
+    function AddTestPoint(Latitude, Longitude, BillIcon, BranchName, BillNo, TotalAmountAfterDiscount, map) {
+        debugger
+        setTimeout(function () {
+            alert("Ready To Add Point For Test 2 sc")
+        }, 1000);
+        setTimeout(function () {
+            L.marker([Latitude, Longitude], { icon: BillIcon }).addTo(map)
+                .bindPopup(`
+ <div class="popup-content" style="direction: ltr;">
+     <div><span style="color: #070606;" class="label">Bill Number :</span> ${BillNo}</div>
+     <div><span style="color: #070606;" class="label">Branch Name :</span> ${BranchName}</div>
+     <div><span style="color: #070606;" class="label">Total Amount After Discount :</span> ${TotalAmountAfterDiscount}</div>
+ </div>`);        },3000);
+    }
+
+    function AddPointLocation(latitude, longitude, DateLocation, Message, Time, map) {
+        // Icons
+        debugger
+         var count = @Model.data.Count + 1;
+        let CarIconInLoop = L.icon({
+            iconUrl: "https://admin-dawar.unoerp.app/Images/GPS/" + count + ".png",
+            iconSize: [50, 50], // Size of the icon
+            iconAnchor: [8, 50], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -50] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        // Add Point In maps
+
+        L.marker([latitude, longitude], { icon: CarIconInLoop }).addTo(map)
+            .bindPopup(`
+            <div class="popup-content" style="direction: ltr;">
+                <div><span style="color: #070606;" class="label">Date :</span> ${new Date(DateLocation).toLocaleDateString()}</div>
+                <div><span style="color: #070606;" class="label">Time :</span> ${Time}</div>
+                <div><span style="color: #070606;" class="label">Finish Date :</span> ${new Date(DateLocation).toLocaleDateString()}</div>
+                <div><span style="color: #070606;" class="label">All Time :</span> ${Message}</div>
+            </div>`);
+    }
+
+    function AddPointForNewBill(BillNo, BranchName, TotalAmountAfterDiscount, Longitude, Latitude, map) {
+        debugger
+        var BillIcon = L.icon({
+            iconUrl: "https://admin-dawar.unoerp.app/Content/Images/bill.png",
+            iconSize: [32, 32], // Size of the icon
+            iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+        });
+        L.marker([Latitude,Longitude], { icon: BillIcon }).addTo(map)
+            .bindPopup(`
+      <div class="popup-content" style="direction: ltr;">
+          <div><span style="color: #070606;" class="label">Bill Number :</span> ${BillNo}</div>
+          <div><span style="color: #070606;" class="label">Branch Name :</span> ${BranchName}</div>
+          <div><span style="color: #070606;" class="label">Total Amount After Discount :</span> ${TotalAmountAfterDiscount}</div>
+      </div>`);
+    }
+
+    function AddVisitBranche(Latitude, Longitude, BranchName, Address, map) {
+        var BrancesIcon = L.icon({
+            iconUrl: "https://admin-dawar.unoerp.app/Content/Images/store.png",
+            iconSize: [32, 32], // Size of the icon
+            iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        L.marker([Latitude,Longitude], { icon: BrancesIcon }).addTo(map)
+            .bindPopup(`
+        <div class="popup-content" style="direction: ltr;">
+            <div><span style="color: #070606;" class="label">Branch Name :</span> ${BranchName}</div>
+            <div><span style="color: #070606;" class="label">Address :</span> ${Address}</div>
+        </div>`);
+    }
 </script>

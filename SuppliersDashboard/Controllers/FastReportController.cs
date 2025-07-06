@@ -161,6 +161,7 @@ namespace SuppliersDashboard.Controllers
                         report.Report.SetParameterValue("AgentId", Paramters.AgentId);
                         report.Report.SetParameterValue("DateFrom", Paramters.DateFrom);
                         report.Report.SetParameterValue("DateTo", Paramters.DateTo);
+                       
 
 
                         break;
