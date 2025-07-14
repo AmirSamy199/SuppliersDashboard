@@ -22,6 +22,16 @@
         var connection = $.connection.notificationHub;
         console.log("Connection ")
         console.log(connection)
+        $.connection.hub.url = "https://caigoapi.enkima-eg.com/signalr/hubs";
+        $.connection.hub.start()
+            .done(function () {
+                console.log("✅ الاتصال شغال!");
+
+
+            })
+            .fail(function (err) {
+                console.error("❌ فشل الاتصال", err);
+            });
         // For Add Location For Distrobuter
 
         connection.client.addLocationS = function (UserID, latitude, longitude, date, message, minutes) {
@@ -55,16 +65,7 @@ function areDatesEqual(d1, d2) {
 }
         // ✅ Must start the SignalR connection
         // تشغيل الاتصال
-        $.connection.hub.url = "https://caigoapi.enkima-eg.com/signalr";
-        $.connection.hub.start()
-            .done(function () {
-                console.log("✅ الاتصال شغال!");
-
-
-            })
-            .fail(function (err) {
-                console.error("❌ فشل الاتصال", err);
-            });
+      
 
         // For Add Vist Branch
 

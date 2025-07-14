@@ -242,6 +242,8 @@
             }
     </style>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
 </head>
 
 <body class="g-sidenav-show @(lang == "ar" ? "rtl" : "") bg-gray-100">
@@ -1956,27 +1958,27 @@ funcs.Contains("اعدادات القنوات")
             var restorepage = $('body').html();
 
             $('#printer').append(`
-                                    <style>
-                              td, th {
-                                  text-align: center !important;
-                                  border: 2px solid !important;
-                                  max-width: 50px !important;
-                                  overflow:hidden;
-                              }
+                                        <style>
+                                  td, th {
+                                      text-align: center !important;
+                                      border: 2px solid !important;
+                                      max-width: 50px !important;
+                                      overflow:hidden;
+                                  }
 
 
-                              table {
-                                  max-width: 100% !important;
-                                  border-collapse: collapse !important;
-                              }
-                              /*
-                              .table td {
-                                  white-space: pre-wrap !important
-                              }
-                              */
+                                  table {
+                                      max-width: 100% !important;
+                                      border-collapse: collapse !important;
+                                  }
+                                  /*
+                                  .table td {
+                                      white-space: pre-wrap !important
+                                  }
+                                  */
 
-                          </style>
-                                    `)
+                              </style>
+                                        `)
             var printcontent = $('#printer').clone();
             $('body').empty().html(printcontent);
             window.print();
@@ -2129,9 +2131,9 @@ funcs.Contains("اعدادات القنوات")
 
     <script>
         const HeaderModal = `<div class="modal-header d-flex justify-content-between align-items-center">
-       <h5 class="modal-title mb-0 text-primary" id="staticBackdropLabel"></h5>
-       <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" >&times;</button>
-        </div>`;
+           <h5 class="modal-title mb-0 text-primary" id="staticBackdropLabel"></h5>
+           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" >&times;</button>
+            </div>`;
         // ########## css classes ##########
         // detail
         // detail-child
@@ -2179,61 +2181,61 @@ funcs.Contains("اعدادات القنوات")
         function showsuccessoperation(txt) {
             let html = `
 
-            <div class=' p-4'  style='min-width:500px' >
+                <div class=' p-4'  style='min-width:500px' >
 
-            <div class=' p-4'>
-            <div class='text-center text-success'>
-            <i style='font-size:150px' class="fa fa-solid fa-check"></i>
-            </div>
-            </div>
-            <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
-            </div>
-            `
+                <div class=' p-4'>
+                <div class='text-center text-success'>
+                <i style='font-size:150px' class="fa fa-solid fa-check"></i>
+                </div>
+                </div>
+                <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+                </div>
+                `
             ShowModal(html)
         }
         function showSuccessOperation(txt) {
             let html = `
 
-            <div class=' p-4'  style='min-width:500px' >
+                <div class=' p-4'  style='min-width:500px' >
 
-            <div class=' p-4'>
-             <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
-            <div class='text-center text-success'>
-            <i style='font-size:150px' class="fa fa-solid fa-check"></i>
-            </div>
-            </div>
-            <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
-            </div>
-            `
+                <div class=' p-4'>
+                 <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+                <div class='text-center text-success'>
+                <i style='font-size:150px' class="fa fa-solid fa-check"></i>
+                </div>
+                </div>
+                <div class='pt-3 pb-3 text-center text-success' style='font-size:20px'> ${txt}</div>
+                </div>
+                `
             ShowModal(html)
         }
         function showdangeroperation(txt) {
             let html = `
 
-            <div class=' p-4' style='min-width:500px' >
-            <div class=' p-4'>
-             <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
-            <div class='text-center text-danger'>
-            <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
-            </div>
-            </div>
-            <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
-            </div>
-            `
+                <div class=' p-4' style='min-width:500px' >
+                <div class=' p-4'>
+                 <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+                <div class='text-center text-danger'>
+                <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+                </div>
+                </div>
+                <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+                </div>
+                `
             ShowModal(html)
         }
         function showDangerOperation(txt) {
             let html = `
-            <div class=' p-4' style='min-width:500px' >
-            <div class=' p-4'>
-             <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
-            <div class='text-center text-danger'>
-            <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
-            </div>
-            </div>
-            <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
-            </div>
-            `
+                <div class=' p-4' style='min-width:500px' >
+                <div class=' p-4'>
+                 <div style='text-align:right'><button onclick='closepopup()' class='btn text-danger'> X </button></div>
+                <div class='text-center text-danger'>
+                <i style='font-size:50px' class="fa fa-solid fa-exclamation"></i>
+                </div>
+                </div>
+                <div class='pt-3 pb-3 text-center text-danger' style='font-size:20px'> ${txt}</div>
+                </div>
+                `
             ShowModal(html)
         }
         function log(x) { console.log(x) }
@@ -2256,45 +2258,45 @@ funcs.Contains("اعدادات القنوات")
             debugger
 
             let html = `    ${HeaderModal}
-            <div  style='min-width:500px' class=" d-flex justify-content-center" >
+                <div  style='min-width:500px' class=" d-flex justify-content-center" >
 
 
-            <i style='font-size:150px' class="fa fa-regular fa-circle-question"></i>
-            </div>
+                <i style='font-size:150px' class="fa fa-regular fa-circle-question"></i>
+                </div>
 
-            </div>
-            <div class='pt-3 pb-3 text-center text-warning' style='font-size:22px;font-weight:bolder'>
-           ${msg}
-             </div>
-            <div class="row  d-flex justify-content-around">
-            <div class="col-lg-4 text-center p-3">
-           <button style='font-size: 18px;' class='btn btn-primary col-12 btn-lg ' onclick="${btnclick}">${btntxt}</button>
-            </div>
-            </div>
-            </div>
-            `
+                </div>
+                <div class='pt-3 pb-3 text-center text-warning' style='font-size:22px;font-weight:bolder'>
+               ${msg}
+                 </div>
+                <div class="row  d-flex justify-content-around">
+                <div class="col-lg-4 text-center p-3">
+               <button style='font-size: 18px;' class='btn btn-primary col-12 btn-lg ' onclick="${btnclick}">${btntxt}</button>
+                </div>
+                </div>
+                </div>
+                `
             ShowModal(html)
         }
         function displaymsg(msg) {
             let ht = `   ${HeaderModal}
-                <div class='p-3 '>
-                <h3 class='text-center h3  '>
-                ${msg}
-                <h3>
-                </div>
-                `
+                    <div class='p-3 '>
+                    <h3 class='text-center h3  '>
+                    ${msg}
+                    <h3>
+                    </div>
+                    `
             ShowModal(ht)
         }
 
         let displaynonestyle = `
-         <style>
-                .detail{
-                    display:none
-                }
-                td:has(.detail-child){
-                    display:none
-                }
-            </style>
+             <style>
+                    .detail{
+                        display:none
+                    }
+                    td:has(.detail-child){
+                        display:none
+                    }
+                </style>
 `
         let displayornot = 0;
         function showDetails(ele) {
@@ -2367,6 +2369,9 @@ funcs.Contains("اعدادات القنوات")
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
 
     <script src="http://localhost:50861/signalr/hubs"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     @RenderSection("scripts", required: false)
 
     <script>

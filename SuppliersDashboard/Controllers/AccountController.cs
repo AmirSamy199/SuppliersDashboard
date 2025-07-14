@@ -58,7 +58,6 @@ namespace SuppliersDashboard.Controllers
         {
 
             var User = Cokie.UserGet();
-            
             if(User.Id !=0)
                 return RedirectToAction("Index","Home");
             return View();
